@@ -33,15 +33,13 @@ class cCircleOrbitStar :public cBaseStar{
 
 public:
 
-
-
 	 void Init(LPDIRECT3DTEXTURE9* pTex);	// 初期化 テクスチャのポインタを受け取って
-	 void Update();				// 必須
+	 void Update();			// 必須
 	 void Draw();				// 必須
-	 void Uninit();				// 終了
+	 void UnInit();				// 終了
 
 	 ~cCircleOrbitStar(){}		// デストラクタ
-	 cCircleOrbitStar();		// コンストラクタ
+	 cCircleOrbitStar() :m_fMove(D3DXVECTOR2(0.0f,0.0f)){}		// コンストラクタ
 private:
 	cSpriteParam	m_sprite;		// 描画用
 	cCollider		m_collision;	// あたり判定	
