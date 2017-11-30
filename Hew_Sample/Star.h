@@ -22,29 +22,31 @@
 //----継承用 星基本クラス----
 class cBaseStar{
 public:
-	virtual void Update() = 0;	// 必須
-	virtual void Draw() = 0;	// 必須
-	virtual ~cBaseStar(){}		// デストラクタをオーバライドさせるため
+	virtual void Init(LPDIRECT3DTEXTURE9* pTex) = 0;
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
+	virtual void UnInit() = 0;
+	virtual ~cBaseStar(){}
 };
 
 
-//----継承用 円軌道星----
+//----円軌道星----
 class cCircleOrbitStar :public cBaseStar{
 
 public:
+	 void Init(LPDIRECT3DTEXTURE9* pTex);
+	 void Update();
+	 void Draw();
+	 void UnInit();
 
-	 void Init(LPDIRECT3DTEXTURE9* pTex);	// 初期化 テクスチャのポインタを受け取って
-	 void Update();			// 必須
-	 void Draw();				// 必須
-	 void UnInit();				// 終了
-
-	 ~cCircleOrbitStar(){}		// デストラクタ
-	 cCircleOrbitStar() :m_fMove(D3DXVECTOR2(0.0f,0.0f)){}		// コンストラクタ
+	 ~cCircleOrbitStar(){}
+	 cCircleOrbitStar() :m_center(D3DXVECTOR2(100.0f, 100.0f)), m_radius(D3DXVECTOR2(50.0f,50.0f)), m_rad(D3DX_PI){}
 private:
 	cSpriteParam	m_sprite;		// 描画用
 	cCollider		m_collision;	// あたり判定	
-	D3DXVECTOR2		m_fMove;		// 移動量
-
+	D3DXVECTOR2		m_center;		// 軌道の中心座標
+	D3DXVECTOR2		m_radius;		// 半径
+	float			m_rad;			// 角度
 };
 
 

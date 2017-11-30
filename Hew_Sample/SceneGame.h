@@ -12,7 +12,9 @@
 //------------------------------
 // インクルードファイル
 //------------------------------
+#include <d3d9.h>
 #include "SceneManeger.h"
+
 
 //------------------------------
 // クラス定義
@@ -28,13 +30,14 @@ public:
 
 	// このシーンで使うテクスチャ
 	enum Texture{
+		STAR,
 		MAX_TEXTURE,
 	};
 
 	void LoadTextureFromFile();
 
 private:
-	//LPDIRECT3DTEXTURE9 m_pTex[MAX_TEXTURE];	// このシーンで使うテクスチャのポインタ配列
+	LPDIRECT3DTEXTURE9 m_pTex[MAX_TEXTURE];	// このシーンで使うテクスチャのポインタ配列
 
 
 };

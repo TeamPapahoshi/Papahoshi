@@ -23,7 +23,6 @@
 #define PLAYER_DEFAULT_POS	(D3DXVECTOR2(100.0f,100.0f))
 #define PLAYER_MOVE_SPEED	(4.0f)
 
-#define TEXTURE_FILNAME_PLAYER ("Image/Character/Jelly.png")
 
 //-----------------------------
 //グローバル
@@ -48,7 +47,6 @@ void cPlayer::Init(LPDIRECT3DTEXTURE9* pTex){ //pTex
 	// Collider
 	collider.SetType(cCollider::CollisionType::CIRCLE);						// 使用するあたり判定を指定
 	collider.SetCircleCollider(sprite.GetPos(), sprite.GetSizeX() / 2.0f);	// あたり判定の座標セット(Updateのしわすれ注意)
-	
 }
 
 //=======================================================================================

@@ -15,18 +15,22 @@
 #include "debugproc.h"
 #include "Input.h"
 
+// オブジェクト
+#include "Star.h"
+
 
 //------------------------------
 // マクロ定義
 //------------------------------
-//#define TEXTURE_FILNAME_ENEMY ("Image/Character/KingJelly.jpg")
+#define TEXTURE_FILNAME_ENEMY ("Image/Character/KingJelly.jpg")
 //#define TEXTURE_FILNAME_PLAYER ("Image/Character/Jelly.png")
 
 
 //-----------------------------
 // グローバル
 //-----------------------------
-
+// インスタンス用ポインタ
+cBaseStar* pCircleOrbitStar;
 
 
 //=======================================================================================
@@ -35,6 +39,16 @@
 //
 //=======================================================================================
 cSceneGame::cSceneGame(){
+
+
+	// テクスチャの読み込み
+	LoadTextureFromFile();
+
+	// インスタンス
+	pCircleOrbitStar = new cCircleOrbitStar();
+
+	pCircleOrbitStar->Init(&m_pTex[STAR]);
+
 }
 
 //=======================================================================================
@@ -43,6 +57,11 @@ cSceneGame::cSceneGame(){
 //
 //=======================================================================================
 cSceneGame::~cSceneGame(){
+
+	pCircleOrbitStar->UnInit();
+
+	// デリーと
+	delete pCircleOrbitStar;
 }
 
 //=======================================================================================
@@ -51,6 +70,9 @@ cSceneGame::~cSceneGame(){
 //
 //=======================================================================================
 void cSceneGame::Update(){
+
+	pCircleOrbitStar->Update();
+
 
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
@@ -63,6 +85,8 @@ void cSceneGame::Update(){
 //
 //=======================================================================================
 void cSceneGame::Draw(){
+
+	pCircleOrbitStar->Draw();
 }
 
 //=======================================================================================
@@ -78,12 +102,13 @@ void cSceneGame::LoadTextureFromFile(){
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	// このシーンで使うテクスチャのファイル名
-	//char* pTexture[MAX_TEXTURE] = {			//※順番注意enumの順にファイル名を書いて
-	//};
+	 // このシーンで使うテクスチャのファイル名
+	char* pTexture[MAX_TEXTURE] = {			//※順番注意enumの順にファイル名を書いて
+		{ TEXTURE_FILNAME_ENEMY }
+	};
 
 	// ロード
-	//for (int i = 0; i < MAX_TEXTURE; i++){
-	//	D3DXCreateTextureFromFile(pDevice, pTexture[i], &m_pTex[i]);
-	//}
+	for (int i = 0; i < MAX_TEXTURE; i++){
+		D3DXCreateTextureFromFile(pDevice, pTexture[i], &m_pTex[i]);
+	}
 }
