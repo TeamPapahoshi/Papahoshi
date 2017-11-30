@@ -33,6 +33,8 @@ class cCircleOrbitStar :public cBaseStar{
 
 public:
 
+
+
 	 void Init(LPDIRECT3DTEXTURE9* pTex);	// 初期化 テクスチャのポインタを受け取って
 	 void Update();				// 必須
 	 void Draw();				// 必須
