@@ -27,6 +27,8 @@ public:
 	virtual void Draw() = 0;
 	virtual void UnInit() = 0;
 	virtual ~cBaseStar(){}
+
+
 };
 
 
@@ -41,12 +43,17 @@ public:
 
 	 ~cCircleOrbitStar(){}
 	 cCircleOrbitStar() :m_center(D3DXVECTOR2(100.0f, 100.0f)), m_radius(D3DXVECTOR2(50.0f,50.0f)), m_rad(D3DX_PI){}
+
+	 // ¯‚Ìİ’è
+	 void SetcCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+
 private:
 	cSpriteParam	m_sprite;		// •`‰æ—p
 	cCollider		m_collision;	// ‚ ‚½‚è”»’è	
 	D3DXVECTOR2		m_center;		// ‹O“¹‚Ì’†SÀ•W
 	D3DXVECTOR2		m_radius;		// ”¼Œa
 	float			m_rad;			// Šp“x
+	int				m_second;		// ˆêü‚É‚©‚©‚éŠÔ(•b)
 };
 
 

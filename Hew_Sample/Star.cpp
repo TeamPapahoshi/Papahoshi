@@ -39,11 +39,12 @@ void cCircleOrbitStar::Init(LPDIRECT3DTEXTURE9* pTex){
 	m_sprite.SetCurrentAnimPattern(0);			// テクスチャの現在のパターン番号セット
 	m_sprite.SetTexture(pTex);					// テクスチャのセット
 
-
-	// 星
+	// 星初期値(セットなしの時)
 	m_center = STAR_CENTER;
 	m_radius = STAR_RADIUS;
 	m_sprite.SetSize(STAR_SIZE);
+	m_second = ROUND_TIME;
+
 }	
 
 
@@ -64,14 +65,18 @@ void cCircleOrbitStar::UnInit(){
 //=======================================================================================
 void cCircleOrbitStar::Update(){
 
-	// 角度更新
-	m_rad += 2 * D3DX_PI / (ROUND_TIME * 60.0f);
+	if (m_second != 0){
+		// 角度更新
+		m_rad += 2 * D3DX_PI / (m_second * 60.0f);
 
-
-	// 座標更新
-	m_sprite.SetPosX(m_center.x - m_radius.x*cos(m_rad));
-	m_sprite.SetPosY(m_center.y - m_radius.y*sin(m_rad));
-
+		// 座標更新
+		m_sprite.SetPosX(m_center.x - m_radius.x*cos(m_rad));
+		m_sprite.SetPosY(m_center.y - m_radius.y*sin(m_rad));
+	}
+	else{
+		m_sprite.SetPosX(m_center.x);
+		m_sprite.SetPosY(m_center.y);
+	}
 }
 
 
@@ -82,4 +87,20 @@ void cCircleOrbitStar::Update(){
 //=======================================================================================
 void cCircleOrbitStar::Draw(){
 	m_sprite.Draw();
+}
+
+//=======================================================================================
+//
+//		星の設定
+//
+//=======================================================================================
+void cCircleOrbitStar::SetcCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+
+	// 星
+	m_center = center;
+	m_radius = radius;
+	m_sprite.SetSize(size);
+	m_second = second;
+
+
 }

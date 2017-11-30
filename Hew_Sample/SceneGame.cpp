@@ -25,12 +25,13 @@
 #define TEXTURE_FILNAME_ENEMY ("Image/Character/KingJelly.jpg")
 //#define TEXTURE_FILNAME_PLAYER ("Image/Character/Jelly.png")
 
+#define STAR_NUM	(4)	//仮
 
 //-----------------------------
 // グローバル
 //-----------------------------
 // インスタンス用ポインタ
-cBaseStar* pCircleOrbitStar;
+cCircleOrbitStar* pStar[STAR_NUM];
 
 
 //=======================================================================================
@@ -45,9 +46,19 @@ cSceneGame::cSceneGame(){
 	LoadTextureFromFile();
 
 	// インスタンス
-	pCircleOrbitStar = new cCircleOrbitStar();
+	for (int i = 0; i < STAR_NUM; i++){
+		pStar[i] = new cCircleOrbitStar();
+	}
 
-	pCircleOrbitStar->Init(&m_pTex[STAR]);
+	// 初期化
+	for (int i = 0; i < STAR_NUM; i++){
+		pStar[i]->Init(&m_pTex[STAR]);
+	}
+
+	// 数値のセット
+	pStar[1]->SetcCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(100, 200), D3DXVECTOR2(20.0f, 20.0f), 5);
+	pStar[2]->SetcCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(0,0), D3DXVECTOR2(20.0f, 20.0f), 5);
+	pStar[3]->SetcCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(100,100), D3DXVECTOR2(20.0f, 20.0f), 5);
 
 }
 
@@ -58,10 +69,14 @@ cSceneGame::cSceneGame(){
 //=======================================================================================
 cSceneGame::~cSceneGame(){
 
-	pCircleOrbitStar->UnInit();
-
+	for (int i = 0; i < STAR_NUM; i++){
+		pStar[i]->UnInit();
+	}
 	// デリーと
-	delete pCircleOrbitStar;
+	
+	for (int i = 0; i < STAR_NUM; i++){
+		delete pStar[i];
+	}
 }
 
 //=======================================================================================
@@ -71,8 +86,9 @@ cSceneGame::~cSceneGame(){
 //=======================================================================================
 void cSceneGame::Update(){
 
-	pCircleOrbitStar->Update();
-
+	for (int i = 0; i < STAR_NUM; i++){
+		pStar[i]->Update();
+	}
 
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
@@ -86,7 +102,9 @@ void cSceneGame::Update(){
 //=======================================================================================
 void cSceneGame::Draw(){
 
-	pCircleOrbitStar->Draw();
+	for (int i = 0; i < STAR_NUM; i++){
+		pStar[i]->Draw();
+	}
 }
 
 //=======================================================================================
