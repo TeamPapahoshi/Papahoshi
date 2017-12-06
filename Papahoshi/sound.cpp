@@ -246,6 +246,7 @@ HRESULT PlaySound(SOUND_LABEL label)
 	buffer.Flags      = XAUDIO2_END_OF_STREAM;
 	buffer.LoopCount  = g_aParam[label].nCntLoop;
 
+
 	// ó‘ÔŽæ“¾
 	g_apSourceVoice[label]->GetState(&xa2state);
 	if(xa2state.BuffersQueued != 0)
