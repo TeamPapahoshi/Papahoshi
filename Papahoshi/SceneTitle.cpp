@@ -16,7 +16,6 @@
 #include "Input.h"
 #include "sound.h"
 
-
 // このシーンで使うオブジェクト
 #include "Player.h"
 #include "Enemy.h"
