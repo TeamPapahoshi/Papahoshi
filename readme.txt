@@ -1,0 +1,26 @@
+
+
+ゲームとしての処理はGameMain.cppで行います。機能を追加するときはGameMaiinに追加してください。。
+
+シーンの追加
+SceneManeger.hでenumを追加して cppで動的インスタンスします。たぶんソース見ればわかります。
+GameMainには何も追加する必要はありません
+
+描画
+cSpriteParamを描画させたいクラスのprivateにもたせます playerをみたらわかると思います。
+
+あたり判定(とりあえず円と円)
+cColiderをあたり判定を持たせたいクラスのprivateにもたせます。
+cCollidert::SetType()であたり判定が四角か円かを設定して、cCollider::SetCircleCollider()もしくはCollider::SetQuadCollider()で座標をセットして
+cCollider::Draw()をすれば白の半透明のテクスチャであたり判定が描画されます。playerをみたらわかると思います
+
+あと注意することがあってSceneTitleを見ればわかると思いますが、あたり判定のチェックはシーンでしているので
+当たった後の処理はUpdateとは別の関数(SceneTitleのplayer.OnColidのこと)を作って行ってください。
+理由はplayerとEnemyがインスタンスしている場所がシーンだからです。あとオブジェクト指向で考えた時、プレイヤーに
+エネミーの要素を持たせるのはおかしいかなとおもったからです。
+他にいい方法あったら教えてください。
+
+アニメーション
+自動化はまだ実装していないですが、cSpriteparamでテクスチャUVの設定はできるので、手動でできます。playerをみたらわかると思います
+
+テクスチャの読み込みはオブジェクトごとに読み込みます。
