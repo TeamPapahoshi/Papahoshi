@@ -29,6 +29,8 @@
 bool g_bDispDebug = true;	//デバッグON/OFF
 #endif
 
+cEffectManeger g_CEffectManeger;	//エフェクト管理用クラス
+
 //=======================================================================================
 //
 //		初期化
@@ -52,6 +54,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 	//スプライト管理の初期化
 	if (FAILED(CreateBufferSprite()))
 		return E_FAIL;
+
+	//エフェクトの初期化
+	g_CEffectManeger.Init();
 
 	//入力装置管理の初期化
 	if (FAILED(InitInput(hInstance, hWnd)))
@@ -87,6 +92,9 @@ void UnInit(void){
 	// スプライト管理の終了処理
 	ReleaseBufferSprite();
 
+	//エフェクトの初期化
+	g_CEffectManeger.Uninit();
+
 	// 入力装置管理の終了処理
 	UnInitInput();
 
@@ -107,6 +115,9 @@ void Update(void){
 
 	//入力装置情報の更新
 	UpdateInput();
+
+	//エフェクトの初期化
+	g_CEffectManeger.Update();
 
 	//現在のシーンの更新
 	cSceneManeger::Update();
@@ -146,6 +157,9 @@ void Draw(void){
 	// 描画開始
 	if (SUCCEEDED(pDevice->BeginScene())){
 
+		//エフェクトの初期化
+		g_CEffectManeger.Draw();
+
 		//現在のシーンの描画
 		cSceneManeger::Draw();
 
@@ -166,6 +180,15 @@ void Draw(void){
 
 }
 
+//==================================================================
+//
+//	エフェクト情報引き渡し関数
+//
+//==================================================================
+cEffectManeger* GetEffectManeger(void)
+{
+	return &g_CEffectManeger;
+}
 
 
 
