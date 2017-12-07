@@ -27,6 +27,7 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Star.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -48,6 +49,7 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Star.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

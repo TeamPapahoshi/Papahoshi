@@ -40,14 +40,11 @@ cSceneTitle::cSceneTitle(){
 	pPlayer = new cPlayer();
 	pEnemy = new cEnemy();
 
-	// テクスチャの読み込み
-	LoadTextureFromFile();
-
 	// プレイヤー
-	pPlayer->Init(&m_pTex[PLAYER]);
+	pPlayer->Init();
 
 	// エネミー
-	pEnemy->Init(&m_pTex[ENEMY]);
+	pEnemy->Init();
 
 	// 音源
 	PlaySound(SOUND_LABEL_BGM000);	
@@ -104,27 +101,4 @@ void cSceneTitle::Draw(){
 }
 
 
-//=======================================================================================
-//
-//		このシーンで使うテクスチャの読込
-//		ヘッダーのenumとこの関数のchar*配列に追加すればテクスチャがロードされます
-//		※ヘッダーのenumとchar配列のファイル名の順番が一致するようにしてください
-//		シーンが変わるとテクスチャも消えちゃうのでので同じオブジェクトを別シーンで呼ぶ
-//		時はもう一度使うテクスチャを書いてください
-//
-//=======================================================================================
-void cSceneTitle::LoadTextureFromFile(){
 
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-	// このシーンで使うテクスチャのファイル名
-	char* pTexture[MAX_TEXTURE] = {			//※順番注意enumの順にファイル名を書いて
-		{ TEXTURE_FILNAME_PLAYER },
-		{ TEXTURE_FILNAME_ENEMY }
-	};
-
-	// ロード
-	for (int i = 0; i < MAX_TEXTURE; i++){
-		D3DXCreateTextureFromFile(pDevice, pTexture[i], &m_pTex[i]);
-	}
-}

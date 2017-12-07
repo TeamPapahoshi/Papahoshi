@@ -12,6 +12,7 @@
 #include "debugproc.h"		//printdebug
 #include <math.h>
 #include "Common.h"
+#include "Texture.h"
 
 #include"Star.h"
 
@@ -30,13 +31,13 @@
 //		初期化
 //
 //=======================================================================================
-void cCircleOrbitStar::Init(LPDIRECT3DTEXTURE9* pTex){
+void cCircleOrbitStar::Init(){
 
 	// Sprite
 	m_sprite.SetPos(D3DXVECTOR2(0.0f,0.0f));	// 座標セット
 	m_sprite.SetTexPatternDevide(4, 4);			// テクスチャの分割数のセット
 	m_sprite.SetCurrentAnimPattern(0);			// テクスチャの現在のパターン番号セット
-	m_sprite.SetTexture(pTex);					// テクスチャのセット
+	m_sprite.SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_JELLY));					// テクスチャのセット
 
 	// 星初期値(セットなしの時)
 	m_center = STAR_CENTER;

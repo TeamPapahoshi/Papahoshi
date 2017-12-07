@@ -36,17 +36,9 @@ public:
 	cSceneTitle();	//コンストラクタ
 	~cSceneTitle();	//デストラクタ
 
-	// このシーンで使うテクスチャ
-	enum Texture{
-		PLAYER,
-		ENEMY,
-		MAX_TEXTURE,
-	};
-
-	void LoadTextureFromFile();	// テクスチャの読み込み
 
 private:
-	LPDIRECT3DTEXTURE9 m_pTex[MAX_TEXTURE];	// このシーンで使うテクスチャのポインタ配列
+
 
 };
 #endif //!___SCENE_TITLE_H___

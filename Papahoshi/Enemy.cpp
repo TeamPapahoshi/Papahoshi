@@ -14,6 +14,7 @@
 
 #include "Input.h"
 #include "Enemy.h"
+#include"Texture.h"
 
 //-----------------------------
 //É}ÉNÉçíËã`
@@ -27,12 +28,12 @@
 //		èâä˙âª
 //
 //=======================================================================================
-void cEnemy::Init(LPDIRECT3DTEXTURE9* pTex){
+void cEnemy::Init(){
 	
-	sprite.SetTexture(pTex);
 	sprite.SetPos(ENEMY_DEFAULT_POS);
 	sprite.SetTexPatternDevide(4, 4);
 	sprite.SetCurrentAnimPattern(0);
+	sprite.SetTexture(cTextureManager::GetTextureTitle(cTextureManager::TEX_TITLE_JELLY));
 
 	collider.SetCircleCollider(sprite.GetPos(), sprite.GetSizeX() / 2.0f);
 	collider.SetType(cCollider::CollisionType::CIRCLE);

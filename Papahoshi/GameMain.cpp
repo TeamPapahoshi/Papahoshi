@@ -63,7 +63,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 
 	//Å‰‚ÌƒV[ƒ“‚Ìİ’è
 	cSceneManeger::ChangeScene(cSceneManeger::TITLE);
-	
+
+
 	//‰Šú‰»Š®—¹
 	return S_OK;
 }

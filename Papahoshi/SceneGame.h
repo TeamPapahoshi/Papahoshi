@@ -28,16 +28,10 @@ public:
 	cSceneGame();	//コンストラクタ
 	~cSceneGame();	//デストラクタ
 
-	// このシーンで使うテクスチャ
-	enum Texture{
-		STAR,
-		MAX_TEXTURE,
-	};
 
-	void LoadTextureFromFile();
 
 private:
-	LPDIRECT3DTEXTURE9 m_pTex[MAX_TEXTURE];	// このシーンで使うテクスチャのポインタ配列
+
 
 
 };

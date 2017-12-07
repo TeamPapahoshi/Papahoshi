@@ -22,7 +22,7 @@
 //----継承用 星基本クラス----
 class cBaseStar{
 public:
-	virtual void Init(LPDIRECT3DTEXTURE9* pTex) = 0;
+	virtual void Init() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void UnInit() = 0;
@@ -36,7 +36,7 @@ public:
 class cCircleOrbitStar :public cBaseStar{
 
 public:
-	 void Init(LPDIRECT3DTEXTURE9* pTex);
+	 void Init();
 	 void Update();
 	 void Draw();
 	 void UnInit();
