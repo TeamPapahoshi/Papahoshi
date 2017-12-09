@@ -38,7 +38,6 @@
 //-----------------------------
 // ÉOÉçÅ[ÉoÉã
 //-----------------------------
-
 //----Title-----
 vector<char*> texTitle = {
 	TEXTURE_FILNAME_KING_JELLY,
@@ -123,6 +122,12 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 			}
 		break;
 		*/
+
+		int i;
+		for (; i < 5; i++){
+
+
+		}
 	default:
 		break;
 	}

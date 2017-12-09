@@ -28,15 +28,6 @@
 // 名前空間の指定
 using namespace std;
 
-// どのシーンで使うかをここでファイルを指定
-//　※下のenumと順番が同じになるようにしてください
-
-/*
-vector<char*> texSample = {
-TEXTURE_FILNAME_ENEMY
-};
-*/
-
 
 //-----------------------------
 //クラス定義
