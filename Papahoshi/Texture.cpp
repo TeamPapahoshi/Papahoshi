@@ -36,6 +36,7 @@
 // テクスチャファイル
 #define TEXTURE_FILNAME_KING_JELLY ("Image/Character/KingJelly.jpg")
 #define TEXTURE_FILNAME_JELLY     ("Image/Character/Jelly.png")
+#define TEXTURE_FILNAME_STAR_LIGHT ("Image/Star/light.png")
 
 
 //-----------------------------
@@ -50,6 +51,7 @@ vector<char*> texTitle = {
 //----Game-----
 vector<char*> texGame = {
 	TEXTURE_FILNAME_JELLY,		// 同じ画像でもシーンが違うときはもう一回書いて
+	TEXTURE_FILNAME_STAR_LIGHT
 };
 
 /*

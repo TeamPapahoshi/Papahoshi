@@ -33,11 +33,11 @@ cSceneGame::cSceneGame(){
 	// ‰Šú‰»
 	for (int i = 0; i < STAR_NUM; i++)
 		pStar[i]->Init();
-	pStar[0]->SetcCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(20.0f, 20.0f), 3);
+	pStar[0]->SetcCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 3);
 
 	
 	m_pBG->Init();
-	m_pBG->SetBG(cBG::GAME_MAIN);
+	m_pBG->SetBG(cBG::GAME_SKY);
 
 }
 
@@ -53,6 +53,8 @@ cSceneGame::~cSceneGame(){
 	}
 
 	m_pBG->UnInit();
+
+	delete m_pBG;
 
 }
 

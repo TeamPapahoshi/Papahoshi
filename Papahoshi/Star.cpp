@@ -35,9 +35,8 @@ void cCircleOrbitStar::Init(){
 
 	// Sprite
 	m_sprite.SetPos(D3DXVECTOR2(0.0f,0.0f));	// 座標セット
-	m_sprite.SetTexPatternDevide(4, 4);			// テクスチャの分割数のセット
-	m_sprite.SetCurrentAnimPattern(0);			// テクスチャの現在のパターン番号セット
-	m_sprite.SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_JELLY));					// テクスチャのセット
+	m_sprite.SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_STAR_LIGHT));					// テクスチャのセット
+	m_sprite.SetVtxColorA(200);
 
 	// 星初期値(セットなしの時)
 	m_center = STAR_CENTER;
