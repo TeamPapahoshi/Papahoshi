@@ -95,6 +95,15 @@ void cSceneGame::Update(){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
 	}
 
+	// Œ©‚¦‚é‚©Œ©‚¦‚È‚¢‚©‚Ì”»’è
+
+	for (int i = 0; i < STAR_NUM; i++){
+			pStar[i]->StarVisibility(CalculateDistanceAtoB(pStar[i]->GetPos(), pFixedStar[0]->GetPos()));
+	}
+
+
+
+
 	m_pBG->Update();
 }
 

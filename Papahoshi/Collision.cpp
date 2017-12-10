@@ -80,6 +80,19 @@ bool cCollider::CheckCollisionCircleToCircle(cCollider obj1, cCollider obj2){
 
 }
 
+
+float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB){
+
+	float ans;// “š‚¦Ši”[—p
+	ans = sqrt((posA.x - posB.x)*(posA.x - posB.x) + (posA.y - posB.y)*(posA.y - posB.y));
+
+	return ans;
+}
+
+
+
+
+
 // Œã‚É’Ç‰Á‚æ‚Ä‚¢
 
 //======================================================================

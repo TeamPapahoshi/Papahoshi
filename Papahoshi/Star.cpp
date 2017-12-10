@@ -32,6 +32,8 @@
 #define FIXED_STAR_SIZE_RANGE	(60)
 #define FIXED_STAR_SIZE_SPEED	(0.4f)
 #define FIXED_STAR_ROTATE_SPEED	(0.01f)
+float nearDist=99999;	// ˆê”Ô‹ß‚¢P¯‚Ì‹——£
+float nowDist=0;	// ¡ˆø”‚©‚çó‚¯æ‚Á‚½‹——£
 
 //****************************************************************************************************************
 // ‰~‹O“¹‚Ì¯
@@ -115,6 +117,24 @@ void cCircleOrbitStar::SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius
 	m_radius = radius;
 	m_sprite.SetSize(size);
 	m_second = second;
+}
+//=======================================================================================
+//
+//		¯‚ªŒ©‚¦‚é‚©Œ©‚¦‚È‚¢‚©‚Ìİ’è
+//
+//=======================================================================================
+void cCircleOrbitStar::StarVisibility(float distance){
+
+	//// ˆê”Ô‹ß‚¢P¯‚Æ‚Ì”»’è‚ğ‚Æ‚é
+	//nowDist = distance;	// ˆø”‚ğŠi”[
+	//if (nearDist > nowDist){	// ˆø”‚æ‚è‚àÅ’Z‹——£‚Ì‚Ù‚¤‚ª‘å‚«‚¢‚È‚çXV
+	//	nearDist = nowDist;
+	//}
+
+	
+	m_sprite.SetVtxColorA(255/distance*8.0f);
+
+
 }
 
 

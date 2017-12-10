@@ -15,6 +15,7 @@
 #include "Common.h"
 #include <Windows.h>
 #include "Sprite.h"
+#include <math.h>
 
 //-----------------------------
 //マクロ定義
@@ -86,6 +87,15 @@ private:
 	tCollisionBody	m_tColBody;	// あたり判定の要素
 	cSpriteParam	sprite;		// スプライトパラメーター
 	CollisionType	m_type;		// あたり判定の種類
-
 };
+
+// 計算関数
+
+// 二点間の距離を求める
+float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB); 
+
+
+
+
+
 #endif	//!___COLLISION_H___
