@@ -37,6 +37,7 @@ private:
 	LPDIRECT3DTEXTURE9 m_pTex;	// テクスチャのポインタ
 
 	D3DXVECTOR2 m_pos;			// 座標位置
+	D3DXVECTOR2 m_posFree[4];	// 座標位置(正方形にしない時はこっち使う)
 	D3DXVECTOR2 m_size;			// 大きさ
 	D3DXVECTOR2 m_scale;		// 拡大率
 	float		m_rad;			// 角度
@@ -52,6 +53,7 @@ public:
 
 	cSpriteParam();									// コンストラクタ
 	void Draw();									// 描画
+	void DrawFreePos();								// 正方形じゃない描画
 	void LoadTexture(LPCSTR fileName);				// テクスチャのロード
 	void SetTexture(LPDIRECT3DTEXTURE9* pTex);		// テクスチャのセット
 
