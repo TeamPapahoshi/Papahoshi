@@ -146,7 +146,7 @@ public:
 	float GetScaleY(){
 		return m_scale.y;
 	}
-	float GetRad(float data){	// rad
+	float GetRad(){	// rad
 		return m_rad;
 	}
 	D3DXCOLOR GetVtxColor(){	// vexcolor

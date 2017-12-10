@@ -24,19 +24,35 @@
 //=======================================================================================
 cSceneGame::cSceneGame(){
 
+	//--------------
 	// ÉCÉìÉXÉ^ÉìÉX
-	for (int i = 0; i < STAR_NUM; i++)
-		pStar[i] = new cCircleOrbitStar();
+	//--------------
+	for (int i = 0; i < STAR_NUM; i++)	pStar[i] = new cCircleOrbitStar();	// â~ãOìπêØ
+	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i] = new cFixedStar();	// çPêØ
 
-	m_pBG = new cBG();
+	m_pBG = new cBG();	// îwåi
 
+	//--------------
 	// èâä˙âª
-	for (int i = 0; i < STAR_NUM; i++)
-		pStar[i]->Init();
-	pStar[0]->SetcCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 3);
-
-	
+	//--------------
+	for (int i = 0; i < STAR_NUM; i++)	pStar[i]->Init();
+	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Init();	// çPêØ
 	m_pBG->Init();
+
+	//--------------
+	// ÉZÉbÉg
+	//--------------
+	// êØ
+	pStar[0]->SetCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
+	pStar[1]->SetCircleOrbitStar(D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
+	pStar[2]->SetCircleOrbitStar(D3DXVECTOR2(600.0f, 200.0f), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
+	pStar[3]->SetCircleOrbitStar(D3DXVECTOR2(150.0f, 300.0f), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
+	pStar[4]->SetCircleOrbitStar(D3DXVECTOR2(800, 400), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
+
+	// çPêØ
+	pFixedStar[0]->SetFixedStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 10);
+
+	// îwåi
 	m_pBG->SetBG(cBG::GAME_SKY);
 
 }
@@ -48,12 +64,16 @@ cSceneGame::cSceneGame(){
 //=======================================================================================
 cSceneGame::~cSceneGame(){
 
+	// èIóπ
 	for (int i = 0; i < STAR_NUM; i++){
 		pStar[i]->UnInit();
 	}
 
+	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->UnInit();	// çPêØ
+
 	m_pBG->UnInit();
 
+	// ÉfÉäÅ[Ç∆
 	delete m_pBG;
 
 }
@@ -69,6 +89,7 @@ void cSceneGame::Update(){
 		pStar[i]->Update();
 	}
 
+	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Update();	// çPêØ
 
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
@@ -86,10 +107,11 @@ void cSceneGame::Draw(){
 
 	m_pBG->Draw();
 
+	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Draw();	// çPêØ
+
 	for (int i = 0; i < STAR_NUM; i++){
 		pStar[i]->Draw();
 	}
 
-	
 }
 

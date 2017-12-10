@@ -27,12 +27,49 @@ public:
 	virtual void Draw() = 0;
 	virtual void UnInit() = 0;
 	virtual ~cBaseStar(){}
+	cBaseStar():m_center(D3DXVECTOR2(100.0f, 100.0f)), m_radius(D3DXVECTOR2(50.0f, 50.0f)), m_rad(D3DX_PI){}
 
+protected:
+
+	// ‰~‹O“¹‚·‚éÛ‚É•K—v
+	cSpriteParam	m_sprite;		// •`‰æ—p
+	cCollider		m_collision;	// ‚ ‚½‚è”»’è	
+	D3DXVECTOR2		m_center;		// ‹O“¹‚Ì’†SÀ•W
+	D3DXVECTOR2		m_radius;		// ”¼Œa
+	float			m_rad;			// Šp“x
+	int				m_second;		// ˆêü‚É‚©‚©‚éŠÔ(•b)
+
+	//
 
 };
 
 
-//----‰~‹O“¹¯----
+//-----¯‚ÌŒõ------
+//class cStarLight{
+//
+//public:
+//
+//	cStarLight(){
+//
+//	}
+//	~cStarLight(){
+//
+//	}
+//
+//	void Init();
+//	void Update();
+//	void Draw();
+//	void UnInit();
+//
+//	void SetPos(D3DXVECTOR2 pos);
+//private:
+//	cSpriteParam m_sprite;
+//
+//
+//};
+
+
+//******‰~‹O“¹¯********
 class cCircleOrbitStar :public cBaseStar{
 
 public:
@@ -42,20 +79,34 @@ public:
 	 void UnInit();
 
 	 ~cCircleOrbitStar(){}
-	 cCircleOrbitStar() :m_center(D3DXVECTOR2(100.0f, 100.0f)), m_radius(D3DXVECTOR2(50.0f,50.0f)), m_rad(D3DX_PI){}
+	 cCircleOrbitStar(){}
 
 	 // ¯‚Ìİ’è
-	 void SetcCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+	 void SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
 private:
-	cSpriteParam	m_sprite;		// •`‰æ—p
-	cCollider		m_collision;	// ‚ ‚½‚è”»’è	
-	D3DXVECTOR2		m_center;		// ‹O“¹‚Ì’†SÀ•W
-	D3DXVECTOR2		m_radius;		// ”¼Œa
-	float			m_rad;			// Šp“x
-	int				m_second;		// ˆêü‚É‚©‚©‚éŠÔ(•b)
+
+	//bool			m_lightSwitch;	// ©•ª‚ªŒõ‚é‚© 
+	//cStarLight		m_Light;		// Œõ
 };
 
 
+//******P¯********
+class cFixedStar:public cBaseStar{
+
+public:
+	void Init();
+	void Update();
+	void Draw();
+	void UnInit();
+
+	~cFixedStar(){}
+	cFixedStar() :m_bSizeSwitch(true){}
+
+	// ¯‚Ìİ’è
+	void SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+private:
+	bool m_bSizeSwitch;
+};
 
 #endif	//!___STAR_H___

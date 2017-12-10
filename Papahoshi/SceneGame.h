@@ -19,7 +19,8 @@
 #include "BG.h"
 #include "Star.h"
 
-#define STAR_NUM	(1)	//仮
+#define STAR_NUM		(5)	//仮
+#define FIXED_STAR_NUM	(1)	//仮
 
 //------------------------------
 // クラス定義
@@ -35,8 +36,9 @@ public:
 
 private:
 	// このシーンでインスタンスするもののポインタ
-	cBG*	m_pBG;
-	cCircleOrbitStar* pStar[STAR_NUM];
+	cBG*				m_pBG;
+	cCircleOrbitStar*	pStar[STAR_NUM];
+	cFixedStar*			pFixedStar[FIXED_STAR_NUM];
 
 
 };

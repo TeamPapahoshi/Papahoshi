@@ -46,6 +46,7 @@ public:
 	enum TEX_GAME{
 		TEX_GAME_JELLY,
 		TEX_GAME_STAR_LIGHT,
+		TEX_GAME_STAR,
 		TEX_GAME_MAX
 	};
 	/*
