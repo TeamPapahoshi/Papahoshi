@@ -79,7 +79,7 @@ public:
 	 void UnInit();
 
 	 ~cCircleOrbitStar(){}
-	 cCircleOrbitStar(){}
+	 cCircleOrbitStar() {}
 
 	 // êØÇÃê›íË
 	 void SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);

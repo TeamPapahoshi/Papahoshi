@@ -75,6 +75,10 @@ cSceneGame::~cSceneGame(){
 
 	// ÉfÉäÅ[Ç∆
 	delete m_pBG;
+	for (int i = 0; i < STAR_NUM; i++)
+		delete pStar[i];
+	for (int i = 0; i < FIXED_STAR_NUM; i++)
+		delete pFixedStar[i];
 
 }
 
@@ -91,20 +95,18 @@ void cSceneGame::Update(){
 
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Update();	// çPêØ
 
-	if (GetKeyboardTrigger(DIK_SPACE)){
-		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
-	}
+
 
 	// å©Ç¶ÇÈÇ©å©Ç¶Ç»Ç¢Ç©ÇÃîªíË
-
 	for (int i = 0; i < STAR_NUM; i++){
 			pStar[i]->StarVisibility(CalculateDistanceAtoB(pStar[i]->GetPos(), pFixedStar[0]->GetPos()));
 	}
 
-
-
-
 	m_pBG->Update();
+
+	if (GetKeyboardTrigger(DIK_SPACE)){
+		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
+	}
 }
 
 //=======================================================================================

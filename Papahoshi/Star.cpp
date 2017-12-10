@@ -132,7 +132,7 @@ void cCircleOrbitStar::StarVisibility(float distance){
 	//}
 
 	
-	m_sprite.SetVtxColorA(255/distance*8.0f);
+	m_sprite.SetVtxColorA(255/distance*9.0f);
 
 
 }
