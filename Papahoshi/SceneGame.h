@@ -15,6 +15,11 @@
 #include <d3d9.h>
 #include "SceneManeger.h"
 
+// このシーンで使うオブジェクト
+#include "BG.h"
+#include "Star.h"
+
+#define STAR_NUM	(1)	//仮
 
 //------------------------------
 // クラス定義
@@ -28,10 +33,10 @@ public:
 	cSceneGame();	//コンストラクタ
 	~cSceneGame();	//デストラクタ
 
-
-
 private:
-
+	// このシーンでインスタンスするもののポインタ
+	cBG*	m_pBG;
+	cCircleOrbitStar* pStar[STAR_NUM];
 
 
 };

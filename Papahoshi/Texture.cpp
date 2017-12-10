@@ -12,6 +12,9 @@
 //
 //		またゲット用関数もシーンごとに分けたので注意してください
 //
+//		あと背景とか明らかに同じシーンで複数回ロードしないとわかっているものは
+//		sprite.LoadTextureで直接ロードしたほうがいいかも
+//
 //	制作者：加藤 遼
 //	
 //======================================================================
@@ -41,12 +44,12 @@
 //----Title-----
 vector<char*> texTitle = {
 	TEXTURE_FILNAME_KING_JELLY,
-	TEXTURE_FILNAME_JELLY
+	TEXTURE_FILNAME_JELLY		// 同じ画像でもシーンが違うときはもう一回書いて
 };
 
 //----Game-----
 vector<char*> texGame = {
-	TEXTURE_FILNAME_JELLY,
+	TEXTURE_FILNAME_JELLY,		// 同じ画像でもシーンが違うときはもう一回書いて
 };
 
 /*
@@ -58,7 +61,7 @@ TEXTURE_FILNAME_JELLY,
 */
 
 // テクスチャのポインタ
-vector<LPDIRECT3DTEXTURE9>  cTextureManager::p_texture(1,NULL);
+vector<LPDIRECT3DTEXTURE9>  cTextureManager::p_texture(1,NULL);	// 初期化(要素数,中身)
 
 
 
@@ -123,11 +126,6 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 		break;
 		*/
 
-		int i;
-		for (; i < 5; i++){
-
-
-		}
 	default:
 		break;
 	}

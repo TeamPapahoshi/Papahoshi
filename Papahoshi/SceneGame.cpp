@@ -15,22 +15,6 @@
 #include "debugproc.h"
 #include "Input.h"
 
-// オブジェクト
-#include "Star.h"
-
-//------------------------------
-// マクロ定義
-//------------------------------
-#define TEXTURE_FILNAME_ENEMY ("Image/Character/KingJelly.jpg")
-//#define TEXTURE_FILNAME_PLAYER ("Image/Character/Jelly.png")
-
-#define STAR_NUM	(1)	//仮
-
-//-----------------------------
-// グローバル
-//-----------------------------
-// インスタンス用ポインタ
-cCircleOrbitStar* pStar[STAR_NUM];	// 仮baseではない
 
 
 //=======================================================================================
@@ -41,17 +25,19 @@ cCircleOrbitStar* pStar[STAR_NUM];	// 仮baseではない
 cSceneGame::cSceneGame(){
 
 	// インスタンス
-	for (int i = 0; i < STAR_NUM; i++){
+	for (int i = 0; i < STAR_NUM; i++)
 		pStar[i] = new cCircleOrbitStar();
-	}
 
-	for (int i = 0; i < STAR_NUM; i++){
+	m_pBG = new cBG();
+
+	// 初期化
+	for (int i = 0; i < STAR_NUM; i++)
 		pStar[i]->Init();
-	}
-
 	pStar[0]->SetcCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(20.0f, 20.0f), 3);
 
 	
+	m_pBG->Init();
+	m_pBG->SetBG(cBG::GAME_MAIN);
 
 }
 
@@ -65,6 +51,8 @@ cSceneGame::~cSceneGame(){
 	for (int i = 0; i < STAR_NUM; i++){
 		pStar[i]->UnInit();
 	}
+
+	m_pBG->UnInit();
 
 }
 
@@ -83,6 +71,8 @@ void cSceneGame::Update(){
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
 	}
+
+	m_pBG->Update();
 }
 
 //=======================================================================================
@@ -92,8 +82,12 @@ void cSceneGame::Update(){
 //=======================================================================================
 void cSceneGame::Draw(){
 
+	m_pBG->Draw();
+
 	for (int i = 0; i < STAR_NUM; i++){
 		pStar[i]->Draw();
 	}
+
+	
 }
 
