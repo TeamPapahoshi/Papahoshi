@@ -72,7 +72,6 @@ TEXTURE_FILNAME_JELLY,
 vector<LPDIRECT3DTEXTURE9>  cTextureManager::p_texture(1,NULL);	// 初期化(要素数,中身)
 
 
-
 //=======================================================================================
 //
 //		シーンごとのテクスチャのロード
@@ -92,50 +91,26 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 	switch (scene){
 
 	case cSceneManeger::TITLE:
-
-		// ファイル名をセット
-		filename = texTitle;
-
-		// テクスチャのポインタのリサイズ
-		p_texture.resize(TEX_TITLE_MAX);
-	
-
-		// ロード
-		for (int i = 0; i < TEX_TITLE_MAX; i++){
-			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
-		}
+		filename = texTitle;	// ファイル名をセット
 		break;
-
 	case cSceneManeger::GAME:
-
-		// ファイル名をセット
-		filename = texGame;
-
-		// テクスチャのポインタのリサイズ
-		p_texture.resize(TEX_GAME_MAX);
-
-		// ロード
-		for (int i = 0; i < TEX_GAME_MAX; i++){
-			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
-		}
+		filename = texGame;		// ファイル名をセット
 		break;
-
 		/*
 		case cSceneManeger::SAMPLE:
 			// ファイル名をセット
 			filename = texSample;
-		
-			// テクスチャのポインタのリサイズ
-			p_texture.resize(TEX_SAMPLE_MAX);
-
-		for (int i = 0; i < TEX_SAMPLE_MAX; i++){
-			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
-			}
-		break;
 		*/
-
 	default:
 		break;
+	}
+
+	// テクスチャのポインタのリサイズ
+	p_texture.resize(filename.size());
+
+	// ロード
+	for (int i = 0; i < (int)filename.size(); i++){
+		D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
 	}
 }
 
