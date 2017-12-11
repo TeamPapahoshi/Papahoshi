@@ -38,11 +38,7 @@ protected:
 	D3DXVECTOR2		m_radius;		// ”¼Œa
 	float			m_rad;			// Šp“x
 	int				m_second;		// ˆêü‚É‚©‚©‚éŠÔ(•b)
-
-	//
-
 };
-
 
 //-----¯‚ÌŒõ------
 //class cStarLight{
@@ -68,7 +64,6 @@ protected:
 //
 //};
 
-
 //******‰~‹O“¹¯********
 class cCircleOrbitStar :public cBaseStar{
 
@@ -87,6 +82,7 @@ public:
 	 // P¯‚Æ‚Ì‹——£‚É‚æ‚Á‚Ä‚İ‚¦‚é‚©Œ©‚¦‚È‚¢‚©‚ğ•Ï‚¦‚éˆ—
 	 void StarVisibility(float distance);
 
+	 // ŒvZ—p‚ÌˆÊ’u‚ğæ“¾
 	 D3DXVECTOR2 GetPos(){
 		 return m_sprite.GetPos();
 	 }
@@ -113,10 +109,11 @@ public:
 	// ¯‚Ìİ’è
 	void SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
-
+	// ŒvZ—p‚ÌˆÊ’u‚ğæ“¾
 	D3DXVECTOR2 GetPos(){
 		return m_sprite.GetPos();
 	}
+
 private:
 	bool m_bSizeSwitch;
 };

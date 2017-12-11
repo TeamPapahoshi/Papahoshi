@@ -38,6 +38,8 @@
 #define TEXTURE_FILNAME_JELLY		("Image/Character/Jelly.png")
 #define TEXTURE_FILNAME_STAR_LIGHT	("Image/Star/light.png")
 #define TEXTURE_FILNAME_STAR		("Image/Star/Star.png")
+#define TEXTURE_FILNAME_EF			("Image/Star/Effect.png")
+#define TEXTURE_FILNAME_EF02		("Image/Star/Effect2.png")
 
 
 //-----------------------------
@@ -53,7 +55,9 @@ vector<char*> texTitle = {
 vector<char*> texGame = {
 	TEXTURE_FILNAME_JELLY,		// ìØÇ∂âÊëúÇ≈Ç‡ÉVÅ[ÉìÇ™à·Ç§Ç∆Ç´ÇÕÇ‡Ç§àÍâÒèëÇ¢Çƒ
 	TEXTURE_FILNAME_STAR_LIGHT,
-	TEXTURE_FILNAME_STAR
+	TEXTURE_FILNAME_STAR,
+	TEXTURE_FILNAME_EF,
+	TEXTURE_FILNAME_EF02
 };
 
 /*
