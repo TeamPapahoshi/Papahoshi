@@ -102,8 +102,6 @@ void cSceneGame::Update(){
 	}
 
 
-
-
 	m_pBG->Update();
 }
 

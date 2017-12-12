@@ -194,9 +194,9 @@ void cSpriteParam::DrawFreePos(){
 
 	//----- 頂点座標　更新 ------------
 	pVtx[0].pos = D3DXVECTOR3(m_posFree[0].x, m_posFree[0].y, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_posFree[1].x, m_posFree[1].x, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(m_posFree[2].x, m_posFree[2].x, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_posFree[3].x, m_posFree[3].x, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_posFree[1].x, m_posFree[1].y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_posFree[2].x, m_posFree[2].y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_posFree[3].x, m_posFree[3].y, 0.0f);
 
 	//----- テクスチャ座標 更新 ------------
 	float fPosXLeft, fPosXRight, fPosYUp, fPosYDown;

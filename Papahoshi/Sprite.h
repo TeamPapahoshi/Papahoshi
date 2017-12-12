@@ -71,6 +71,12 @@ public:
 		m_currentAnimPattern = data;
 	}
 
+	void SetPosFree(D3DXVECTOR2 data1, D3DXVECTOR2 data2, D3DXVECTOR2 data3, D3DXVECTOR2 data4){
+		m_posFree[0] = data1;
+		m_posFree[1] = data2;
+		m_posFree[2] = data3;
+		m_posFree[3] = data4;
+	}
 	void SetPos(D3DXVECTOR2 data){		// pos
 		m_pos = data;
 	}
@@ -120,6 +126,18 @@ public:
 	//----Žæ“¾—p----
 	int GetCurrentAnimPattern(){
 		return m_currentAnimPattern;
+	}
+	D3DXVECTOR2 GerPosFree0(){
+		return m_posFree[0];
+	}
+	D3DXVECTOR2 GerPosFree1(){
+		return m_posFree[1];
+	}
+	D3DXVECTOR2 GerPosFree2(){
+		return m_posFree[2];
+	}
+	D3DXVECTOR2 GerPosFree3(){
+		return m_posFree[3];
 	}
 	D3DXVECTOR2 GetPos(){		// pos
 		return m_pos;

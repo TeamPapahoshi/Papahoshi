@@ -11,7 +11,7 @@
 // インクルード部
 //----------------------------------------
 #include "Common.h"
-
+#include "Sprite.h"
 
 //----------------------------------------
 // 列挙型宣言
@@ -37,10 +37,20 @@ enum{
 class cNet{
 
 public:
+	cNet();
+	~cNet();
 
+	void Update();	// 更新
+	void Draw();	// 描画
 
 private:
-	int m_aNet[NET_PARTS_MAX][NET_Y_NUM][NET_X_NUM];
+	cSpriteParam m_aNet[NET_PARTS_MAX][NET_Y_NUM][NET_X_NUM];
+	cSpriteParam m_aFourUki[4];	//四頂点
+	cSpriteParam m_center;		//中心点
+	D3DXVECTOR2 m_aPos[4];	//四頂点
+	D3DXVECTOR2 m_centerPos;	//中心点
+
+	void SetNet();	//各頂点に合わせてあみを貼る
 
 };
 

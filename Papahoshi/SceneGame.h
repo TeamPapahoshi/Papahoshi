@@ -40,6 +40,5 @@ private:
 	cCircleOrbitStar*	pStar[STAR_NUM];
 	cFixedStar*			pFixedStar[FIXED_STAR_NUM];
 
-
 };
 #endif //!___SCENE_TITLE_H___
