@@ -38,6 +38,8 @@
 #define TEXTURE_FILNAME_JELLY		("Image/Character/Jelly.png")
 #define TEXTURE_FILNAME_STAR_LIGHT	("Image/Star/light.png")
 #define TEXTURE_FILNAME_STAR		("Image/Star/Star.png")
+#define TEXTURE_FILNAME_EF			("Image/Star/Effect.png")
+#define TEXTURE_FILNAME_EF02		("Image/Star/Effect2.png")
 #define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
 #define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
 
@@ -56,7 +58,9 @@ vector<char*> texTitle = {
 vector<char*> texGame = {
 	TEXTURE_FILNAME_JELLY,		// 同じ画像でもシーンが違うときはもう一回書いて
 	TEXTURE_FILNAME_STAR_LIGHT,
-	TEXTURE_FILNAME_STAR
+	TEXTURE_FILNAME_STAR,
+	TEXTURE_FILNAME_EF,
+	TEXTURE_FILNAME_EF02
 };
 
 /*
@@ -69,7 +73,6 @@ TEXTURE_FILNAME_JELLY,
 
 // テクスチャのポインタ
 vector<LPDIRECT3DTEXTURE9>  cTextureManager::p_texture(1,NULL);	// 初期化(要素数,中身)
-
 
 
 //=======================================================================================
@@ -91,51 +94,27 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 	switch (scene){
 
 	case cSceneManeger::TITLE:
-
-		// ファイル名をセット
-		filename = texTitle;
-
-		// テクスチャのポインタのリサイズ
-		p_texture.resize(TEX_TITLE_MAX);
-	
-
-		// ロード
-		for (int i = 0; i < TEX_TITLE_MAX; i++){
-			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
-		}
+		filename = texTitle;	// ファイル名をセット
 		break;
-
 	case cSceneManeger::GAME:
-
-		// ファイル名をセット
-		filename = texGame;
-
-		// テクスチャのポインタのリサイズ
-		p_texture.resize(TEX_GAME_MAX);
-
-		// ロード
-		for (int i = 0; i < TEX_GAME_MAX; i++){
-			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
-		}
+		filename = texGame;		// ファイル名をセット
 		break;
-
 		/*
 		case cSceneManeger::SAMPLE:
 			// ファイル名をセット
 			filename = texSample;
-		
-			// テクスチャのポインタのリサイズ
-			p_texture.resize(TEX_SAMPLE_MAX);
-
-		for (int i = 0; i < TEX_SAMPLE_MAX; i++){
-			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
-			}
-		break;
 		*/
-
 	default:
 		break;
 	}
+		
+			// テクスチャのポインタのリサイズ
+	p_texture.resize(filename.size());
+
+	// ロード
+	for (int i = 0; i < (int)filename.size(); i++){
+			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
+			}
 }
 
 

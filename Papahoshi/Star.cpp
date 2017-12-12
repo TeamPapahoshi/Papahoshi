@@ -20,20 +20,26 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
+//*************
 // 星の初期値
+//*************
 #define ROUND_TIME	(5)														// 一周するのにかかる時間
 #define STAR_SIZE	(D3DXVECTOR2(20.0f,20.0f))								// 星のサイズ
 #define STAR_CENTER	(D3DXVECTOR2(SCREEN_WIDTH/2.0f,SCREEN_HEIGHT/2.0f))		// 星の軌道の中心
 #define STAR_RADIUS	(D3DXVECTOR2(200.0f,100.0f))							// 軌道半径
 
-
+//*************
 // 恒星関連
-#define FIXED_STAR_SIZE_MAX		(200)
-#define FIXED_STAR_SIZE_RANGE	(60)
-#define FIXED_STAR_SIZE_SPEED	(0.4f)
-#define FIXED_STAR_ROTATE_SPEED	(0.01f)
-float nearDist=99999;	// 一番近い恒星の距離
-float nowDist=0;	// 今引数から受け取った距離
+//*************
+#define FIXED_STAR_SIZE_MAX		(200)		// 恒星の最大サイズ
+#define FIXED_STAR_SIZE_RANGE	(60)		// 恒星のサイズの変化幅
+#define FIXED_STAR_SIZE_SPEED	(0.4f)		// 恒星のサイズの変化スピード
+#define FIXED_STAR_ROTATE_SPEED	(0.01f)		// 恒星の回転スピード
+
+// 後にprivate
+//float nearDist=99999;						// 一番近い恒星の距離
+//float nowDist=0;							// 今引数から受け取った距離
+
 
 //****************************************************************************************************************
 // 円軌道の星
@@ -130,9 +136,7 @@ void cCircleOrbitStar::StarVisibility(float distance){
 	//if (nearDist > nowDist){	// 引数よりも最短距離のほうが大きいなら更新
 	//	nearDist = nowDist;
 	//}
-
-	
-	m_sprite.SetVtxColorA(255/distance*8.0f);
+	m_sprite.SetVtxColorA(255/distance*9.0f);
 
 
 }
@@ -158,7 +162,7 @@ void cFixedStar::Init(){
 	m_sprite.SetVtxColorA(200);
 
 	// 恒星の色
-	//m_sprite.SetVtxColor(D3DXCOLOR(255,255,0,255));
+	//m_sprite.SetVtxColor(D3DXCOLOR(125,0,0,255));
 
 	// 星初期値(セットなしの時)
 	m_center = STAR_CENTER;
@@ -199,7 +203,7 @@ void cFixedStar::Update(){
 	}
 
 	//-------------
-	// サイズ処理
+	// 恒星の動き
 	//-------------
 	if (m_sprite.GetSizeX() >= FIXED_STAR_SIZE_MAX){
 		m_bSizeSwitch = true;
@@ -220,14 +224,6 @@ void cFixedStar::Update(){
 		m_sprite.SetRad(m_sprite.GetRad() - FIXED_STAR_ROTATE_SPEED);
 
 	}
-
-	//-------------
-	// 回転処理
-	//-------------
-		
-
-
-
 }
 //=======================================================================================
 //
@@ -252,9 +248,9 @@ void cFixedStar::SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR
 	m_second = second;
 }
 
-//---------------------------------------------------------------------------------------------------------------
+//****************************************************************************************************************
 // 星の光
-//---------------------------------------------------------------------------------------------------------------
+//****************************************************************************************************************
 ////=======================================================================================
 ////
 ////		初期化
