@@ -16,7 +16,7 @@
 //----------------------------------------
 // 列挙型宣言
 //----------------------------------------
-enum{
+enum{	//ネットの部品
 	NET_PARTS_TOP,
 	NET_PARTS_UNDER,
 	NET_PARTS_RIGHT,
@@ -28,8 +28,8 @@ enum{
 //----------------------------------------
 // 定数・マクロ定義
 //----------------------------------------
-#define NET_X_NUM	(5)
-#define NET_Y_NUM	(5)
+#define NET_X_NUM	(5)	//あみの横分割数
+#define NET_Y_NUM	(5)	//あみの縦分割数
 
 //----------------------------------------
 // クラス定義
@@ -44,11 +44,13 @@ public:
 	void Draw();	// 描画
 
 private:
-	cSpriteParam m_aNet[NET_PARTS_MAX][NET_Y_NUM][NET_X_NUM];
-	cSpriteParam m_aFourUki[4];	//四頂点
-	cSpriteParam m_center;		//中心点
-	D3DXVECTOR2 m_aPos[4];	//四頂点
-	D3DXVECTOR2 m_centerPos;	//中心点
+	//---- スプライト ----
+	cSpriteParam m_aNet[NET_PARTS_MAX][NET_Y_NUM][NET_X_NUM];	//あみ
+	cSpriteParam m_aFourUki[4];	//四頂点のうき
+	cSpriteParam m_center;		//中心点のうき
+	D3DXVECTOR2 m_aPos[4];		//四頂点＊＊あとでけす＊＊
+	D3DXVECTOR2 m_centerPos;	//中心点＊＊あとでけす＊＊
+
 
 	void SetNet();	//各頂点に合わせてあみを貼る
 

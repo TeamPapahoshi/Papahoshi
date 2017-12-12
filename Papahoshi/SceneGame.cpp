@@ -37,6 +37,7 @@ cSceneGame::cSceneGame(){
 	for (int i = 0; i < STAR_NUM; i++)	pStar[i]->Init();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Init();	// 恒星
 	m_pBG->Init();
+	m_gamePhase = GAME_PHASE::PHASE_POST;
 
 	//----------------
 	// セット
@@ -113,3 +114,14 @@ void cSceneGame::Draw(){
 
 }
 
+
+//========================================================================================
+//
+//  ゲームフェイズ受け渡し
+//
+//  戻り値　GAME_PHASE
+//
+//========================================================================================
+cSceneGame::GAME_PHASE cSceneGame::GetGamePhase(){
+	return m_gamePhase;
+}
