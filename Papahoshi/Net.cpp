@@ -19,6 +19,7 @@
 //-------------------------------------
 #include "Net.h"
 #include "Texture.h"
+#include "SceneGame.h"
 
 //-------------------------------------
 // 定数・マクロ定義
@@ -88,7 +89,11 @@ cNet::~cNet(){
 //=====================================================
 void cNet::Update(){
 
-	
+	switch ((int)cSceneGame::GetGamePhase())
+	{
+	default:
+		break;
+	}
 
 	//頂点情報に合わせてあみをはる
 	SetNet();
