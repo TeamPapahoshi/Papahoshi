@@ -89,6 +89,9 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// Direct3Dデバイス
 	vector<char*> filename;						// ファイル名格納
 
+	// 初期化処理
+	p_texture.clear();
+	filename.clear();
 
 	//-----シーンによって読み込むテクスチャを分ける-----
 	switch (scene){
