@@ -37,6 +37,7 @@ private:
 	LPDIRECT3DTEXTURE9 m_pTex;	// テクスチャのポインタ
 
 	D3DXVECTOR2 m_pos;			// 座標位置
+	D3DXVECTOR2 m_posFree[4];	// 座標位置(正方形にしない時はこっち使う)
 	D3DXVECTOR2 m_size;			// 大きさ
 	D3DXVECTOR2 m_scale;		// 拡大率
 	float		m_rad;			// 角度
@@ -52,6 +53,7 @@ public:
 
 	cSpriteParam();									// コンストラクタ
 	void Draw();									// 描画
+	void DrawFreePos();								// 正方形じゃない描画
 	void LoadTexture(LPCSTR fileName);				// テクスチャのロード
 	void SetTexture(LPDIRECT3DTEXTURE9* pTex);		// テクスチャのセット
 
@@ -69,6 +71,12 @@ public:
 		m_currentAnimPattern = data;
 	}
 
+	void SetPosFree(D3DXVECTOR2 data1, D3DXVECTOR2 data2, D3DXVECTOR2 data3, D3DXVECTOR2 data4){
+		m_posFree[0] = data1;
+		m_posFree[1] = data2;
+		m_posFree[2] = data3;
+		m_posFree[3] = data4;
+	}
 	void SetPos(D3DXVECTOR2 data){		// pos
 		m_pos = data;
 	}
@@ -118,6 +126,18 @@ public:
 	//----取得用----
 	int GetCurrentAnimPattern(){
 		return m_currentAnimPattern;
+	}
+	D3DXVECTOR2 GerPosFree0(){
+		return m_posFree[0];
+	}
+	D3DXVECTOR2 GerPosFree1(){
+		return m_posFree[1];
+	}
+	D3DXVECTOR2 GerPosFree2(){
+		return m_posFree[2];
+	}
+	D3DXVECTOR2 GerPosFree3(){
+		return m_posFree[3];
 	}
 	D3DXVECTOR2 GetPos(){		// pos
 		return m_pos;

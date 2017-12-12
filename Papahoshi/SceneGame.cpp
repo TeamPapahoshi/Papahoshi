@@ -89,13 +89,15 @@ void cSceneGame::Update(){
 
 	// 見えるか見えないかの判定
 	for (int i = 0; i < STAR_NUM; i++){
-		pStar[i]->StarVisibility(CalculateDistanceAtoB(pStar[i]->GetPos(), pFixedStar[0]->GetPos()));
+			pStar[i]->StarVisibility(CalculateDistanceAtoB(pStar[i]->GetPos(), pFixedStar[0]->GetPos()));
 	}
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
 	}
+
+	m_pBG->Update();
 }
 
 //=======================================================================================

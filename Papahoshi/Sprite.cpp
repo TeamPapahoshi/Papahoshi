@@ -57,7 +57,11 @@ static LPDIRECT3DVERTEXBUFFER9	g_pVtxBuffSprite = NULL;
 cSpriteParam::cSpriteParam(){
 
 	// 初期値(使わない場合はこのままで)
-	m_pos		= D3DXVECTOR2(100.0f, 100.0f);
+	m_pos = D3DXVECTOR2(100.0f, 100.0f);
+	m_posFree[0] = D3DXVECTOR2(100.0f, 100.0f);
+	m_posFree[1] = D3DXVECTOR2(100.0f, 100.0f);
+	m_posFree[2] = D3DXVECTOR2(100.0f, 100.0f);
+	m_posFree[3] = D3DXVECTOR2(100.0f, 100.0f);
 	m_size		= D3DXVECTOR2(100.0f, 100.0f);
 	m_scale		= D3DXVECTOR2(1.0f, 1.0f);
 	m_vtxColor	= D3DXCOLOR(255, 255, 255, 255);
@@ -161,6 +165,84 @@ void cSpriteParam::Draw(){
 	//----------------------------
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON_SPRITE);
 }
+
+
+//=======================================================================================
+//
+//		スプライト描画関数(正方形じゃない場合)
+//
+//=======================================================================================
+void cSpriteParam::DrawFreePos(){
+
+	//----------------------------
+	// 透明度0のとき、skip
+	//----------------------------
+	if (m_vtxColor.a <= 0)
+		return;
+
+	//----------------------------
+	// ローカル変数宣言
+	//----------------------------
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// デバイス情報
+	tVertex2D *pVtx;							// 頂点情報
+
+	//----------------------------
+	// 頂点バッファの頂点情報を更新
+	//----------------------------
+	//----- 頂点バッファ　ロック ------------
+	g_pVtxBuffSprite->Lock(0, 0, (void **)&pVtx, 0);	//ポインタのポインタ
+
+	//----- 頂点座標　更新 ------------
+	pVtx[0].pos = D3DXVECTOR3(m_posFree[0].x, m_posFree[0].y, 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_posFree[1].x, m_posFree[1].y, 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_posFree[2].x, m_posFree[2].y, 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_posFree[3].x, m_posFree[3].y, 0.0f);
+
+	//----- テクスチャ座標 更新 ------------
+	float fPosXLeft, fPosXRight, fPosYUp, fPosYDown;
+	int		NumAnimPattern = m_texPatternDivideX*m_texPatternDivideY;// アニメーションの総パターン数
+	float	TexPatternSizeX = 1.0f / m_texPatternDivideX;			 // 1パターンのテクスチャサイズ割合(X方向)
+	float	TexPatternSizeY = 1.0f / m_texPatternDivideY;			 // 1パターンのテクスチャサイズ割合(Y方向)
+
+	fPosXLeft = (float)(m_currentAnimPattern % m_texPatternDivideX) * TexPatternSizeX;
+	fPosXRight = fPosXLeft + TexPatternSizeX;
+	fPosYUp = (float)(m_currentAnimPattern / (NumAnimPattern / m_texPatternDivideY)) * TexPatternSizeY;
+	fPosYDown = fPosYUp + TexPatternSizeY;
+
+	pVtx[0].tex = D3DXVECTOR2(fPosXLeft, fPosYUp);
+	pVtx[1].tex = D3DXVECTOR2(fPosXRight, fPosYUp);
+	pVtx[2].tex = D3DXVECTOR2(fPosXLeft, fPosYDown);
+	pVtx[3].tex = D3DXVECTOR2(fPosXRight, fPosYDown);
+
+	//----- rhw 更新 ------------
+	pVtx[0].rhw = pVtx[1].rhw = pVtx[2].rhw = pVtx[3].rhw = 1.0f;
+
+	//----- 頂点カラー 更新 ------------
+	pVtx[0].col = pVtx[1].col = pVtx[2].col = pVtx[3].col =
+		D3DCOLOR_RGBA((unsigned char)m_vtxColor.r, (unsigned char)m_vtxColor.g,
+		(unsigned char)m_vtxColor.b, (unsigned char)m_vtxColor.a);
+
+	//----- 頂点バッファ　アンロック ------------
+	g_pVtxBuffSprite->Unlock();
+
+	//----------------------------
+	// 描画準備
+	//----------------------------
+	// 頂点バッファをデバイスのデータストリームへバインド
+	pDevice->SetStreamSource(0, g_pVtxBuffSprite, 0, sizeof(tVertex2D));
+
+	// 頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_2D_TEXTURE);
+
+	// テクスチャの設定
+	pDevice->SetTexture(0, m_pTex);
+
+	//----------------------------
+	// 描画
+	//----------------------------
+	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON_SPRITE);
+}
+
 
 //=======================================================================================
 //

@@ -40,7 +40,8 @@
 #define TEXTURE_FILNAME_STAR		("Image/Star/Star.png")
 #define TEXTURE_FILNAME_EF			("Image/Star/Effect.png")
 #define TEXTURE_FILNAME_EF02		("Image/Star/Effect2.png")
-
+#define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
+#define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
 
 //-----------------------------
 // グローバル
@@ -48,7 +49,9 @@
 //----Title-----
 vector<char*> texTitle = {
 	TEXTURE_FILNAME_KING_JELLY,
-	TEXTURE_FILNAME_JELLY		// 同じ画像でもシーンが違うときはもう一回書いて
+	TEXTURE_FILNAME_JELLY,		// 同じ画像でもシーンが違うときはもう一回書いて
+	TEXTURE_FILENAME_NET,
+	TEXTURE_FILENAME_UKI,
 };
 
 //----Game-----
