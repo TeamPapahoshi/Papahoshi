@@ -4,12 +4,23 @@
 //  制作：後藤 愛生
 //  概要：網の処理
 //=============================================================================
+/*
+・あみのはりかたの調整　12/15
+　centerとの距離で図る。
+・まっすぐ飛ばせて指を離したら頂点広がる　12/18
+*/
+
 
 //-------------------------------------
 // インクルード部
 //-------------------------------------
 #include "Net.h"
 #include "Texture.h"
+
+//-------------------------------------
+// 定数・マクロ定義
+//-------------------------------------
+#define UKI_SIZE (20.0f)
 
 //=====================================================
 //
@@ -41,10 +52,10 @@ cNet::cNet(){
 	}
 	for (int i = 0; i < 4; i++){
 		m_aFourUki[i].SetTexture(cTextureManager::GetTextureTitle(cTextureManager::TEX_UKI));
-		m_aFourUki[i].SetSize(D3DXVECTOR2(20.0f, 20.0f));
+		m_aFourUki[i].SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 	}
 	m_center.SetTexture(cTextureManager::GetTextureTitle(cTextureManager::TEX_UKI));
-	m_center.SetSize(D3DXVECTOR2(20.0f, 20.0f));
+	m_center.SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 
 }
 
