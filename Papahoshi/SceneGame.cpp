@@ -30,6 +30,7 @@ cSceneGame::cSceneGame(){
 	for (int i = 0; i < STAR_NUM; i++)			pStar[i] = new cCircleOrbitStar();	// ‰~‹O“¹¯
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i] = new cFixedStar();	// P¯
 	m_pBG = new cBG();	// ”wŒi
+	pNet = new cNet();
 
 	//----------------
 	// ‰Šú‰»
@@ -83,6 +84,7 @@ cSceneGame::~cSceneGame(){
 void cSceneGame::Update(){
 
 	// XV
+	pNet->Update();	//‚ ‚İ
 	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Update();			// ‰~‹O“¹‚Ì¯
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Update();	// P¯
 	m_pBG->Update();	// ”wŒi
@@ -111,6 +113,7 @@ void cSceneGame::Draw(){
 	m_pBG->Draw();	// ”wŒi
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Draw();	// P¯
 	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Draw();		// ‰~‹O“¹¯
+	pNet->Draw();	//‚ ‚İ
 
 }
 

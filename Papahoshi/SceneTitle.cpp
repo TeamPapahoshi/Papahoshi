@@ -39,7 +39,6 @@ cSceneTitle::cSceneTitle(){
 	// 使うオブジェクトのインスタンス
 	pPlayer = new cPlayer();
 	pEnemy = new cEnemy();
-	pNet = new cNet();
 
 	// プレイヤー
 	pPlayer->Init();
@@ -77,7 +76,6 @@ void cSceneTitle::Update(){
 
 	pPlayer->Update();
 	pEnemy->Update();
-	pNet->Update();
 
 	// あたり判定
 	if (cCollider::CheckCollisionCircleToCircle(pPlayer->GetCollider(), pEnemy->GetCollider())){
@@ -100,7 +98,6 @@ void cSceneTitle::Draw(){
 
 	pEnemy->Draw();
 	pPlayer->Draw();
-	pNet->Draw();
 }
 
 

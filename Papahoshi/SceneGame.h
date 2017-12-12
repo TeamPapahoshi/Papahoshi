@@ -14,6 +14,7 @@
 //------------------------------
 #include <d3d9.h>
 #include "SceneManeger.h"
+#include "Net.h"
 
 // このシーンで使うオブジェクト
 #include "BG.h"
@@ -51,6 +52,7 @@ private:
 	cBG*				m_pBG;
 	cCircleOrbitStar*	pStar[STAR_NUM];
 	cFixedStar*			pFixedStar[FIXED_STAR_NUM];
+	cNet *pNet;
 
 	GAME_PHASE			m_gamePhase;	//ゲームフェイズを保管
 

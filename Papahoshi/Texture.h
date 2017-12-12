@@ -41,8 +41,6 @@ public:
 	enum TEX_TITLE{
 		TEX_TITLE_KING_JELLY,
 		TEX_TITLE_JELLY,
-		TEX_NET,
-		TEX_UKI,
 		TEX_TITLE_MAX
 	};
 	enum TEX_GAME{
@@ -51,6 +49,8 @@ public:
 		TEX_GAME_STAR,
 		TEX_GAME_FE,
 		TEX_GAME_FE02,
+		TEX_GAME_NET,
+		TEX_GAME_UKI,
 		TEX_GAME_MAX
 	};
 	/*

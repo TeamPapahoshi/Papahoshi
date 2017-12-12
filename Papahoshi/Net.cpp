@@ -51,19 +51,19 @@ cNet::cNet(){
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
-				m_aNet[z][y][x].SetTexture(cTextureManager::GetTextureTitle(cTextureManager::TEX_NET));	// テクスチャのセット
+				m_aNet[z][y][x].SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_NET));	// テクスチャのセット
 			}
 		}
 	}
 
 	//うき・四頂点
 	for (int i = 0; i < 4; i++){
-		m_aFourUki[i].SetTexture(cTextureManager::GetTextureTitle(cTextureManager::TEX_UKI));
+		m_aFourUki[i].SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_UKI));
 		m_aFourUki[i].SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 	}
 
 	//うき・センター
-	m_center.SetTexture(cTextureManager::GetTextureTitle(cTextureManager::TEX_UKI));
+	m_center.SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_UKI));
 	m_center.SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 
 }

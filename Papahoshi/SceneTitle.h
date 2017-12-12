@@ -14,9 +14,6 @@
 //------------------------------
 #include "SceneManeger.h"
 #include <d3d9.h>
-#include "Net.h"
-
-
 
 //------------------------------
 // É}ÉNÉçíËã`
@@ -38,7 +35,6 @@ public:
 
 
 private:
-	cNet *pNet;
 
 };
 #endif //!___SCENE_TITLE_H___
