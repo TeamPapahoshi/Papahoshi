@@ -44,16 +44,31 @@ public:
 	void Draw();	// 描画
 
 private:
+	//---- 列挙型宣言 -----
+	enum GAME_PHASE{	//ゲームフェイズ
+		PHASE_POST,	//構え
+		PHASE_SHOUT,	//飛ばし
+		PHASE_PULL,		//引く
+
+		PHASE_MAX,
+	};
+
 	//---- スプライト ----
 	cSpriteParam m_aNet[NET_PARTS_MAX][NET_Y_NUM][NET_X_NUM];	//あみ
 	cSpriteParam m_aFourUki[4];	//四頂点のうき
 	cSpriteParam m_center;		//中心点のうき
+	cSpriteParam m_arrow;		//矢印
 	D3DXVECTOR2 m_aPos[4];		//四頂点＊＊あとでけす＊＊
 	D3DXVECTOR2 m_centerPos;	//中心点＊＊あとでけす＊＊
 
+	//----- 変数宣言 -----
+	GAME_PHASE gamePhase;
 
+	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る
-
+	void PostPhaseUpdate();
+	void ShoutPhaseUpdate();
+	void PullPhaseUpdate();
 };
 
 #endif

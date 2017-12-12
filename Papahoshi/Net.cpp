@@ -25,13 +25,17 @@
 // 定数・マクロ定義
 //-------------------------------------
 #define UKI_SIZE (20.0f)	//うきのサイズ
+#define ARROW_SIZE_X (300.0f)	//矢印のサイズ
+#define ARROW_SIZE_Y (120.0f)
 
 //=====================================================
 //
 //  網のコンストラクタ
 //
 //=====================================================
-cNet::cNet(){
+cNet::cNet() : 
+//---- イニシャライザ ----
+gamePhase(PHASE_POST){
 
 	//---- 四頂点の初期化 ----
 	m_aPos[0].x = 100.0f;
@@ -67,6 +71,12 @@ cNet::cNet(){
 	m_center.SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_UKI));
 	m_center.SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 
+	//矢印
+	m_arrow.SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_ARROW));
+	m_arrow.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 80.0f));
+	m_arrow.SetSize(D3DXVECTOR2(ARROW_SIZE_X, ARROW_SIZE_Y));
+	m_arrow.SetRad(D3DX_PI);
+
 }
 
 
@@ -89,9 +99,17 @@ cNet::~cNet(){
 //=====================================================
 void cNet::Update(){
 
-	switch ((int)cSceneGame::GetGamePhase())
+	//ゲームフェイズごとの更新
+	switch (gamePhase)
 	{
-	default:
+	case PHASE_POST:	//構え
+		PostPhaseUpdate();
+		break;
+	case PHASE_SHOUT:	//投げ
+		ShoutPhaseUpdate();
+		break;
+	case PHASE_PULL:	//引く
+		PullPhaseUpdate();
 		break;
 	}
 
@@ -123,6 +141,9 @@ void cNet::Draw(){
 
 	//中心点
 	m_center.Draw();
+
+	//矢印(構え状態の時)
+	m_arrow.Draw();
 
 }
 
@@ -222,3 +243,41 @@ void cNet::SetNet(){
 	}
 
 }
+
+
+//====================================================
+//
+// 『構え』中の更新
+//
+//====================================================
+void cNet::PostPhaseUpdate(){
+
+
+
+}
+
+
+//====================================================
+//
+// 『投げる』中の更新
+//
+//====================================================
+void cNet::ShoutPhaseUpdate(){
+
+
+
+}
+
+
+//====================================================
+//
+// 『引く』中の更新
+//
+//====================================================
+void cNet::PullPhaseUpdate(){
+
+
+
+}
+
+

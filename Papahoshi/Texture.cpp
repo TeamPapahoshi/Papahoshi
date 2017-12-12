@@ -42,6 +42,7 @@
 #define TEXTURE_FILNAME_EF02		("Image/Star/Effect2.png")
 #define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
 #define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
+#define TEXTURE_FILENAME_ARROW		("Image/Net/arrow.png")
 
 //-----------------------------
 // ÉOÉçÅ[ÉoÉã
@@ -61,6 +62,7 @@ vector<char*> texGame = {
 	TEXTURE_FILNAME_EF02,
 	TEXTURE_FILENAME_NET,
 	TEXTURE_FILENAME_UKI,
+	TEXTURE_FILENAME_ARROW,
 };
 
 /*

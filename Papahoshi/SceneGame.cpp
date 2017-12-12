@@ -15,13 +15,6 @@
 #include "debugproc.h"
 #include "Input.h"
 
-
-//------------------------------
-// グローバル宣言
-//------------------------------
-GAME_PHASE gamePhase;
-
-
 //=======================================================================================
 //
 //		初期化
@@ -43,7 +36,6 @@ cSceneGame::cSceneGame(){
 	for (int i = 0; i < STAR_NUM; i++)	pStar[i]->Init();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Init();	// 恒星
 	m_pBG->Init();
-	gamePhase = PHASE_POST;
 
 	//----------------
 	// セット
@@ -120,16 +112,4 @@ void cSceneGame::Draw(){
 	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Draw();		// 円軌道星
 	pNet->Draw();	//あみ
 
-}
-
-
-//========================================================================================
-//
-//  ゲームフェイズ受け渡し
-//
-//  戻り値　GAME_PHASE
-//
-//========================================================================================
-GAME_PHASE GetGamePhase(){
-	return gamePhase;
 }

@@ -51,6 +51,7 @@ public:
 		TEX_GAME_FE02,
 		TEX_GAME_NET,
 		TEX_GAME_UKI,
+		TEX_GAME_ARROW,
 		TEX_GAME_MAX
 	};
 	/*
