@@ -136,15 +136,10 @@ void cCircleOrbitStar::StarVisibility(float distance){
 	//if (nearDist > nowDist){	// ˆø”‚æ‚è‚àÅ’Z‹——£‚Ì‚Ù‚¤‚ª‘å‚«‚¢‚È‚çXV
 	//	nearDist = nowDist;
 	//}
-	m_sprite.SetVtxColorA(255/distance*9.0f);
+	m_sprite.SetVtxColorA(255/distance*10.0f);
 
 
 }
-
-
-
-
-
 
 //****************************************************************************************************************
 // P¯

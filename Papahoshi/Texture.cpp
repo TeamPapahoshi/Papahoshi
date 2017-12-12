@@ -1,7 +1,7 @@
 //======================================================================
 //	Texture
 //	
-//	概要：テクスチ管理
+//	概要：テクスチャ管理
 //		使い方 
 //		グローバルにあるシーンごとのファイル名用配列に、マクロで定義した
 //		ファイルを追加していく
@@ -89,6 +89,9 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// Direct3Dデバイス
 	vector<char*> filename;						// ファイル名格納
 
+	// 初期化処理
+	p_texture.clear();
+	filename.clear();
 
 	//-----シーンによって読み込むテクスチャを分ける-----
 	switch (scene){
@@ -107,14 +110,14 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 	default:
 		break;
 	}
-		
-			// テクスチャのポインタのリサイズ
+
+	// テクスチャのポインタのリサイズ
 	p_texture.resize(filename.size());
 
 	// ロード
 	for (int i = 0; i < (int)filename.size(); i++){
-			D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
-			}
+		D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
+	}
 }
 
 
