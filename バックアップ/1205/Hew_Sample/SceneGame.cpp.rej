@@ -1,0 +1,16 @@
+diff a/Hew_Sample/SceneGame.cpp b/Hew_Sample/SceneGame.cpp	(rejected hunks)
+@@ -25,12 +25,13 @@
+ #define TEXTURE_FILNAME_ENEMY ("Image/Character/KingJelly.jpg")
+ //#define TEXTURE_FILNAME_PLAYER ("Image/Character/Jelly.png")
+ 
++#define STAR_NUM	(4)	//��
+ 
+ //-----------------------------
+ // �O���[�o��
+ //-----------------------------
+ // �C���X�^���X�p�|�C���^
+-cBaseStar* pCircleOrbitStar;
++cCircleOrbitStar* pStar[STAR_NUM];
+ 
+ 
+ //=======================================================================================
