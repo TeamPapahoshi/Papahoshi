@@ -91,7 +91,10 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 
 	// 初期化処理
 	p_texture.clear();
+	p_texture.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
 	filename.clear();
+	filename.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
+
 
 	//-----シーンによって読み込むテクスチャを分ける-----
 	switch (scene){

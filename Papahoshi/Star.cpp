@@ -52,8 +52,8 @@
 void cCircleOrbitStar::Init(){
 
 	// Sprite
-	m_sprite.SetPos(D3DXVECTOR2(0.0f,0.0f));	// 座標セット
-	m_sprite.SetTexture(cTextureManager::GetTextureGame(TEX_GAME_STAR));					// テクスチャのセット
+	m_sprite.SetPos(D3DXVECTOR2(0.0f,0.0f));	
+	m_sprite.SetTexture(cTextureManager::GetTextureGame(TEX_GAME_STAR));
 	m_sprite.SetVtxColorA(200);
 
 	// 星初期値(セットなしの時)
@@ -139,7 +139,6 @@ void cCircleOrbitStar::StarVisibility(float distance){
 	//if (nearDist > nowDist){	// 引数よりも最短距離のほうが大きいなら更新
 	//	nearDist = nowDist;
 	//}
-
 
 	// α値の変化
 	if (distance != 0){
@@ -246,7 +245,6 @@ void cFixedStar::Draw(){
 //=======================================================================================
 void cFixedStar::SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
 
-	// 星
 	m_center = center;
 	m_radius = radius;
 	m_sprite.SetSize(size);

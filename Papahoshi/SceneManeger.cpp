@@ -14,6 +14,7 @@
 #include"SceneManeger.h"
 #include"debugproc.h"
 #include"Texture.h"
+
 // ŠeƒV[ƒ“
 #include"SceneTitle.h"
 #include"SceneGame.h"

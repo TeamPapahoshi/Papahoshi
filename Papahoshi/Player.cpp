@@ -40,9 +40,9 @@ void cPlayer::Init(){ //pTex
 	// ここで初期化しないとそれぞれのクラスのコンストラクタの値で初期化される
 
 	// Sprite
-	sprite.SetPos(PLAYER_DEFAULT_POS);													// 座標セット
-	sprite.SetTexPatternDevide(4, 4);													// テクスチャの分割数のセット
-	sprite.SetCurrentAnimPattern(0);													// テクスチャの現在のパターン番号セット
+	sprite.SetPos(PLAYER_DEFAULT_POS);										// 座標セット
+	sprite.SetTexPatternDevide(4, 4);										// テクスチャの分割数のセット
+	sprite.SetCurrentAnimPattern(0);										// テクスチャの現在のパターン番号セット
 	sprite.SetTexture(cTextureManager::GetTextureTitle(TEX_TITLE_JELLY));	// テクスチャのセット
 
 	// Collider
