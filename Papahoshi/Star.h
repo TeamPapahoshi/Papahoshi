@@ -14,8 +14,6 @@
 #include "Sprite.h"
 #include "Collision.h"
 
-
-
 //-----------------------------
 //クラス定義
 //-----------------------------
@@ -30,7 +28,6 @@ public:
 	cBaseStar():m_center(D3DXVECTOR2(100.0f, 100.0f)), m_radius(D3DXVECTOR2(50.0f, 50.0f)), m_rad(D3DX_PI){}
 
 protected:
-
 	// 円軌道する際に必要
 	cSpriteParam	m_sprite;		// 描画用
 	cCollider		m_collision;	// あたり判定	
@@ -39,6 +36,32 @@ protected:
 	float			m_rad;			// 角度
 	int				m_second;		// 一周にかかる時間(秒)
 };
+
+
+
+// 星の設定用構造体
+typedef struct _tSetCircleOrbitStar{
+
+	D3DXVECTOR2		center;		// 軌道の中心座標
+	D3DXVECTOR2		radius;		// 半径
+	float			rad;		// 角度
+	int				second;		// 一周にかかる時間(秒)
+
+}tSetCircleOrbitStaretStar;
+
+typedef struct _tFixedStar{
+
+	D3DXVECTOR2		center;		// 軌道の中心座標
+	D3DXVECTOR2		radius;		// 半径
+	float			rad;		// 角度
+	int				second;		// 一周にかかる時間(秒)
+
+}tFixedStar;
+
+// 星の設定用
+//vector<tFixedStar>					a_SetFixedStarData;
+//vector<tSetCircleOrbitStaretStar>	a_SetCircleOrbitStaretStar;
+
 
 //-----星の光------
 //class cStarLight{
@@ -116,6 +139,7 @@ public:
 
 private:
 	bool m_bSizeSwitch;
+	
 };
 
 #endif	//!___STAR_H___

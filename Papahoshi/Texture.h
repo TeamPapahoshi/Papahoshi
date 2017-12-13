@@ -12,53 +12,55 @@
 //インクルードファイル
 //-----------------------------
 #include <Windows.h>		//HRESULT他
-#include "debugproc.h"		//printdebug
-#include<vector>
-#include<iostream>
+#include <vector>
+#include <iostream>
+#include "debugproc.h"
 #include "Common.h"
-#include"SceneManeger.h"
-
-
-
+#include "SceneManeger.h"
 
 //-----------------------------
 // グローバル
 //-----------------------------
+using namespace std;		// 名前空間の指定
 
-// 名前空間の指定
-using namespace std;
+
+//-----------------------------
+// 列挙体
+//-----------------------------
+//***************************************
+// シーンごとのテクスチャのポインタ番号
+//***************************************
+
+enum TEX_TITLE{
+	TEX_TITLE_KING_JELLY,
+	TEX_TITLE_JELLY,
+	TEX_NET,
+	TEX_UKI,
+	TEX_TITLE_MAX
+};
+enum TEX_GAME{
+	TEX_GAME_JELLY,
+	TEX_GAME_STAR_LIGHT,
+	TEX_GAME_STAR,
+	TEX_GAME_FE,
+	TEX_GAME_FE02,
+	TEX_GAME_MAX
+};
+/*
+enum TEX_SAMPLE{
+TEX_SAMPLE_ENEMY,
+TEX_SAMPLE_MAX
+};
+*/
+
 
 
 //-----------------------------
 //クラス定義
 //-----------------------------
 //---- テクスチャー管理クラス ------
-// クラス定義
 class cTextureManager {
 public:
-
-	// ここにも追加
-	enum TEX_TITLE{
-		TEX_TITLE_KING_JELLY,
-		TEX_TITLE_JELLY,
-		TEX_NET,
-		TEX_UKI,
-		TEX_TITLE_MAX
-	};
-	enum TEX_GAME{
-		TEX_GAME_JELLY,
-		TEX_GAME_STAR_LIGHT,
-		TEX_GAME_STAR,
-		TEX_GAME_FE,
-		TEX_GAME_FE02,
-		TEX_GAME_MAX
-	};
-	/*
-	enum TEX_SAMPLE{
-	TEX_SAMPLE_ENEMY,
-	TEX_SAMPLE_MAX
-	};
-	*/
 
 	// テクスチャを読み込む
 	void LoadTexture(cSceneManeger::SCENE scene);
