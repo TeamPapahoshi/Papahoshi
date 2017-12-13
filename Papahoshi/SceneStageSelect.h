@@ -14,9 +14,10 @@
 //------------------------------
 #include <d3d9.h>
 #include "SceneManeger.h"
+#include "StageSelect.h"
 
 #define TEXTURE_FILENAME_STAGESELECT ("Image/Character/KingJelly.jpg")	//仮のテクスチャ
-#define TEXTURE_FILENAME_STAGECLEAR  ("akira000.png")	//仮のテクスチャ2
+#define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ2
 
 //------------------------------
 // クラス定義
@@ -38,6 +39,8 @@ public:
 	};
 
 	void LoadTextureFromFile();
+
+	cStageSelect* GetStage(void);	//ステージ情報の取得用(暫定)
 
 private:
 	LPDIRECT3DTEXTURE9 m_pTex[MAX_TEXTURE];	// このシーンで使うテクスチャのポインタ配列

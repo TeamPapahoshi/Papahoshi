@@ -19,7 +19,7 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define MAX_STAGE (12)	//ステージ数(仮)
+#define MAX_STAGE (10)	//ステージ数(仮)
 //-----------------------------
 //列挙型定義
 //-----------------------------
@@ -30,8 +30,9 @@
 class cStageSelect
 {
 private:
-	cSpriteParam m_StageSprite[MAX_STAGE];	//スプライト情報
-	bool		 m_bClearFlag[MAX_STAGE];	//ステージのクリアフラグ
+	cSpriteParam m_StageSprite[MAX_STAGE];		//ステージ選択用のスプライト情報
+	cSpriteParam m_StageClearSprite[MAX_STAGE];	//ステージクリア表示のスプライト情報
+	bool		 m_bClearFlag[MAX_STAGE];		//ステージのクリアフラグ
 
 	int			 m_nSelectStageNum;	//現在選択中のステージ番号
 
@@ -50,7 +51,11 @@ public:
 	void Update();	// 更新
 	void Draw();	// 描画
 
+	void SaveClearFlag(void);	//クリアフラグの書き込み
+	void LoadClearFlag(void);	//クリアフラグの読み込み
+
 	int GetSelectStageNum(void);	//ステージ番号の引き渡し関数
+	bool* GetStageClearFlag(void);	//ステージクリアフラグの引き渡し関数
 };
 
 #endif	//!___STAGESELECT_H___

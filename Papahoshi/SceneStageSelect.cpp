@@ -107,3 +107,13 @@ void cSceneStageSelect::LoadTextureFromFile(){
 		D3DXCreateTextureFromFile(pDevice, pTexture[TexLoadLoop], &m_pTex[TexLoadLoop]);
 	}
 }
+
+//=======================================================================================
+//
+//		ステージ情報の引き渡し関数
+//
+//=======================================================================================
+cStageSelect* GetStage(void)
+{
+	return pStageSelect;
+}
