@@ -140,7 +140,6 @@ void cCircleOrbitStar::StarVisibility(float distance){
 	//	nearDist = nowDist;
 	//}
 
-
 	// ÉøílÇÃïœâª
 	if (distance != 0){
 		m_sprite.SetVtxColorA(255 / distance * 20);
@@ -246,7 +245,6 @@ void cFixedStar::Draw(){
 //=======================================================================================
 void cFixedStar::SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
 
-	// êØ
 	m_center = center;
 	m_radius = radius;
 	m_sprite.SetSize(size);
