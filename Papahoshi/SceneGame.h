@@ -17,7 +17,7 @@
 
 // このシーンで使うオブジェクト
 #include "BG.h"
-#include "Star.h"
+
 
 #define STAR_NUM		(5)	//仮
 #define FIXED_STAR_NUM	(1)	//仮
@@ -37,8 +37,6 @@ public:
 private:
 	// このシーンでインスタンスするもののポインタ
 	cBG*				m_pBG;
-	cNormalStar*	pStar[STAR_NUM];
-	cFixedStar*			pFixedStar[FIXED_STAR_NUM];
 
 };
 #endif //!___SCENE_TITLE_H___

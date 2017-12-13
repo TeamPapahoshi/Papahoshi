@@ -1,12 +1,12 @@
 //======================================================================
-//	Star
+//	BaseStar
 //	
 //	概要＿：星クラスなど
 //	制作者：加藤　遼
 //	
 //======================================================================
-#ifndef ___STAR_H___
-#define ___STAR_H___
+#ifndef ___BASE_STAR_H___
+#define ___BASE_STAR_H___
 
 //-----------------------------
 //インクルードファイル
@@ -60,63 +60,6 @@ private:
 	float		m_fSpeed;	// 速さ
 };
 
-//******モブ星********
-class cNormalStar :public cBaseStar{
-
-public:
-	 void Update();
-	 void Draw();
-
-	 ~cNormalStar();
-	 cNormalStar();
-
-	 // 星の設定
-	 void SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
-
-	 // 恒星との距離によってみえるか見えないかを変える処理
-	 void StarVisibility(float distance);
-
-	 // 計算用の位置を取得
-	 D3DXVECTOR2 GetPos(){
-		 return m_sprite.GetPos();
-	 }
-
-private:
-	cCircleOrbitMovement moveCircle;	// 円軌道するために必要
-	
-};
-
-
-//******恒星********
-class cFixedStar:public cBaseStar{
-
-public:
-	void Update();
-	void Draw();
-
-	~cFixedStar();
-	cFixedStar();
-
-	// 星の設定
-	void SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
-
-	// 計算用の位置を取得
-	D3DXVECTOR2 GetPos(){
-		return m_sprite.GetPos();
-	}
-
-private:
-	cCircleOrbitMovement moveCircle;
-	bool m_bSizeSwitch;
-	
-};
-
-
-
-
-
-
-
 
 // 星の設定用構造体
 typedef struct _tSetCircleOrbitStar{
@@ -141,4 +84,4 @@ typedef struct _tFixedStar{
 //vector<tFixedStar>					a_SetFixedStarData;
 //vector<tSetCircleOrbitStaretStar>	a_SetCircleOrbitStaretStar;
 
-#endif	//!___STAR_H___
+#endif	//!___BASE_STAR_H___

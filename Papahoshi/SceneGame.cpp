@@ -25,9 +25,6 @@
 cSceneGame::cSceneGame(){
 
 	m_pBG = new cBG();	// îwåi
-
-
-	// îwåi
 	m_pBG->SetBG(cBG::GAME_SKY);
 }
 
@@ -41,8 +38,7 @@ cSceneGame::~cSceneGame(){
 	
 	// ÉfÉäÅ[Ég
 	delete m_pBG;
-	for (int i = 0; i < STAR_NUM; i++)			delete pStar[i];
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	delete pFixedStar[i];
+
 
 }
 
@@ -71,7 +67,5 @@ void cSceneGame::Update(){
 void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// îwåi
-
-
 }
 
