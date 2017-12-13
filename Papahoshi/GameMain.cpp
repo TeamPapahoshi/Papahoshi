@@ -69,6 +69,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 	//最初のシーンの設定
 	cSceneManeger::ChangeScene(cSceneManeger::STAGE_SELECT);	//デバッグ用にステージセレクト画面から開始(安藤)
 	
+
 	//初期化完了
 	return S_OK;
 }

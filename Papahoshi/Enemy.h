@@ -35,7 +35,7 @@ public:
 	~cEnemy(){}
 
 	// ここも何かから継承してもいいかもオーバライドさせる形で
-	void Init(LPDIRECT3DTEXTURE9* pTex);	// 初期化
+	void Init();	// 初期化
 	void Unit();	// 終了
 	void Update();	// 更新
 	void Draw();	// 描画

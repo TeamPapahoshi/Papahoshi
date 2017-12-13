@@ -14,6 +14,7 @@
 
 #include "Input.h"
 #include "Player.h"
+#include "Texture.h"
 
 
 //-----------------------------
@@ -34,15 +35,15 @@ bool g_hit = false;	//仮
 //		初期化
 //
 //=======================================================================================
-void cPlayer::Init(LPDIRECT3DTEXTURE9* pTex){ //pTex
+void cPlayer::Init(){ //pTex
 
 	// ここで初期化しないとそれぞれのクラスのコンストラクタの値で初期化される
 
 	// Sprite
-	sprite.SetPos(PLAYER_DEFAULT_POS);			// 座標セット
-	sprite.SetTexPatternDevide(4, 4);			// テクスチャの分割数のセット
-	sprite.SetCurrentAnimPattern(0);			// テクスチャの現在のパターン番号セット
-	sprite.SetTexture(pTex);					// テクスチャのセット
+	sprite.SetPos(PLAYER_DEFAULT_POS);													// 座標セット
+	sprite.SetTexPatternDevide(4, 4);													// テクスチャの分割数のセット
+	sprite.SetCurrentAnimPattern(0);													// テクスチャの現在のパターン番号セット
+	sprite.SetTexture(cTextureManager::GetTextureTitle(TEX_TITLE_JELLY));	// テクスチャのセット
 
 	// Collider
 	collider.SetType(cCollider::CollisionType::CIRCLE);						// 使用するあたり判定を指定

@@ -13,7 +13,7 @@
 
 #include"SceneManeger.h"
 #include"debugproc.h"
-
+#include"Texture.h"
 // ŠeƒV[ƒ“
 #include"SceneTitle.h"
 #include"SceneStageSelect.h"
@@ -26,6 +26,9 @@
 cBaseScene* cSceneManeger::m_pScene = NULL;							//Œ»İ‚ÌƒV[ƒ“‚Ì‰Šú‰»
 cSceneManeger::SCENE cSceneManeger::m_nCurrentSceneNum = TITLE;		//Œ»İ‚ÌƒV[ƒ“”Ô†‚Ì‰Šú‰»
 
+// texture‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+cTextureManager* tex = new cTextureManager();
+
 //=======================================================================================
 //
 //	ƒV[ƒ“ƒ`ƒFƒ“ƒWŠÖ”
@@ -36,8 +39,10 @@ cSceneManeger::SCENE cSceneManeger::m_nCurrentSceneNum = TITLE;		//Œ»İ‚ÌƒV[ƒ“”
 //=======================================================================================
 void cSceneManeger::ChangeScene(SCENE scene){
 
+
+
 	if (m_pScene != NULL){
-		delete m_pScene;	//Uninit
+		delete m_pScene;	// ƒV[ƒ“‚Ì‰ğ•ú
 	}
 
 	//Œ»İ‚ÌƒV[ƒ“”Ô†‚ÌXV
@@ -45,20 +50,24 @@ void cSceneManeger::ChangeScene(SCENE scene){
 
 	switch (scene){
 	case TITLE:
-		m_pScene = new cSceneTitle();	//“®“IƒCƒ“ƒXƒ^ƒ“ƒX&‰Šú‰»
+		tex->LoadTexture(TITLE);		// ƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+		m_pScene = new cSceneTitle();	// “®“IƒCƒ“ƒXƒ^ƒ“ƒX&‰Šú‰»
 		break;
 	case STAGE_SELECT:
 		m_pScene = new cSceneStageSelect();
 		break;
 	case GAME:
-		m_pScene = new cSceneGame();	//“®“IƒCƒ“ƒXƒ^ƒ“ƒX&‰Šú‰»
+		tex->LoadTexture(GAME);			// ƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+		m_pScene = new cSceneGame();	// “®“IƒCƒ“ƒXƒ^ƒ“ƒX&‰Šú‰»
 		break;
 	//case RESULT:
-	//	m_pScene = new cResultScene();	//“®“IƒCƒ“ƒXƒ^ƒ“ƒX&‰Šú‰»
+	//	m_pScene = new cResultScene();	// “®“IƒCƒ“ƒXƒ^ƒ“ƒX&‰Šú‰»
 	//	break;
 	default:
 		break;
 	}
+
+
 }
 
 //=======================================================================================
@@ -73,7 +82,11 @@ void cSceneManeger::Uninit() {
 	if (m_pScene != NULL){
 		delete m_pScene;	//Uninit
 		m_pScene = NULL;
+		delete tex;
+		tex = NULL;
 	}
+
+
 }
 
 //=======================================================================================

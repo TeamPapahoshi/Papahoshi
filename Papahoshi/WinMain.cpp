@@ -82,7 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (1){
 
 		//----- Windowsとしての処理 ------------
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) != 0){
+ 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) != 0){
 
 			// <Windowsから　アプリケーション終了依頼時> 終了
 			if (msg.message == WM_QUIT)

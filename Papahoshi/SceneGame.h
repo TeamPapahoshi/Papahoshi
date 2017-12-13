@@ -15,6 +15,12 @@
 #include <d3d9.h>
 #include "SceneManeger.h"
 
+// このシーンで使うオブジェクト
+#include "BG.h"
+#include "Star.h"
+
+#define STAR_NUM		(5)	//仮
+#define FIXED_STAR_NUM	(1)	//仮
 
 //------------------------------
 // クラス定義
@@ -28,17 +34,11 @@ public:
 	cSceneGame();	//コンストラクタ
 	~cSceneGame();	//デストラクタ
 
-	// このシーンで使うテクスチャ
-	enum Texture{
-		STAR,
-		MAX_TEXTURE,
-	};
-
-	void LoadTextureFromFile();
-
 private:
-	LPDIRECT3DTEXTURE9 m_pTex[MAX_TEXTURE];	// このシーンで使うテクスチャのポインタ配列
-
+	// このシーンでインスタンスするもののポインタ
+	cBG*				m_pBG;
+	cCircleOrbitStar*	pStar[STAR_NUM];
+	cFixedStar*			pFixedStar[FIXED_STAR_NUM];
 
 };
 #endif //!___SCENE_TITLE_H___

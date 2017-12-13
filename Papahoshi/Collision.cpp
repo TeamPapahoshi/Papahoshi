@@ -12,9 +12,6 @@
 //------------------------------
 //グローバル 
 //------------------------------
-// collisionのテクスチャはインクルード時に読み込んでおく
-
-
 
 //======================================================================
 //	
@@ -77,8 +74,19 @@ bool cCollider::CheckCollisionCircleToCircle(cCollider obj1, cCollider obj2){
 		return true;
 	}
 	return false;
-
 }
+
+
+float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB){
+
+	float ans;// 答え格納用
+	ans = sqrt((posA.x - posB.x)*(posA.x - posB.x) + (posA.y - posB.y)*(posA.y - posB.y));
+	return ans;
+}
+
+
+
+
 
 // 後に追加よてい
 
