@@ -87,7 +87,7 @@ void cSceneTitle::Update(){
 
 	// スペースでシーンチェンジ
 	if (GetKeyboardTrigger(DIK_SPACE)){
-		cSceneManeger::ChangeScene(cSceneManeger::GAME);
+		cSceneManeger::ChangeScene(cSceneManeger::STAGE_SELECT);
 	}
 }
 

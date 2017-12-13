@@ -17,6 +17,7 @@
 
 // 各シーン
 #include"SceneTitle.h"
+#include"SceneStageSelect.h"
 #include"SceneGame.h"
 //#include"SceneResult.h"
 
@@ -52,6 +53,9 @@ void cSceneManeger::ChangeScene(SCENE scene){
 	case TITLE:
 		tex->LoadTexture(TITLE);		// テクスチャのロード
 		m_pScene = new cSceneTitle();	// 動的インスタンス&初期化
+		break;
+	case STAGE_SELECT:
+		m_pScene = new cSceneStageSelect();
 		break;
 	case GAME:
 		tex->LoadTexture(GAME);			// テクスチャのロード

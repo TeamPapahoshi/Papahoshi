@@ -11,6 +11,7 @@
 #include <Windows.h>		//HRESULTëº
 
 #include "debugproc.h"		//printdebug
+#include "SaveClearFlag.h"
 
 //-----------------------------
 //É}ÉNÉçíËã`
