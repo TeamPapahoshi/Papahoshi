@@ -24,32 +24,8 @@
 //=======================================================================================
 cSceneGame::cSceneGame(){
 
-	//----------------
-	// ÉCÉìÉXÉ^ÉìÉX
-	//----------------
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i] = new cCircleOrbitStar();	// â~ãOìπêØ
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i] = new cFixedStar();	// çPêØ
 	m_pBG = new cBG();	// îwåi
 
-	//----------------
-	// èâä˙âª
-	//----------------
-	for (int i = 0; i < STAR_NUM; i++)	pStar[i]->Init();
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Init();	// çPêØ
-	m_pBG->Init();
-
-	//----------------
-	// ÉZÉbÉg
-	//----------------
-	// êØ
-	pStar[0]->SetCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
-	pStar[1]->SetCircleOrbitStar(D3DXVECTOR2(100.0f, 100.0f), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
-	pStar[2]->SetCircleOrbitStar(D3DXVECTOR2(600.0f, 200.0f), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
-	pStar[3]->SetCircleOrbitStar(D3DXVECTOR2(150.0f, 300.0f), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
-	pStar[4]->SetCircleOrbitStar(D3DXVECTOR2(800, 400), D3DXVECTOR2(0.0f, 0.0f), D3DXVECTOR2(30.0f, 30.0f), 0);
-
-	// çPêØ
-	pFixedStar[0]->SetFixedStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f), D3DXVECTOR2(200.0f, 200.0f), D3DXVECTOR2(200.0f, 200.0f), 10);
 
 	// îwåi
 	m_pBG->SetBG(cBG::GAME_SKY);
@@ -62,11 +38,7 @@ cSceneGame::cSceneGame(){
 //=======================================================================================
 cSceneGame::~cSceneGame(){
 
-	// èIóπ
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->UnInit();			// â~ãOìπêØ
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->UnInit();	// çPêØ
-	m_pBG->UnInit();	// îwåi
-
+	
 	// ÉfÉäÅ[Ég
 	delete m_pBG;
 	for (int i = 0; i < STAR_NUM; i++)			delete pStar[i];
@@ -81,23 +53,14 @@ cSceneGame::~cSceneGame(){
 //=======================================================================================
 void cSceneGame::Update(){
 
-	// çXêV
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Update();			// â~ãOìπÇÃêØ
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Update();	// çPêØ
+
 	m_pBG->Update();	// îwåi
 
-
-	// å©Ç¶ÇÈÇ©å©Ç¶Ç»Ç¢Ç©ÇÃîªíË
-	for (int i = 0; i < STAR_NUM; i++){
-			pStar[i]->StarVisibility(CalculateDistanceAtoB(pStar[i]->GetPos(), pFixedStar[0]->GetPos()));
-	}
 
 	// ÉVÅ[ÉìçXêV
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
 	}
-
-	m_pBG->Update();
 }
 
 //=======================================================================================
@@ -108,8 +71,7 @@ void cSceneGame::Update(){
 void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// îwåi
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Draw();	// çPêØ
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Draw();		// â~ãOìπêØ
+
 
 }
 

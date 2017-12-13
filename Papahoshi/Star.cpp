@@ -8,9 +8,9 @@
 //-----------------------------
 //インクルードファイル
 //-----------------------------
-#include <Windows.h>		//HRESULT他
+#include <Windows.h>
 #include <math.h>
-#include "debugproc.h"		//printdebug
+#include "debugproc.h"
 #include "Common.h"
 #include "Texture.h"
 
@@ -36,39 +36,75 @@
 #define FIXED_STAR_SIZE_SPEED	(0.4f)		// 恒星のサイズの変化スピード
 #define FIXED_STAR_ROTATE_SPEED	(0.01f)		// 恒星の回転スピード
 
-// 後にprivate
-//float nearDist=99999;						// 一番近い恒星の距離
-//float nowDist=0;							// 今引数から受け取った距離
+
+//=======================================================================================
+//
+//		コンストラクタ
+//
+//=======================================================================================
+cCircleOrbitMovement::cCircleOrbitMovement(){
+
+	// 初期化
+	m_center	= D3DXVECTOR2(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f);	// 円軌道の中心
+	m_radius	= D3DXVECTOR2(200.0f, 200.0f);								// 半径
+	m_fRad		= 0.0f;														// 角度
+	m_fSpeed	= 2 * D3DX_PI / (5 * 60.0f);								// 速さ
+}
+
+
+//=======================================================================================
+//
+//		デストラクタ
+//
+//=======================================================================================
+cCircleOrbitMovement::~cCircleOrbitMovement(){
+}
+
+//=======================================================================================
+//
+//		Move
+//
+//=======================================================================================
+D3DXVECTOR2 cCircleOrbitMovement::GetMove(){
+
+	// 移動後の座標格納用
+	D3DXVECTOR2	pos;
+
+	// 角度更新
+	m_fRad += m_fSpeed;
+
+	// 座標更新
+	pos.x = m_center.x - m_radius.x*cos(m_fRad);
+	pos.y = m_center.y - m_radius.y*sin(m_fRad);
+
+	return pos;
+}
+
 
 
 //****************************************************************************************************************
-// 円軌道の星
+// 普通の星
 //****************************************************************************************************************
 //=======================================================================================
 //
-//		初期化
+//		コンストラクタ
 //
 //=======================================================================================
-void cCircleOrbitStar::Init(){
+cNormalStar::cNormalStar(){
 
 	// Sprite
-	m_sprite.SetPos(D3DXVECTOR2(0.0f,0.0f));	// 座標セット
-	m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));					// テクスチャのセット
+	m_sprite.SetPos(D3DXVECTOR2(0.0f,0.0f));	
+	m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));
 	m_sprite.SetVtxColorA(200);
 
-	// 星初期値(セットなしの時)
-	m_center = STAR_CENTER;
-	m_radius = STAR_RADIUS;
-	m_sprite.SetSize(STAR_SIZE);
-	m_second = ROUND_TIME;
 }	
 
 //=======================================================================================
 //
-//		終了
+//		デストラクタ
 //
 //=======================================================================================
-void cCircleOrbitStar::UnInit(){
+cNormalStar::~cNormalStar(){
 
 }
 //=======================================================================================
@@ -76,28 +112,18 @@ void cCircleOrbitStar::UnInit(){
 //		更新
 //
 //=======================================================================================
-void cCircleOrbitStar::Update(){
+void cNormalStar::Update(){
 
-	
-	if (m_second != 0){
-		// 角度更新
-		m_rad += 2 * D3DX_PI / ((float)m_second * 60.0f);
+	// 座標更新
+	m_sprite.SetPos(moveCircle.GetMove());
 
-		// 座標更新
-		m_sprite.SetPosX(m_center.x - m_radius.x*cos(m_rad));
-		m_sprite.SetPosY(m_center.y - m_radius.y*sin(m_rad));
-	}
-	else{
-		m_sprite.SetPosX(m_center.x - m_radius.x);
-		m_sprite.SetPosY(m_center.y - m_radius.y);
-	}
 }
 //=======================================================================================
 //
 //		描画
 //
 //=======================================================================================
-void cCircleOrbitStar::Draw(){
+void cNormalStar::Draw(){
 	m_sprite.Draw();
 }
 
@@ -106,39 +132,16 @@ void cCircleOrbitStar::Draw(){
 //		星の設定
 //
 //=======================================================================================
-void cCircleOrbitStar::SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+void cNormalStar::SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
 
-	// 星
-	m_center = center;
-	m_radius = radius;
-	m_sprite.SetSize(size);
-	m_second = second;
-
-	//// ファイル用
-	////**********************************************************************************
-	//// 格納用work
-	//tSetCircleOrbitStaretStar work;
-	//work.center = m_center;
-	//work.rad = m_rad;
-	//work.radius = m_radius;
-	//work.second = m_second;
-
-	//// 設定用配列にも追加
-	//a_SetCircleOrbitStaretStar.push_back(work);
-	////**********************************************************************************
 }
+
 //=======================================================================================
 //
 //		星が見えるか見えないかの設定
 //
 //=======================================================================================
-void cCircleOrbitStar::StarVisibility(float distance){
-
-	//// 一番近い恒星との判定をとる
-	//nowDist = distance;	// 引数を格納
-	//if (nearDist > nowDist){	// 引数よりも最短距離のほうが大きいなら更新
-	//	nearDist = nowDist;
-	//}
+void cNormalStar::StarVisibility(float distance){
 
 	// α値の変化
 	if (distance != 0){
@@ -147,7 +150,6 @@ void cCircleOrbitStar::StarVisibility(float distance){
 	else{
 		m_sprite.SetVtxColorA(255);
 	}
-
 }
 
 //****************************************************************************************************************
@@ -155,32 +157,28 @@ void cCircleOrbitStar::StarVisibility(float distance){
 //****************************************************************************************************************
 //=======================================================================================
 //
-//		初期化
+//		コンストラクタ
 //
 //=======================================================================================
-void cFixedStar::Init(){
+cFixedStar::cFixedStar(){
 
 	// Sprite
 	m_sprite.SetPos(D3DXVECTOR2(0.0f, 0.0f));	// 座標セット
 	m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));	 // テクスチャのセット
-	m_sprite.SetVtxColorA(200);
+	m_sprite.SetVtxColorA(255);
+
+	m_bSizeSwitch = true;
 
 	// 恒星の色
-	m_sprite.SetVtxColor(D3DXCOLOR(125,0,0,255));
-
-	// 星初期値(セットなしの時)
-	m_center = STAR_CENTER;
-	m_radius = STAR_RADIUS;
-	m_sprite.SetSize(STAR_SIZE);
-	m_second = ROUND_TIME;
+	//m_sprite.SetVtxColor(D3DXCOLOR(125,0,0,255));
 
 }
 //=======================================================================================
 //
-//		終了
+//		デストラクタ
 //
 //=======================================================================================
-void cFixedStar::UnInit(){
+cFixedStar::~cFixedStar(){
 
 }
 //=======================================================================================
@@ -193,18 +191,7 @@ void cFixedStar::Update(){
 	//-------------
 	// 円軌道処理
 	//-------------
-	if (m_second != 0){
-		// 角度更新
-		m_rad += 2 * D3DX_PI / ((float)m_second * 60.0f);
-
-		// 座標更新
-		m_sprite.SetPosX(m_center.x - m_radius.x*cos(m_rad));
-		m_sprite.SetPosY(m_center.y - m_radius.y*sin(m_rad));
-	}
-	else{
-		m_sprite.SetPosX(m_center.x - m_radius.x);
-		m_sprite.SetPosY(m_center.y - m_radius.y);
-	}
+	m_sprite.SetPos(moveCircle.GetMove());
 
 	//-------------
 	// 恒星の動き
@@ -244,10 +231,5 @@ void cFixedStar::Draw(){
 //
 //=======================================================================================
 void cFixedStar::SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
-
-	m_center = center;
-	m_radius = radius;
-	m_sprite.SetSize(size);
-	m_second = second;
 
 }

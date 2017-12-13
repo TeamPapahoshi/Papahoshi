@@ -37,7 +37,7 @@ public:
 private:
 	// このシーンでインスタンスするもののポインタ
 	cBG*				m_pBG;
-	cCircleOrbitStar*	pStar[STAR_NUM];
+	cNormalStar*	pStar[STAR_NUM];
 	cFixedStar*			pFixedStar[FIXED_STAR_NUM];
 
 };
