@@ -27,7 +27,7 @@ cBaseScene* cSceneManeger::m_pScene = NULL;							//現在のシーンの初期化
 cSceneManeger::SCENE cSceneManeger::m_nCurrentSceneNum = TITLE;		//現在のシーン番号の初期化
 
 // textureのインスタンス
-cTextureManager* tex = new cTextureManager();
+cTextureManeger* tex = new cTextureManeger();
 
 //=======================================================================================
 //
@@ -54,6 +54,7 @@ void cSceneManeger::ChangeScene(SCENE scene){
 		m_pScene = new cSceneTitle();	// 動的インスタンス&初期化
 		break;
 	case STAGE_SELECT:
+		tex->LoadTexture(STAGE_SELECT);		// テクスチャのロード
 		m_pScene = new cSceneStageSelect();
 		break;
 	case GAME:

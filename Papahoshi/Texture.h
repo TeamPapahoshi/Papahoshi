@@ -38,6 +38,13 @@ enum TEX_TITLE{
 	TEX_UKI,
 	TEX_TITLE_MAX
 };
+
+enum TEX_STAGE_SELECT{
+	TEX_STAGESELECT_STAGE,
+	TEX_STAGESELECT_KING_JELLY,
+	TEX_STAGESELECT_MAX
+};
+
 enum TEX_GAME{
 	TEX_GAME_JELLY,
 	TEX_GAME_STAR_LIGHT,
@@ -59,7 +66,7 @@ TEX_SAMPLE_MAX
 //クラス定義
 //-----------------------------
 //---- テクスチャー管理クラス ------
-class cTextureManager {
+class cTextureManeger {
 public:
 
 	// テクスチャを読み込む
@@ -67,10 +74,11 @@ public:
 
 	// テクスチャを取得する
 	static LPDIRECT3DTEXTURE9* GetTextureTitle(TEX_TITLE texNum);
+	static LPDIRECT3DTEXTURE9* GetTextureStageSelect(TEX_STAGE_SELECT texNum);
 	static LPDIRECT3DTEXTURE9* GetTextureGame(TEX_GAME texNum);
 
-	cTextureManager(){}
-	~cTextureManager(){}
+	cTextureManeger(){}
+	~cTextureManeger(){}
 
 private:
 	static vector<LPDIRECT3DTEXTURE9> p_texture;	// テクスチャのポインタの動的配列

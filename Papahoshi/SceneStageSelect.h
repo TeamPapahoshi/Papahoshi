@@ -16,9 +16,6 @@
 #include "SceneManeger.h"
 #include "StageSelect.h"
 
-#define TEXTURE_FILENAME_STAGESELECT ("Image/Character/KingJelly.jpg")	//仮のテクスチャ
-#define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ2
-
 //------------------------------
 // クラス定義
 //------------------------------
@@ -31,20 +28,9 @@ public:
 	cSceneStageSelect();	//コンストラクタ
 	~cSceneStageSelect();	//デストラクタ
 
-	// このシーンで使うテクスチャ
-	enum Texture{
-		STAGESELECT_TEXTURE,
-		STAGECLEAR_TEXTURE,
-		MAX_TEXTURE
-	};
-
-	void LoadTextureFromFile();
-
 	cStageSelect* GetStage(void);	//ステージ情報の取得用(暫定)
 
 private:
-	LPDIRECT3DTEXTURE9 m_pTex[MAX_TEXTURE];	// このシーンで使うテクスチャのポインタ配列
-
 
 };
 #endif //!___SCENE_STAGESELECT_H___

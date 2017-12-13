@@ -46,7 +46,7 @@ public:
 	~cStageSelect(){}	// デストラクタ
 
 	// ここは何かから継承させてもいいかもオーバライド
-	void Init(LPDIRECT3DTEXTURE9* pTex);	// 初期化 テクスチャのポインタを受け取って
+	void Init();	// 初期化 テクスチャのポインタを受け取って
 	void Uninit();	// 終了
 	void Update();	// 更新
 	void Draw();	// 描画

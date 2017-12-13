@@ -53,7 +53,7 @@ void cCircleOrbitStar::Init(){
 
 	// Sprite
 	m_sprite.SetPos(D3DXVECTOR2(0.0f,0.0f));	// 座標セット
-	m_sprite.SetTexture(cTextureManager::GetTextureGame(TEX_GAME_STAR));					// テクスチャのセット
+	m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));					// テクスチャのセット
 	m_sprite.SetVtxColorA(200);
 
 	// 星初期値(セットなしの時)
@@ -163,7 +163,7 @@ void cFixedStar::Init(){
 
 	// Sprite
 	m_sprite.SetPos(D3DXVECTOR2(0.0f, 0.0f));	// 座標セット
-	m_sprite.SetTexture(cTextureManager::GetTextureGame(TEX_GAME_STAR_LIGHT));	 // テクスチャのセット
+	m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));	 // テクスチャのセット
 	m_sprite.SetVtxColorA(200);
 
 	// 恒星の色

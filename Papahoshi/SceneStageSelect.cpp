@@ -38,11 +38,7 @@ cSceneStageSelect::cSceneStageSelect(){
 	//使用するオブジェクトの動的確保
 	pStageSelect = new cStageSelect();
 
-	// テクスチャの読み込み
-	LoadTextureFromFile();
-
-	pStageSelect->Init(m_pTex);		//ステージセレクト用オブジェクトの初期化
-
+	pStageSelect->Init();		//ステージセレクト用オブジェクトの初期化
 
 }
 
@@ -83,29 +79,6 @@ void cSceneStageSelect::Update()
 void cSceneStageSelect::Draw()
 {
 	pStageSelect->Draw();
-}
-
-//=======================================================================================
-//
-//		このシーンで使うテクスチャの読込
-//		ヘッダーのenumとこの関数のchar*配列に追加すればテクスチャがロードされます
-//		※ヘッダーのenumとchar配列のファイル名の順番が一致するようにしてください
-//		シーンが変わるとテクスチャも消えちゃうのでので同じオブジェクトを別シーンで呼ぶ
-//		時はもう一度使うテクスチャを書いてください
-//
-//=======================================================================================
-void cSceneStageSelect::LoadTextureFromFile(){
-
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-
-
-	char* pTexture[MAX_TEXTURE] = { { TEXTURE_FILENAME_STAGESELECT },
-									{ TEXTURE_FILENAME_STAGECLEAR} }; //仮のテクスチャ
-
-	// ロード
-	for (int TexLoadLoop = 0; TexLoadLoop < MAX_TEXTURE; TexLoadLoop++){
-		D3DXCreateTextureFromFile(pDevice, pTexture[TexLoadLoop], &m_pTex[TexLoadLoop]);
-	}
 }
 
 //=======================================================================================

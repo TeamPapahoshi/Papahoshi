@@ -17,6 +17,8 @@
 #include <iostream>			//ファイル書き込み用
 #include <fstream>			//ファイル読み込み用
 
+#include "Texture.h"
+
 //----- 名前空間の指定 -----
 using namespace std;
 
@@ -53,7 +55,7 @@ using namespace std;
 //		初期化
 //
 //=======================================================================================
-void cStageSelect::Init(LPDIRECT3DTEXTURE9* pTex)
+void cStageSelect::Init()
 {
 	//ポインタの設定
 	cSpriteParam* pStageSprite = m_StageSprite;
@@ -64,14 +66,14 @@ void cStageSelect::Init(LPDIRECT3DTEXTURE9* pTex)
 		for (int VarticalLoop = 0; VarticalLoop < MAX_STAGE / 2; VarticalLoop++, pStageSprite++, pStageClearSprite++) //列のループ
 		{
 			//ステージ選択用スプライトの初期化
-			pStageSprite->SetTexture(pTex);	//テクスチャの設定
+			pStageSprite->SetTexture(cTextureManeger::GetTextureStageSelect(TEX_STAGESELECT_KING_JELLY));	//テクスチャの設定
 			pStageSprite->SetPos(D3DXVECTOR2(STAGESELECT_POS_X + VarticalLoop * STAGESELECT_SPACE_POS_X,	//座標の設定
 											 STAGESELECT_POS_Y + HorizonLoop  * STAGESELECT_SPACE_POS_Y));
 			pStageSprite->SetTexPatternDevide(1, 1);
 			pStageSprite->SetCurrentAnimPattern(0);
 
 			//ステージクリア表示スプライトの初期化
-			pStageClearSprite->SetTexture(pTex + 1);	//テクスチャの設定
+			pStageClearSprite->SetTexture(cTextureManeger::GetTextureStageSelect(TEX_STAGESELECT_STAGE));	//テクスチャの設定
 			pStageClearSprite->SetPos(D3DXVECTOR2(STAGECLEAR_POS_X + VarticalLoop * STAGECLEAR_SPACE_POS_X,	//座標の設定
 												  STAGECLEAR_POS_Y + HorizonLoop  * STAGECLEAR_SPACE_POS_Y));
 			pStageClearSprite->SetTexPatternDevide(1, 1);

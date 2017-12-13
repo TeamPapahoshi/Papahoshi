@@ -43,7 +43,7 @@ void cPlayer::Init(){ //pTex
 	sprite.SetPos(PLAYER_DEFAULT_POS);													// 座標セット
 	sprite.SetTexPatternDevide(4, 4);													// テクスチャの分割数のセット
 	sprite.SetCurrentAnimPattern(0);													// テクスチャの現在のパターン番号セット
-	sprite.SetTexture(cTextureManager::GetTextureTitle(TEX_TITLE_JELLY));	// テクスチャのセット
+	sprite.SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_JELLY));	// テクスチャのセット
 
 	// Collider
 	collider.SetType(cCollider::CollisionType::CIRCLE);						// 使用するあたり判定を指定

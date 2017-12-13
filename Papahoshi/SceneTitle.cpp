@@ -48,7 +48,7 @@ cSceneTitle::cSceneTitle(){
 	pEnemy->Init();
 
 	// ‰¹Œ¹
-	PlaySound(SOUND_LABEL_BGM000);	
+	//PlaySound(SOUND_LABEL_BGM000);	
 
 }
 
@@ -59,7 +59,7 @@ cSceneTitle::cSceneTitle(){
 //=======================================================================================
 cSceneTitle::~cSceneTitle(){
 
-	StopSound(SOUND_LABEL_BGM000);
+	//StopSound(SOUND_LABEL_BGM000);
 	pPlayer->Unit();
 	pEnemy->Unit();
 
