@@ -51,19 +51,19 @@ void cSceneManeger::ChangeScene(SCENE scene){
 
 	switch (scene){
 	case TITLE:
-		tex->LoadTexture(TITLE);		// テクスチャのロード
-		m_pScene = new cSceneTitle();	// 動的インスタンス&初期化
+		tex->LoadTexture(TITLE);			// テクスチャのロード
+		m_pScene = new cSceneTitle();		// 動的インスタンス&初期化
 		break;
 	case STAGE_SELECT:
 		tex->LoadTexture(STAGE_SELECT);		// テクスチャのロード
 		m_pScene = new cSceneStageSelect();
 		break;
 	case GAME:
-		tex->LoadTexture(GAME);			// テクスチャのロード
-		m_pScene = new cSceneGame();	// 動的インスタンス&初期化
+		tex->LoadTexture(GAME);				// テクスチャのロード
+		m_pScene = new cSceneGame();		// 動的インスタンス&初期化
 		break;
 	//case RESULT:
-	//	m_pScene = new cResultScene();	// 動的インスタンス&初期化
+	//	m_pScene = new cResultScene();		// 動的インスタンス&初期化
 	//	break;
 	default:
 		break;

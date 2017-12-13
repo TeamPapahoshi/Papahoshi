@@ -58,7 +58,7 @@ vector<char*> texTitle = {
 
 //----StageSelect-----
 vector<char*> texStageSelect = {
-	TEXTURE_FILENAME_STAGECLEAR,		// 同じ画像でもシーンが違うときはもう一回書いて
+	TEXTURE_FILENAME_STAGECLEAR,// 同じ画像でもシーンが違うときはもう一回書いて
 	TEXTURE_FILNAME_JELLY,
 };
 

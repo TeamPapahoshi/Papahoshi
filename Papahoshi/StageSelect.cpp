@@ -165,23 +165,23 @@ void cStageSelect::Draw()
 //=======================================================================================
 void cStageSelect::SaveClearFlag(void)
 {
-	ofstream ofs;	//ファイル書き込み用
-
-	//ファイルを新規作成して書き込み開始
-	ofs.open("Test.txt", ios_base::out | ios_base::trunc);
-
-	//失敗していたらエラー文の表示
-	if (!ofs) {
-		cerr << "ファイルオープンに失敗" << endl;
-		exit(1);
-	}
-
-	//char*型に変換してクリア情報の書き込み
-	for (int SaveFlagLoop = 0; SaveFlagLoop < MAX_STAGE; SaveFlagLoop++)
-	{
-		ofs << m_bClearFlag[MAX_STAGE] << endl;
-	}
-	//ファイルは自動的に閉じられる
+//	ofstream ofs;	//ファイル書き込み用
+//
+//	//ファイルを新規作成して書き込み開始
+//	ofs.open("Test.txt", ios_base::out | ios_base::trunc);
+//
+//	//失敗していたらエラー文の表示
+//	if (!ofs) {
+//		cerr << "ファイルオープンに失敗" << endl;
+//		exit(1);
+//	}
+//
+//	//char*型に変換してクリア情報の書き込み
+//	for (int SaveFlagLoop = 0; SaveFlagLoop < MAX_STAGE; SaveFlagLoop++)
+//	{
+//		ofs << m_bClearFlag[MAX_STAGE] << endl;
+//	}
+//	//ファイルは自動的に閉じられる
 }
 
 //=======================================================================================
@@ -191,19 +191,19 @@ void cStageSelect::SaveClearFlag(void)
 //=======================================================================================
 void cStageSelect::LoadClearFlag(void)
 {
-	ifstream ifs("Test.txt");	//ファイル読み込み用
+	//ifstream ifs("Test.txt");	//ファイル読み込み用
 
-	//失敗したらエラー文の表示
-	if (!ifs) {
-		cerr << "ファイルオープンに失敗" << endl;
-		exit(1);
-	}
+	////失敗したらエラー文の表示
+	//if (!ifs) {
+	//	cerr << "ファイルオープンに失敗" << endl;
+	//	exit(1);
+	//}
 
-	//ファイルの中身を読み込み
-	for (int LoadFlagLoop = 0; LoadFlagLoop < MAX_STAGE; LoadFlagLoop++)
-	{
-		ifs >> m_bClearFlag[MAX_STAGE];
-	}
+	////ファイルの中身を読み込み
+	//for (int LoadFlagLoop = 0; LoadFlagLoop < MAX_STAGE; LoadFlagLoop++)
+	//{
+	//	ifs >> m_bClearFlag[MAX_STAGE];
+	//}
 }
 
 //=======================================================================================
