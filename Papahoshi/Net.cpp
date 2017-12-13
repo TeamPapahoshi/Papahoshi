@@ -10,8 +10,8 @@
 /*
 ・あみのはりかたの調整　12/15
 　centerとの距離で図る。
-・まっすぐ飛ばせて指を離したら頂点広がる　12/18
-*/
+ ・まっすぐ飛ばせて指を離したら頂点広がる　12/18
+ */
 
 
 //-------------------------------------
@@ -33,13 +33,13 @@
 //  網のコンストラクタ
 //
 //=====================================================
-cNet::cNet() : 
+cNet::cNet() :
 //---- イニシャライザ ----
 gamePhase(PHASE_POST){
 
 	//---- 四頂点の初期化 ----
 	m_aPos[0].x = 100.0f;
-	m_aPos[0].y = 100.0f;
+	m_aPos[0].y = 180.0f;
 	m_aPos[1].x = 400.0f;
 	m_aPos[1].y = 100.0f;
 	m_aPos[2].x = 100.0f;
@@ -156,13 +156,14 @@ void cNet::Draw(){
 void cNet::SetNet(){
 
 	D3DXVECTOR2 workPos[4];
-	float tlx, ulx, trx, urx, tdisX, udisX, ry, ly, ydis;
+	float tlx, ulx, trx, urx, tdisX, udisX, trY, tly, ury, uly, tdisY, udisY, yAng, xAng;
 	tlx = ulx = m_aPos[0].x;
 	trx = urx = m_aPos[1].x;
 	tdisX = udisX = trx - tlx;
-	ly = m_aPos[0].y;
-	ry = m_aPos[1].y;
-	ydis = ry - ly;
+	tly = uly = m_aPos[0].y;
+	trY = ury = m_aPos[1].y;
+	trY >= tly ? tdisY = udisY = trY - tly : tdisY = udisY = tly - trY;
+	trY >= tly ? yAng = 1.0f : yAng = 0.0f;
 
 	//---- ウキの位置を設定 ----
 	for (int i = 0; i < 4; i++){
@@ -189,8 +190,14 @@ void cNet::SetNet(){
 						udisX = urx - ulx;
 
 						//Yの調整
-						ly = m_aPos[0].y + ((((m_aPos[1].y - m_aPos[0].x) / NET_X_NUM) * (x + 1)) / 2.0f);
-						ry = m_aPos[1].y + ((((m_aPos[1].y - m_aPos[0].x) / NET_X_NUM) * (x + 1)) / 2.0f);
+						tly = uly;
+						trY = ury;
+						tdisY = udisY;
+						uly = m_aPos[0].y + ((((m_centerPos.y - m_aPos[0].y) / NET_Y_NUM) * (y + 1)));
+						ury = m_aPos[1].y + ((((m_centerPos.y - m_aPos[1].y) / NET_Y_NUM) * (y + 1)));
+						ury >= uly ? udisY = ury - uly : udisY = uly - ury;
+						if (y == 0)
+							trY >= tly ? yAng = 1.0f : yAng = 0.0f;
 					}
 
 					//座標の設定
@@ -199,36 +206,20 @@ void cNet::SetNet(){
 					workPos[2].x = ulx + ((udisX / NET_X_NUM) * x);
 					workPos[3].x = ulx + ((udisX / NET_X_NUM) * (x + 1));
 
-					workPos[0].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * y;
-					workPos[1].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * y;
-					workPos[2].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * (y + 1);
-					workPos[3].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * (y + 1);
+					if (yAng){	//みぎのほうが下にある
+						workPos[0].y = tly + (tdisY / NET_X_NUM) * (x);
+						workPos[1].y = tly + (tdisY / NET_X_NUM) * (x + 1);
+						workPos[2].y = uly + (udisY / NET_X_NUM) * (x);
+						workPos[3].y = uly + (udisY / NET_X_NUM) * (x + 1);
+					}
+					else{
+						workPos[0].y = tly - (tdisY / NET_X_NUM) * (x);
+						workPos[1].y = tly - (tdisY / NET_X_NUM) * (x + 1);
+						workPos[2].y = uly - (udisY / NET_X_NUM) * (x);
+						workPos[3].y = uly - (udisY / NET_X_NUM) * (x + 1);
+					}
 					break;
 				case NET_PARTS_UNDER://UNDER
-					//Xの調整
-					if (x == 0){
-						tlx = ulx;
-						trx = urx;
-						tdisX = udisX;
-						urx = m_aPos[2].x - ((((m_aPos[3].x - m_aPos[2].x) / NET_Y_NUM) * (y + 1)) / 2.0f);
-						ulx = m_aPos[3].x + ((((m_aPos[3].x - m_aPos[2].x) / NET_Y_NUM) * (y + 1)) / 2.0f);
-						udisX = urx - ulx;
-
-						//Yの調整
-						ly = m_aPos[2].y + ((((m_aPos[3].y - m_aPos[2].x) / NET_X_NUM) * (x + 1)) / 2.0f);
-						ry = m_aPos[3].y + ((((m_aPos[3].y - m_aPos[2].x) / NET_X_NUM) * (x + 1)) / 2.0f);
-					}
-
-					//座標の設定
-					workPos[0].x = tlx + ((tdisX / NET_X_NUM) * x);
-					workPos[1].x = tlx + ((tdisX / NET_X_NUM) * (x + 1));
-					workPos[2].x = ulx + ((udisX / NET_X_NUM) * x);
-					workPos[3].x = ulx + ((udisX / NET_X_NUM) * (x + 1));
-
-					workPos[0].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * y;
-					workPos[1].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * y;
-					workPos[2].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * (y + 1);
-					workPos[3].y = m_aPos[0].y + (m_centerPos.y - m_aPos[0].y) / NET_Y_NUM * (y + 1);
 					break;
 				case NET_PARTS_RIGHT://RIGHT
 					break;
