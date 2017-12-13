@@ -23,11 +23,14 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="rand.cpp" />
     <ClCompile Include="Sample.cpp" />
+    <ClCompile Include="SaveClearFlag.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneManeger.cpp" />
+    <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -46,11 +49,14 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Sample.h" />
+    <ClInclude Include="SaveClearFlag.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneManeger.h" />
+    <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StageSelect.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>

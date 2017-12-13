@@ -1,57 +1,48 @@
 //======================================================================
-//	Title
+//	SceneStageSelect
 //	
-//	概要＿：タイトル
-//	制作者：
+//	概要＿：ステージ選択(仮)
+//	制作者：安藤 光樹
 //	
 //======================================================================
 
 //------------------------------
 // インクルードファイル
 //------------------------------
-#include "SceneTitle.h"
+#include "SceneStageSelect.h"
 #include "Sprite.h"
 #include "Collision.h"
 #include "debugproc.h"
 #include "Input.h"
-#include "sound.h"
 
+// オブジェクト
+#include "StageSelect.h"
 
-// このシーンで使うオブジェクト
-#include "Player.h"
-#include "Enemy.h"
-
+//------------------------------
+// マクロ定義
+//------------------------------
+#define TEXTURE_FILNAME_STAGE (NULL)
 
 //-----------------------------
 // グローバル
 //-----------------------------
-// このシーンで使うオブジェクトのポインタを用意(ここでインスタンス化しない)
-cPlayer* pPlayer;
-cEnemy*	 pEnemy;
-
+cStageSelect* pStageSelect = NULL;
 
 //=======================================================================================
 //
 //		初期化
 //
 //=======================================================================================
-cSceneTitle::cSceneTitle(){
+cSceneStageSelect::cSceneStageSelect(){
 
-	// 使うオブジェクトのインスタンス
-	pPlayer = new cPlayer();
-	pEnemy = new cEnemy();
+	//使用するオブジェクトの動的確保
+	pStageSelect = new cStageSelect();
 
 	// テクスチャの読み込み
 	LoadTextureFromFile();
 
-	// プレイヤー
-	pPlayer->Init(&m_pTex[PLAYER]);
+	pStageSelect->Init(m_pTex);		//ステージセレクト用オブジェクトの初期化
 
-	// エネミー
-	pEnemy->Init(&m_pTex[ENEMY]);
-
-	// 音源
-	PlaySound(SOUND_LABEL_BGM000);	
 
 }
 
@@ -60,15 +51,13 @@ cSceneTitle::cSceneTitle(){
 //		終了
 //
 //=======================================================================================
-cSceneTitle::~cSceneTitle(){
+cSceneStageSelect::~cSceneStageSelect()
+{
+	pStageSelect->Uninit();		//ステージセレクト用オブジェクトの終了処理
 
-	StopSound(SOUND_LABEL_BGM000);
-	pPlayer->Unit();
-	pEnemy->Unit();
+	delete pStageSelect;		//動的確保したオブジェクトの解放
+	pStageSelect = NULL;
 
-	// 動的インスタンスするならdeleteをUnitとは別にここに
-	delete pPlayer;
-	delete pEnemy;
 }
 
 //=======================================================================================
@@ -76,20 +65,13 @@ cSceneTitle::~cSceneTitle(){
 //		更新
 //
 //=======================================================================================
-void cSceneTitle::Update(){
+void cSceneStageSelect::Update()
+{
+	pStageSelect->Update();
 
-	pPlayer->Update();
-	pEnemy->Update();
-
-	// あたり判定
-	if (cCollider::CheckCollisionCircleToCircle(pPlayer->GetCollider(), pEnemy->GetCollider())){
-		pPlayer->OnColidToEnemy();	// エネミーに当たった時のプレイヤーの処理
-		//enemy.OnColidToPlayer();	// プレイヤーに当たった時のエネミーーの処理
-	}
-
-	// スペースでシーンチェンジ
-	if (GetKeyboardTrigger(DIK_SPACE)){
-		cSceneManeger::ChangeScene(cSceneManeger::STAGE_SELECT);
+	if (GetKeyboardTrigger(DIK_SPACE))
+	{
+		cSceneManeger::ChangeScene(cSceneManeger::GAME);
 	}
 }
 
@@ -98,12 +80,10 @@ void cSceneTitle::Update(){
 //		描画
 //
 //=======================================================================================
-void cSceneTitle::Draw(){
-
-	pEnemy->Draw();
-	pPlayer->Draw();
+void cSceneStageSelect::Draw()
+{
+	pStageSelect->Draw();
 }
-
 
 //=======================================================================================
 //
@@ -114,18 +94,16 @@ void cSceneTitle::Draw(){
 //		時はもう一度使うテクスチャを書いてください
 //
 //=======================================================================================
-void cSceneTitle::LoadTextureFromFile(){
+void cSceneStageSelect::LoadTextureFromFile(){
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	// このシーンで使うテクスチャのファイル名
-	char* pTexture[MAX_TEXTURE] = {			//※順番注意enumの順にファイル名を書いて
-		{ TEXTURE_FILNAME_PLAYER },
-		{ TEXTURE_FILNAME_ENEMY }
-	};
+
+	char* pTexture[MAX_TEXTURE] = { { TEXTURE_FILENAME_STAGESELECT },
+									{ TEXTURE_FILENAME_STAGECLEAR} }; //仮のテクスチャ
 
 	// ロード
-	for (int i = 0; i < MAX_TEXTURE; i++){
-		D3DXCreateTextureFromFile(pDevice, pTexture[i], &m_pTex[i]);
+	for (int TexLoadLoop = 0; TexLoadLoop < MAX_TEXTURE; TexLoadLoop++){
+		D3DXCreateTextureFromFile(pDevice, pTexture[TexLoadLoop], &m_pTex[TexLoadLoop]);
 	}
 }
