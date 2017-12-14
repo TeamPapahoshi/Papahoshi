@@ -108,6 +108,6 @@ void cFixedStar::Draw(){
 //		êØÇÃê›íË
 //
 //=======================================================================================
-void cFixedStar::SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+void cFixedStar::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
 
 }

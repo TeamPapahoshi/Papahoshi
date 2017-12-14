@@ -73,7 +73,12 @@ void cNormalStar::Draw(){
 //		êØÇÃê›íË
 //
 //=======================================================================================
-void cNormalStar::SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+void cNormalStar::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+
+	moveCircle.SetCenter(center);
+	moveCircle.SetRadius(radius);
+	m_sprite.SetSize(size);
+	moveCircle.SetSpped(second);
 
 }
 
@@ -85,11 +90,7 @@ void cNormalStar::SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3D
 void cNormalStar::StarVisibility(float distance){
 
 	// ÉøílÇÃïœâª
-	if (distance != 0){
-		m_sprite.SetVtxColorA(255 / distance * 20);
-	}
-	else{
-		m_sprite.SetVtxColorA(255);
-	}
+	m_sprite.SetVtxColorA(255 / distance * 15);
+	
 }
 

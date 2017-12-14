@@ -29,7 +29,7 @@ public:
 	cNormalStar();
 
 	// ¯‚Ìİ’è
-	void SetCircleOrbitStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
 	// P¯‚Æ‚Ì‹——£‚É‚æ‚Á‚Ä‚İ‚¦‚é‚©Œ©‚¦‚È‚¢‚©‚ğ•Ï‚¦‚éˆ—
 	void StarVisibility(float distance);

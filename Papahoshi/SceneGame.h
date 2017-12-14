@@ -14,9 +14,12 @@
 //------------------------------
 #include <d3d9.h>
 #include "SceneManeger.h"
+#include "Common.h"
 
 // このシーンで使うオブジェクト
 #include "BG.h"
+#include "NormalStars.h"
+#include "FixedStars.h"
 
 
 #define STAR_NUM		(5)	//仮
@@ -36,7 +39,10 @@ public:
 
 private:
 	// このシーンでインスタンスするもののポインタ
-	cBG*				m_pBG;
+	cBG*						m_pBG;			// 背景
+	vector<cNormalStar*>		m_pNomalStar;	// モブ星
+	vector<cFixedStar*>			m_pFixedStar;	// 恒星
+	
 
 };
 #endif //!___SCENE_TITLE_H___

@@ -5,197 +5,273 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="ソース ファイル\シーン">
+      <UniqueIdentifier>{d2be1882-a650-401b-bc92-44ccd97e7fbf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="ソース ファイル\シーン\各シーン">
+      <UniqueIdentifier>{b74e4abd-e98d-4e2a-9090-7b26b8a522e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Stars.cpp">
-      <UniqueIdentifier>{28733b08-65d8-4d36-824f-51cac9dc7a74}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\シーン\各シーン\02ステージセレクト">
+      <UniqueIdentifier>{8af1a10e-6408-47f1-a8c1-cf8e74760235}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Stars.h">
-      <UniqueIdentifier>{44d4cbb1-2370-41b4-bc86-53d3065ebf78}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\シーン\各シーン\01タイトル">
+      <UniqueIdentifier>{17a71ee9-83e4-48b8-a812-c684187ee939}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Scenes.cpp">
-      <UniqueIdentifier>{ac736ef1-ba97-4b14-b14e-36e33c3f0ac3}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\シーン\管理、基底クラス">
+      <UniqueIdentifier>{870585b4-1761-40cb-a7fb-8c42f5a72698}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Scenes.h">
-      <UniqueIdentifier>{2a0d7451-6b99-496b-8eb1-13ef18675943}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\共通処理">
+      <UniqueIdentifier>{9dc7eefd-f3d0-40b3-94ca-80f88dce9b6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\Direct3Dデバイス">
+      <UniqueIdentifier>{0429e864-723e-4c35-a1c3-e363e46ac046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\タイマー">
+      <UniqueIdentifier>{d8bf9c5f-8aff-42ec-976c-58fc7cf29c55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\乱数">
+      <UniqueIdentifier>{428fe58b-cb8e-4eda-80f1-858abc4e813a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\インプット">
+      <UniqueIdentifier>{3b050de2-991c-4aae-9681-e6a78fe85c5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\フレーム管理">
+      <UniqueIdentifier>{c23e2209-3222-4cf7-a3aa-60676a1ac0d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\サウンド">
+      <UniqueIdentifier>{3a3fb655-8c3c-404b-8064-c94d651eef12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\スプライト">
+      <UniqueIdentifier>{6a0a1b4a-d2f8-4cda-a0d5-3d54232536ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\テクスチャ">
+      <UniqueIdentifier>{4ff8656a-c84d-44c9-a293-0df12b4f2639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\あたり判定">
+      <UniqueIdentifier>{9fedb9e3-564a-4e8a-8184-54f0ae935f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\デバッグ関係">
+      <UniqueIdentifier>{bfdde3a9-d23d-418d-83c6-492ae1c39f46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\コピー用">
+      <UniqueIdentifier>{f064968f-65e1-4182-a2ee-1d3d8bf916e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\エフェクト">
+      <UniqueIdentifier>{7159093c-39f3-4a90-98c3-1b0aaa341661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\エフェクト\管理、基底">
+      <UniqueIdentifier>{4395cc73-53a3-4307-869b-b0caf7f054f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\エフェクト\エフェクトの種類">
+      <UniqueIdentifier>{6f80f5be-b26b-4a83-813e-7215f8805b6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理">
+      <UniqueIdentifier>{fdbd7213-cad0-4845-b584-45ff69f237cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム">
+      <UniqueIdentifier>{7815facc-e42b-48a1-819d-9fffd060160d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星">
+      <UniqueIdentifier>{1e7770ba-aacc-4c5e-ba42-80bdcbfd9e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス">
+      <UniqueIdentifier>{2c778fbb-1676-4ce1-9c34-e055b8788492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類">
+      <UniqueIdentifier>{aff97138-7f03-425c-b336-b069ae62df77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\モブ星">
+      <UniqueIdentifier>{c71cfbec-69d9-447f-b277-782e5fcb6592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\恒星">
+      <UniqueIdentifier>{fde97b57-414b-4312-a510-114b78b7b209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\プレイヤー%28仮%29">
+      <UniqueIdentifier>{098c1280-1165-42f2-90e8-a9e13e14c250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\網">
+      <UniqueIdentifier>{444df0d6-b471-462e-b01c-8fd23eebee82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\敵%28仮%29">
+      <UniqueIdentifier>{2c617a3f-490e-4d5d-8e42-722e2409fa93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン背景">
+      <UniqueIdentifier>{454f8047-0bd1-4a03-aca8-3d0292388ceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\メイン">
+      <UniqueIdentifier>{2db00c89-32f5-40b8-983a-494d7eb1dd53}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Timer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="debugproc.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Direct3D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Frame.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameMain.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Sample.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="sound.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EffectCircle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EffectManeger.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="rand.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="StageSelect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SaveClearFlag.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BG.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Net.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FixedStars.cpp">
-      <Filter>ソース ファイル\Stars.cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseStar.cpp">
-      <Filter>ソース ファイル\Stars.cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="NormalStars.cpp">
-      <Filter>ソース ファイル\Stars.cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGame.cpp">
-      <Filter>ソース ファイル\Scenes.cpp</Filter>
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\01タイトル</Filter>
     </ClCompile>
     <ClCompile Include="SceneManeger.cpp">
-      <Filter>ソース ファイル\Scenes.cpp</Filter>
+      <Filter>ソース ファイル\シーン\管理、基底クラス</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム</Filter>
     </ClCompile>
     <ClCompile Include="SceneStageSelect.cpp">
-      <Filter>ソース ファイル\Scenes.cpp</Filter>
+      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
     </ClCompile>
-    <ClCompile Include="SceneTitle.cpp">
-      <Filter>ソース ファイル\Scenes.cpp</Filter>
+    <ClCompile Include="BaseStar.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス</Filter>
+    </ClCompile>
+    <ClCompile Include="FixedStars.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\恒星</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalStars.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\モブ星</Filter>
+    </ClCompile>
+    <ClCompile Include="BG.cpp">
+      <Filter>ソース ファイル\シーン\各シーン背景</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>ソース ファイル\共通処理\あたり判定</Filter>
+    </ClCompile>
+    <ClCompile Include="debugproc.cpp">
+      <Filter>ソース ファイル\共通処理\デバッグ関係</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectCircle.cpp">
+      <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManeger.cpp">
+      <Filter>ソース ファイル\共通処理\エフェクト\管理、基底</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\敵%28仮%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Net.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\プレイヤー%28仮%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>ソース ファイル\共通処理\テクスチャ</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>ソース ファイル\共通処理\スプライト</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>ソース ファイル\共通処理\サウンド</Filter>
+    </ClCompile>
+    <ClCompile Include="StageSelect.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3D.cpp">
+      <Filter>ソース ファイル\共通処理\Direct3Dデバイス</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>ソース ファイル\共通処理\フレーム管理</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain.cpp">
+      <Filter>ソース ファイル\メイン</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル\共通処理\インプット</Filter>
+    </ClCompile>
+    <ClCompile Include="rand.cpp">
+      <Filter>ソース ファイル\共通処理\乱数</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>ソース ファイル\メイン</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>ソース ファイル\共通処理\タイマー</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample.cpp">
+      <Filter>ソース ファイル\コピー用</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveClearFlag.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Common.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="debugproc.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Direct3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Frame.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMain.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Sample.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="sound.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectCircle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectManeger.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="rand.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="StageSelect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SaveClearFlag.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BG.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Net.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseStar.h">
-      <Filter>ヘッダー ファイル\Stars.h</Filter>
-    </ClInclude>
-    <ClInclude Include="NormalStars.h">
-      <Filter>ヘッダー ファイル\Stars.h</Filter>
-    </ClInclude>
-    <ClInclude Include="FixedStars.h">
-      <Filter>ヘッダー ファイル\Stars.h</Filter>
-    </ClInclude>
     <ClInclude Include="SceneTitle.h">
-      <Filter>ヘッダー ファイル\Scenes.h</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGame.h">
-      <Filter>ヘッダー ファイル\Scenes.h</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneStageSelect.h">
-      <Filter>ヘッダー ファイル\Scenes.h</Filter>
+      <Filter>ソース ファイル\シーン\各シーン\01タイトル</Filter>
     </ClInclude>
     <ClInclude Include="SceneManeger.h">
-      <Filter>ヘッダー ファイル\Scenes.h</Filter>
+      <Filter>ソース ファイル\シーン\管理、基底クラス</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneStageSelect.h">
+      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStar.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス</Filter>
+    </ClInclude>
+    <ClInclude Include="FixedStars.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\恒星</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalStars.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\モブ星</Filter>
+    </ClInclude>
+    <ClInclude Include="BG.h">
+      <Filter>ソース ファイル\シーン\各シーン背景</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>ソース ファイル\共通処理\あたり判定</Filter>
+    </ClInclude>
+    <ClInclude Include="debugproc.h">
+      <Filter>ソース ファイル\共通処理\デバッグ関係</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectCircle.h">
+      <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManeger.h">
+      <Filter>ソース ファイル\共通処理\エフェクト\管理、基底</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\敵%28仮%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Net.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\プレイヤー%28仮%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>ソース ファイル\共通処理\テクスチャ</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>ソース ファイル\共通処理\スプライト</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>ソース ファイル\共通処理\サウンド</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSelect.h">
+      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D.h">
+      <Filter>ソース ファイル\共通処理\Direct3Dデバイス</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>ソース ファイル\共通処理\フレーム管理</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain.h">
+      <Filter>ソース ファイル\メイン</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>ソース ファイル\メイン</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ソース ファイル\共通処理\インプット</Filter>
+    </ClInclude>
+    <ClInclude Include="rand.h">
+      <Filter>ソース ファイル\共通処理\乱数</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>ソース ファイル\共通処理\タイマー</Filter>
+    </ClInclude>
+    <ClInclude Include="Sample.h">
+      <Filter>ソース ファイル\コピー用</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveClearFlag.h">
+      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

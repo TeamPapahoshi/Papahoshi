@@ -30,7 +30,7 @@ public:
 	cFixedStar();
 
 	// ¯‚Ìİ’è
-	void SetFixedStar(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
 	// ŒvZ—p‚ÌˆÊ’u‚ğæ“¾
 	D3DXVECTOR2 GetPos(){
