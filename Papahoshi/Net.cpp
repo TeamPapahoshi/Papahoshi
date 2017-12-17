@@ -41,14 +41,14 @@ cNet::cNet() :
 gamePhase(PHASE_POST){
 
 	//---- 四頂点の初期化 ----
-	m_aPos[0].x = 100.0f;
+	m_aPos[0].x = 200.0f;
 	m_aPos[0].y = 200.0f;
-	m_aPos[1].x = 600.0f;
-	m_aPos[1].y = 100.0f;
+	m_aPos[1].x = 300.0f;
+	m_aPos[1].y = 200.0f;
 	m_aPos[2].x = 200.0f;
-	m_aPos[2].y = 600.0f;
-	m_aPos[3].x = 400.0f;
-	m_aPos[3].y = 400.0f;
+	m_aPos[2].y = 300.0f;
+	m_aPos[3].x = 300.0f;
+	m_aPos[3].y = 300.0f;
 
 	//---- 中心点の初期化 ----
 	m_centerPos = D3DXVECTOR2(250.0f, 250.0f);
