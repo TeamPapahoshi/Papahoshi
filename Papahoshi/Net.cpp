@@ -6,6 +6,10 @@
 //
 //	****** 素材プッシュしましたか！？！？！？ ******
 //
+//  レバー入力方向はテンキーに見立てて格納（格闘ゲームの1Pコマンド表記）
+//	789
+//	456
+//	123
 //=============================================================================
 /*
 ・あみのはりかたの調整　12/15  クリア！
@@ -23,6 +27,7 @@
 #include "Net.h"
 #include "Texture.h"
 #include "SceneGame.h"
+#include "Input.h"
 
 //-------------------------------------
 // 定数・マクロ定義
@@ -30,6 +35,7 @@
 #define UKI_SIZE (20.0f)	//うきのサイズ
 #define ARROW_SIZE_X (300.0f)	//矢印のサイズ
 #define ARROW_SIZE_Y (120.0f)
+
 
 //=====================================================
 //
@@ -40,18 +46,12 @@ cNet::cNet() :
 //---- イニシャライザ ----
 gamePhase(PHASE_POST){
 
-	//---- 四頂点の初期化 ----
-	m_aPos[0].x = 200.0f;
-	m_aPos[0].y = 200.0f;
-	m_aPos[1].x = 300.0f;
-	m_aPos[1].y = 200.0f;
-	m_aPos[2].x = 200.0f;
-	m_aPos[2].y = 300.0f;
-	m_aPos[3].x = 300.0f;
-	m_aPos[3].y = 300.0f;
-
 	//---- 中心点の初期化 ----
-	m_centerPos = D3DXVECTOR2(250.0f, 250.0f);
+	m_centerPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT + 30.0f);
+
+	//---- 四頂点の初期化 ----
+	for (int i = 0; i < 4; i++)
+		m_aPos[i] = m_centerPos;
 
 	//---- スプライトの初期化 ----
 
@@ -404,10 +404,45 @@ void cNet::SetNet(){
 
 //====================================================
 //
+// 入力取得
+//
+//====================================================
+void cNet::Input(){
+
+	//---------------------------
+	// レバー入力
+	//---------------------------
+	if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP) && GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection = 7;
+	else if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP) && GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection = 9;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN) && GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection = 3;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN) && GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection = 1;
+	else if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP))
+		m_nLeverDirection = 8;
+	else if (GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection = 4;
+	else if (GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection = 6;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN))
+		m_nLeverDirection = 2;
+	else
+		m_nLeverDirection = 5;
+
+
+
+}
+
+//====================================================
+//
 // 『構え』中の更新
 //
 //====================================================
 void cNet::PostPhaseUpdate(){
+
+
 
 
 

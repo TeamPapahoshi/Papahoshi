@@ -58,15 +58,17 @@ private:
 	cSpriteParam m_aFourUki[4];	//四頂点のうき
 	cSpriteParam m_center;		//中心点のうき
 	cSpriteParam m_arrow;		//矢印
-	D3DXVECTOR2 m_aPos[4];		//四頂点＊＊あとでけす＊＊
-	D3DXVECTOR2 m_centerPos;	//中心点＊＊あとでけす＊＊
+	D3DXVECTOR2 m_aPos[4];		//四頂点
+	D3DXVECTOR2 m_centerPos;	//中心点
 
 	//----- 変数宣言 -----
 	GAME_PHASE gamePhase;	//ゲームフェイズ
-	bool	m_bPressButton[4];	//
+	bool	m_bPressButton[4];	//四ボタンのプッシュ状況
+	int		m_nLeverDirection;	//レバー入力方向、テンキー表記で格納
 
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る
+	void Input();	//コントローラー入力を取得
 	void PostPhaseUpdate();
 	void ShoutPhaseUpdate();
 	void PullPhaseUpdate();
