@@ -14,6 +14,7 @@
 //------------------------------
 #include <Windows.h>	//HRESULT他
 
+#include "EffectManeger.h"
 
 //-----------------------------
 // 列挙体宣言
@@ -40,5 +41,9 @@ void Update(void);
 //描画
 void Draw(void);
 void SetScene(int nScene);
+
+//エフェクトクラスのゲッタ
+class cEffectManeger;		// クラスの前方宣言
+cEffectManeger* GetEffectManeger(void);
 
 #endif //!___GAME_MAIN_H___

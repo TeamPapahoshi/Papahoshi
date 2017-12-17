@@ -40,6 +40,7 @@ private:
 	D3DXVECTOR2 m_posFree[4];	// 座標位置(正方形にしない時はこっち使う)
 	D3DXVECTOR2 m_size;			// 大きさ
 	D3DXVECTOR2 m_scale;		// 拡大率
+	D3DXVECTOR2 m_move;			// 移動量(追加)
 	float		m_rad;			// 角度
 	D3DXCOLOR	m_vtxColor;		// 頂点カラー
 
@@ -98,6 +99,21 @@ public:
 	void SetScale(D3DXVECTOR2 data){	// scale
 		m_scale = data;
 	}
+
+	//追加
+	void SetMove(D3DXVECTOR2 data){
+		m_move = data;
+	}
+
+	void SetMoveX(float data){
+		m_move.x = data;
+	}
+
+	void SetMoveY(float data){
+		m_move.y = data;
+	}
+	//追加ここまで
+
 	void SetScaleX(float data){
 		m_scale.x = data;
 	}
@@ -166,6 +182,19 @@ public:
 	float GetScaleY(){
 		return m_scale.y;
 	}
+
+	//追加
+	D3DXVECTOR2 GetMove(){		// scale
+		return m_move;
+	}
+	float GetMoveX(){
+		return m_move.x;
+	}
+	float GetMoveY(){
+		return m_move.y;
+	}
+	//追加ここまで
+
 	float GetRad(){	// rad
 		return m_rad;
 	}

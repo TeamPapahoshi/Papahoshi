@@ -29,15 +29,9 @@ public:
 		RESULT,
 	};
 
-	cBG(){
-		sprite.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
-		sprite.SetSize(D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT));
-		type = TITLE;
-	}
-	~cBG(){}
+	cBG();
+	~cBG();
 
-	void Init();
-	void UnInit();
 	void Update();
 	void Draw();
 
@@ -46,7 +40,5 @@ public:
 private:
 	cSpriteParam sprite;
 	BG type;
-
 };
-
 #endif	//!___BG_H___

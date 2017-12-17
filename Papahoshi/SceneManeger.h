@@ -32,6 +32,7 @@ public:
 	//シーン番号用列挙体
 	enum SCENE{
 		TITLE,	//タイトル
+		STAGE_SELECT,	//ステージ選択
 		GAME,	//ゲームメイン
 		//RESULT,	//リザルト
 	};

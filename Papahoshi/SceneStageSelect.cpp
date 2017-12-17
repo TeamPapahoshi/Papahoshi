@@ -1,54 +1,44 @@
 //======================================================================
-//	Title
+//	SceneStageSelect
 //	
-//	概要＿：タイトル
-//	制作者：
+//	概要＿：ステージ選択(仮)
+//	制作者：安藤 光樹
 //	
 //======================================================================
 
 //------------------------------
 // インクルードファイル
 //------------------------------
-#include "SceneTitle.h"
+#include "SceneStageSelect.h"
 #include "Sprite.h"
 #include "Collision.h"
 #include "debugproc.h"
 #include "Input.h"
-#include "sound.h"
 
-// このシーンで使うオブジェクト
-#include "Player.h"
-#include "Enemy.h"
+// オブジェクト
+#include "StageSelect.h"
 
+//------------------------------
+// マクロ定義
+//------------------------------
+#define TEXTURE_FILNAME_STAGE (NULL)
 
 //-----------------------------
 // グローバル
 //-----------------------------
-// このシーンで使うオブジェクトのポインタを用意(ここでインスタンス化しない)
-cPlayer* pPlayer;
-cEnemy*	 pEnemy;
-
+cStageSelect* pStageSelect = NULL;
 
 //=======================================================================================
 //
 //		初期化
 //
 //=======================================================================================
-cSceneTitle::cSceneTitle(){
+cSceneStageSelect::cSceneStageSelect(){
 
-	// 使うオブジェクトのインスタンス
-	pPlayer = new cPlayer();
-	pEnemy	= new cEnemy();
-	pNet	= new cNet();
+	//使用するオブジェクトの動的確保
+	pStageSelect = new cStageSelect();
 
-	// プレイヤー
-	pPlayer->Init();
-
-	// エネミー
-	pEnemy->Init();
-
-	// 音源
-	//PlaySound(SOUND_LABEL_BGM000);	
+	pStageSelect->Init();		//ステージセレクト用オブジェクトの初期化
 
 }
 
@@ -57,15 +47,13 @@ cSceneTitle::cSceneTitle(){
 //		終了
 //
 //=======================================================================================
-cSceneTitle::~cSceneTitle(){
+cSceneStageSelect::~cSceneStageSelect()
+{
+	pStageSelect->Uninit();		//ステージセレクト用オブジェクトの終了処理
 
-	//StopSound(SOUND_LABEL_BGM000);
-	pPlayer->Unit();
-	pEnemy->Unit();
+	delete pStageSelect;		//動的確保したオブジェクトの解放
+	pStageSelect = NULL;
 
-	// 動的インスタンスするならdeleteをUnitとは別にここに
-	delete pPlayer;
-	delete pEnemy;
 }
 
 //=======================================================================================
@@ -73,20 +61,13 @@ cSceneTitle::~cSceneTitle(){
 //		更新
 //
 //=======================================================================================
-void cSceneTitle::Update(){
+void cSceneStageSelect::Update()
+{
+	pStageSelect->Update();
 
-	pPlayer->Update();
-	pEnemy->Update();
-
-	// あたり判定
-	if (cCollider::CheckCollisionCircleToCircle(pPlayer->GetCollider(), pEnemy->GetCollider())){
-		pPlayer->OnColidToEnemy();	// エネミーに当たった時のプレイヤーの処理
-		//enemy.OnColidToPlayer();	// プレイヤーに当たった時のエネミーーの処理
-	}
-
-	// スペースでシーンチェンジ
-	if (GetKeyboardTrigger(DIK_SPACE)){
-		cSceneManeger::ChangeScene(cSceneManeger::STAGE_SELECT);
+	if (GetKeyboardTrigger(DIK_SPACE))
+	{
+		cSceneManeger::ChangeScene(cSceneManeger::GAME);
 	}
 }
 
@@ -95,11 +76,17 @@ void cSceneTitle::Update(){
 //		描画
 //
 //=======================================================================================
-void cSceneTitle::Draw(){
-
-	pEnemy->Draw();
-	pPlayer->Draw();
+void cSceneStageSelect::Draw()
+{
+	pStageSelect->Draw();
 }
 
-
-
+//=======================================================================================
+//
+//		ステージ情報の引き渡し関数
+//
+//=======================================================================================
+cStageSelect* GetStage(void)
+{
+	return pStageSelect;
+}

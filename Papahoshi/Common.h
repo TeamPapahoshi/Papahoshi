@@ -13,6 +13,17 @@
 // インクルードファイル
 //------------------------------
 #include "d3dx9.h"		//D3DXVECTOR2他
+#include "rand.h"		//乱数生成用クラス
+#include "GameMain.h"	//エフェクトクラス取得用
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+//------------------------------
+// 名前空間の指定
+//------------------------------
+using namespace std;
 
 //------------------------------
 // マクロ定義

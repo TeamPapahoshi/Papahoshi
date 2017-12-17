@@ -12,37 +12,36 @@
 //インクルードファイル
 //-----------------------------
 #include <Windows.h>		//HRESULT他
-#include "debugproc.h"		//printdebug
-#include<vector>
-#include<iostream>
+#include <vector>
+#include <iostream>
+#include "debugproc.h"
 #include "Common.h"
-#include"SceneManeger.h"
-
-
-
+#include "SceneManeger.h"
 
 //-----------------------------
 // グローバル
 //-----------------------------
-
-// 名前空間の指定
-using namespace std;
+using namespace std;		// 名前空間の指定
 
 
 //-----------------------------
-//クラス定義
+// 列挙体
 //-----------------------------
-//---- テクスチャー管理クラス ------
-// クラス定義
-class cTextureManager {
-public:
-
-	// ここにも追加
+//***************************************
+// シーンごとのテクスチャのポインタ番号
+//***************************************
 	enum TEX_TITLE{
 		TEX_TITLE_KING_JELLY,
 		TEX_TITLE_JELLY,
 		TEX_TITLE_MAX
 	};
+
+enum TEX_STAGE_SELECT{
+	TEX_STAGESELECT_STAGE,
+	TEX_STAGESELECT_KING_JELLY,
+	TEX_STAGESELECT_MAX
+};
+
 	enum TEX_GAME{
 		TEX_GAME_JELLY,
 		TEX_GAME_STAR_LIGHT,
@@ -61,15 +60,25 @@ public:
 	};
 	*/
 
+
+
+//-----------------------------
+//クラス定義
+//-----------------------------
+//---- テクスチャー管理クラス ------
+class cTextureManeger {
+public:
+
 	// テクスチャを読み込む
 	void LoadTexture(cSceneManeger::SCENE scene);
 
 	// テクスチャを取得する
 	static LPDIRECT3DTEXTURE9* GetTextureTitle(TEX_TITLE texNum);
+	static LPDIRECT3DTEXTURE9* GetTextureStageSelect(TEX_STAGE_SELECT texNum);
 	static LPDIRECT3DTEXTURE9* GetTextureGame(TEX_GAME texNum);
 
-	cTextureManager(){}
-	~cTextureManager(){}
+	cTextureManeger(){}
+	~cTextureManeger(){}
 
 private:
 	static vector<LPDIRECT3DTEXTURE9> p_texture;	// テクスチャのポインタの動的配列

@@ -44,6 +44,8 @@
 #define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
 #define TEXTURE_FILENAME_ARROW		("Image/Net/arrow.png")
 
+#define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ
+
 //-----------------------------
 // グローバル
 //-----------------------------
@@ -51,6 +53,12 @@
 vector<char*> texTitle = {
 	TEXTURE_FILNAME_KING_JELLY,
 	TEXTURE_FILNAME_JELLY,		// 同じ画像でもシーンが違うときはもう一回書いて
+};
+
+//----StageSelect-----
+vector<char*> texStageSelect = {
+	TEXTURE_FILENAME_STAGECLEAR,// 同じ画像でもシーンが違うときはもう一回書いて
+	TEXTURE_FILNAME_JELLY,
 };
 
 //----Game-----
@@ -74,7 +82,7 @@ TEXTURE_FILNAME_JELLY,
 */
 
 // テクスチャのポインタ
-vector<LPDIRECT3DTEXTURE9>  cTextureManager::p_texture(1,NULL);	// 初期化(要素数,中身)
+vector<LPDIRECT3DTEXTURE9>  cTextureManeger::p_texture(1,NULL);	// 初期化(要素数,中身)
 
 
 //=======================================================================================
@@ -83,7 +91,7 @@ vector<LPDIRECT3DTEXTURE9>  cTextureManager::p_texture(1,NULL);	// 初期化(要素数
 //		引数	シーン
 //
 //=======================================================================================
-void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
+void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 
 	//----------------------------
 	//ローカル変数宣言
@@ -93,13 +101,19 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 
 	// 初期化処理
 	p_texture.clear();
+	p_texture.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
 	filename.clear();
+	filename.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
+
 
 	//-----シーンによって読み込むテクスチャを分ける-----
 	switch (scene){
 
 	case cSceneManeger::TITLE:
 		filename = texTitle;	// ファイル名をセット
+		break;
+	case cSceneManeger::STAGE_SELECT:
+		filename = texStageSelect;	// ファイル名をセット
 		break;
 	case cSceneManeger::GAME:
 		filename = texGame;		// ファイル名をセット
@@ -128,11 +142,15 @@ void cTextureManager::LoadTexture(cSceneManeger::SCENE scene){
 //		シーンごとのテクスチャの取得
 //
 //=======================================================================================
-LPDIRECT3DTEXTURE9* cTextureManager::GetTextureTitle(TEX_TITLE texNum){
+LPDIRECT3DTEXTURE9* cTextureManeger::GetTextureTitle(TEX_TITLE texNum){	//タイトル
 	return &p_texture[texNum];
 }
 
-LPDIRECT3DTEXTURE9* cTextureManager::GetTextureGame(TEX_GAME texNum){
+LPDIRECT3DTEXTURE9* cTextureManeger::GetTextureStageSelect(TEX_STAGE_SELECT texNum){	//ステージセレクト
+	return &p_texture[texNum];
+}
+
+LPDIRECT3DTEXTURE9* cTextureManeger::GetTextureGame(TEX_GAME texNum){	//ゲームメイン
 	return &p_texture[texNum];
 }
 
