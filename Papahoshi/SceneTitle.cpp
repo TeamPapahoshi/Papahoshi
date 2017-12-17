@@ -39,7 +39,6 @@ cSceneTitle::cSceneTitle(){
 	// 使うオブジェクトのインスタンス
 	pPlayer = new cPlayer();
 	pEnemy	= new cEnemy();
-	pNet	= new cNet();
 
 	// プレイヤー
 	pPlayer->Init();

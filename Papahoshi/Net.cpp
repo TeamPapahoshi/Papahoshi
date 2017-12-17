@@ -40,18 +40,18 @@ cNet::cNet() :
 //---- イニシャライザ ----
 gamePhase(PHASE_POST){
 
-	//---- 中心点の初期化 ----
-	m_centerPos = D3DXVECTOR2(475.0f, 600.0f);
-
 	//---- 四頂点の初期化 ----
-	m_aPos[0].x = m_centerPos.x - 30.0f;
-	m_aPos[0].y = m_centerPos.y - 30.0f;
-	m_aPos[1].x = m_centerPos.x + 30.0f;
-	m_aPos[1].y = m_centerPos.y - 30.0f;
-	m_aPos[2].x = m_centerPos.x - 30.0f;
-	m_aPos[2].y = m_centerPos.y + 30.0f;
-	m_aPos[3].x = m_centerPos.x + 30.0f;
-	m_aPos[3].y = m_centerPos.y + 30.0f;
+	m_aPos[0].x = 100.0f;
+	m_aPos[0].y = 200.0f;
+	m_aPos[1].x = 600.0f;
+	m_aPos[1].y = 100.0f;
+	m_aPos[2].x = 200.0f;
+	m_aPos[2].y = 600.0f;
+	m_aPos[3].x = 400.0f;
+	m_aPos[3].y = 400.0f;
+
+	//---- 中心点の初期化 ----
+	m_centerPos = D3DXVECTOR2(250.0f, 250.0f);
 
 	//---- スプライトの初期化 ----
 
@@ -59,21 +59,23 @@ gamePhase(PHASE_POST){
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
-				m_aNet[z][y][x].SetTexture(cTextureManeger::GetTextureTitle(TEX_NET));	// テクスチャのセット
+				m_aNet[z][y][x].SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_NET));	// テクスチャのセット
 			}
 		}
 	}
 
 	//うき・四頂点
 	for (int i = 0; i < 4; i++){
-		m_aFourUki[i].SetTexture(cTextureManeger::GetTextureTitle(TEX_UKI));
+		m_aFourUki[i].SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_UKI));
 		m_aFourUki[i].SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 	}
-	m_center.SetTexture(cTextureManeger::GetTextureTitle(TEX_UKI));
+
+	//うき・センター
+	m_center.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_UKI));
 	m_center.SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 
 	//矢印
-	m_arrow.SetTexture(cTextureManager::GetTextureGame(cTextureManager::TEX_GAME_ARROW));
+	m_arrow.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_ARROW));
 	m_arrow.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 80.0f));
 	m_arrow.SetSize(D3DXVECTOR2(ARROW_SIZE_X, ARROW_SIZE_Y));
 	m_arrow.SetRad(D3DX_PI);
@@ -113,7 +115,7 @@ void cNet::Update(){
 		PullPhaseUpdate();
 		break;
 	}
-	
+
 	//頂点情報に合わせてあみをはる
 	SetNet();
 
@@ -409,7 +411,7 @@ void cNet::PostPhaseUpdate(){
 
 
 
-		}
+}
 
 
 //====================================================
@@ -421,7 +423,7 @@ void cNet::ShoutPhaseUpdate(){
 
 
 
-	}
+}
 
 
 //====================================================

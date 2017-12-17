@@ -31,12 +31,7 @@ vector<SetNormalStar> a_NormalStarData;
 //=======================================================================================
 cSceneGame::cSceneGame(){
 
-	//----------------
-	// ÉCÉìÉXÉ^ÉìÉX
-	//----------------
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i] = new cCircleOrbitStar();	// â~ãOìπêØ
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i] = new cFixedStar();	// çPêØ
-	m_pBG = new cBG();	// îwåi
+
 	pNet = new cNet();
 	m_pNomalStar.resize(STAGE_01_STAR_NUM);
 	m_pFixedStar.resize(FIXED_STAR_NUM);
@@ -55,11 +50,11 @@ cSceneGame::cSceneGame(){
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i] = new cFixedStar();
 	//m_pFixedStar[0]->Set()
 
-	
+
 
 
 	// îwåi
-	m_pBG = new cBG();	
+	m_pBG = new cBG();
 	m_pBG->SetBG(cBG::GAME_SKY);
 }
 
@@ -86,8 +81,6 @@ void cSceneGame::Update(){
 
 	// çXêV
 	pNet->Update();	//Ç†Ç›
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Update();			// â~ãOìπÇÃêØ
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Update();	// çPêØ
 	m_pBG->Update();	// îwåi
 
 	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Update();
@@ -115,10 +108,8 @@ void cSceneGame::Update(){
 void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// îwåi
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Draw();	// çPêØ
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Draw();		// â~ãOìπêØ
-	pNet->Draw();	//Ç†Ç›
 
 	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Draw();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Draw();
+	pNet->Draw();	//Ç†Ç›
 }
