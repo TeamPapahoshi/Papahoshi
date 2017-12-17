@@ -18,6 +18,7 @@
 // このシーンで使うオブジェクト
 #include "BG.h"
 #include "Star.h"
+#include "Pause.h"
 
 #define STAR_NUM		(5)	//仮
 #define FIXED_STAR_NUM	(1)	//仮
@@ -39,6 +40,7 @@ private:
 	cBG*				m_pBG;
 	cCircleOrbitStar*	pStar[STAR_NUM];
 	cFixedStar*			pFixedStar[FIXED_STAR_NUM];
+	cPause*				m_pPause;
 
 };
 #endif //!___SCENE_TITLE_H___

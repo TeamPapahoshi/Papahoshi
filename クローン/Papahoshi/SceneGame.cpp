@@ -16,7 +16,6 @@
 #include "Input.h"
 
 
-
 //=======================================================================================
 //
 //		‰Šú‰»
@@ -30,6 +29,7 @@ cSceneGame::cSceneGame(){
 	for (int i = 0; i < STAR_NUM; i++)			pStar[i] = new cCircleOrbitStar();	// ‰~‹O“¹¯
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i] = new cFixedStar();	// P¯
 	m_pBG = new cBG();	// ”wŒi
+	m_pPause = new cPause();
 
 	//----------------
 	// ‰Šú‰»
@@ -37,6 +37,7 @@ cSceneGame::cSceneGame(){
 	for (int i = 0; i < STAR_NUM; i++)	pStar[i]->Init();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Init();	// P¯
 	m_pBG->Init();
+	m_pPause->Init();
 
 	//----------------
 	// ƒZƒbƒg
@@ -53,6 +54,7 @@ cSceneGame::cSceneGame(){
 
 	// ”wŒi
 	m_pBG->SetBG(cBG::GAME_SKY);
+
 }
 
 //=======================================================================================
@@ -66,6 +68,7 @@ cSceneGame::~cSceneGame(){
 	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->UnInit();			// ‰~‹O“¹¯
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->UnInit();	// P¯
 	m_pBG->UnInit();	// ”wŒi
+	m_pPause->Uninit();	// ƒ|[ƒY‰æ–Ê
 
 	// ƒfƒŠ[ƒg
 	delete m_pBG;
@@ -82,10 +85,14 @@ cSceneGame::~cSceneGame(){
 void cSceneGame::Update(){
 
 	// XV
-	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Update();			// ‰~‹O“¹‚Ì¯
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Update();	// P¯
-	m_pBG->Update();	// ”wŒi
-
+	// ƒ|[ƒY’†‚ÍXV’â~
+	if (!m_pPause->GetPauseFlag())
+	{
+		for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Update();			// ‰~‹O“¹‚Ì¯
+		for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Update();	// P¯
+		m_pBG->Update();	// ”wŒi
+	}
+	m_pPause->Update();	// ƒ|[ƒY‰æ–Ê
 
 	// Œ©‚¦‚é‚©Œ©‚¦‚È‚¢‚©‚Ì”»’è
 	for (int i = 0; i < STAR_NUM; i++){
@@ -110,6 +117,6 @@ void cSceneGame::Draw(){
 	m_pBG->Draw();	// ”wŒi
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	pFixedStar[i]->Draw();	// P¯
 	for (int i = 0; i < STAR_NUM; i++)			pStar[i]->Draw();		// ‰~‹O“¹¯
-
+	m_pPause->Draw();	//ƒ|[ƒY‰æ–Ê
 }
 

@@ -22,6 +22,7 @@
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Net.cpp" />
+    <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="rand.cpp" />
     <ClCompile Include="Sample.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Net.h" />
+    <ClInclude Include="Pause.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Sample.h" />
