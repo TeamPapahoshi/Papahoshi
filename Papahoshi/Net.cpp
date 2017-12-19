@@ -43,7 +43,8 @@
 #define ARROW_SIZE_Y (120.0f)
 //スピード
 #define MAX_SPEED	(10.0f)
-#define DECRE_SPEED (0.5f)
+#define DECRE_SPEED (0.1f)	//１フレームごとに初速減らす量
+#define DECRE_THROW_SPEED	(0.1f)	//まさつ
 
 //=====================================================
 //
@@ -582,7 +583,24 @@ void cNet::PostPhaseUpdate(){
 //====================================================
 void cNet::ShoutPhaseUpdate(){
 
-	int i = 0;
+	//------ 中心点を飛ばす ------
+	m_centerPos.y -= m_fThrowSpeed;
+	//ななめにとばすならXも
+
+	//------ ボタン離していない頂点を追従 -----
+	for (int i = 0; i < 4; i++){
+		if (m_bPressButton[i])	//別のフラグで管理
+			m_aPos[i].y -= m_fThrowSpeed;
+	}
+
+	//------ 減速 ----------
+	m_fThrowSpeed -= DECRE_THROW_SPEED;
+	if (m_fThrowSpeed < 0)
+		m_fThrowSpeed = 0.0f;
+
+	//----- ボタンリリースで頂点とばせっ！ -----
+
+	//----- 自然に見えるように頂点間の最大処理とか -----
 
 }
 
