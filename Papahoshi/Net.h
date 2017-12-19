@@ -52,6 +52,19 @@ private:
 
 		PHASE_MAX,
 	};
+	
+	enum POST_ANGLE{	//構え角度
+		ANG_LEFT = 1,
+		ANG_STRAIGHT,
+		ANG_RIGHT,
+	};
+
+	enum POST_PHASE{
+		POST_NON,
+		POST_PULL,
+		POST_N,
+		POST_PUSH,
+	};
 
 	//---- スプライト ----
 	cSpriteParam m_aNet[NET_PARTS_MAX][NET_Y_NUM][NET_X_NUM];	//あみ
@@ -63,8 +76,17 @@ private:
 
 	//----- 変数宣言 -----
 	GAME_PHASE gamePhase;	//ゲームフェイズ
-	bool	m_bPressButton[4];	//四ボタンのプッシュ状況
+	//キー入力系
+	bool	m_bPressButton[4];	//四ボタンのプレス状況
+	bool	m_bAllPress;		//全ボタンプレス中
 	int		m_nLeverDirection;	//レバー入力方向、テンキー表記で格納
+	//描画系
+	bool	m_bDrawArrow;		//矢印を描画するかどうか
+	//構え状態
+	int		m_nPostAngle;		//構え角度
+	int		m_nFrameCnt;
+	float	m_fThrowSpeed;		//スピード
+	POST_PHASE	m_postPhase;	//構えフェイズ
 
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る

@@ -41,6 +41,9 @@
 #define UKI_SIZE (20.0f)	//うきのサイズ
 #define ARROW_SIZE_X (300.0f)	//矢印のサイズ
 #define ARROW_SIZE_Y (120.0f)
+//スピード
+#define MAX_SPEED	(10.0f)
+#define DECRE_SPEED (0.5f)
 
 //=====================================================
 //
@@ -49,7 +52,14 @@
 //=====================================================
 cNet::cNet() :
 //---- イニシャライザ ----
-gamePhase(PHASE_POST){
+gamePhase(PHASE_POST),
+m_bDrawArrow(false),
+m_bAllPress(false),
+m_nLeverDirection(5),	//ニュートラル
+m_nFrameCnt(0),
+m_postPhase(POST_NON),
+m_fThrowSpeed(0.0f)
+{
 
 	//---- 中心点の初期化 ----
 	m_centerPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT + 30.0f);
@@ -154,7 +164,8 @@ void cNet::Draw(){
 	m_center.Draw();
 
 	//矢印(構え状態の時)
-	m_arrow.Draw();
+	if (m_bDrawArrow)
+		m_arrow.Draw();
 
 }
 
@@ -451,6 +462,14 @@ void cNet::Input(){
 	if (GetInputButtonPress(DIK_9, 0, BOTTON_NET_DOWNRIGHT))
 		m_bPressButton[3] = true;
 
+	//---- 全ボタンプッシュ状態かどうか ----
+	for (int i = 0; i < 4; i++){
+		if (!m_bPressButton[i])
+			break;
+		if (i == 3)
+			m_bAllPress = true;
+	}
+
 }
 
 //====================================================
@@ -460,9 +479,98 @@ void cNet::Input(){
 //====================================================
 void cNet::PostPhaseUpdate(){
 
+	//----- 全ボタンプレス中以外リターン -----
+	if (!m_bAllPress){
+		m_bDrawArrow = false;
 
+		return;
+	}
 
+	switch (m_postPhase)
+	{
+	//------ 何もしてないとき -----
+	case POST_NON:
+		//-----	レバーを引いて角度調整 -----
+		if (m_nLeverDirection <= 3){
 
+			//矢印の表示
+			m_bDrawArrow = true;
+
+			//角度の設定
+			m_nPostAngle = m_nLeverDirection;
+
+			//引き中を設定
+			m_postPhase = POST_PULL;
+
+		}
+
+		//----- 矢印角度も調整 -----
+		if (m_nPostAngle == 1){
+			m_arrow.SetRad(D3DX_PI + (D3DX_PI / 4.0f));
+		}
+		else if (m_nPostAngle == 3){
+			m_arrow.SetRad(D3DX_PI - (D3DX_PI / 4.0f));
+		}
+		else{
+			m_arrow.SetRad(D3DX_PI);
+		}
+		break;
+	//------- 引き中 ------
+	case POST_PULL:
+		//-----	レバーを引いて角度調整 -----
+		if (m_nLeverDirection <= 3){
+
+			//矢印の表示
+			m_bDrawArrow = true;
+
+			//角度の設定
+			m_nPostAngle = m_nLeverDirection;
+		}
+
+		//----- 矢印角度も調整 -----
+		if (m_nPostAngle == 1){
+			m_arrow.SetRad(D3DX_PI + (D3DX_PI / 4.0f));
+		}
+		else if (m_nPostAngle == 3){
+			m_arrow.SetRad(D3DX_PI - (D3DX_PI / 4.0f));
+		}
+		else{
+			m_arrow.SetRad(D3DX_PI);
+		}
+
+		//----- レバーニュートラル状態のときに経過フレームを計測
+		if (m_nLeverDirection < 7 && m_nLeverDirection > 3){
+			m_nFrameCnt++;
+			m_postPhase = POST_N;
+		}
+
+		break;
+	//----- ニュートラル状態 -----
+	case POST_N:
+		//----- レバーニュートラル状態のときに経過フレームを計測 -----
+		if (m_nLeverDirection < 7 && m_nLeverDirection > 3){
+			m_nFrameCnt++;
+		}
+
+		//----- レバー前倒しでフェイズ移行 -----
+		if (m_nLeverDirection > 6){
+			m_postPhase = POST_PUSH;
+		}
+
+		break;
+	//------- 前倒し状態 -------
+	case POST_PUSH:
+
+		//----- スピードを計算 -----
+		m_fThrowSpeed = MAX_SPEED - (DECRE_SPEED * m_nFrameCnt);
+		if (m_fThrowSpeed < 0.0f)
+			m_fThrowSpeed = 0.0f;
+
+		//----- 構え状態終了 -----
+		gamePhase = PHASE_SHOUT;
+
+		break;
+	}
 
 }
 
@@ -474,7 +582,7 @@ void cNet::PostPhaseUpdate(){
 //====================================================
 void cNet::ShoutPhaseUpdate(){
 
-
+	int i = 0;
 
 }
 
