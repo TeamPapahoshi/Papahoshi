@@ -32,10 +32,15 @@
 //-------------------------------------
 // 定数・マクロ定義
 //-------------------------------------
+//使用ボタン
+#define BOTTON_NET_UPLEFT		(AC_CON_BUTTON_A)
+#define BOTTON_NET_UPRIGHT		(AC_CON_BUTTON_B)
+#define BOTTON_NET_DOWNLEFT		(AC_CON_BUTTON_E)
+#define BOTTON_NET_DOWNRIGHT	(AC_CON_BUTTON_F)
+//テクスチャサイズ
 #define UKI_SIZE (20.0f)	//うきのサイズ
 #define ARROW_SIZE_X (300.0f)	//矢印のサイズ
 #define ARROW_SIZE_Y (120.0f)
-
 
 //=====================================================
 //
@@ -101,6 +106,9 @@ cNet::~cNet(){
 //
 //=====================================================
 void cNet::Update(){
+
+	//入力を受付
+	Input();
 
 	//ゲームフェイズごとの更新
 	switch (gamePhase)
@@ -431,7 +439,17 @@ void cNet::Input(){
 	else
 		m_nLeverDirection = 5;
 
-
+	//----------------------------
+	// ボタン入力
+	//----------------------------
+	if (GetInputButtonPress(DIK_N, 0, BOTTON_NET_DOWNLEFT))
+		m_bPressButton[2] = true;
+	if (GetInputButtonPress(DIK_U, 0, BOTTON_NET_UPLEFT))
+		m_bPressButton[0] = true;
+	if (GetInputButtonPress(DIK_8, 0, BOTTON_NET_UPRIGHT))
+		m_bPressButton[1] = true;
+	if (GetInputButtonPress(DIK_9, 0, BOTTON_NET_DOWNRIGHT))
+		m_bPressButton[3] = true;
 
 }
 

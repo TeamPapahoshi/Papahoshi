@@ -29,6 +29,14 @@
 #define JOY_BUTTON_Y		(3)	// Yボタン(360コントローラ基準)
 #define JOY_BUTTON_START	(7)	// STARTボタン（360コントローラー基準）
 
+#define AC_CON_BUTTON_A		(0)	//左上
+#define AC_CON_BUTTON_B		(3)	//左上からいっこ右
+#define AC_CON_BUTTON_C		(5)	
+#define AC_CON_BUTTON_D		(4)	//右上
+#define AC_CON_BUTTON_E		(1)	//左下
+#define AC_CON_BUTTON_F		(2)
+#define AC_CON_BUTTON_G		(7)
+#define AC_CON_BUTTON_H		(6)	//右下
 
 //------------------------------
 //列挙体定義
