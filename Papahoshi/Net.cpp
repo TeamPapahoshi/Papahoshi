@@ -6,6 +6,10 @@
 //
 //	****** 素材プッシュしましたか！？！？！？ ******
 //
+//  レバー入力方向はテンキーに見立てて格納（格闘ゲームの1Pコマンド表記）
+//	789
+//	456
+//	123
 //=============================================================================
 /*
 ・あみのはりかたの調整　12/15  クリア！
@@ -23,13 +27,24 @@
 #include "Net.h"
 #include "Texture.h"
 #include "SceneGame.h"
+#include "Input.h"
 
 //-------------------------------------
 // 定数・マクロ定義
 //-------------------------------------
+//使用ボタン
+#define BOTTON_NET_UPLEFT		(AC_CON_BUTTON_A)
+#define BOTTON_NET_UPRIGHT		(AC_CON_BUTTON_B)
+#define BOTTON_NET_DOWNLEFT		(AC_CON_BUTTON_E)
+#define BOTTON_NET_DOWNRIGHT	(AC_CON_BUTTON_F)
+//テクスチャサイズ
 #define UKI_SIZE (20.0f)	//うきのサイズ
 #define ARROW_SIZE_X (300.0f)	//矢印のサイズ
 #define ARROW_SIZE_Y (120.0f)
+//スピード
+#define MAX_SPEED	(10.0f)
+#define DECRE_SPEED (0.1f)	//１フレームごとに初速減らす量
+#define DECRE_THROW_SPEED	(0.1f)	//まさつ
 
 //=====================================================
 //
@@ -38,20 +53,21 @@
 //=====================================================
 cNet::cNet() :
 //---- イニシャライザ ----
-gamePhase(PHASE_POST){
-
-	//---- 四頂点の初期化 ----
-	m_aPos[0].x = 200.0f;
-	m_aPos[0].y = 200.0f;
-	m_aPos[1].x = 300.0f;
-	m_aPos[1].y = 200.0f;
-	m_aPos[2].x = 200.0f;
-	m_aPos[2].y = 300.0f;
-	m_aPos[3].x = 300.0f;
-	m_aPos[3].y = 300.0f;
+gamePhase(PHASE_POST),
+m_bDrawArrow(false),
+m_bAllPress(false),
+m_nLeverDirection(5),	//ニュートラル
+m_nFrameCnt(0),
+m_postPhase(POST_NON),
+m_fThrowSpeed(0.0f)
+{
 
 	//---- 中心点の初期化 ----
-	m_centerPos = D3DXVECTOR2(250.0f, 250.0f);
+	m_centerPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT + 30.0f);
+
+	//---- 四頂点の初期化 ----
+	for (int i = 0; i < 4; i++)
+		m_aPos[i] = m_centerPos;
 
 	//---- スプライトの初期化 ----
 
@@ -102,6 +118,9 @@ cNet::~cNet(){
 //=====================================================
 void cNet::Update(){
 
+	//入力を受付
+	Input();
+
 	//ゲームフェイズごとの更新
 	switch (gamePhase)
 	{
@@ -146,7 +165,8 @@ void cNet::Draw(){
 	m_center.Draw();
 
 	//矢印(構え状態の時)
-	m_arrow.Draw();
+	if (m_bDrawArrow)
+		m_arrow.Draw();
 
 }
 
@@ -404,12 +424,154 @@ void cNet::SetNet(){
 
 //====================================================
 //
+// 入力取得
+//
+//====================================================
+void cNet::Input(){
+
+	//---------------------------
+	// レバー入力
+	//---------------------------
+	if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP) && GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection = 7;
+	else if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP) && GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection = 9;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN) && GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection = 3;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN) && GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection = 1;
+	else if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP))
+		m_nLeverDirection = 8;
+	else if (GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection = 4;
+	else if (GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection = 6;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN))
+		m_nLeverDirection = 2;
+	else
+		m_nLeverDirection = 5;
+
+	//----------------------------
+	// ボタン入力
+	//----------------------------
+	if (GetInputButtonPress(DIK_N, 0, BOTTON_NET_DOWNLEFT))
+		m_bPressButton[2] = true;
+	if (GetInputButtonPress(DIK_U, 0, BOTTON_NET_UPLEFT))
+		m_bPressButton[0] = true;
+	if (GetInputButtonPress(DIK_8, 0, BOTTON_NET_UPRIGHT))
+		m_bPressButton[1] = true;
+	if (GetInputButtonPress(DIK_9, 0, BOTTON_NET_DOWNRIGHT))
+		m_bPressButton[3] = true;
+
+	//---- 全ボタンプッシュ状態かどうか ----
+	for (int i = 0; i < 4; i++){
+		if (!m_bPressButton[i])
+			break;
+		if (i == 3)
+			m_bAllPress = true;
+	}
+
+}
+
+//====================================================
+//
 // 『構え』中の更新
 //
 //====================================================
 void cNet::PostPhaseUpdate(){
 
+	//----- 全ボタンプレス中以外リターン -----
+	if (!m_bAllPress){
+		m_bDrawArrow = false;
 
+		return;
+	}
+
+	switch (m_postPhase)
+	{
+	//------ 何もしてないとき -----
+	case POST_NON:
+		//-----	レバーを引いて角度調整 -----
+		if (m_nLeverDirection <= 3){
+
+			//矢印の表示
+			m_bDrawArrow = true;
+
+			//角度の設定
+			m_nPostAngle = m_nLeverDirection;
+
+			//引き中を設定
+			m_postPhase = POST_PULL;
+
+		}
+
+		//----- 矢印角度も調整 -----
+		if (m_nPostAngle == 1){
+			m_arrow.SetRad(D3DX_PI + (D3DX_PI / 4.0f));
+		}
+		else if (m_nPostAngle == 3){
+			m_arrow.SetRad(D3DX_PI - (D3DX_PI / 4.0f));
+		}
+		else{
+			m_arrow.SetRad(D3DX_PI);
+		}
+		break;
+	//------- 引き中 ------
+	case POST_PULL:
+		//-----	レバーを引いて角度調整 -----
+		if (m_nLeverDirection <= 3){
+
+			//矢印の表示
+			m_bDrawArrow = true;
+
+			//角度の設定
+			m_nPostAngle = m_nLeverDirection;
+		}
+
+		//----- 矢印角度も調整 -----
+		if (m_nPostAngle == 1){
+			m_arrow.SetRad(D3DX_PI + (D3DX_PI / 4.0f));
+		}
+		else if (m_nPostAngle == 3){
+			m_arrow.SetRad(D3DX_PI - (D3DX_PI / 4.0f));
+		}
+		else{
+			m_arrow.SetRad(D3DX_PI);
+		}
+
+		//----- レバーニュートラル状態のときに経過フレームを計測
+		if (m_nLeverDirection < 7 && m_nLeverDirection > 3){
+			m_nFrameCnt++;
+			m_postPhase = POST_N;
+		}
+
+		break;
+	//----- ニュートラル状態 -----
+	case POST_N:
+		//----- レバーニュートラル状態のときに経過フレームを計測 -----
+		if (m_nLeverDirection < 7 && m_nLeverDirection > 3){
+			m_nFrameCnt++;
+		}
+
+		//----- レバー前倒しでフェイズ移行 -----
+		if (m_nLeverDirection > 6){
+			m_postPhase = POST_PUSH;
+		}
+
+		break;
+	//------- 前倒し状態 -------
+	case POST_PUSH:
+
+		//----- スピードを計算 -----
+		m_fThrowSpeed = MAX_SPEED - (DECRE_SPEED * m_nFrameCnt);
+		if (m_fThrowSpeed < 0.0f)
+			m_fThrowSpeed = 0.0f;
+
+		//----- 構え状態終了 -----
+		gamePhase = PHASE_SHOUT;
+
+		break;
+	}
 
 }
 
@@ -421,7 +583,24 @@ void cNet::PostPhaseUpdate(){
 //====================================================
 void cNet::ShoutPhaseUpdate(){
 
+	//------ 中心点を飛ばす ------
+	m_centerPos.y -= m_fThrowSpeed;
+	//ななめにとばすならXも
 
+	//------ ボタン離していない頂点を追従 -----
+	for (int i = 0; i < 4; i++){
+		if (m_bPressButton[i])	//別のフラグで管理
+			m_aPos[i].y -= m_fThrowSpeed;
+	}
+
+	//------ 減速 ----------
+	m_fThrowSpeed -= DECRE_THROW_SPEED;
+	if (m_fThrowSpeed < 0)
+		m_fThrowSpeed = 0.0f;
+
+	//----- ボタンリリースで頂点とばせっ！ -----
+
+	//----- 自然に見えるように頂点間の最大処理とか -----
 
 }
 
