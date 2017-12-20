@@ -57,6 +57,7 @@ public:
 		return m_sprite.GetPos();
 	}
 
+	// ‰¼
 	enum STAFGE_NUM{
 		STAGE_01,
 		STAGE_MAX,
@@ -66,10 +67,7 @@ public:
 private:
 	cCircleOrbitMovement moveCircle;	// ‰~‹O“¹‚·‚é‚½‚ß‚É•K—v
 	vector<SetNormalStar> a_Data;
-	STAFGE_NUM stageNum = STAGE_01;
+	STAFGE_NUM stageNum = STAGE_01; //‰¼
 
 };
-
-
-
 #endif	//!___NORMAL_STARS_H___

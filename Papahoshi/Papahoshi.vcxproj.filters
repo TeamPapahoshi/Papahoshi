@@ -101,6 +101,18 @@
     <Filter Include="ソース ファイル\メイン">
       <UniqueIdentifier>{2db00c89-32f5-40b8-983a-494d7eb1dd53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ">
+      <UniqueIdentifier>{090d8c85-47cc-4b6a-991a-bea2c42bc2de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ\管理、基底">
+      <UniqueIdentifier>{b6b6c4f2-7330-4fbf-8a08-2eb311483ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29">
+      <UniqueIdentifier>{7e569b73-392f-4a36-92d7-c8168d5961a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ01%28チュートリアル01%29">
+      <UniqueIdentifier>{2a166c99-40da-46d3-9219-015f2ef25e80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -187,6 +199,15 @@
     <ClCompile Include="SaveClearFlag.cpp">
       <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理</Filter>
     </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\管理、基底</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage01.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ01%28チュートリアル01%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage02.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -272,6 +293,15 @@
     </ClInclude>
     <ClInclude Include="SaveClearFlag.h">
       <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理</Filter>
+    </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\管理、基底</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage01.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ01%28チュートリアル01%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage02.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

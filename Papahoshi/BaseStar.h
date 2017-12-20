@@ -60,28 +60,4 @@ private:
 	float		m_fSpeed;	// ‘¬‚³
 };
 
-
-// ¯‚Ìİ’è—p\‘¢‘Ì
-typedef struct _tSetCircleOrbitStar{
-
-	D3DXVECTOR2		center;		// ‹O“¹‚Ì’†SÀ•W
-	D3DXVECTOR2		radius;		// ”¼Œa
-	float			rad;		// Šp“x
-	int				second;		// ˆêü‚É‚©‚©‚éŠÔ(•b)
-
-}tSetCircleOrbitStaretStar;
-
-typedef struct _tFixedStar{
-
-	D3DXVECTOR2		center;		// ‹O“¹‚Ì’†SÀ•W
-	D3DXVECTOR2		radius;		// ”¼Œa
-	float			rad;		// Šp“x
-	int				second;		// ˆêü‚É‚©‚©‚éŠÔ(•b)
-
-}tFixedStar;
-
-// ¯‚Ìİ’è—p
-//vector<tFixedStar>					a_SetFixedStarData;
-//vector<tSetCircleOrbitStaretStar>	a_SetCircleOrbitStaretStar;
-
 #endif	//!___BASE_STAR_H___

@@ -122,10 +122,10 @@ void cNormalStar::SetStarFromFile(int loop){
 		break;
 	}
 
-	// ì«çû
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++){
-		file.read((char*)&a_Data[i], sizeof(a_Data[i]));
 
+	// ì«çû
+	for (int i = 0; i < (int)a_Data.size(); i++){
+		file.read((char*)&a_Data[i], sizeof(a_Data[i]));
 	}
 
 	// ì«Ç›çûÇÒÇæÉfÅ[É^ÇÃà¯êîî‘ñ⁄Çë„ì¸Ç∑ÇÈ

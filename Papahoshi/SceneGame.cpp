@@ -17,12 +17,13 @@
 #include <fstream>
 #include <vector>
 
+
+
 //------------------------------
 // マクロ定義
 //------------------------------
 #define FIXED_STAR_NUM	(1)
 
-vector<SetNormalStar> a_NormalStarData;
 
 //=======================================================================================
 //
@@ -30,6 +31,10 @@ vector<SetNormalStar> a_NormalStarData;
 //
 //=======================================================================================
 cSceneGame::cSceneGame(){
+
+	// ステージマネージャ
+	m_pStageManager = new cStageManager();
+	cStageManager::ChangeStage(cStageManager::STAGE_01);
 
 
 	pNet = new cNet();
@@ -80,6 +85,10 @@ cSceneGame::~cSceneGame(){
 void cSceneGame::Update(){
 
 	// 更新
+	m_pStageManager->Update();
+
+
+	// 更新
 	pNet->Update();	//あみ
 	m_pBG->Update();	// 背景
 
@@ -106,6 +115,9 @@ void cSceneGame::Update(){
 //
 //=======================================================================================
 void cSceneGame::Draw(){
+
+
+	m_pStageManager->Draw();
 
 	m_pBG->Draw();	// 背景
 
