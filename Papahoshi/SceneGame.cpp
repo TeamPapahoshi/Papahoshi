@@ -85,9 +85,8 @@ void cSceneGame::Update(){
 	// 更新
 	m_pStageManager->Update();
 
-
 	// 更新
-	pNet->Update();	//あみ
+	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
 
 	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Update();
@@ -98,8 +97,6 @@ void cSceneGame::Update(){
 		float Distance = CalculateDistanceAtoB(m_pNomalStar[i]->GetPos(), m_pFixedStar[0]->GetPos());
 		m_pNomalStar[i]->StarVisibility(Distance);
 	}
-
-
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -113,8 +110,6 @@ void cSceneGame::Update(){
 //
 //=======================================================================================
 void cSceneGame::Draw(){
-
-
 
 	m_pBG->Draw();	// 背景
 

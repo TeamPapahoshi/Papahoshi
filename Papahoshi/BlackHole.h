@@ -14,18 +14,8 @@
 #include "Sprite.h"
 #include "Collision.h"
 #include "BaseStar.h"
-
 #include <vector>
 #include <fstream>
-
-//struct SetNormalStar{
-//	D3DXVECTOR2 center;
-//	D3DXVECTOR2 radius;
-//	D3DXVECTOR2 size;
-//	float		speed;
-//};
-
-
 
 //-----------------------------
 //クラス定義
@@ -43,20 +33,9 @@ public:
 	// 星の設定
 	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
-	// ファイルで読み込んだデータをセット
-	//void SetStarFromFile(int loop);
-
-	// 恒星との距離によってみえるか見えないかを変える処理
-	//void StarVisibility(float distance);
-
-	// 計算用の位置を取得
-	D3DXVECTOR2 GetPos(){
-		return m_sprite.GetPos();
-	}
-
 private:
-	cCircleOrbitMovement moveCircle;	// 円軌道するために必要
-
-
+	cCollider		m_Collider;			// あたり判定
+	int				m_nVacuumStar;		// 吸い込む星の数
+	D3DXVECTOR2		move;				// 移動量
 };
-#endif	//!___BLACK_HOLE_H___
+#endif //!___BLACK_HOLE_H___

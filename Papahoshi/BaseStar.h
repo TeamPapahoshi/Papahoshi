@@ -25,6 +25,11 @@ public:
 	virtual ~cBaseStar(){}
 	cBaseStar(){}
 
+	// 計算用の位置を取得
+	D3DXVECTOR2 GetPos(){
+		return m_sprite.GetPos();
+	}
+
 protected:
 	cSpriteParam	m_sprite;		// 描画用
 };

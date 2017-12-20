@@ -52,19 +52,14 @@ public:
 	// 恒星との距離によってみえるか見えないかを変える処理
 	void StarVisibility(float distance);
 
-	// 計算用の位置を取得
-	D3DXVECTOR2 GetPos(){
-		return m_sprite.GetPos();
-	}
-
 	// 仮
 	enum STAFGE_NUM{
 		STAGE_01,
 		STAGE_MAX,
 	};
 
-
 private:
+	cCollider		m_Collider;			// あたり判定
 	cCircleOrbitMovement moveCircle;	// 円軌道するために必要
 	vector<SetNormalStar> a_Data;
 	STAFGE_NUM stageNum = STAGE_01; //仮
