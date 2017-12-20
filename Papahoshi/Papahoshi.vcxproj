@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BaseStar.cpp" />
     <ClCompile Include="BG.cpp" />
     <ClCompile Include="BlackHole.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="BaseStar.h" />
     <ClInclude Include="BG.h" />
     <ClInclude Include="BlackHole.h" />
