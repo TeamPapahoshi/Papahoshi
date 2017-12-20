@@ -43,6 +43,7 @@
 #define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
 #define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
 #define TEXTURE_FILENAME_ARROW		("Image/Net/arrow.png")
+#define TEXTURE_FILENAME_BLACK_HOLE	("Image/Star/blackhole.png")
 
 #define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ
 
@@ -71,6 +72,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_NET,
 	TEXTURE_FILENAME_UKI,
 	TEXTURE_FILENAME_ARROW,
+	TEXTURE_FILENAME_BLACK_HOLE,
 };
 
 /*

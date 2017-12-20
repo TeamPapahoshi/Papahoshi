@@ -15,6 +15,9 @@
 #include "StageManager.h"
 #include <d3d9.h>
 
+// このクラスで使うオブジェクト
+#include "BlackHole.h"
+
 //------------------------------
 // マクロ定義
 //------------------------------
@@ -27,10 +30,11 @@
 class cStage01 :public cBaseStage{
 
 public:
-	void Draw();	//描画
-	void Update();	//更新
-	cStage01();		//コンストラクタ
-	~cStage01();	//デストラクタ
+	void Draw();				// 描画
+	void Update();				// 更新
+	cStage01();					// コンストラクタ
+	~cStage01();				// デストラクタ
 private:
+	cBaseStar* m_pBlackHole;	// ブラックホール(仮)
 };
 #endif //!___STAGE_01_H___

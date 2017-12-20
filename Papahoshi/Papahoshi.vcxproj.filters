@@ -113,6 +113,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ01%28チュートリアル01%29">
       <UniqueIdentifier>{2a166c99-40da-46d3-9219-015f2ef25e80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\ブラックホール">
+      <UniqueIdentifier>{d30a170a-1b32-4d7b-baba-ec4edb767d52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -208,6 +211,9 @@
     <ClCompile Include="Stage02.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29</Filter>
     </ClCompile>
+    <ClCompile Include="BlackHole.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\ブラックホール</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -302,6 +308,9 @@
     </ClInclude>
     <ClInclude Include="Stage02.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackHole.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\ブラックホール</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

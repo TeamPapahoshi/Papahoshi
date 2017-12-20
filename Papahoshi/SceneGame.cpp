@@ -56,8 +56,6 @@ cSceneGame::cSceneGame(){
 	//m_pFixedStar[0]->Set()
 
 
-
-
 	// îwåi
 	m_pBG = new cBG();
 	m_pBG->SetBG(cBG::GAME_SKY);
@@ -117,11 +115,12 @@ void cSceneGame::Update(){
 void cSceneGame::Draw(){
 
 
-	m_pStageManager->Draw();
 
 	m_pBG->Draw();	// îwåi
 
 	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Draw();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Draw();
+
+	m_pStageManager->Draw();
 	pNet->Draw();	//Ç†Ç›
 }
