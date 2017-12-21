@@ -11,8 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BaseStar.cpp" />
     <ClCompile Include="BG.cpp" />
+    <ClCompile Include="BlackHole.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="Direct3D.cpp" />
@@ -35,14 +37,19 @@
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Stage01.cpp" />
+    <ClCompile Include="Stage02.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="BaseStar.h" />
     <ClInclude Include="BG.h" />
+    <ClInclude Include="BlackHole.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="debugproc.h" />
@@ -66,6 +73,9 @@
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Stage01.h" />
+    <ClInclude Include="Stage02.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="StageSelect.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />

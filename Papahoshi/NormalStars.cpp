@@ -56,8 +56,19 @@ cNormalStar::~cNormalStar(){
 //=======================================================================================
 void cNormalStar::Update(){
 
+	// ゲームフェイズをもらう予定!!!
+	
+	// 通常状態(ゲーム)
 	// 座標更新
 	m_sprite.SetPos(moveCircle.GetMove());
+
+	// 確保中
+
+	// ブラックホール吸い込み->吸い込んだら消える？
+
+	// 数え中
+
+	// 網引き上げ中
 
 }
 //=======================================================================================
@@ -122,10 +133,10 @@ void cNormalStar::SetStarFromFile(int loop){
 		break;
 	}
 
-	// 読込
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++){
-		file.read((char*)&a_Data[i], sizeof(a_Data[i]));
 
+	// 読込
+	for (int i = 0; i < (int)a_Data.size(); i++){
+		file.read((char*)&a_Data[i], sizeof(a_Data[i]));
 	}
 
 	// 読み込んだデータの引数番目を代入する

@@ -1,18 +1,18 @@
 //======================================================================
-//	Title
+//	Stage02(チュートリアルステージ？)
 //	
-//	概要＿：タイトル(仮)
+//	概要＿：ステージ02(仮)
 //	制作者：
 //	
 //======================================================================
 
-#ifndef ___SCENE_TITLE_H___
-#define ___SCENE_TITLE_H___
+#ifndef ___STAGE_02_H___
+#define ___STAGE_02_H___
 
 //------------------------------
 // インクルードファイル
 //------------------------------
-#include "SceneManeger.h"
+#include "StageManager.h"
 #include <d3d9.h>
 
 //------------------------------
@@ -24,16 +24,13 @@
 // クラス定義
 //------------------------------
 //----シーンタイトル-----
-class cSceneTitle :public cBaseScene{
+class cStage02 :public cBaseStage{
 
 public:
 	void Draw();	//描画
 	void Update();	//更新
-	cSceneTitle();	//コンストラクタ
-	~cSceneTitle();	//デストラクタ
-
-
+	cStage02();		//コンストラクタ
+	~cStage02();	//デストラクタ
 private:
-
 };
-#endif //!___SCENE_TITLE_H___
+#endif //!___STAGE_02_H___

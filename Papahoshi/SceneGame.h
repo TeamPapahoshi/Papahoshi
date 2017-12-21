@@ -17,12 +17,16 @@
 #include "Common.h"
 #include "Net.h"
 
-// このシーンで使うオブジェクト
+// ステージ
+#include "StageManager.h"
+
+// このステージで使うオブジェクト
 #include "BG.h"
 #include "NormalStars.h"
 #include "FixedStars.h"
 
 
+// 呼び出す星の数
 #define STAR_NUM		(5)	//仮
 #define FIXED_STAR_NUM	(1)	//仮
 
@@ -44,10 +48,10 @@ private:
 	cBG*				m_pBG;
 	cNet *pNet;
 
-	vector<cNormalStar*>		m_pNomalStar;	// モブ星
-	vector<cFixedStar*>			m_pFixedStar;	// 恒星
+	vector<cNormalStar*>		m_pNomalStar;		// モブ星
+	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	
-
+	cStageManager*				m_pStageManager;	// ステージマネージャー
 };
 
 #endif //!___SCENE_TITLE_H___

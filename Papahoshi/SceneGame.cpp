@@ -17,12 +17,13 @@
 #include <fstream>
 #include <vector>
 
+
+
 //------------------------------
 // マクロ定義
 //------------------------------
 #define FIXED_STAR_NUM	(1)
 
-vector<SetNormalStar> a_NormalStarData;
 
 //=======================================================================================
 //
@@ -30,6 +31,10 @@ vector<SetNormalStar> a_NormalStarData;
 //
 //=======================================================================================
 cSceneGame::cSceneGame(){
+
+	// ステージマネージャ
+	m_pStageManager = new cStageManager();
+	cStageManager::ChangeStage(cStageManager::STAGE_01);
 
 
 	pNet = new cNet();
@@ -49,8 +54,6 @@ cSceneGame::cSceneGame(){
 	// 恒星
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i] = new cFixedStar();
 	//m_pFixedStar[0]->Set()
-
-
 
 
 	// 背景
@@ -80,7 +83,10 @@ cSceneGame::~cSceneGame(){
 void cSceneGame::Update(){
 
 	// 更新
-	pNet->Update();	//あみ
+	m_pStageManager->Update();
+
+	// 更新
+	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
 
 	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Update();
@@ -91,8 +97,6 @@ void cSceneGame::Update(){
 		float Distance = CalculateDistanceAtoB(m_pNomalStar[i]->GetPos(), m_pFixedStar[0]->GetPos());
 		m_pNomalStar[i]->StarVisibility(Distance);
 	}
-
-
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -111,5 +115,7 @@ void cSceneGame::Draw(){
 
 	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Draw();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Draw();
+
+	m_pStageManager->Draw();
 	pNet->Draw();	//あみ
 }

@@ -25,6 +25,11 @@ public:
 	virtual ~cBaseStar(){}
 	cBaseStar(){}
 
+	// 計算用の位置を取得
+	D3DXVECTOR2 GetPos(){
+		return m_sprite.GetPos();
+	}
+
 protected:
 	cSpriteParam	m_sprite;		// 描画用
 };
@@ -59,29 +64,5 @@ private:
 	float		m_fRad;		// 角度
 	float		m_fSpeed;	// 速さ
 };
-
-
-// 星の設定用構造体
-typedef struct _tSetCircleOrbitStar{
-
-	D3DXVECTOR2		center;		// 軌道の中心座標
-	D3DXVECTOR2		radius;		// 半径
-	float			rad;		// 角度
-	int				second;		// 一周にかかる時間(秒)
-
-}tSetCircleOrbitStaretStar;
-
-typedef struct _tFixedStar{
-
-	D3DXVECTOR2		center;		// 軌道の中心座標
-	D3DXVECTOR2		radius;		// 半径
-	float			rad;		// 角度
-	int				second;		// 一周にかかる時間(秒)
-
-}tFixedStar;
-
-// 星の設定用
-//vector<tFixedStar>					a_SetFixedStarData;
-//vector<tSetCircleOrbitStaretStar>	a_SetCircleOrbitStaretStar;
 
 #endif	//!___BASE_STAR_H___
