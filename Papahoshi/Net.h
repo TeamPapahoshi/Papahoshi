@@ -89,6 +89,7 @@ private:
 	POST_PHASE	m_postPhase;	//構えフェイズ
 	//投げ状態
 	bool	m_bThrow[4];		//Trueなら投げ中の頂点
+	float	m_afSpeedFourse[4];		//四頂点のスピード
 
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る

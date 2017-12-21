@@ -456,12 +456,20 @@ void cNet::Input(){
 	//----------------------------
 	if (GetInputButtonPress(DIK_N, 0, BOTTON_NET_DOWNLEFT))
 		m_bPressButton[2] = true;
+	else
+		m_bPressButton[2] = false;
 	if (GetInputButtonPress(DIK_U, 0, BOTTON_NET_UPLEFT))
 		m_bPressButton[0] = true;
+	else
+		m_bPressButton[0] = false;
 	if (GetInputButtonPress(DIK_8, 0, BOTTON_NET_UPRIGHT))
 		m_bPressButton[1] = true;
+	else
+		m_bPressButton[1] = false;
 	if (GetInputButtonPress(DIK_9, 0, BOTTON_NET_DOWNRIGHT))
 		m_bPressButton[3] = true;
+	else
+		m_bPressButton[3] = false;
 
 	//---- 全ボタンプッシュ状態かどうか ----
 	for (int i = 0; i < 4; i++){
@@ -483,7 +491,7 @@ void cNet::PostPhaseUpdate(){
 	//----- 全ボタンプレス中以外リターン -----
 	if (!m_bAllPress){
 		m_bDrawArrow = false;
-
+		m_postPhase = POST_NON;
 		return;
 	}
 
@@ -570,7 +578,8 @@ void cNet::PostPhaseUpdate(){
 		//----- 構え状態終了 -----
 		gamePhase = PHASE_SHOUT;
 		m_bDrawArrow = false;
-
+		for (int i = 0; i < 4; i++)
+			m_bThrow[i] = false;
 		break;
 	}
 
@@ -595,21 +604,35 @@ void cNet::ShoutPhaseUpdate(){
 		}
 	}
 
-	//------ ボタン離していない頂点を追従 -----
+	//----- 各四頂点の処理 ------
 	for (int i = 0; i < 4; i++){
-		if (!m_bThrow[i])
+
+		//------ ボタン離していない頂点を追従 -----
+		if (!m_bThrow[i]){
 			m_aPos[i].y -= m_fThrowSpeed;
+			continue;
+		}
+
+		//----- ボタンリリースで頂点とばせっ！ -----
+		m_afSpeedFourse[i] = m_fThrowSpeed;	//スピードを代入
+		float fDisX = 1.0f, fDisY = 1.0f;
+		//飛ばす方向の調整
+		if (!(i % 2))
+			fDisX = -1.0f;
+		if (i < 2)
+			fDisY = -2.0f;
+		//飛ばす
+		m_aPos[i].x = m_aFourUki[i].GetPosX() + m_afSpeedFourse[i] * fDisX;
+		m_aPos[i].y = m_aFourUki[i].GetPosY() + m_afSpeedFourse[i] * fDisY;
+
+		//----- 自然に見えるように頂点間の最大処理とか -----
+
 	}
 
 	//------ 減速 ----------
 	m_fThrowSpeed -= DECRE_THROW_SPEED;
 	if (m_fThrowSpeed < 0)
 		m_fThrowSpeed = 0.0f;
-
-	//----- ボタンリリースで頂点とばせっ！ -----
-
-
-	//----- 自然に見えるように頂点間の最大処理とか -----
 
 }
 
