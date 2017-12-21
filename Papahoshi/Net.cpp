@@ -569,6 +569,7 @@ void cNet::PostPhaseUpdate(){
 
 		//----- 構え状態終了 -----
 		gamePhase = PHASE_SHOUT;
+		m_bDrawArrow = false;
 
 		break;
 	}
@@ -587,9 +588,16 @@ void cNet::ShoutPhaseUpdate(){
 	m_centerPos.y -= m_fThrowSpeed;
 	//ななめにとばすならXも
 
+	//------ ボタン離したかチェック ------
+	for (int i = 0; i < 4; i++){
+		if (!m_bPressButton[i] && !m_bThrow[i]){
+			m_bThrow[i] = true;
+		}
+	}
+
 	//------ ボタン離していない頂点を追従 -----
 	for (int i = 0; i < 4; i++){
-		if (m_bPressButton[i])	//別のフラグで管理
+		if (!m_bThrow[i])
 			m_aPos[i].y -= m_fThrowSpeed;
 	}
 
@@ -599,6 +607,7 @@ void cNet::ShoutPhaseUpdate(){
 		m_fThrowSpeed = 0.0f;
 
 	//----- ボタンリリースで頂点とばせっ！ -----
+
 
 	//----- 自然に見えるように頂点間の最大処理とか -----
 

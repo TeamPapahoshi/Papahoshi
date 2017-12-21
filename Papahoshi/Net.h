@@ -87,6 +87,8 @@ private:
 	int		m_nFrameCnt;
 	float	m_fThrowSpeed;		//スピード
 	POST_PHASE	m_postPhase;	//構えフェイズ
+	//投げ状態
+	bool	m_bThrow[4];		//Trueなら投げ中の頂点
 
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る
