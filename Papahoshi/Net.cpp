@@ -45,6 +45,8 @@
 #define MAX_SPEED	(10.0f)
 #define DECRE_SPEED (0.1f)	//１フレームごとに初速減らす量
 #define DECRE_THROW_SPEED	(0.1f)	//まさつ
+//待ち時間
+#define INTERVAL_THOROW_PULL	(90)	//投げから引き上げまでの待ち時間
 
 //=====================================================
 //
@@ -578,6 +580,7 @@ void cNet::PostPhaseUpdate(){
 		//----- 構え状態終了 -----
 		gamePhase = PHASE_SHOUT;
 		m_bDrawArrow = false;
+		m_nFrameCnt = 0;		//フレームカウントの初期化
 		for (int i = 0; i < 4; i++)
 			m_bThrow[i] = false;
 		break;
@@ -633,6 +636,13 @@ void cNet::ShoutPhaseUpdate(){
 	m_fThrowSpeed -= DECRE_THROW_SPEED;
 	if (m_fThrowSpeed < 0)
 		m_fThrowSpeed = 0.0f;
+
+	//------ 減速しきって数秒したら引き上げ ------
+	if (m_fThrowSpeed <= 0.0f){
+		m_nFrameCnt++;
+		if (m_nFrameCnt >= INTERVAL_THOROW_PULL)
+			gamePhase = PHASE_PULL;
+	}
 
 }
 
