@@ -26,6 +26,7 @@
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Net.cpp" />
+    <ClCompile Include="Net_Type2.cpp" />
     <ClCompile Include="NormalStars.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="rand.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Net.h" />
+    <ClInclude Include="Net_Type2.h" />
     <ClInclude Include="NormalStars.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="rand.h" />

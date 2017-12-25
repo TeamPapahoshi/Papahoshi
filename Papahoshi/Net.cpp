@@ -29,6 +29,8 @@
 #include "SceneGame.h"
 #include "Input.h"
 
+#ifdef  _TYPE_1_
+
 //-------------------------------------
 // 定数・マクロ定義
 //-------------------------------------
@@ -659,3 +661,5 @@ void cNet::PullPhaseUpdate(){
 }
 
 
+
+#endif

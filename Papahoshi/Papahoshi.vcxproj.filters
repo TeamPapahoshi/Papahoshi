@@ -220,6 +220,9 @@
     <ClCompile Include="Animation.cpp">
       <Filter>ソース ファイル\共通処理\アニメーション</Filter>
     </ClCompile>
+    <ClCompile Include="Net_Type2.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -320,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>ソース ファイル\共通処理\アニメーション</Filter>
+    </ClInclude>
+    <ClInclude Include="Net_Type2.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

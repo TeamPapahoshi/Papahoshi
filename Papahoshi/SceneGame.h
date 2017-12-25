@@ -16,6 +16,7 @@
 #include "SceneManeger.h"
 #include "Common.h"
 #include "Net.h"
+#include "Net_Type2.h"
 
 // ステージ
 #include "StageManager.h"

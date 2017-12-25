@@ -7,6 +7,9 @@
 #ifndef _NET_H_
 #define _NET_H_
 
+//#define _TYPE_1_
+#ifdef  _TYPE_1_
+
 //----------------------------------------
 // インクルード部
 //----------------------------------------
@@ -100,4 +103,5 @@ private:
 	void PullPhaseUpdate();
 };
 
+#endif
 #endif
