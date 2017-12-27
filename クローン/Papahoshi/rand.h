@@ -44,6 +44,8 @@ public:
 	CRandam();
 	//デストラクタ
 	~CRandam();
+	//初期化処理
+	static void InitRand();
 	//一定範囲内での乱数の生成
 	static int RandamRenge(int nMin, int nMax);
 	//確率による合否判定

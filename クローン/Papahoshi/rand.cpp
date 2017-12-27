@@ -42,14 +42,7 @@ unsigned int CRandam::sunSeed[4] = {0, 0, 0, 0};
 //============================
 CRandam::CRandam()
 {
-	//変数の初期化
-	unSeed = (int)time(NULL);	//時間による変数の初期化
 
-	//配列の初期化
-	for (int Loop = 0; Loop < 4; Loop++)
-	{
-		sunSeed[Loop - 1] = unSeed = 1812433253U * (unSeed ^ (unSeed >> 30)) + Loop;
-	}
 }
 
 //============================
@@ -58,6 +51,21 @@ CRandam::CRandam()
 CRandam::~CRandam()
 {
 
+}
+
+//============================
+//CRandamクラス:乱数初期化処理
+//============================
+void CRandam::InitRand()
+{
+	//変数の初期化
+	unSeed = (int)time(NULL);	//時間による変数の初期化
+
+	//配列の初期化
+	for (int Loop = 0; Loop < 4; Loop++)
+	{
+		sunSeed[Loop - 1] = unSeed = 1812433253U * (unSeed ^ (unSeed >> 30)) + Loop;
+	}
 }
 
 //============================

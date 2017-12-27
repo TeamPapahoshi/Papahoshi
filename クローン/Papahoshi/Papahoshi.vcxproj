@@ -17,10 +17,12 @@
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="EffectCircle.cpp" />
     <ClCompile Include="EffectManeger.cpp" />
+    <ClCompile Include="EffectSphereLight.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="Net.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -32,11 +34,14 @@
     <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="TitleShip.cpp" />
+    <ClCompile Include="TitleWave.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TitleRogo.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -47,10 +52,12 @@
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="EffectCircle.h" />
     <ClInclude Include="EffectManeger.h" />
+    <ClInclude Include="EffectSphereLight.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Meteor.h" />
     <ClInclude Include="Net.h" />
     <ClInclude Include="Pause.h" />
     <ClInclude Include="Player.h" />
@@ -67,6 +74,9 @@
     <ClInclude Include="Star.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TitleRogo.h" />
+    <ClInclude Include="TitleShip.h" />
+    <ClInclude Include="TitleWave.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C552E5BC-1749-44D7-B0AF-DCDABB99F054}</ProjectGuid>
