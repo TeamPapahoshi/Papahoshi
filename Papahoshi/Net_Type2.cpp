@@ -49,7 +49,10 @@
 #define DECRE_THROW_SPEED	(0.1f)	//まさつ
 //待ち時間
 #define INTERVAL_THOROW_PULL	(90)	//投げから引き上げまでの待ち時間
-
+//引くとき
+#define PULL_NUM	(3)		//ズッズッてなる回数
+#define PULL_FRAME	(30)	//引くフレーム
+#define PULL_WAIT	(20)	//待ち時間？
 //=====================================================
 //
 //  網のコンストラクタ
@@ -353,11 +356,11 @@ void cNet::Input(){
 	//----------------------------
 	// ボタン入力
 	//----------------------------
-	if (GetInputButtonPress(DIK_N, 0, BOTTON_NET_RIGHT))
+	if (GetInputButtonPress(DIK_N, 0, BOTTON_NET_LEFT))
 		m_bPressButton[0] = true;
 	else
 		m_bPressButton[0] = false;
-	if (GetInputButtonPress(DIK_U, 0, BOTTON_NET_LEFT))
+	if (GetInputButtonPress(DIK_U, 0, BOTTON_NET_RIGHT))
 		m_bPressButton[1] = true;
 	else
 		m_bPressButton[1] = false;
@@ -528,8 +531,11 @@ void cNet::ShoutPhaseUpdate(){
 	//------ 減速しきって数秒したら引き上げ ------
 	if (m_fThrowSpeed <= 0.0f){
 		m_nFrameCnt++;
-		if (m_nFrameCnt >= INTERVAL_THOROW_PULL)
+		if (m_nFrameCnt >= INTERVAL_THOROW_PULL){
+			m_nFrameCnt = 0;	//初期化
+			m_bPurpose = false;
 			gamePhase = PHASE_PULL;
+		}
 	}
 
 }
@@ -542,7 +548,59 @@ void cNet::ShoutPhaseUpdate(){
 //====================================================
 void cNet::PullPhaseUpdate(){
 
+	//------ 待ち時間がある場合は実行しない --------
+	if (m_nFrameCnt){
+		m_nFrameCnt--;
+		return;
+	}
 
+	//------ 目的位置をセット --------
+	if (!m_bPurpose){
+
+		//引き上げ回数一定以上で終了
+		if (m_nPullNum >= PULL_NUM){
+			//シーン移動？
+			gamePhase = PHASE_MAX;
+		}
+
+		//初回設定
+		if (!m_nPullNum){
+			for (int i = 0; i < 3; i++){
+				if (m_aPos[i].x < m_centerPos.x)
+					m_oncePullPos[i].x = (m_centerPos.x - m_aPos[i].x) / PULL_NUM;
+				else
+					m_oncePullPos[i].x = -(m_aPos[i].x - m_centerPos.x) / PULL_NUM;
+				m_oncePullPos[i].y = (m_centerPos.y - m_aPos[i].y) / PULL_NUM;
+				m_pullSpeed[i].x = m_oncePullPos[i].x / PULL_FRAME;
+				m_pullSpeed[i].y = m_oncePullPos[i].y / PULL_FRAME;
+			}
+		}
+
+		//引き上げ回数を加算
+		m_nPullNum++;
+		m_bPurpose = true;
+
+		//目的位置を設定
+		for (int i = 0; i < 3; i++){
+			m_purposePos[i].x = m_aPos[i].x + m_oncePullPos[i].x;
+			m_purposePos[i].y = m_aPos[i].y + m_oncePullPos[i].y;
+		}
+
+	}
+
+	//------ 目的位置に近づける --------
+	for (int i = 0; i < 3; i++){
+		m_aPos[i].x += m_pullSpeed[i].x;
+		m_aPos[i].y += m_pullSpeed[i].y;
+	}
+	m_nPullFrame++;
+
+	//------ 目的位置に着いたら次へ --------
+	if (m_nPullFrame >= PULL_FRAME){
+		m_nFrameCnt = PULL_WAIT;
+		m_nPullFrame = 0;
+		m_bPurpose = false;
+	}
 
 }
 

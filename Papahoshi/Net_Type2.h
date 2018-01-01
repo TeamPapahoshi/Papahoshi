@@ -92,6 +92,13 @@ private:
 	//投げ状態
 	bool	m_bThrow[3];		//Trueなら投げ中の頂点
 	float	m_afSpeedFourse[3];		//四頂点のスピード
+	//引き状態
+	D3DXVECTOR2	m_purposePos[3];	//目的位置
+	bool		m_bPurpose;			//目的位置が設定されているか
+	int			m_nPullNum;			//引いた回数
+	int			m_nPullFrame;		//引くフレーム
+	D3DXVECTOR2 m_oncePullPos[3];		//一度で引く距離
+	D3DXVECTOR2 m_pullSpeed[3];		//引くスピード
 
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る
