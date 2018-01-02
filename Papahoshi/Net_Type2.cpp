@@ -51,8 +51,12 @@
 #define INTERVAL_THOROW_PULL	(90)	//投げから引き上げまでの待ち時間
 //引くとき
 #define PULL_NUM	(3)		//ズッズッてなる回数
-#define PULL_FRAME	(30)	//引くフレーム
-#define PULL_WAIT	(20)	//待ち時間？
+#define PULL_FRAME	(50)	//引くフレーム
+#define PULL_WAIT	(30)	//待ち時間？
+//半円
+#define MIN_SPEED	(1.0f)	//最低スピード
+#define SPEED_HALFCIRCLE	(10)	//10/1進む
+
 //=====================================================
 //
 //  網のコンストラクタ
@@ -103,6 +107,10 @@ m_fThrowSpeed(0.0f)
 	m_arrow.SetSize(D3DXVECTOR2(ARROW_SIZE_X, ARROW_SIZE_Y));
 	m_arrow.SetRad(D3DX_PI);
 
+	//半円
+	m_halfCircle.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_HALFCIRCLE));
+	m_halfCircle.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT));
+	m_halfCircle.SetScale(D3DXVECTOR2(0.0f, 0.0f));
 }
 
 
@@ -174,6 +182,10 @@ void cNet::Draw(){
 	//矢印(構え状態の時)
 	if (m_bDrawArrow)
 		m_arrow.Draw();
+
+	//半円(投げ状態の時)
+	if (gamePhase == PHASE_SHOUT)
+		m_halfCircle.Draw();
 
 }
 
@@ -473,6 +485,14 @@ void cNet::PostPhaseUpdate(){
 		if (m_fThrowSpeed < 0.0f)
 			m_fThrowSpeed = 0.0f;
 
+		//----- 半円の情報を計算 ------
+		m_fMaxHalfCircle = m_fThrowSpeed / 1.0f;
+		//if (m_fMaxHalfCircle > 1.0f)
+		//	m_fMaxHalfCircle = 1.0f;
+		m_fDirectHalfCircle = 1.0f;
+		m_fSpeed = m_fThrowSpeed * 0.01f;
+		m_fHalfCircleSize = 0.0f;
+
 		//----- 構え状態終了 -----
 		gamePhase = PHASE_SHOUT;
 		m_bDrawArrow = false;
@@ -495,6 +515,14 @@ void cNet::ShoutPhaseUpdate(){
 	//------ ボタン離したかチェック ------
 	for (int i = 0; i < 3; i++){
 		if (!m_bPressButton[i] && !m_bThrow[i]){
+			//------- 離した瞬間に目的位置を代入 ----------
+			if (i == 1)
+				m_ThreePurposePos[i].x = SCREEN_WIDTH / 2.0f;
+			else if (i == 0)
+				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) - ((SCREEN_WIDTH * m_fHalfCircleSize * 0.1f) / 2.0f);
+			else
+				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) + ((SCREEN_WIDTH * m_fHalfCircleSize * 0.1f) / 2.0f);
+			m_ThreePurposePos[i].y = SCREEN_HEIGHT - (SCREEN_HEIGHT * m_fHalfCircleSize * 0.1f);
 			m_bThrow[i] = true;
 		}
 	}
@@ -502,34 +530,47 @@ void cNet::ShoutPhaseUpdate(){
 	//----- 各四頂点の処理 ------
 	for (int i = 0; i < 3; i++){
 
-		//---- スピードの調整 ----
-		if (m_bThrow[i])
-			m_afSpeedFourse[i] = m_fThrowSpeed;	//スピードを代入
-
-		//----- ボタンリリースで頂点とばせっ！ -----
-		float fDisX = 1.0f, fDisY = 1.0f;
-		//飛ばす方向の調整
-		if (i == 0)
-			fDisX = -1.0f;
-		else if (i == 1)
-			fDisX = 0.0f;
-		if (i != 1)
-			fDisY = 0.9f;
-		//飛ばす
-		m_aPos[i].x = m_aFourUki[i].GetPosX() + (m_afSpeedFourse[i] * fDisX / 2.0f);
-		m_aPos[i].y = m_aFourUki[i].GetPosY() - (m_afSpeedFourse[i] * fDisY);
-
-		//----- 自然に見えるように頂点間の最大処理とか -----
+		if (m_bThrow[i]){
+			//----- ボタンリリースで頂点とばせっ！ -----
+			float fSp;	//スピード
+			//Y方向
+			fSp = (m_aPos[i].y - m_ThreePurposePos[i].y) / SPEED_HALFCIRCLE;
+			if (fSp < MIN_SPEED)
+				fSp = MIN_SPEED;
+			m_aPos[i].y -= fSp;
+			if (m_aPos[i].y < m_ThreePurposePos[i].y)
+				m_aPos[i].y = m_ThreePurposePos[i].y;
+			//X方向
+			if (m_ThreePurposePos[i].x < m_aPos[i].x){
+				fSp = (m_aPos[i].x - m_ThreePurposePos[i].x) / SPEED_HALFCIRCLE;
+				if (fSp < MIN_SPEED)
+					fSp = MIN_SPEED;
+				m_aPos[i].x -= fSp;
+				if (m_aPos[i].x < m_ThreePurposePos[i].x)
+					m_aPos[i].x = m_ThreePurposePos[i].x;
+			}
+			else{
+				fSp = (m_ThreePurposePos[i].x - m_aPos[i].x) / SPEED_HALFCIRCLE;
+				if (fSp < MIN_SPEED)
+					fSp = MIN_SPEED;
+				m_aPos[i].x += fSp;
+				if (m_aPos[i].x > m_ThreePurposePos[i].x)
+					m_aPos[i].x = m_ThreePurposePos[i].x;
+			}
+		}
 
 	}
 
-	//------ 減速 ----------
-	m_fThrowSpeed -= DECRE_THROW_SPEED;
-	if (m_fThrowSpeed < 0)
-		m_fThrowSpeed = 0.0f;
+	//------ 半円の拡大縮小 ----------
+	m_fHalfCircleSize += (m_fSpeed * m_fDirectHalfCircle);
+	if (m_fHalfCircleSize > m_fMaxHalfCircle)
+		m_fDirectHalfCircle = -1.0f;
+	if (m_fHalfCircleSize <= 0.0f)
+		m_fDirectHalfCircle = 0.0f;
+	m_halfCircle.SetScale(D3DXVECTOR2(m_fHalfCircleSize, m_fHalfCircleSize));
 
 	//------ 減速しきって数秒したら引き上げ ------
-	if (m_fThrowSpeed <= 0.0f){
+	if (m_fHalfCircleSize <= 0.0f){
 		m_nFrameCnt++;
 		if (m_nFrameCnt >= INTERVAL_THOROW_PULL){
 			m_nFrameCnt = 0;	//初期化

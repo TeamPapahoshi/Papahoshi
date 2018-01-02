@@ -73,6 +73,7 @@ private:
 	cSpriteParam m_aFourUki[3];	//三頂点のうき
 	cSpriteParam m_center;		//中心点のうき
 	cSpriteParam m_arrow;		//矢印
+	cSpriteParam m_halfCircle;	//半円
 	D3DXVECTOR2 m_aPos[3];		//四頂点
 	D3DXVECTOR2 m_centerPos;	//中心点
 
@@ -91,7 +92,7 @@ private:
 	POST_PHASE	m_postPhase;	//構えフェイズ
 	//投げ状態
 	bool	m_bThrow[3];		//Trueなら投げ中の頂点
-	float	m_afSpeedFourse[3];		//四頂点のスピード
+	D3DXVECTOR2	m_ThreePurposePos[3];	//三頂点のポジション
 	//引き状態
 	D3DXVECTOR2	m_purposePos[3];	//目的位置
 	bool		m_bPurpose;			//目的位置が設定されているか
@@ -99,6 +100,11 @@ private:
 	int			m_nPullFrame;		//引くフレーム
 	D3DXVECTOR2 m_oncePullPos[3];		//一度で引く距離
 	D3DXVECTOR2 m_pullSpeed[3];		//引くスピード
+	//半円
+	float		m_fHalfCircleSize;	//半円のサイズ
+	float		m_fSpeed;			//スピード
+	float		m_fMaxHalfCircle;	//半円のマックスサイズ
+	float		m_fDirectHalfCircle;	//方向
 
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る
