@@ -15,12 +15,23 @@
 #include <d3d9.h>
 #include "SceneManeger.h"
 #include "StageSelect.h"
+#include "TitleWave.h"
+#include "TitleShip.h"
+#include "Meteor.h"
+#include "StageSelect.h"
 
 //------------------------------
 // クラス定義
 //------------------------------
 //----シーンゲーム-----
 class cSceneStageSelect :public cBaseScene{
+
+private:
+
+	cStageSelect* pStageSelect;
+	cTitleWave* pTitleWave;
+	cTitleShip* pTitleShip;
+	cMeteor*	pMeteor;
 
 public:
 	void Draw();	//描画
@@ -30,7 +41,6 @@ public:
 
 	cStageSelect* GetStage(void);	//ステージ情報の取得用(暫定)
 
-private:
 
 };
 #endif //!___SCENE_STAGESELECT_H___

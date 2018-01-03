@@ -14,11 +14,15 @@
 //------------------------------
 #include "SceneManeger.h"
 #include <d3d9.h>
+#include "TitleRogo.h"
+#include "TitleWave.h"
+#include "TitleShip.h"
+#include "Meteor.h"
 
 //------------------------------
 // マクロ定義
 //------------------------------
-
+#define CIRCLE_ORBIT_STAR_NUM (2)
 
 //------------------------------
 // クラス定義
@@ -34,6 +38,11 @@ public:
 
 
 private:
+	cTitleRogo* pTitleRogo;
+	cTitleWave* pTitleWave;
+	cTitleShip* pTitleShip;
+	cMeteor*	pMeteor;
+	//cCircleOrbitStar*	pCircleOrbitStar[CIRCLE_ORBIT_STAR_NUM];
 
 };
 #endif //!___SCENE_TITLE_H___

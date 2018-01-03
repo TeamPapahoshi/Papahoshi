@@ -19,6 +19,7 @@
 
 //使用するエフェクトのインクルード部
 #include "EffectCircle.h"
+#include "EffectSphereLight.h"
 
 //-----------------------------
 //マクロ定義
@@ -113,6 +114,7 @@ void cEffectManeger::SetEffectBase(EFFECT_NUM			effect,
 								   LPDIRECT3DTEXTURE9	ptex, 
 								   D3DXVECTOR2			pos, 
 								   D3DXVECTOR2			size, 
+								   D3DXVECTOR2			move,
 								   D3DXCOLOR			color, 
 								   int					life,
 								   int					division)
@@ -127,9 +129,15 @@ void cEffectManeger::SetEffectBase(EFFECT_NUM			effect,
 		case EFFECT_CIRCLE:
 			//円形エフェクトの配置
 			m_pEffect[SetEffectloop] = new cEffectCircle;
-			m_pEffect[SetEffectloop]->SetEffect(ptex, pos, size, color, life, division);
+			m_pEffect[SetEffectloop]->SetEffectCircle(ptex, pos, size, color, life, division);
 			break;
 		
+		case EFFECT_SPHERE_LIGHT:
+			//丸型の光エフェクト配置
+			m_pEffect[SetEffectloop] = new cEffectSphereLight;
+			m_pEffect[SetEffectloop]->SetEffectSphereLight(ptex, pos, size, move, color, life);
+			break;
+
 		default:
 			break;
 		}
