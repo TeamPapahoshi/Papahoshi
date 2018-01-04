@@ -43,6 +43,7 @@
 #define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
 #define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
 #define TEXTURE_FILENAME_ARROW		("Image/Net/arrow.png")
+#define TEXTURE_FILENAME_HALFCIRCLE		("Image/Net/half.png")
 #define TEXTURE_FILENAME_BLACK_HOLE	("Image/Star/blackhole.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
 
@@ -74,6 +75,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_NET,
 	TEXTURE_FILENAME_UKI,
 	TEXTURE_FILENAME_ARROW,
+	TEXTURE_FILENAME_HALFCIRCLE,
 	TEXTURE_FILENAME_BLACK_HOLE,
 };
 
