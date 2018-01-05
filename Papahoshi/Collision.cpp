@@ -7,7 +7,9 @@
 //======================================================================
 #include "Collision.h"
 #include "Sprite.h"
+#include <cmath>	//少数の絶対値用
 
+using namespace std;
 
 //------------------------------
 //グローバル 
@@ -27,6 +29,9 @@ cCollider::cCollider(){
 	m_tColBody.QuadSize = D3DXVECTOR2(0.0f, 0.0f);	// 四角のサイズ
 	m_tColBody.CirclePos = D3DXVECTOR2(0.0f, 0.0f);	// 円の中心座標
 	m_tColBody.fRadius = 0.0f;						// 円の半径
+	m_tColBody.TriangleVertexPos[0] = D3DXVECTOR2(0.0f, 0.0f);	//三角形の頂点
+	m_tColBody.TriangleVertexPos[1] = D3DXVECTOR2(0.0f, 0.0f);
+	m_tColBody.TriangleVertexPos[2] = D3DXVECTOR2(0.0f, 0.0f);
 	sprite.SetVtxColorA(100.0f);					// 半透明でセット
 }
 
@@ -72,6 +77,55 @@ bool cCollider::CheckCollisionCircleToCircle(cCollider obj1, cCollider obj2){
 		<= (obj1.GetCollider().fRadius + obj2.GetCollider().fRadius)*(obj1.GetCollider().fRadius + obj2.GetCollider().fRadius)){
 
 		return true;
+	}
+	return false;
+}
+
+//====================================================================
+//
+//  円と三角の当たり判定
+//
+//====================================================================
+bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider triangle){
+
+	//--------- 変数宣言 ----------
+	D3DXVECTOR2 triVector[3];	//三角形を構成するベクトル
+	D3DXVECTOR2 TtoCVector[3];	//三角形の頂点から円の中心点へ向かうベクトル
+	int i, next;	//ループ用
+	D3DXVECTOR2 work1, work2, work3;	//計算用
+
+	//------ ベクトルの計算 --------
+	for (i = 0; i < 3; i++){
+		//次の値を設定
+		next = i + 1;
+		if (next == 2)
+			next = 0;
+		//三角形を構成するベクトル　*** もしエラー出たらここの向きかえる *** うちが変えます！！
+		triVector[i].x = triangle.GetCollider().TriangleVertexPos[next].x - triangle.GetCollider().TriangleVertexPos[i].x;
+		triVector[i].y = triangle.GetCollider().TriangleVertexPos[next].y - triangle.GetCollider().TriangleVertexPos[i].y;
+		//三角形の頂点から円の中心点へ向かうベクトル
+		TtoCVector[i].x = circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x;
+		TtoCVector[i].y = circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y;
+	}
+
+	//---------- 三角形の線分との当たり判定 --------------
+	for (int i = 0; i < 3; i++){
+
+		//次の値を設定
+		next = i + 1;
+		if (next == 2)
+			next = 0;
+		//判定
+		work1.x = triVector[i].x * TtoCVector[i].x;
+		work1.y = triVector[i].y * TtoCVector[i].y;
+		work2.x = triVector[i].x * TtoCVector[next].x;
+		work2.y = triVector[i].y * TtoCVector[next].y;
+		work3.x = abs(triVector[i].x * TtoCVector[i].x) / abs(triVector[i].x);
+		work3.y = abs(triVector[i].y * TtoCVector[i].y) / abs(triVector[i].y);
+		//if (work1 >= 0 && work2 <= 0 && work3 <= circle.GetCollider().fRadius){
+		//
+		//}
+
 	}
 	return false;
 }
