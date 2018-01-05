@@ -144,7 +144,7 @@ void cEffectCircle::Uninit(void)
 //					 int型				  division	[エフェクトの分割個数]
 //
 //=======================================================================================
-void cEffectCircle::SetEffect(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division)
+void cEffectCircle::SetEffectCircle(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division)
 {
 	//未使用のエフェクトに設定
 	if (!m_bEffectUseFlag)

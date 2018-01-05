@@ -40,7 +40,7 @@
 #define TEXTURE_FILNAME_STAR		("Image/Star/Star.png")
 #define TEXTURE_FILNAME_EF			("Image/Star/Effect.png")
 #define TEXTURE_FILNAME_EF02		("Image/Star/Effect2.png")
-#define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")	// 円のコライダー
+#define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
 #define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
 #define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
 

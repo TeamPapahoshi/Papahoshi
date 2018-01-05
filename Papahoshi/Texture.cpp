@@ -45,6 +45,7 @@
 #define TEXTURE_FILENAME_ARROW		("Image/Net/arrow.png")
 #define TEXTURE_FILENAME_HALFCIRCLE		("Image/Net/half.png")
 #define TEXTURE_FILENAME_BLACK_HOLE	("Image/Star/blackhole.png")
+#define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
 
 #define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ
 
@@ -55,6 +56,7 @@
 vector<char*> texTitle = {
 	TEXTURE_FILNAME_KING_JELLY,
 	TEXTURE_FILNAME_JELLY,		// 同じ画像でもシーンが違うときはもう一回書いて
+	TEXTURE_FILENAME_SPHERE_LIGHT,
 };
 
 //----StageSelect-----

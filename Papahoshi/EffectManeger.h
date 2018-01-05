@@ -44,7 +44,8 @@ public:
 	virtual ~cBaseEffect(){}	//デストラクタ
 	
 	//エフェクト設定用仮想関数
-	virtual void SetEffect(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division) = 0;
+	virtual void SetEffectCircle(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division){};
+	virtual void SetEffectSphereLight(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life){};
 
 	//使用中フラグの取得
 	bool GetUseFlag(void)
@@ -61,6 +62,7 @@ public:
 	enum EFFECT_NUM
 	{
 		EFFECT_CIRCLE,
+		EFFECT_SPHERE_LIGHT,
 		EFFECT_NUM_MAX
 	};
 
@@ -68,7 +70,7 @@ public:
 	void Update();		//更新処理
 	void Draw();			//描画処理
 	void Uninit();		//終了処理
-	void SetEffectBase(EFFECT_NUM effect, LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division);
+	void SetEffectBase(EFFECT_NUM effect, LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life, int division);
 
 protected:
 
