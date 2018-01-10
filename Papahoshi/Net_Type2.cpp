@@ -111,6 +111,13 @@ m_fThrowSpeed(0.0f)
 	m_halfCircle.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_HALFCIRCLE));
 	m_halfCircle.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT));
 	m_halfCircle.SetScale(D3DXVECTOR2(0.0f, 0.0f));
+
+	//--------- “–‚½‚è”»’è‚Ì‰Šú‰» --------------
+	m_aCollider[0].SetType(cCollider::CollisionType::TRIANGLE);
+	m_aCollider[1].SetType(cCollider::CollisionType::TRIANGLE);
+	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
+	m_aCollider[1].SetTriangleCollider(m_aPos[2], m_centerPos, m_aPos[1]);
+
 }
 
 
@@ -152,6 +159,10 @@ void cNet::Update(){
 
 	//’¸“_î•ñ‚É‡‚í‚¹‚Ä‚ ‚İ‚ğ‚Í‚é
 	SetNet();
+
+	//“–‚½‚è”»’èî•ñ‚ÌXV
+	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
+	m_aCollider[1].SetTriangleCollider(m_aPos[2], m_centerPos, m_aPos[1]);
 
 }
 
@@ -645,5 +656,15 @@ void cNet::PullPhaseUpdate(){
 
 }
 
+
+
+//====================================================
+//
+//  –Ô‚Ì“–‚½‚è”»’è‚ğæ“¾
+//
+//====================================================
+//cCollider* cNet::GetCollider(){
+//	return m_aCollider;
+//}
 
 #endif
