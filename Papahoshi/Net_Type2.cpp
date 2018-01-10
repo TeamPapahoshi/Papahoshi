@@ -663,8 +663,8 @@ void cNet::PullPhaseUpdate(){
 //  –Ô‚Ì“–‚½‚è”»’è‚ðŽæ“¾
 //
 //====================================================
-cCollider* cNet::GetCollider(){
-	return m_aCollider;
-}
+//cCollider* cNet::GetCollider(){
+//	return m_aCollider;
+//}
 
 #endif
