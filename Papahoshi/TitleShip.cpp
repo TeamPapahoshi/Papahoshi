@@ -25,7 +25,7 @@
 #define TITLESHIO_MOVE_X (0.3f)			//船のX軸方向移動量
 #define TITLESHIP_MOVE_Y (0.15f)		//船のY軸方向移動量
 
-#define MAKE_SMOKE_TIME  (60)			//煙の生成間隔時間
+#define MAKE_SMOKE_TIME  (35)			//煙の生成間隔時間
 //-----------------------------
 //列挙型定義
 //-----------------------------
@@ -65,6 +65,7 @@ cTitleShip::~cTitleShip(){
 void cTitleShip::Init(){
 	m_sprite.SetPos(D3DXVECTOR2(TITLESHIP_POS_X, TITLESHIP_POS_Y));
 	m_sprite.SetSize(D3DXVECTOR2(TITLESHIP_SIZE_X,TITLESHIP_SIZE_Y));
+	m_sprite.SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_SHIP));
 
 	m_nMakeSmokeTime = 0;
 }
@@ -105,9 +106,9 @@ void cTitleShip::Update(){
 		//煙エフェクトの設定
 		GetEffectManeger()->SetEffectBase(GetEffectManeger()->EFFECT_SPHERE_LIGHT,
 										  *cTextureManeger::GetTextureTitle(TEX_TITLE_SPHERE_LIGHT),
-										  m_sprite.GetPos() + D3DXVECTOR2(50.0f, -100.0f),
-										  D3DXVECTOR2(50.0f, 50.0f),
-										  D3DXVECTOR2(0, -1.0f),
+										  m_sprite.GetPos() + D3DXVECTOR2(65.0f, -40.0f),
+										  D3DXVECTOR2(25.0f, 25.0f),
+										  D3DXVECTOR2(0.3f, -1.0f),
 										  m_sprite.GetVtxColor(),
 										  90, 0);
 		//生成時間の再設定

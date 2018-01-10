@@ -18,7 +18,7 @@
 //-----------------------------
 //ƒ}ƒNƒ’è‹`
 //-----------------------------
-#define WAVE_POS_X (-WAVE_SIZE_X / 2)
+#define WAVE_POS_X (-WAVE_SIZE_X / 2 - 10)
 #define WAVE_POS_Y (SCREEN_HEIGHT - WAVE_SIZE_Y / 2)
 
 #define WAVE_MOVE_X (1.0f)
@@ -68,7 +68,7 @@ void cTitleWave::Init(){
 	{
 		pTitleWave->SetPos(D3DXVECTOR2(WAVE_POS_X + WAVE_SIZE_X * TitleWaveloop, WAVE_POS_Y));
 		pTitleWave->SetSize(D3DXVECTOR2(WAVE_SIZE_X, WAVE_SIZE_Y));
-		pTitleWave->SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_JELLY));
+		pTitleWave->SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_WAVE));
 		pTitleWave->SetMoveX(WAVE_MOVE_X);
 	}
 }
