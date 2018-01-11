@@ -45,7 +45,7 @@ public:
 	void Update();	// XV
 	void Draw();	// •`‰æ
 
-	//cCollider* GetCollider();	//–Ô‚Ì“–‚½‚è”»’è‚ğæ“¾
+	cCollider* GetCollider();	//–Ô‚Ì“–‚½‚è”»’è‚ğæ“¾
 
 private:
 	//---- —ñ‹“Œ^éŒ¾ -----

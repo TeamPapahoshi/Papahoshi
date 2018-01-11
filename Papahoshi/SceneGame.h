@@ -53,6 +53,8 @@ private:
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	
 	cStageManager*				m_pStageManager;	// ステージマネージャー
+
+	void CheckCollision();	//当たり判定を取る
 };
 
 #endif //!___SCENE_TITLE_H___
