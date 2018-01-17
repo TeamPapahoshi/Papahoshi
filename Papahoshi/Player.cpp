@@ -83,7 +83,7 @@ void cPlayer::Update(){
 	//確認用:円形エフェクトの設定
 	if (GetKeyboardTrigger(DIK_E))
 	{
-		GetEffectManeger()->SetEffectBase(GetEffectManeger()->EFFECT_CIRCLE,NULL,sprite.GetPos(),sprite.GetScale(),sprite.GetVtxColor(),60,8 );
+		GetEffectManeger()->SetEffectBase(GetEffectManeger()->EFFECT_CIRCLE,NULL,sprite.GetPos(),sprite.GetScale(),sprite.GetMove(),sprite.GetVtxColor(),60,8 );
 	}
 
 	// あたり判定の位置の更新

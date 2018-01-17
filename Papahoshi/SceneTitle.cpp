@@ -17,16 +17,12 @@
 #include "sound.h"
 
 // このシーンで使うオブジェクト
-#include "Player.h"
-#include "Enemy.h"
 
 
 //-----------------------------
 // グローバル
 //-----------------------------
 // このシーンで使うオブジェクトのポインタを用意(ここでインスタンス化しない)
-cPlayer* pPlayer;
-cEnemy*	 pEnemy;
 
 
 //=======================================================================================
@@ -37,15 +33,33 @@ cEnemy*	 pEnemy;
 cSceneTitle::cSceneTitle(){
 
 	// 使うオブジェクトのインスタンス
-	pPlayer = new cPlayer();
-	pEnemy	= new cEnemy();
+	pTitleRogo = new cTitleRogo;	//タイトルロゴ
+	pTitleWave = new cTitleWave;	//波
+	pTitleShip = new cTitleShip;	//船
+	pMeteor = new cMeteor;
+	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++)	pCircleOrbitStar[i] = new cCircleOrbitStar();	// 円軌道星
 
-	// プレイヤー
-	pPlayer->Init();
-
-	// エネミー
-	pEnemy->Init();
-
+	//初期化処理
+	pTitleRogo->Init();
+	pTitleWave->Init();
+	pTitleShip->Init();
+	pMeteor->Init();
+	/*
+	for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++)
+	{
+		pCircleOrbitStar[i]->Init();
+		if (!i)
+			pCircleOrbitStar[i]->SetCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f - 100),
+			D3DXVECTOR2(350.0f, 180.0f),
+			D3DXVECTOR2(40.0f, 40.0f),
+			5);
+		else
+			pCircleOrbitStar[i]->SetCircleOrbitStar(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f - 100),
+			D3DXVECTOR2(350.0f, 180.0f),
+			D3DXVECTOR2(40.0f, 40.0f),
+			10);
+	}
+	*/
 	// 音源
 	//PlaySound(SOUND_LABEL_BGM000);	
 
@@ -57,14 +71,20 @@ cSceneTitle::cSceneTitle(){
 //
 //=======================================================================================
 cSceneTitle::~cSceneTitle(){
+	
+	//終了処理
+	pTitleRogo->UnInit();
+	pTitleWave->UnInit();
+	pTitleShip->UnInit();
+	pMeteor->UnInit();
+	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->UnInit();
 
 	//StopSound(SOUND_LABEL_BGM000);
-	pPlayer->Unit();
-	pEnemy->Unit();
 
 	// 動的インスタンスするならdeleteをUnitとは別にここに
-	delete pPlayer;
-	delete pEnemy;
+	delete pTitleRogo;
+	pTitleRogo = NULL;
+	
 }
 
 //=======================================================================================
@@ -73,15 +93,12 @@ cSceneTitle::~cSceneTitle(){
 //
 //=======================================================================================
 void cSceneTitle::Update(){
-
-	pPlayer->Update();
-	pEnemy->Update();
-
-	// あたり判定
-	if (cCollider::CheckCollisionCircleToCircle(pPlayer->GetCollider(), pEnemy->GetCollider())){
-		pPlayer->OnColidToEnemy();	// エネミーに当たった時のプレイヤーの処理
-		//enemy.OnColidToPlayer();	// プレイヤーに当たった時のエネミーーの処理
-	}
+	//更新処理
+	pTitleRogo->Update();
+	pTitleWave->Update();
+	pTitleShip->Update();
+	pMeteor->Update();
+	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->Update();
 
 	// スペースでシーンチェンジ
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -95,9 +112,12 @@ void cSceneTitle::Update(){
 //
 //=======================================================================================
 void cSceneTitle::Draw(){
-
-	pEnemy->Draw();
-	pPlayer->Draw();
+	//描画処理
+	pTitleRogo->Draw();
+	pTitleWave->Draw();
+	pTitleShip->Draw();
+	pMeteor->Draw();
+	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->Draw();
 }
 
 

@@ -16,7 +16,6 @@
 #include "Input.h"
 
 // オブジェクト
-#include "StageSelect.h"
 
 //------------------------------
 // マクロ定義
@@ -26,7 +25,6 @@
 //-----------------------------
 // グローバル
 //-----------------------------
-cStageSelect* pStageSelect = NULL;
 
 //=======================================================================================
 //
@@ -37,6 +35,11 @@ cSceneStageSelect::cSceneStageSelect(){
 
 	//使用するオブジェクトの動的確保
 	pStageSelect = new cStageSelect();
+	/*
+	pTitleWave = new cTitleWave;	//波
+	pTitleShip = new cTitleShip;	//船
+	pMeteor = new cMeteor;
+	*/
 
 	pStageSelect->Init();		//ステージセレクト用オブジェクトの初期化
 
@@ -63,6 +66,12 @@ cSceneStageSelect::~cSceneStageSelect()
 //=======================================================================================
 void cSceneStageSelect::Update()
 {
+	//更新処理
+	/*
+	pTitleWave->Update();
+	pTitleShip->Update();
+	pMeteor->Update();
+	*/
 	pStageSelect->Update();
 
 	if (GetKeyboardTrigger(DIK_SPACE))
@@ -86,7 +95,7 @@ void cSceneStageSelect::Draw()
 //		ステージ情報の引き渡し関数
 //
 //=======================================================================================
-cStageSelect* GetStage(void)
+cStageSelect* cSceneStageSelect::GetStage(void)
 {
 	return pStageSelect;
 }

@@ -7,7 +7,9 @@
 //======================================================================
 #include "Collision.h"
 #include "Sprite.h"
+#include <cmath>	//少数の絶対値用
 
+using namespace std;
 
 //------------------------------
 //グローバル 
@@ -27,7 +29,10 @@ cCollider::cCollider(){
 	m_tColBody.QuadSize = D3DXVECTOR2(0.0f, 0.0f);	// 四角のサイズ
 	m_tColBody.CirclePos = D3DXVECTOR2(0.0f, 0.0f);	// 円の中心座標
 	m_tColBody.fRadius = 0.0f;						// 円の半径
-	sprite.SetVtxColorA(100.0f);					// 半透明でセット
+	m_tColBody.TriangleVertexPos[0] = D3DXVECTOR2(0.0f, 0.0f);	//三角形の頂点
+m_tColBody.TriangleVertexPos[1] = D3DXVECTOR2(0.0f, 0.0f);
+m_tColBody.TriangleVertexPos[2] = D3DXVECTOR2(0.0f, 0.0f);
+sprite.SetVtxColorA(100.0f);					// 半透明でセット
 }
 
 
@@ -76,6 +81,75 @@ bool cCollider::CheckCollisionCircleToCircle(cCollider obj1, cCollider obj2){
 	return false;
 }
 
+//====================================================================
+//
+//  円と三角の当たり判定
+//
+//====================================================================
+bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider triangle){
+
+	//--------- 変数宣言 ----------
+	D3DXVECTOR2 triVector[3];	//三角形を構成するベクトル
+	D3DXVECTOR2 TtoCVector[3];	//三角形の頂点から円の中心点へ向かうベクトル
+	int i, next;	//ループ用
+
+	//------ ベクトルの計算 --------
+	for (i = 0; i < 3; i++){
+		//次の値を設定
+		next = i + 1;
+		if (next == 2)
+			next = 0;
+		//三角形を構成するベクトル　*** もしエラー出たらここの向きかえる *** うちが変えます！！
+		triVector[i].x = triangle.GetCollider().TriangleVertexPos[next].x - triangle.GetCollider().TriangleVertexPos[i].x;
+		triVector[i].y = triangle.GetCollider().TriangleVertexPos[next].y - triangle.GetCollider().TriangleVertexPos[i].y;
+		//三角形の頂点から円の中心点へ向かうベクトル
+		TtoCVector[i].x = circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x;
+		TtoCVector[i].y = circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y;
+	}
+
+	//---------- 三角形の線分との当たり判定 --------------
+	for (int i = 0; i < 3; i++){
+
+		//次の値を設定
+		next = i + 1;
+		if (next == 2)
+			next = 0;
+		//判定
+		/*
+		① 線分の内側？
+		　　V[n]・M[n]≧0（鋭角）且つV[n]・M[n+1]≦0（鈍角）で|V[n]×M[n]|/|V[n]|≦rならば衝突を起こしている。
+		② 線分の外側の例外ケース
+		　　①ではない時、(xc-xp[n])^2+(yc-yp[n])^2≦r^2もしくは(xc-xp[n+1])^2+(yc-yp[n+1])^2≦r^2ならば衝突を起こしている。
+			*/
+		//①
+		if (VectorDotProduct(triVector[i], TtoCVector[i]) >= 0 &&
+			VectorDotProduct(triVector[i], TtoCVector[next]) <= 0 &&
+			VectorCrossProduct(triVector[i], TtoCVector[i]) / VectorSize(triVector[i]) <= circle.GetCollider().fRadius)
+			return true;
+		//②
+		if ((((int)(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) ^ 2) +
+			((int)(circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) ^ 2) <=
+			(int)circle.GetCollider().fRadius ^ 2) ||
+			(((int)(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x) ^ 2) +
+			((int)(circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y) ^ 2) <=
+			(int)circle.GetCollider().fRadius ^ 2))
+			return true;
+	}
+	for (int i = 0; i < 3; i++){
+		//次の値を設定
+		next = i + 1;
+		if (next == 2)
+			next = 0;
+		//③ ①と②がすべての辺で成り立っていない時に、
+		//V[n]×M[n]≦0（線分の右側に頂点がある）
+		//がすべての辺について言えるなら衝突を起こしている。
+		//③
+		if (!(VectorCrossProduct(triVector[i], TtoCVector[i]) <= 0))
+			return false;
+	}
+	return true;
+}
+
 
 float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB){
 
@@ -84,8 +158,43 @@ float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB){
 	return ans;
 }
 
+//=====================================================
+//
+//  ベクトルの内積を求める関数
+//
+//=====================================================
+float cCollider::VectorDotProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2){
 
+	//Dot = v1・v2 = x1*x2 + y1*y2 = |v1||v2|cos(θ)
 
+	return (v1.x * v2.x + v1.y * v2.y);
+}
+
+//====================================================
+//
+//  ベクトルの外積を求める関数
+//
+//====================================================
+float cCollider::VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2){
+
+	//v1×v2= x1*y2-x2*y1 = |v1||v2|sin(θ)
+
+	return (v1.x * v2.y - v2.x * v1.y);
+
+}
+
+//====================================================
+//
+// ベクトルの長さを求める関数
+//
+//====================================================
+float cCollider::VectorSize(D3DXVECTOR2 v){
+
+	//ルート(x二乗 + y二乗)
+
+	return sqrt(v.x * v.x + v.y * v.y);
+
+}
 
 
 // 後に追加よてい

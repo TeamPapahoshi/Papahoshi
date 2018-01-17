@@ -15,7 +15,7 @@
 //----------------------------------------
 #include "Common.h"
 #include "Sprite.h"
-
+#include "Collision.h"
 
 //----------------------------------------
 // 列挙型宣言
@@ -44,6 +44,8 @@ public:
 
 	void Update();	// 更新
 	void Draw();	// 描画
+
+	//cCollider* GetCollider();	//網の当たり判定を取得
 
 private:
 	//---- 列挙型宣言 -----
@@ -76,6 +78,10 @@ private:
 	cSpriteParam m_halfCircle;	//半円
 	D3DXVECTOR2 m_aPos[3];		//四頂点
 	D3DXVECTOR2 m_centerPos;	//中心点
+	
+	//---- 当たり判定 ------
+	cCollider m_aCollider[2];	//当たり判定
+								//２つの三角で構成される網
 
 	//----- 変数宣言 -----
 	GAME_PHASE gamePhase;	//ゲームフェイズ

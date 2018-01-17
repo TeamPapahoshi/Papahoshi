@@ -58,6 +58,9 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 	//エフェクトの初期化
 	g_CEffectManeger.Init();
 
+	//乱数の初期化
+	CRandam::InitRand();
+
 	//入力装置管理の初期化
 	if (FAILED(InitInput(hInstance, hWnd)))
 		return E_FAIL;
@@ -95,6 +98,9 @@ void UnInit(void){
 
 	//エフェクトの初期化
 	g_CEffectManeger.Uninit();
+
+	//乱数の初期化
+	CRandam::InitRand();
 
 	// 入力装置管理の終了処理
 	UnInitInput();

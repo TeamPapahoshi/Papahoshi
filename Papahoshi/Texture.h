@@ -21,8 +21,6 @@
 //-----------------------------
 // グローバル
 //-----------------------------
-using namespace std;		// 名前空間の指定
-
 
 //-----------------------------
 // 列挙体
@@ -33,6 +31,9 @@ using namespace std;		// 名前空間の指定
 	enum TEX_TITLE{
 		TEX_TITLE_KING_JELLY,
 		TEX_TITLE_JELLY,
+		TEX_TITLE_SPHERE_LIGHT,
+		TEX_TITLE_SHIP,
+		TEX_TITLE_WAVE,
 		TEX_TITLE_MAX
 	};
 

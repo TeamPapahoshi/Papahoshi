@@ -34,6 +34,7 @@ typedef struct _tCollisionBody{
 	D3DXVECTOR2	QuadSize = D3DXVECTOR2(0.0f, 0.0f);		//四角のサイズ
 	D3DXVECTOR2	CirclePos = D3DXVECTOR2(0.0f, 0.0f);	//円の中心座標
 	float	fRadius = 0.0f;								//円の半径
+	D3DXVECTOR2 TriangleVertexPos[3];					//三角形の各頂点(時計回りに設定)
 
 }tCollisionBody;
 
@@ -48,7 +49,8 @@ public:
 	// あたり判定の種類
 	enum CollisionType{
 		CIRCLE,	// 円
-		QUAD	// 四角
+		QUAD,	// 四角
+		TRIANGLE,	//三角形
 	};
 
 	cCollider();	// コンストラクタ
@@ -67,6 +69,13 @@ public:
 		m_tColBody.QuadSize = size;
 	}
 
+	// 三角形のコライダーのセット
+	void SetTriangleCollider(D3DXVECTOR2 pos1, D3DXVECTOR2 pos2, D3DXVECTOR2 pos3){
+		m_tColBody.TriangleVertexPos[0] = pos1;
+		m_tColBody.TriangleVertexPos[1] = pos2;
+		m_tColBody.TriangleVertexPos[2] = pos3;
+	}
+
 	// 使用するあたり判定のセット
 	void SetType(CollisionType type){
 		m_type = type;
@@ -80,6 +89,9 @@ public:
 	// 円と円のあたり判定
 	static bool CheckCollisionCircleToCircle(cCollider obj1, cCollider obj2);	
 
+	//円と三角の当たり判定
+	static bool CheckCollisionCircleToTriangle(cCollider circle, cCollider triangle);
+
 	// 描画
 	void Draw();	
 	
@@ -87,6 +99,11 @@ private:
 	tCollisionBody	m_tColBody;	// あたり判定の要素
 	cSpriteParam	sprite;		// スプライトパラメーター
 	CollisionType	m_type;		// あたり判定の種類
+
+	//数学的な関数だけど
+	static float	VectorDotProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの内積
+	static float	VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの外積
+	static float	VectorSize(D3DXVECTOR2 v);	//ベクトルの大きさ
 };
 
 // 計算関数
