@@ -49,7 +49,7 @@ public:
 
 private:
 	//---- 列挙型宣言 -----
-	enum GAME_PHASE{	//ゲームフェイズ
+	enum GAME_PHASE{	//網のゲームフェイズ
 		PHASE_POST,	//構え
 		PHASE_SHOUT,	//飛ばし
 		PHASE_PULL,		//引く

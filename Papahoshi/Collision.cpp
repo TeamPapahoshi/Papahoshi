@@ -100,18 +100,18 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 		if (next == 3)
 			next = 0;
 		//三角形を構成するベクトル　*** もしエラー出たらここの向きかえる *** うちが変えます！！
-		//triVector[i].x = triangle.GetCollider().TriangleVertexPos[next].x - triangle.GetCollider().TriangleVertexPos[i].x;
-		//triVector[i].y = triangle.GetCollider().TriangleVertexPos[next].y - triangle.GetCollider().TriangleVertexPos[i].y;
+		triVector[i].x = triangle.GetCollider().TriangleVertexPos[next].x - triangle.GetCollider().TriangleVertexPos[i].x;
+		triVector[i].y = triangle.GetCollider().TriangleVertexPos[next].y - triangle.GetCollider().TriangleVertexPos[i].y;
 		//三角形の頂点から円の中心点へ向かうベクトル
 		TtoCVector[i].x = circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x;
 		TtoCVector[i].y = circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y;
 	}
-	triVector[0].x = triangle.GetCollider().TriangleVertexPos[1].x - triangle.GetCollider().TriangleVertexPos[0].x;
-	triVector[0].y = triangle.GetCollider().TriangleVertexPos[1].y - triangle.GetCollider().TriangleVertexPos[0].y;
-	triVector[1].x = triangle.GetCollider().TriangleVertexPos[2].x - triangle.GetCollider().TriangleVertexPos[1].x;
-	triVector[1].y = triangle.GetCollider().TriangleVertexPos[2].y - triangle.GetCollider().TriangleVertexPos[1].y;
-	triVector[2].x = triangle.GetCollider().TriangleVertexPos[2].x - triangle.GetCollider().TriangleVertexPos[0].x;
-	triVector[2].y = triangle.GetCollider().TriangleVertexPos[2].y - triangle.GetCollider().TriangleVertexPos[0].y;
+	//triVector[0].x = triangle.GetCollider().TriangleVertexPos[1].x - triangle.GetCollider().TriangleVertexPos[0].x;
+	//triVector[0].y = triangle.GetCollider().TriangleVertexPos[1].y - triangle.GetCollider().TriangleVertexPos[0].y;
+	//triVector[1].x = triangle.GetCollider().TriangleVertexPos[2].x - triangle.GetCollider().TriangleVertexPos[1].x;
+	//triVector[1].y = triangle.GetCollider().TriangleVertexPos[2].y - triangle.GetCollider().TriangleVertexPos[1].y;
+	//triVector[2].x = triangle.GetCollider().TriangleVertexPos[2].x - triangle.GetCollider().TriangleVertexPos[0].x;
+	//triVector[2].y = triangle.GetCollider().TriangleVertexPos[2].y - triangle.GetCollider().TriangleVertexPos[0].y;
 
 
 	//---------- 三角形の線分との当たり判定 --------------
@@ -131,7 +131,7 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 		//①
 		if (VectorDotProduct(triVector[i], TtoCVector[i]) >= 0 &&
 			VectorDotProduct(triVector[i], TtoCVector[next]) <= 0 &&
-			VectorCrossProduct(triVector[i], TtoCVector[i]) / VectorSize(triVector[i]) <= circle.GetCollider().fRadius)
+			fabs(VectorCrossProduct(triVector[i], TtoCVector[i])) / VectorSize(triVector[i]) <= circle.GetCollider().fRadius)
 			return true;
 		//②☆
 		if ((circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) * (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) + (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) * (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) <= circle.GetCollider().fRadius * circle.GetCollider().fRadius ||
@@ -156,7 +156,7 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 		//がすべての辺について言えるなら衝突を起こしている。
 		//③
 		float test = VectorCrossProduct(triVector[i], TtoCVector[i]);
-		if (!(VectorCrossProduct(triVector[i], TtoCVector[i]) <= 0))
+		if (VectorCrossProduct(triVector[i], TtoCVector[i]) <= 0)
 			return false;
 	}
 	return true;

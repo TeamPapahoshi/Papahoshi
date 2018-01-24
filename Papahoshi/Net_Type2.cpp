@@ -28,6 +28,7 @@
 #include "Texture.h"
 #include "SceneGame.h"
 #include "Input.h"
+#include "debugproc.h"
 
 #ifdef  _TYPE_2_
 
@@ -110,6 +111,7 @@ m_fThrowSpeed(0.0f)
 	//îºâ~
 	m_halfCircle.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_HALFCIRCLE));
 	m_halfCircle.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT));
+	m_halfCircle.SetSize(D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT));
 	m_halfCircle.SetScale(D3DXVECTOR2(0.0f, 0.0f));
 
 	//--------- ìñÇΩÇËîªíËÇÃèâä˙âª --------------
@@ -497,11 +499,11 @@ void cNet::PostPhaseUpdate(){
 			m_fThrowSpeed = 0.0f;
 
 		//----- îºâ~ÇÃèÓïÒÇåvéZ ------
-		m_fMaxHalfCircle = m_fThrowSpeed / 1.0f;
-		//if (m_fMaxHalfCircle > 1.0f)
-		//	m_fMaxHalfCircle = 1.0f;
+		m_fMaxHalfCircle = m_fThrowSpeed / 10.0f;
+		if (m_fMaxHalfCircle > 1.0f)
+			m_fMaxHalfCircle = 1.0f;
 		m_fDirectHalfCircle = 1.0f;
-		m_fSpeed = m_fThrowSpeed * 0.01f;
+		m_fSpeed = m_fThrowSpeed * 0.001f;
 		m_fHalfCircleSize = 0.0f;
 
 		//----- ç\Ç¶èÛë‘èIóπ -----
@@ -530,11 +532,15 @@ void cNet::ShoutPhaseUpdate(){
 			if (i == 1)
 				m_ThreePurposePos[i].x = SCREEN_WIDTH / 2.0f;
 			else if (i == 0)
-				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) - ((SCREEN_WIDTH * m_fHalfCircleSize * 0.1f) / 2.0f);
+				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) - ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
 			else
-				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) + ((SCREEN_WIDTH * m_fHalfCircleSize * 0.1f) / 2.0f);
-			m_ThreePurposePos[i].y = SCREEN_HEIGHT - (SCREEN_HEIGHT * m_fHalfCircleSize * 0.1f);
+				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) + ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
+			m_ThreePurposePos[i].y = SCREEN_HEIGHT - (SCREEN_HEIGHT * m_fHalfCircleSize);
 			m_bThrow[i] = true;
+			
+			//****** ÉfÉoÉbÉN *******
+			//m_aPos[i] = m_ThreePurposePos[i];
+			//gamePhase = GAME_PHASE::PHASE_MAX;
 		}
 	}
 
@@ -579,6 +585,8 @@ void cNet::ShoutPhaseUpdate(){
 	if (m_fHalfCircleSize <= 0.0f)
 		m_fDirectHalfCircle = 0.0f;
 	m_halfCircle.SetScale(D3DXVECTOR2(m_fHalfCircleSize, m_fHalfCircleSize));
+	m_halfCircle.SetPosY(SCREEN_HEIGHT -  m_halfCircle.GetSizeY() * m_halfCircle.GetScaleY() * 0.5f);
+
 
 	//------ å∏ë¨ÇµÇ´Ç¡ÇƒêîïbÇµÇΩÇÁà¯Ç´è„Ç∞ ------
 	if (m_fHalfCircleSize <= 0.0f){
