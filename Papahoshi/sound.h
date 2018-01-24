@@ -42,5 +42,6 @@ void UninitSound(void);
 HRESULT PlaySound(SOUND_LABEL label);
 void StopSound(SOUND_LABEL label);
 void StopSound(void);
+void SetVolume(float fVolume, SOUND_LABEL label);	//ƒ{ƒŠƒ…[ƒ€’²®
 
 #endif
