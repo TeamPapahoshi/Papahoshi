@@ -15,6 +15,7 @@
 #include "debugproc.h"
 #include "Input.h"
 #include "sound.h"
+#include "Transition.h"
 
 // このシーンで使うオブジェクト
 
@@ -102,7 +103,7 @@ void cSceneTitle::Update(){
 
 	// スペースでシーンチェンジ
 	if (GetKeyboardTrigger(DIK_SPACE)){
-		cSceneManeger::ChangeScene(cSceneManeger::STAGE_SELECT);
+		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::STAGE_SELECT, cTransition::TRANSITION_DICE_SCALE_CHANGE);
 	}
 }
 

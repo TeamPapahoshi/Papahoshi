@@ -49,6 +49,7 @@
     <ClCompile Include="TitleRogo.cpp" />
     <ClCompile Include="TitleShip.cpp" />
     <ClCompile Include="TitleWave.cpp" />
+    <ClCompile Include="Transition.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +92,7 @@
     <ClInclude Include="TitleRogo.h" />
     <ClInclude Include="TitleShip.h" />
     <ClInclude Include="TitleWave.h" />
+    <ClInclude Include="Transition.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C552E5BC-1749-44D7-B0AF-DCDABB99F054}</ProjectGuid>
