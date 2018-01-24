@@ -21,10 +21,10 @@
 #define METEOR_SIZE (10.0f)
 #define METEOR_MOVE (2.5f)
 
-#define RANDAM_METEOR_POS (100)
+#define RANDAM_METEOR_POS (300)
 
 #define RANDAM_METEOR_SET ((float)CRandam::RandamRenge(RANDAM_METEOR_POS, SCREEN_WIDTH - RANDAM_METEOR_POS))
-#define RANDAM_METEOR_TIME (CRandam::RandamRenge(300, 600))
+#define RANDAM_METEOR_TIME (CRandam::RandamRenge(200, 400))
 
 //-----------------------------
 //—ñ‹“Œ^’è‹`
