@@ -38,18 +38,11 @@ cSceneGame::cSceneGame(){
 
 
 	pNet = new cNet();
-	m_pNomalStar.resize(STAGE_01_STAR_NUM);
 	m_pFixedStar.resize(FIXED_STAR_NUM);
 
 
 	// モブ星
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++) m_pNomalStar[i] = new cNormalStar();
-
-
-	// ファイルから読み込んだデータをセットする
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++){
-		m_pNomalStar[i]->SetStarFromFile(i);
-	}
+	m_pNomalStar = new cNormalStar();
 
 	// 恒星
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i] = new cFixedStar();
@@ -71,7 +64,7 @@ cSceneGame::~cSceneGame(){
 	// デリート
 	delete m_pBG;
 
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	delete m_pNomalStar[i];
+	delete m_pNomalStar;
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	delete m_pFixedStar[i];
 }
 
@@ -89,14 +82,9 @@ void cSceneGame::Update(){
 	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
 
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Update();
+	m_pNomalStar->Update();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Update();
 
-	// 恒星とモブ星の距離を計算
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++){
-		float Distance = CalculateDistanceAtoB(m_pNomalStar[i]->GetPos(), m_pFixedStar[0]->GetPos());
-		m_pNomalStar[i]->StarVisibility(Distance);
-	}
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -113,7 +101,7 @@ void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// 背景
 
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Draw();
+	m_pNomalStar->Draw();
 	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Draw();
 
 	m_pStageManager->Draw();
