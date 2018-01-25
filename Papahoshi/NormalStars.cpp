@@ -51,8 +51,11 @@ cNormalStar::cNormalStar(){
 		m_pStarData[nCuntStar].t_Sprite.SetPos(D3DXVECTOR2(100, 100));
 		m_pStarData[nCuntStar].t_Sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
 		m_pStarData[nCuntStar].t_Sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));
-		m_pStarData[nCuntStar].t_bUse = false;
-		
+		m_pStarData[nCuntStar].t_bUse = false;	
+
+		// あたり判定
+		m_pStarData[nCuntStar].t_Collider.SetType(cCollider::CIRCLE);
+		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), STAR_SIZE / 2.0f);
 	}
 
 	//　フレームカウント
@@ -89,12 +92,21 @@ cNormalStar::~cNormalStar(){
 //=======================================================================================
 void cNormalStar::Update(){
 
-	// α処理
+	
+
+
 	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-		
+
+
+		// あたり判定
+		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), STAR_SIZE / 2.0f);
+
+
+		// α処理
 		if (m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() < 255){
 
 			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() + 0.5f);
+
 		}
 	}
 
@@ -122,8 +134,11 @@ void cNormalStar::Update(){
 void cNormalStar::Draw(){
 
 	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-		if (m_pStarData[nCuntStar].t_bUse)
+		if (m_pStarData[nCuntStar].t_bUse){
 			m_pStarData[nCuntStar].t_Sprite.Draw();
+		//	m_pStarData[nCuntStar].t_Collider.Draw();
+		}
+
 	}
 
 
@@ -222,4 +237,21 @@ void cNormalStar::Respawn(){
 
 		}
 	}
+}
+
+
+//=======================================================================================
+//
+//		網との処理
+//
+//=======================================================================================
+void cNormalStar::OnCollidToNet(int count){
+
+
+	// 仮
+	m_pStarData[count].t_bUse = false;
+
+
+	m_bCapchared = true;
+
 }

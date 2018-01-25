@@ -15,6 +15,7 @@
 #include "Collision.h"
 #include "BaseStar.h"
 #include "Sprite.h"
+#include "Net_Type2.h"
 
 #include <vector>
 #include <fstream>
@@ -55,30 +56,41 @@ class cNormalStar :public cBaseStar{
 public:
 	void Update();
 	void Draw();
-
 	~cNormalStar();
 	cNormalStar();
 
-	// 星のランダム生成
+	//--- 網との処理 ---
+	void OnCollidToNet(int count);
+	void SetNetData();
+
+	//--- 星のランダム生成 ---
 	void CreateRamdom();
 
-
-	// 星のリスポーン
+	//--- 星のリスポーン ---
 	void Respawn();
 
 
-	// 星の設定
+	//--- 星の設定 ---
 	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+
+
+	// Getter
+	tNormalStarData* GetStarData(){
+		return m_pStarData;
+	}
 
 private:
 	tNormalStarData*	m_pStarData;
 	int					m_nMaxNum;
 
+	cNet*				m_pNetData;
 
-	// フラグ
+	//--- フラグ ---
 	bool	m_bCapchared;	// 確保完了
 
-	// フレーム関連
+
+
+	//--- フレーム関連 ---
 	int m_nRespawnFream;	// リスポーン
 
 

@@ -36,17 +36,11 @@ cSceneGame::cSceneGame(){
 	m_pStageManager = new cStageManager();
 	cStageManager::ChangeStage(cStageManager::STAGE_01);
 
-
+	// ñ‘
 	pNet = new cNet();
-	m_pFixedStar.resize(FIXED_STAR_NUM);
-
 
 	// ÉÇÉuêØ
 	m_pNomalStar = new cNormalStar();
-
-	// çPêØ
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i] = new cFixedStar();
-	//m_pFixedStar[0]->Set()
 
 
 	// îwåi
@@ -63,9 +57,8 @@ cSceneGame::~cSceneGame(){
 
 	// ÉfÉäÅ[Ég
 	delete m_pBG;
-
 	delete m_pNomalStar;
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	delete m_pFixedStar[i];
+
 }
 
 //=======================================================================================
@@ -83,9 +76,7 @@ void cSceneGame::Update(){
 	m_pBG->Update();	// îwåi
 
 	m_pNomalStar->Update();
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Update();
-
-
+	
 	//ìñÇΩÇËîªíË
 	CheckCollision();
 
@@ -105,7 +96,6 @@ void cSceneGame::Draw(){
 	m_pBG->Draw();	// îwåi
 
 	m_pNomalStar->Draw();
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Draw();
 
 	m_pStageManager->Draw();
 	pNet->Draw();	//Ç†Ç›
@@ -128,5 +118,18 @@ void cSceneGame::CheckCollision(){
 	if (cCollider::CheckCollisionCircleToTriangle(c, t)){
 		int i = 0;
 	}
+
+	// ñ‘Ç∆ÉÇÉuêØÇÃÇ†ÇΩÇËîªíË
+	for (int i = 0; i < MAX_NORMAL_STAR; i++){
+
+		for (int j = 0; j < 2; j++){
+			if (cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[i].t_Collider, pNet->GetCollider()[j])){
+
+				m_pNomalStar->OnCollidToNet(i);
+
+			}
+		}
+	}
+
 
 }
