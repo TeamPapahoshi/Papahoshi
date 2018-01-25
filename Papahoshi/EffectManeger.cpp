@@ -58,6 +58,8 @@ void cEffectManeger::Uninit()
 {
 	for (int UninitEffectloop = 0; UninitEffectloop < MAX_EFFECT; UninitEffectloop++)
 	{
+		//未使用のエフェクトはスルー
+		if (m_pEffect[UninitEffectloop] == NULL) continue;
 		//動的確保したエフェクトの削除
 		delete m_pEffect[UninitEffectloop];
 		m_pEffect[UninitEffectloop] = NULL;
