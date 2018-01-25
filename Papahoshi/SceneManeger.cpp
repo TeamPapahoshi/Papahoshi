@@ -41,7 +41,6 @@ cTextureManeger* tex = new cTextureManeger();
 void cSceneManeger::ChangeScene(SCENE scene){
 
 
-
 	if (m_pScene != NULL){
 		delete m_pScene;				// シーンの解放
 		GetEffectManeger()->Uninit();	// エフェクトの終了処理

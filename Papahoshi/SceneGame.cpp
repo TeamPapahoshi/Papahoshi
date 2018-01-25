@@ -36,24 +36,11 @@ cSceneGame::cSceneGame(){
 	m_pStageManager = new cStageManager();
 	cStageManager::ChangeStage(cStageManager::STAGE_01);
 
-
+	// 網
 	pNet = new cNet();
-	m_pNomalStar.resize(STAGE_01_STAR_NUM);
-	m_pFixedStar.resize(FIXED_STAR_NUM);
-
 
 	// モブ星
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++) m_pNomalStar[i] = new cNormalStar();
-
-
-	// ファイルから読み込んだデータをセットする
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++){
-		m_pNomalStar[i]->SetStarFromFile(i);
-	}
-
-	// 恒星
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i] = new cFixedStar();
-	//m_pFixedStar[0]->Set()
+	m_pNomalStar = new cNormalStar();
 
 
 	// 背景
@@ -70,9 +57,8 @@ cSceneGame::~cSceneGame(){
 
 	// デリート
 	delete m_pBG;
+	delete m_pNomalStar;
 
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	delete m_pNomalStar[i];
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	delete m_pFixedStar[i];
 }
 
 //=======================================================================================
@@ -89,14 +75,10 @@ void cSceneGame::Update(){
 	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
 
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Update();
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Update();
-
-	// 恒星とモブ星の距離を計算
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++){
-		float Distance = CalculateDistanceAtoB(m_pNomalStar[i]->GetPos(), m_pFixedStar[0]->GetPos());
-		m_pNomalStar[i]->StarVisibility(Distance);
-	}
+	m_pNomalStar->Update();
+	
+	//当たり判定
+	CheckCollision();
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -113,9 +95,41 @@ void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// 背景
 
-	for (int i = 0; i < STAGE_01_STAR_NUM; i++)	m_pNomalStar[i]->Draw();
-	for (int i = 0; i < FIXED_STAR_NUM; i++)	m_pFixedStar[i]->Draw();
+	m_pNomalStar->Draw();
 
 	m_pStageManager->Draw();
 	pNet->Draw();	//あみ
+}
+
+
+//============================================
+//
+// 当たり判定を取得
+//
+//============================================
+void cSceneGame::CheckCollision(){
+
+	cCollider c, t;
+	c.SetType(cCollider::CollisionType::CIRCLE);
+	t.SetType(cCollider::CollisionType::TRIANGLE);
+	c.SetCircleCollider(D3DXVECTOR2(200.0f, 200.0f), 10.0f);
+	t.SetTriangleCollider(D3DXVECTOR2(200, 100), D3DXVECTOR2(300, 300), D3DXVECTOR2(100, 300));
+
+	if (cCollider::CheckCollisionCircleToTriangle(c, t)){
+		int i = 0;
+	}
+
+	// 網とモブ星のあたり判定
+	for (int i = 0; i < MAX_NORMAL_STAR; i++){
+
+		for (int j = 0; j < 2; j++){
+			if (cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[i].t_Collider, pNet->GetCollider()[j])){
+
+				m_pNomalStar->OnCollidToNet(i);
+
+			}
+		}
+	}
+
+
 }
