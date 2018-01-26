@@ -21,6 +21,7 @@
 // É}ÉNÉç
 //---------------------
 #define BG_FILNAME_SKY ("Image/BG/black.png")
+#define BG_STAR        ("Image/BG/bgstar.jpg")
 
 
 //=======================================================================================
@@ -38,6 +39,7 @@ void cBG::SetBG(BG bg){
 	switch (type)
 	{
 	case TITLE:
+		sprite.LoadTexture(BG_STAR);
 		break;
 	case GAME_MAIN:
 		break;

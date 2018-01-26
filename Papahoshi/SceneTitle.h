@@ -14,10 +14,13 @@
 //------------------------------
 #include "SceneManeger.h"
 #include <d3d9.h>
+
+//------ 使用するオブジェクト -------
 #include "TitleRogo.h"
 #include "TitleWave.h"
 #include "TitleShip.h"
 #include "Meteor.h"
+#include "BG.h"
 
 //------------------------------
 // マクロ定義
@@ -36,13 +39,14 @@ public:
 	cSceneTitle();	//コンストラクタ
 	~cSceneTitle();	//デストラクタ
 
-
 private:
-	cTitleRogo* pTitleRogo;
-	cTitleWave* pTitleWave;
-	cTitleShip* pTitleShip;
-	cMeteor*	pMeteor;
+	cTitleRogo* m_pTitleRogo;
+	cTitleWave* m_pTitleWave;
+	cTitleShip* m_pTitleShip;
+	cMeteor*	m_pMeteor;
+	cBG*		m_pBG;
 	//cCircleOrbitStar*	pCircleOrbitStar[CIRCLE_ORBIT_STAR_NUM];
 
+	bool		bSceneChangeFlag;
 };
 #endif //!___SCENE_TITLE_H___

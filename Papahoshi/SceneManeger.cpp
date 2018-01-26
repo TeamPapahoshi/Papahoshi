@@ -42,11 +42,13 @@ void cSceneManeger::ChangeScene(SCENE scene){
 
 
 	if (m_pScene != NULL){
-		delete m_pScene;	// シーンの解放
+		delete m_pScene;				// シーンの解放
+		GetEffectManeger()->Uninit();	// エフェクトの終了処理
 	}
 
 	//現在のシーン番号の更新
 	SetSceneNum(scene);
+
 
 	switch (scene){
 	case TITLE:

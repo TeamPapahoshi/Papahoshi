@@ -33,17 +33,20 @@
 cSceneTitle::cSceneTitle(){
 
 	// 使うオブジェクトのインスタンス
-	pTitleRogo = new cTitleRogo;	//タイトルロゴ
-	pTitleWave = new cTitleWave;	//波
-	pTitleShip = new cTitleShip;	//船
-	pMeteor = new cMeteor;
+	m_pTitleRogo = new cTitleRogo();	//タイトルロゴ
+	m_pTitleWave = new cTitleWave();	//波
+	m_pTitleShip = new cTitleShip();	//船
+	m_pMeteor = new cMeteor();
+	// 背景
+	m_pBG = new cBG();
+	m_pBG->SetBG(cBG::TITLE);
 	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++)	pCircleOrbitStar[i] = new cCircleOrbitStar();	// 円軌道星
 
 	//初期化処理
-	pTitleRogo->Init();
-	pTitleWave->Init();
-	pTitleShip->Init();
-	pMeteor->Init();
+	m_pTitleRogo->Init();
+	m_pTitleWave->Init();
+	m_pTitleShip->Init();
+	m_pMeteor->Init();
 	/*
 	for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++)
 	{
@@ -63,6 +66,8 @@ cSceneTitle::cSceneTitle(){
 	// 音源
 	//PlaySound(SOUND_LABEL_BGM000);	
 
+	// シーンチェンジフラグの初期化
+	bSceneChangeFlag = false;
 }
 
 //=======================================================================================
@@ -73,18 +78,25 @@ cSceneTitle::cSceneTitle(){
 cSceneTitle::~cSceneTitle(){
 	
 	//終了処理
-	pTitleRogo->UnInit();
-	pTitleWave->UnInit();
-	pTitleShip->UnInit();
-	pMeteor->UnInit();
+	m_pTitleRogo->UnInit();
+	m_pTitleWave->UnInit();
+	m_pTitleShip->UnInit();
+	m_pMeteor->UnInit();
 	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->UnInit();
 
 	//StopSound(SOUND_LABEL_BGM000);
 
 	// 動的インスタンスするならdeleteをUnitとは別にここに
-	delete pTitleRogo;
-	pTitleRogo = NULL;
-	
+	delete m_pTitleRogo;
+	m_pTitleRogo = NULL;
+	delete m_pTitleWave;
+	m_pTitleWave = NULL;
+	delete m_pTitleShip;
+	m_pTitleShip = NULL;
+	delete m_pMeteor;
+	m_pMeteor = NULL;
+	delete m_pBG;
+	m_pBG = NULL;
 }
 
 //=======================================================================================
@@ -94,14 +106,21 @@ cSceneTitle::~cSceneTitle(){
 //=======================================================================================
 void cSceneTitle::Update(){
 	//更新処理
-	pTitleRogo->Update();
-	pTitleWave->Update();
-	pTitleShip->Update();
-	pMeteor->Update();
+	m_pTitleRogo->Update(bSceneChangeFlag);
+	m_pTitleShip->Update(bSceneChangeFlag);
+	m_pTitleWave->Update();
+	m_pMeteor->Update();
+	m_pBG->Update();
 	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->Update();
 
-	// スペースでシーンチェンジ
+	// スペースでシーンチェンジフラグを立てる
 	if (GetKeyboardTrigger(DIK_SPACE)){
+		bSceneChangeFlag = true;
+	}
+
+	//船が画面外に出たらシーンチェンジ
+	if (m_pTitleShip->GetShipOutFlag())
+	{
 		cSceneManeger::ChangeScene(cSceneManeger::STAGE_SELECT);
 	}
 }
@@ -113,12 +132,12 @@ void cSceneTitle::Update(){
 //=======================================================================================
 void cSceneTitle::Draw(){
 	//描画処理
-	pTitleRogo->Draw();
-	pTitleWave->Draw();
-	pTitleShip->Draw();
-	pMeteor->Draw();
+	m_pBG->Draw();
+	m_pMeteor->Draw();
+	m_pTitleRogo->Draw();
+	m_pTitleWave->Draw();
+	m_pTitleShip->Draw();
 	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->Draw();
 }
-
 
 

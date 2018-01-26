@@ -16,7 +16,8 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define MAX_METEOR (3)
+#define MAX_METEOR (10)
+#define MAX_METEOR_SPRITE_NUM (3)
 #define METEOR_LIFETIME (60)
 
 //-----------------------------
@@ -24,17 +25,74 @@
 //-----------------------------
 
 //-----------------------------
+//構造体定義
+//-----------------------------
+typedef struct
+{
+
+	//int m_nMakeTime;	//流星の生成までの時間
+	//int m_nLifeTime;	//流星の生存時間
+	//bool m_bUseFlag;	//使用フラグ
+
+	cSpriteParam m_Sprite[MAX_METEOR_SPRITE_NUM];
+}ObjMETEOR;
+
+//-----------------------------
 //クラス定義
 //-----------------------------
+
+class cObjMETEOR
+{
+private:	//外部から参照不可
+	int nMakeTime;	//流星の生成までの時間
+	int nLifeTime;	//流星の生存時間
+	bool bUseFlag;	//使用フラグ
+
+	//----------------------------
+protected:	//クラス内でのみ参照可
+
+	//-----------------------------
+public:		//どこからでも参照可
+
+	cObjMETEOR(){}	// コンストラクタ
+	~cObjMETEOR(){}	// デストラクタ
+
+	//------- ゲッタ --------
+	int GetMakeTime(void)
+	{
+		return nMakeTime;
+	}
+	int GetLifeTime(void)
+	{
+		return nLifeTime;
+	}
+	bool GetUseFlag(void)
+	{
+		return bUseFlag;
+	}
+	//------- セッタ --------
+	void SetLifeTime(int LifeTime)
+	{
+		nLifeTime = LifeTime;
+	}
+	void SetMakeTime(int MakeTime)
+	{
+		nMakeTime = MakeTime;
+	}
+	void SetUseFlag(bool Flag)
+	{
+		bUseFlag = Flag;
+	}
+
+	cSpriteParam Sprite[MAX_METEOR_SPRITE_NUM];
+};
+
 //クラステンプレート
 class cMeteor
 {
 private:	//外部から参照不可
-	int m_nMakeTime;	//流星の生成までの時間
-	int m_nLifeTime;	//流星の生存時間
-	bool m_bUseFlag;	//使用フラグ
+	cObjMETEOR m_aMeteor[MAX_METEOR];
 
-	cSpriteParam m_Sprite[3];
 	//-----------------------------
 protected:	//クラス内でのみ参照可
 
