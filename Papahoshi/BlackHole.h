@@ -17,6 +17,28 @@
 #include <vector>
 #include <fstream>
 
+
+//-----------------------------
+// マクロ定義
+//-----------------------------
+#define MAX_BLACK_HOLE_NUM	(1)
+
+
+
+//-----------------------------
+// 構造体定義
+//-----------------------------
+// ブラックホールのデータ
+typedef struct _tBlackHoleData{
+
+	cSpriteParam			t_Sprite;				// 描画用
+	cCollider				t_VacuumCollider;		// 吸い込み範囲
+	cCollider				t_DeleteCollider;		// 消滅範囲
+	cCircleOrbitMovement	t_MoveCircle;			// 円軌道用判定
+	bool					t_bUse;					// 使用フラグ
+
+}tBlackHoleData;
+
 //-----------------------------
 //クラス定義
 //-----------------------------
@@ -26,16 +48,18 @@ class cBlackHole :public cBaseStar{
 public:
 	void Update();
 	void Draw();
-
 	~cBlackHole();
 	cBlackHole();
+
+	// Getter
+	tBlackHoleData* GetStarData(){
+		return m_pStarData;
+	}
 
 	// 星の設定
 	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
 private:
-	cCollider		m_Collider;			// あたり判定
-	int				m_nVacuumStar;		// 吸い込む星の数
-	D3DXVECTOR2		move;				// 移動量
+	tBlackHoleData*	m_pStarData;
 };
 #endif //!___BLACK_HOLE_H___

@@ -15,8 +15,7 @@
 #include <d3d9.h>
 #include "SceneManeger.h"
 #include "Common.h"
-#include "Net.h"
-#include "Net_Type2.h"
+
 
 // ステージ
 #include "StageManager.h"
@@ -25,6 +24,9 @@
 #include "BG.h"
 #include "NormalStars.h"
 #include "FixedStars.h"
+#include "BlackHole.h"
+#include "Net.h"
+#include "Net_Type2.h"
 
 
 // 呼び出す星の数
@@ -50,9 +52,8 @@ private:
 	cNet *pNet;
 
 	cNormalStar*				m_pNomalStar;		// モブ星
+	cBlackHole*					m_pBlackHole;		// ブラックホール
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
-	
-
 	cStageManager*				m_pStageManager;	// ステージマネージャー
 
 	void CheckCollision();	//当たり判定を取る

@@ -16,6 +16,7 @@
 #include "BaseStar.h"
 #include "Sprite.h"
 #include "Net_Type2.h"
+#include "BlackHole.h"
 
 #include <vector>
 #include <fstream>
@@ -41,9 +42,10 @@ struct SetNormalStar{
 typedef struct _tNormalStarData{
 
 	cSpriteParam			t_Sprite;		// 描画用
-	cCollider				t_Collider;		// あたり判定
-	cCircleOrbitMovement	t_MoveCircle;	// 円軌道用
+	cCollider				t_Collider;		// あたり
+	cCircleOrbitMovement	t_MoveCircle;	// 円軌道用判定
 	bool					t_bUse;			// 使用フラグ
+	D3DXVECTOR2				t_Move;
 	
 }tNormalStarData;
 
@@ -63,6 +65,11 @@ public:
 	void OnCollidToNet(int count);
 	void SetNetData();
 
+	//--- ブラックホールとの処理 ---
+	void OnCollidToBlackHole(int Normal,int Black);
+	void SetBlackHoleData(cBlackHole*);
+
+
 	//--- 星のランダム生成 ---
 	void CreateRamdom();
 
@@ -80,19 +87,11 @@ public:
 	}
 
 private:
-	tNormalStarData*	m_pStarData;
-	int					m_nMaxNum;
-
 	cNet*				m_pNetData;
+	tNormalStarData*	m_pStarData;
+	cBlackHole*			m_pBlackHoleData;
 
-	//--- フラグ ---
-	bool	m_bCapchared;	// 確保完了
-
-
-
-	//--- フレーム関連 ---
-	int m_nRespawnFream;	// リスポーン
-
+	
 
 };
 #endif	//!___NORMAL_STARS_H___

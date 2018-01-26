@@ -13,10 +13,15 @@
 #include "debugproc.h"
 #include "Common.h"
 #include "Texture.h"
+#include "rand.h"
 
 #include "BlackHole.h"
 #include <fstream>
 
+#define STAR_SIZE	(100)
+
+#define VACUUM_RANGE	(200)
+#define DELETE_RANGE	(10)
 
 //****************************************************************************************************************
 // ブラックホール
@@ -28,8 +33,39 @@
 //=======================================================================================
 cBlackHole::cBlackHole(){
 
-	m_sprite.SetPos(SCREEN_CENTER);
-	m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
+	// 乱数の初期化
+	CRandam::InitRand();
+
+	// 星の最大数　後にファイルから読込したい
+	m_nMaxNum = MAX_BLACK_HOLE_NUM;
+	m_nCurrentNum = MAX_BLACK_HOLE_NUM;
+
+	// 動的確保
+	m_pStarData = new tBlackHoleData[m_nMaxNum];
+
+
+	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
+
+		// 初期化
+		m_pStarData[nCuntStar].t_Sprite.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
+		m_pStarData[nCuntStar].t_Sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
+		m_pStarData[nCuntStar].t_Sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
+		m_pStarData[nCuntStar].t_bUse = false;
+
+		// あたり判定
+		m_pStarData[nCuntStar].t_VacuumCollider.SetType(cCollider::CIRCLE);
+		m_pStarData[nCuntStar].t_VacuumCollider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), VACUUM_RANGE);
+
+		m_pStarData[nCuntStar].t_DeleteCollider.SetType(cCollider::CIRCLE);
+		m_pStarData[nCuntStar].t_DeleteCollider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), DELETE_RANGE);
+	}
+
+	//　フレームカウント
+	m_nRespawnFream = 0;
+
+	// 
+	m_bCapchared = false;
+
 
 }
 
@@ -49,18 +85,6 @@ cBlackHole::~cBlackHole(){
 //=======================================================================================
 void cBlackHole::Update(){
 
-	// ゲームフェイズをもらう予定!!!
-
-	// 通常状態(ゲーム)
-
-	// 確保中
-
-	// 吸い込み->吸い込んだら消える？
-
-	// 数え中
-
-	// 網引き上げ中 
-
 }
 
 //=======================================================================================
@@ -69,7 +93,12 @@ void cBlackHole::Update(){
 //
 //=======================================================================================
 void cBlackHole::Draw(){
-	m_sprite.Draw();
+	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
+
+		m_pStarData[nCuntStar].t_Sprite.Draw();
+		m_pStarData[nCuntStar].t_VacuumCollider.Draw();
+	//	m_pStarData[nCuntStar].t_DeleteCollider.Draw();
+	}
 }
 
 //=======================================================================================

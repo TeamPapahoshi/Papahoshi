@@ -31,7 +31,14 @@ public:
 	}
 
 protected:
-	cSpriteParam	m_sprite;		// 描画用
+	cSpriteParam	m_sprite;		// 
+
+	int					m_nMaxNum;
+	int					m_nCurrentNum;
+	//--- フラグ ---
+	bool	m_bCapchared;	// 確保完了
+	//--- フレーム関連 ---
+	int m_nRespawnFream;	// リスポーン
 };
 
 //----円軌道移動クラス------円軌道させたいクラスにもたせる(星以外にも使えます)

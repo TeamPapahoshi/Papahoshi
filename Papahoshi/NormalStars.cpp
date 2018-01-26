@@ -17,13 +17,14 @@
 #include "NormalStars.h"
 #include "rand.h"
 #include "Input.h"
+#include <cmath>
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
 #define STAR_SIZE	(20)
 
-#define RESPAWN_FREAM (100)
+#define RESPAWN_FREAM (400)
 
 //****************************************************************************************************************
 // 普通の星
@@ -40,6 +41,7 @@ cNormalStar::cNormalStar(){
 
 	// 星の最大数　後にファイルから読込したい
 	m_nMaxNum = MAX_NORMAL_STAR;
+	m_nCurrentNum = MAX_NORMAL_STAR;
 
 	// 動的確保
 	m_pStarData = new tNormalStarData[m_nMaxNum];
@@ -121,6 +123,7 @@ void cNormalStar::Update(){
 		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 			m_pStarData[nCuntStar].t_bUse = false;
 			m_bCapchared = true;
+			m_nCurrentNum = 0;
 		}
 	}
 
@@ -137,6 +140,7 @@ void cNormalStar::Draw(){
 		if (m_pStarData[nCuntStar].t_bUse){
 			m_pStarData[nCuntStar].t_Sprite.Draw();
 		//	m_pStarData[nCuntStar].t_Collider.Draw();
+
 		}
 
 	}
@@ -145,6 +149,7 @@ void cNormalStar::Draw(){
 	// デバッグプリント
 	PrintDebugProc("***NormalStar***\n");
 	PrintDebugProc("R:Reset\n");
+	PrintDebugProc("CurrentNum %d\n", m_nCurrentNum);
 	PrintDebugProc("RespawnFrame %d\n", m_nRespawnFream);
 	PrintDebugProc("****************\n");
 
@@ -225,6 +230,7 @@ void cNormalStar::Respawn(){
 
 			// フラグを立てる
 			m_pStarData[nCuntStar].t_bUse = true;
+			m_nCurrentNum++;
 
 			// αを０で開始
 			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(0);
@@ -249,9 +255,56 @@ void cNormalStar::OnCollidToNet(int count){
 
 
 	// 仮
-	m_pStarData[count].t_bUse = false;
+	if (m_pStarData[count].t_bUse){
+		m_pStarData[count].t_bUse = false;
+		m_nCurrentNum--;
+	}
+
 
 
 	m_bCapchared = true;
+
+}
+
+void cNormalStar::SetBlackHoleData(cBlackHole* data){
+	m_pBlackHoleData = data;
+}
+
+void cNormalStar::OnCollidToBlackHole(int Normal,int Black){
+
+	// ブラックホールの中心を取得
+	D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].t_Sprite.GetPos();
+
+	// ブラックホールと星との距離を求める
+	D3DXVECTOR2 Distance;
+	Distance.x = sqrt((m_pStarData[Normal].t_Sprite.GetPosX() - Center.x)*(m_pStarData[Normal].t_Sprite.GetPosX() - Center.x));
+	Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
+
+	// 距離から移動量を算出
+	m_pStarData[Normal].t_Move.x = Distance.x / 500.0f;
+	m_pStarData[Normal].t_Move.y = Distance.y / 500.0f;
+
+	// 移動量を繁栄
+	if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
+		m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
+	}
+	if (m_pStarData[Normal].t_Sprite.GetPosX() < Center.x){
+		m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + m_pStarData[Normal].t_Move.x);
+	}
+
+	if (m_pStarData[Normal].t_Sprite.GetPosY() > Center.y){
+		m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() - m_pStarData[Normal].t_Move.y);
+	}
+	if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
+		m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
+	}
+	//m_pStarData[num].t_Sprite.SetPosX(m_pStarData[num].t_Sprite.GetPosX() + 1.0f);
+
+
+
+
+
+
+
 
 }
