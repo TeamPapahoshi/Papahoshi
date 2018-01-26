@@ -164,6 +164,26 @@ void cSceneGame::CheckCollision(){
 			}
 		}
 	}
+	// モブ星とブラックホールの削除範囲とのあたり判定
+	for (int Normal = 0; Normal < MAX_NORMAL_STAR; Normal++){
+
+		if (!m_pNomalStar->GetStarData()[Normal].t_bUse)
+			continue;
+
+		for (int Black = 0; Black < MAX_BLACK_HOLE_NUM; Black++){
+
+			/*if (!m_pBlackHole->GetStarData()[Black].t_bUse)
+			continue;*/
+
+
+			if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[Normal].t_Collider,
+				m_pBlackHole->GetStarData()[Black].t_DeleteCollider)){
+
+				m_pNomalStar->OnCollidToDelete(Normal);
+
+			}
+		}
+	}
 
 
 

@@ -67,6 +67,7 @@ public:
 
 	//--- ブラックホールとの処理 ---
 	void OnCollidToBlackHole(int Normal,int Black);
+	void OnCollidToDelete(int Normal);
 	void SetBlackHoleData(cBlackHole*);
 
 

@@ -270,7 +270,7 @@ void cNormalStar::SetBlackHoleData(cBlackHole* data){
 	m_pBlackHoleData = data;
 }
 
-void cNormalStar::OnCollidToBlackHole(int Normal,int Black){
+void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 
 	// ブラックホールの中心を取得
 	D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].t_Sprite.GetPos();
@@ -284,7 +284,7 @@ void cNormalStar::OnCollidToBlackHole(int Normal,int Black){
 	m_pStarData[Normal].t_Move.x = Distance.x / 500.0f;
 	m_pStarData[Normal].t_Move.y = Distance.y / 500.0f;
 
-	// 移動量を繁栄
+	// 移動量を反映
 	if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
 		m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
 	}
@@ -298,11 +298,14 @@ void cNormalStar::OnCollidToBlackHole(int Normal,int Black){
 	if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
 		m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
 	}
-	//m_pStarData[num].t_Sprite.SetPosX(m_pStarData[num].t_Sprite.GetPosX() + 1.0f);
 
+}
 
+void cNormalStar::OnCollidToDelete(int Normal){
 
-
+	// 
+	m_pStarData[Normal].t_bUse = false;
+	m_nCurrentNum--;
 
 
 

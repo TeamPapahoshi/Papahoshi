@@ -21,7 +21,7 @@
 #define STAR_SIZE	(100)
 
 #define VACUUM_RANGE	(200)
-#define DELETE_RANGE	(10)
+#define DELETE_RANGE	(20)
 
 //****************************************************************************************************************
 // ブラックホール
@@ -97,7 +97,7 @@ void cBlackHole::Draw(){
 
 		m_pStarData[nCuntStar].t_Sprite.Draw();
 		m_pStarData[nCuntStar].t_VacuumCollider.Draw();
-	//	m_pStarData[nCuntStar].t_DeleteCollider.Draw();
+		m_pStarData[nCuntStar].t_DeleteCollider.Draw();
 	}
 }
 
