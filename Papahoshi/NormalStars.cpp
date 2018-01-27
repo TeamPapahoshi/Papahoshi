@@ -306,8 +306,4 @@ void cNormalStar::OnCollidToDelete(int Normal){
 	// 
 	m_pStarData[Normal].t_bUse = false;
 	m_nCurrentNum--;
-
-
-
-
 }

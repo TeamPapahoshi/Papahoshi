@@ -39,6 +39,7 @@
     <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="SpaceRock.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stage01.cpp" />
     <ClCompile Include="Stage02.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="SpaceRock.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Stage01.h" />
     <ClInclude Include="Stage02.h" />

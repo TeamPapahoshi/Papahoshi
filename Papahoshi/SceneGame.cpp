@@ -39,10 +39,11 @@ cSceneGame::cSceneGame(){
 	// 網
 	pNet = new cNet();
 
-
-
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
+
+	// 隕石
+	m_pSpaceRock = new cSpaceRock();
 
 	// モブ星
 	m_pNomalStar = new cNormalStar();
@@ -83,6 +84,7 @@ void cSceneGame::Update(){
 
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
+	m_pSpaceRock->Update();
 	
 	//当たり判定
 	CheckCollision();
@@ -104,6 +106,8 @@ void cSceneGame::Draw(){
 
 	
 	m_pBlackHole->Draw();
+
+	m_pSpaceRock->Draw();
 
 	m_pNomalStar->Draw();
 	

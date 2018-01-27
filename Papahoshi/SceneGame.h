@@ -25,6 +25,7 @@
 #include "NormalStars.h"
 #include "FixedStars.h"
 #include "BlackHole.h"
+#include "SpaceRock.h"
 #include "Net.h"
 #include "Net_Type2.h"
 
@@ -53,7 +54,9 @@ private:
 
 	cNormalStar*				m_pNomalStar;		// モブ星
 	cBlackHole*					m_pBlackHole;		// ブラックホール
+	cSpaceRock*					m_pSpaceRock;		// 隕石
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
+
 	cStageManager*				m_pStageManager;	// ステージマネージャー
 
 	void CheckCollision();	//当たり判定を取る
