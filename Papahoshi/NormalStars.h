@@ -41,11 +41,13 @@ struct SetNormalStar{
 // モブ星のデータ
 typedef struct _tNormalStarData{
 
-	cSpriteParam			t_Sprite;		// 描画用
-	cCollider				t_Collider;		// あたり
-	cCircleOrbitMovement	t_MoveCircle;	// 円軌道用判定
-	bool					t_bUse;			// 使用フラグ
-	D3DXVECTOR2				t_Move;
+	cSpriteParam			t_Sprite;			// 描画用
+	cCollider				t_Collider;			// あたり
+	cCircleOrbitMovement	t_MoveCircle;		// 円軌道用判定
+	bool					t_bUse;				// 使用フラグ
+	D3DXVECTOR2				t_Move;				// 移動量
+	int						t_nRespawnFrame;	// リスポーンフレーム
+	bool					t_bRespawn;			// リスポーンフラグ
 	
 }tNormalStarData;
 
@@ -74,9 +76,30 @@ public:
 	//--- 星のランダム生成 ---
 	void CreateRamdom();
 
-	//--- 星のリスポーン ---
-	void Respawn();
+	////--- 星のリスポーン ---
+	//void Respawn();
 
+	//--- 星のリスポーン ---
+	void Respawn(int num);
+
+
+	//--- 星のフラグオン & カウントアップ ----
+	void CountUp(int num){
+
+		if (!m_pStarData[num].t_bUse){
+			m_pStarData[num].t_bUse = true;
+			m_nCurrentNum++;
+		}
+
+	}
+	//--- 星のフラグオフ & カウントダウン ----
+	void CountDown(int num){
+
+		if (m_pStarData[num].t_bUse){
+			m_pStarData[num].t_bUse = false;
+			m_nCurrentNum--;
+		}
+	}
 
 	//--- 星の設定 ---
 	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);

@@ -24,7 +24,10 @@
 //-----------------------------
 #define STAR_SIZE	(20)
 
-#define RESPAWN_FREAM (400)
+#define RESPAWN_FREAM (200)
+
+
+// 組み方ミスったやりなおしたai
 
 //****************************************************************************************************************
 // 普通の星
@@ -41,7 +44,7 @@ cNormalStar::cNormalStar(){
 
 	// 星の最大数　後にファイルから読込したい
 	m_nMaxNum = MAX_NORMAL_STAR;
-	m_nCurrentNum = MAX_NORMAL_STAR;
+	m_nCurrentNum = 0;
 
 	// 動的確保
 	m_pStarData = new tNormalStarData[m_nMaxNum];
@@ -54,22 +57,16 @@ cNormalStar::cNormalStar(){
 		m_pStarData[nCuntStar].t_Sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
 		m_pStarData[nCuntStar].t_Sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));
 		m_pStarData[nCuntStar].t_bUse = false;	
+		m_pStarData[nCuntStar].t_bRespawn = false;
+		m_pStarData[nCuntStar].t_nRespawnFrame = 0;
 
 		// あたり判定
 		m_pStarData[nCuntStar].t_Collider.SetType(cCollider::CIRCLE);
 		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), STAR_SIZE / 2.0f);
 	}
 
-	//　フレームカウント
-	m_nRespawnFream = 0;
-
-	// 
-	m_bCapchared = false;
-
 	// 生成
 	CreateRamdom();
-
-
 }
 
 //=======================================================================================
@@ -79,13 +76,7 @@ cNormalStar::cNormalStar(){
 //=======================================================================================
 cNormalStar::~cNormalStar(){
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-
-	
-
-
-	}
-
+	delete m_pStarData;
 }
 //=======================================================================================
 //
@@ -94,35 +85,28 @@ cNormalStar::~cNormalStar(){
 //=======================================================================================
 void cNormalStar::Update(){
 
-	
-
-
 	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
-
-		// あたり判定
+		// あたり判定の位置更新
 		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), STAR_SIZE / 2.0f);
 
-
-		// α処理
+		// α処理フェードイン
 		if (m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() < 255){
-
 			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() + 0.5f);
-
 		}
-	}
 
+		// リスポーン処理 リスポーンフラグがオンになったらフレーム加算開始して。。。
+		if (m_pStarData[nCuntStar].t_bRespawn){
+			Respawn(nCuntStar);
+		}
 
-	// リスポーン処理
-	if (m_bCapchared){
-		Respawn();
 	}
 
 	// デバッグ用
-	if (GetKeyboardTrigger(DIK_R)){
+	if (GetKeyboardTrigger(DIK_R)){	// リセット＆リスポーン確認
 		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 			m_pStarData[nCuntStar].t_bUse = false;
-			m_bCapchared = true;
+			m_pStarData[nCuntStar].t_bRespawn = true;
 			m_nCurrentNum = 0;
 		}
 	}
@@ -145,12 +129,11 @@ void cNormalStar::Draw(){
 
 	}
 
-
 	// デバッグプリント
 	PrintDebugProc("***NormalStar***\n");
 	PrintDebugProc("R:Reset\n");
 	PrintDebugProc("CurrentNum %d\n", m_nCurrentNum);
-	PrintDebugProc("RespawnFrame %d\n", m_nRespawnFream);
+	PrintDebugProc("RespawnFrame %d\n", m_pStarData[0].t_nRespawnFrame);	
 	PrintDebugProc("****************\n");
 
 }
@@ -179,7 +162,6 @@ void cNormalStar::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, 
 //=======================================================================================
 void cNormalStar::CreateRamdom(){
 
-	
 	// とりあえず画面の範囲に出す
 	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
@@ -189,7 +171,7 @@ void cNormalStar::CreateRamdom(){
 			continue;
 
 		// フラグを立てる
-		m_pStarData[nCuntStar].t_bUse = true;
+		CountUp(nCuntStar);
 
 
 		// 位置の決定
@@ -202,45 +184,78 @@ void cNormalStar::CreateRamdom(){
 
 }
 
+////=======================================================================================
+////
+////		星のリスポーン
+////
+////=======================================================================================
+//void cNormalStar::Respawn(){
+//
+//	// フレーム加算開始(仮)
+//	m_nRespawnFream++;
+//
+//	if (m_nRespawnFream > RESPAWN_FREAM){
+//
+//		// カウントリセット
+//		m_nRespawnFream = 0;
+//
+//		// フラグリセット
+//		m_bCapchared = false;
+//
+//		// とりあえず画面の範囲に出す
+//		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
+//
+//
+//			// 使用済みは飛ばす
+//			if (m_pStarData[nCuntStar].t_bUse)
+//				continue;
+//
+//			// フラグを立てる
+//			CountUp(nCuntStar);
+//
+//
+//			// αを０で開始
+//			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(0);
+//
+//			// 位置の決定
+//			D3DXVECTOR2 CreateRamdomPos;
+//			CreateRamdomPos.x = CRandam::RandamRenge(0, SCREEN_WIDTH);
+//			CreateRamdomPos.y = CRandam::RandamRenge(0, SCREEN_HEIGHT);
+//			m_pStarData[nCuntStar].t_Sprite.SetPos(CreateRamdomPos);		// 代入
+//		}
+//	}
+//}
+
 //=======================================================================================
 //
 //		星のリスポーン
 //
 //=======================================================================================
-void cNormalStar::Respawn(){
+void cNormalStar::Respawn(int num){
 
-	// フレーム加算開始(仮)
-	m_nRespawnFream++;
+	// フレーム加算
+	m_pStarData[num].t_nRespawnFrame++;
 
-	if (m_nRespawnFream > RESPAWN_FREAM){
+	if (m_pStarData[num].t_nRespawnFrame > RESPAWN_FREAM){
 
-		// カウントリセット
-		m_nRespawnFream = 0;
+		// 使用済みのみ
+		if (!m_pStarData[num].t_bUse){
 
-		// フラグリセット
-		m_bCapchared = false;
+			// 生成＆数える
+			CountUp(num);
 
-		// とりあえず画面の範囲に出す
-		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-
-
-			// 使用済みは飛ばす
-			if (m_pStarData[nCuntStar].t_bUse)
-				continue;
-
-			// フラグを立てる
-			m_pStarData[nCuntStar].t_bUse = true;
-			m_nCurrentNum++;
+			// レスポーン終了フラグオフ
+			m_pStarData[num].t_bRespawn = false;
+			m_pStarData[num].t_nRespawnFrame = 0;
 
 			// αを０で開始
-			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(0);
+			m_pStarData[num].t_Sprite.SetVtxColorA(0);
 
-			// 位置の決定
+			// 位置の決定	
 			D3DXVECTOR2 CreateRamdomPos;
 			CreateRamdomPos.x = CRandam::RandamRenge(0, SCREEN_WIDTH);
 			CreateRamdomPos.y = CRandam::RandamRenge(0, SCREEN_HEIGHT);
-			m_pStarData[nCuntStar].t_Sprite.SetPos(CreateRamdomPos);		// 代入
-
+			m_pStarData[num].t_Sprite.SetPos(CreateRamdomPos);		// 代入
 		}
 	}
 }
@@ -253,23 +268,22 @@ void cNormalStar::Respawn(){
 //=======================================================================================
 void cNormalStar::OnCollidToNet(int count){
 
-
-	// 仮
-	if (m_pStarData[count].t_bUse){
-		m_pStarData[count].t_bUse = false;
-		m_nCurrentNum--;
-	}
-
-
-
-	m_bCapchared = true;
+	CountDown(count);
+	m_pStarData[count].t_bRespawn = true;	// リスポーン開始
 
 }
 
+//=======================================================================================
+//
+//		ブラックホールとの処理
+//
+//=======================================================================================
+//---- ブラックホールの情報を取得 -----
 void cNormalStar::SetBlackHoleData(cBlackHole* data){
 	m_pBlackHoleData = data;
 }
 
+//---- ブラックホール吸い込み範囲に当たった時の処理 -----
 void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 
 	// ブラックホールの中心を取得
@@ -301,9 +315,9 @@ void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 
 }
 
+//---- ブラックホールの削除範囲に当たった時の処理 -----
 void cNormalStar::OnCollidToDelete(int Normal){
 
-	// 
-	m_pStarData[Normal].t_bUse = false;
-	m_nCurrentNum--;
+	CountDown(Normal);
+	m_pStarData[Normal].t_bRespawn = true;
 }
