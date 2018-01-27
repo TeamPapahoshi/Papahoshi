@@ -46,6 +46,8 @@ typedef struct _tNormalStarData{
 	cCircleOrbitMovement	t_MoveCircle;		// 円軌道用判定
 	bool					t_bUse;				// 使用フラグ
 	D3DXVECTOR2				t_Move;				// 移動量
+	bool					t_bVibration;		// 振動用
+	int						t_nVibrationFrame;
 	int						t_nRespawnFrame;	// リスポーンフレーム
 	bool					t_bRespawn;			// リスポーンフラグ
 	
@@ -64,24 +66,21 @@ public:
 	cNormalStar();
 
 	//--- 網との処理 ---
-	void OnCollidToNet(int count);
 	void SetNetData();
+	void OnCollidToNet(int count);
+	
 
 	//--- ブラックホールとの処理 ---
+	void SetBlackHoleData(cBlackHole*);
 	void OnCollidToBlackHole(int Normal,int Black);
 	void OnCollidToDelete(int Normal);
-	void SetBlackHoleData(cBlackHole*);
-
+	
 
 	//--- 星のランダム生成 ---
 	void CreateRamdom();
 
-	////--- 星のリスポーン ---
-	//void Respawn();
-
 	//--- 星のリスポーン ---
 	void Respawn(int num);
-
 
 	//--- 星のフラグオン & カウントアップ ----
 	void CountUp(int num){
@@ -100,10 +99,6 @@ public:
 			m_nCurrentNum--;
 		}
 	}
-
-	//--- 星の設定 ---
-	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
-
 
 	// Getter
 	tNormalStarData* GetStarData(){

@@ -59,6 +59,9 @@ cNormalStar::cNormalStar(){
 		m_pStarData[nCuntStar].t_bUse = false;	
 		m_pStarData[nCuntStar].t_bRespawn = false;
 		m_pStarData[nCuntStar].t_nRespawnFrame = 0;
+		m_pStarData[nCuntStar].t_nVibrationFrame = 0;
+		m_pStarData[nCuntStar].t_bVibration = true;
+		//m_pStarData[nCuntStar].t_Vibration.x = 0;
 
 		// あたり判定
 		m_pStarData[nCuntStar].t_Collider.SetType(cCollider::CIRCLE);
@@ -140,23 +143,6 @@ void cNormalStar::Draw(){
 
 //=======================================================================================
 //
-//		星の設定
-//
-//=======================================================================================
-void cNormalStar::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
-
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-
-
-
-
-
-
-	}
-}
-
-//=======================================================================================
-//
 //		星のランダム生成
 //
 //=======================================================================================
@@ -176,55 +162,12 @@ void cNormalStar::CreateRamdom(){
 
 		// 位置の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = CRandam::RandamRenge(0, SCREEN_HEIGHT);
+		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
+		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
 		m_pStarData[nCuntStar].t_Sprite.SetPos(CreateRamdomPos);		// 代入
 
 	}
-
 }
-
-////=======================================================================================
-////
-////		星のリスポーン
-////
-////=======================================================================================
-//void cNormalStar::Respawn(){
-//
-//	// フレーム加算開始(仮)
-//	m_nRespawnFream++;
-//
-//	if (m_nRespawnFream > RESPAWN_FREAM){
-//
-//		// カウントリセット
-//		m_nRespawnFream = 0;
-//
-//		// フラグリセット
-//		m_bCapchared = false;
-//
-//		// とりあえず画面の範囲に出す
-//		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-//
-//
-//			// 使用済みは飛ばす
-//			if (m_pStarData[nCuntStar].t_bUse)
-//				continue;
-//
-//			// フラグを立てる
-//			CountUp(nCuntStar);
-//
-//
-//			// αを０で開始
-//			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(0);
-//
-//			// 位置の決定
-//			D3DXVECTOR2 CreateRamdomPos;
-//			CreateRamdomPos.x = CRandam::RandamRenge(0, SCREEN_WIDTH);
-//			CreateRamdomPos.y = CRandam::RandamRenge(0, SCREEN_HEIGHT);
-//			m_pStarData[nCuntStar].t_Sprite.SetPos(CreateRamdomPos);		// 代入
-//		}
-//	}
-//}
 
 //=======================================================================================
 //
@@ -253,8 +196,8 @@ void cNormalStar::Respawn(int num){
 
 			// 位置の決定	
 			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = CRandam::RandamRenge(0, SCREEN_WIDTH);
-			CreateRamdomPos.y = CRandam::RandamRenge(0, SCREEN_HEIGHT);
+			CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
+			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
 			m_pStarData[num].t_Sprite.SetPos(CreateRamdomPos);		// 代入
 		}
 	}
@@ -266,6 +209,7 @@ void cNormalStar::Respawn(int num){
 //		網との処理
 //
 //=======================================================================================
+//--- 網と当たった時の処理 ---
 void cNormalStar::OnCollidToNet(int count){
 
 	CountDown(count);
@@ -286,6 +230,28 @@ void cNormalStar::SetBlackHoleData(cBlackHole* data){
 //---- ブラックホール吸い込み範囲に当たった時の処理 -----
 void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 
+	// 振動する
+	if (m_pStarData[Normal].t_bVibration){
+
+		m_pStarData[Normal].t_nVibrationFrame++;
+		m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + 0.15f);
+
+		if (m_pStarData[Normal].t_nVibrationFrame > 5){
+			m_pStarData[Normal].t_bVibration = false;
+			m_pStarData[Normal].t_nVibrationFrame = 0;
+		}	
+	}
+
+	else if (!m_pStarData[Normal].t_bVibration){
+		m_pStarData[Normal].t_nVibrationFrame++;
+		m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - 0.15f);
+		if (m_pStarData[Normal].t_nVibrationFrame > 5){
+			m_pStarData[Normal].t_bVibration = true;
+			m_pStarData[Normal].t_nVibrationFrame = 0;
+		}
+	}
+
+
 	// ブラックホールの中心を取得
 	D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].t_Sprite.GetPos();
 
@@ -295,8 +261,8 @@ void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 	Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
 
 	// 距離から移動量を算出
-	m_pStarData[Normal].t_Move.x = Distance.x / 500.0f;
-	m_pStarData[Normal].t_Move.y = Distance.y / 500.0f;
+	m_pStarData[Normal].t_Move.x = Distance.x / 800.0f;
+	m_pStarData[Normal].t_Move.y = Distance.y / 800.0f;
 
 	// 移動量を反映
 	if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
