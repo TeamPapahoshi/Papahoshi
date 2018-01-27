@@ -79,7 +79,7 @@ cNormalStar::cNormalStar(){
 //=======================================================================================
 cNormalStar::~cNormalStar(){
 
-	delete m_pStarData;
+	delete[] m_pStarData;
 }
 //=======================================================================================
 //
@@ -133,10 +133,10 @@ void cNormalStar::Draw(){
 	}
 
 	// デバッグプリント
-	PrintDebugProc("***NormalStar***\n");
-	PrintDebugProc("R:Reset\n");
-	PrintDebugProc("CurrentNum %d\n", m_nCurrentNum);
-	PrintDebugProc("RespawnFrame %d\n", m_pStarData[0].t_nRespawnFrame);	
+	PrintDebugProc("***モブ星***\n");
+	PrintDebugProc("R:リセット\n");
+	PrintDebugProc("生成数 %d\n", m_nCurrentNum);
+	PrintDebugProc("リセット時のみ復活時間 %d\n", m_pStarData[0].t_nRespawnFrame);	
 	PrintDebugProc("****************\n");
 
 }

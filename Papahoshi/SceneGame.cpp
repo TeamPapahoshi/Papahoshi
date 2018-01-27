@@ -156,8 +156,8 @@ void cSceneGame::CheckCollision(){
 
 		for (int Black = 0; Black < MAX_BLACK_HOLE_NUM; Black++){
 
-			/*if (!m_pBlackHole->GetStarData()[Black].t_bUse)
-				continue;*/
+			if (!m_pBlackHole->GetStarData()[Black].t_bUse)
+				continue;
 
 
 			if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[Normal].t_Collider,
@@ -176,8 +176,8 @@ void cSceneGame::CheckCollision(){
 
 		for (int Black = 0; Black < MAX_BLACK_HOLE_NUM; Black++){
 
-			/*if (!m_pBlackHole->GetStarData()[Black].t_bUse)
-			continue;*/
+			if (!m_pBlackHole->GetStarData()[Black].t_bUse)
+			continue;
 
 
 			if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[Normal].t_Collider,
