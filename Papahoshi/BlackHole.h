@@ -36,8 +36,8 @@ typedef struct _tBlackHoleData{
 	cCollider				t_DeleteCollider;		// 消滅範囲
 	cCircleOrbitMovement	t_MoveCircle;			// 円軌道用判定
 	bool					t_bUse;					// 使用フラグ
-	int						t_nRespawnFrame;	// リスポーンフレーム
-	bool					t_bRespawn;			// リスポーンフラグ
+	int						t_nRespawnFrame;		// リスポーンフレーム
+	bool					t_bRespawn;				// リスポーンフラグ
 
 }tBlackHoleData;
 

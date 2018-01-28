@@ -18,12 +18,16 @@
 #include "BlackHole.h"
 #include "Input.h"
 
+
+//-----------------------------
+// マクロ定義
+//-----------------------------
 #define STAR_SIZE	(100)
 
 #define VACUUM_RANGE	(200)
 #define DELETE_RANGE	(20)
 
-#define RESPAWN_FREAM	(200)
+#define RESPAWN_FREAM	(20)
 
 //****************************************************************************************************************
 // ブラックホール
@@ -131,6 +135,7 @@ void cBlackHole::Update(){
 //
 //=======================================================================================
 void cBlackHole::Draw(){
+
 	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
 		if (!m_pStarData[nCuntStar].t_bUse)
@@ -139,6 +144,7 @@ void cBlackHole::Draw(){
 		m_pStarData[nCuntStar].t_Sprite.Draw();
 		m_pStarData[nCuntStar].t_VacuumCollider.Draw();
 		m_pStarData[nCuntStar].t_DeleteCollider.Draw();
+
 	}
 
 	// デバッグプリント

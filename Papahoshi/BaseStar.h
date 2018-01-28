@@ -41,6 +41,29 @@ protected:
 	int m_nRespawnFream;	// リスポーン
 };
 
+
+class cBaseStarData{
+
+public:
+	virtual void Create();
+	virtual void Respawn();
+
+
+protected:
+
+	cSpriteParam			m_Sprite;			// 描画用
+	cCollider				m_Collider;			// あたり
+	bool					m_bUse;				// 使用フラグ
+	int						m_nRespawnFrame;	// リスポーンフレーム
+	bool					m_bRespawn;			// リスポーンフラグ
+
+
+};
+
+
+
+
+
 //----円軌道移動クラス------円軌道させたいクラスにもたせる(星以外にも使えます)
 class cCircleOrbitMovement{
 

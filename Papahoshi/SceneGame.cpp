@@ -111,7 +111,6 @@ void cSceneGame::Draw(){
 
 	m_pNomalStar->Draw();
 	
-	//m_pStageManager->Draw();
 	pNet->Draw();	//‚ ‚Ý
 }
 

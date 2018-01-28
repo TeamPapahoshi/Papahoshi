@@ -13,7 +13,6 @@
 #include "debugproc.h"
 #include "Common.h"
 #include "Texture.h"
-
 #include "BaseStar.h"
 
 

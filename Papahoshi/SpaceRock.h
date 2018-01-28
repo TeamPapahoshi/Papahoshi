@@ -21,7 +21,7 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define MAX_SPACE_ROCK_NUM	(1)
+#define MAX_SPACE_ROCK_NUM	(5)
 
 
 
@@ -35,6 +35,8 @@ typedef struct _tSpaceRockData{
 	cCollider				t_Collider;				// あたり判定
 	cCircleOrbitMovement	t_MoveCircle;			// 円軌道用判定
 	bool					t_bUse;					// 使用フラグ
+	int						t_nRespawnFrame;		// リスポーンフレーム
+	bool					t_bRespawn;				// リスポーンフラグ
 
 }tSpaceRockData;
 
@@ -53,6 +55,27 @@ public:
 	tSpaceRockData* GetStarData(){
 		return m_pStarData;
 	}
+
+
+	//--- 星のフラグオン & カウントアップ ----
+	void CountUp(int num){
+
+		if (!m_pStarData[num].t_bUse){
+			m_pStarData[num].t_bUse = true;
+			m_nCurrentNum++;
+		}
+
+	}
+	//--- 星のフラグオフ & カウントダウン ----
+	void CountDown(int num){
+
+		if (m_pStarData[num].t_bUse){
+			m_pStarData[num].t_bUse = false;
+			m_nCurrentNum--;
+		}
+	}
+
+	void Respawn(int num);
 
 	// 星の設定
 	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);

@@ -61,7 +61,6 @@ cNormalStar::cNormalStar(){
 		m_pStarData[nCuntStar].t_nRespawnFrame = 0;
 		m_pStarData[nCuntStar].t_nVibrationFrame = 0;
 		m_pStarData[nCuntStar].t_bVibration = true;
-		//m_pStarData[nCuntStar].t_Vibration.x = 0;
 
 		// ‚ ‚½‚è”»’è
 		m_pStarData[nCuntStar].t_Collider.SetType(cCollider::CIRCLE);
@@ -143,7 +142,7 @@ void cNormalStar::Draw(){
 
 //=======================================================================================
 //
-//		¯‚Ìƒ‰ƒ“ƒ_ƒ€¶¬
+//		¯‚Ì‰Šúƒ‰ƒ“ƒ_ƒ€¶¬
 //
 //=======================================================================================
 void cNormalStar::CreateRamdom(){
