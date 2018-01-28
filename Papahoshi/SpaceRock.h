@@ -1,12 +1,12 @@
 //======================================================================
-//	BlackHole
+//	SpaceRock
 //	
-//	概要＿：ブラックホール
+//	概要＿：隕石
 //	制作者：加藤　遼
 //	
 //======================================================================
-#ifndef ___BLACK_HOLE_H___
-#define ___BLACK_HOLE_H___
+#ifndef ___SPACE_ROCK_H___
+#define ___SPACE_ROCK_H___
 
 //-----------------------------
 //インクルードファイル
@@ -21,7 +21,7 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define MAX_BLACK_HOLE_NUM	(5)
+#define MAX_SPACE_ROCK_NUM	(5)
 
 
 
@@ -29,29 +29,35 @@
 // 構造体定義
 //-----------------------------
 // ブラックホールのデータ
-typedef struct _tBlackHoleData{
+typedef struct _tSpaceRockData{
 
 	cSpriteParam			t_Sprite;				// 描画用
-	cCollider				t_VacuumCollider;		// 吸い込み範囲
-	cCollider				t_DeleteCollider;		// 消滅範囲
+	cCollider				t_Collider;				// あたり判定
 	cCircleOrbitMovement	t_MoveCircle;			// 円軌道用判定
 	bool					t_bUse;					// 使用フラグ
 	int						t_nRespawnFrame;		// リスポーンフレーム
 	bool					t_bRespawn;				// リスポーンフラグ
 
-}tBlackHoleData;
+}tSpaceRockData;
 
 //-----------------------------
 //クラス定義
 //-----------------------------
-//******ブラックホール********
-class cBlackHole :public cBaseStar{
+class cSpaceRock :public cBaseStar{
 
 public:
 	void Update();
 	void Draw();
-	~cBlackHole();
-	cBlackHole();
+	~cSpaceRock();
+	cSpaceRock();
+
+	void OnCollidToNet(int count);
+
+
+	// Getter
+	tSpaceRockData* GetStarData(){
+		return m_pStarData;
+	}
 
 
 	//--- 星のフラグオン & カウントアップ ----
@@ -72,17 +78,12 @@ public:
 		}
 	}
 
-	// Getter
-	tBlackHoleData* GetStarData(){
-		return m_pStarData;
-	}
-
-	void Create(int num);
+	void Respawn(int num);
 
 	// 星の設定
 	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
 private:
-	tBlackHoleData*	m_pStarData;
+	tSpaceRockData*	m_pStarData;
 };
-#endif //!___BLACK_HOLE_H___
+#endif //!___SPACE_ROCK_H___

@@ -14,6 +14,9 @@
 #include "Sprite.h"
 #include "Collision.h"
 #include "BaseStar.h"
+#include "Sprite.h"
+#include "Net_Type2.h"
+#include "BlackHole.h"
 
 #include <vector>
 #include <fstream>
@@ -25,13 +28,33 @@ struct SetNormalStar{
 	float		speed;
 };
 
+//-----------------------------
 // マクロ定義
+//-----------------------------
 #define STAGE_01_STAR_NUM	(5)
-
+#define MAX_NORMAL_STAR		(50)
 
 
 //-----------------------------
-//クラス定義
+// 構造体定義
+//-----------------------------
+// モブ星のデータ
+typedef struct _tNormalStarData{
+
+	cSpriteParam			t_Sprite;			// 描画用
+	cCollider				t_Collider;			// あたり
+	cCircleOrbitMovement	t_MoveCircle;		// 円軌道用判定
+	bool					t_bUse;				// 使用フラグ
+	D3DXVECTOR2				t_Move;				// 移動量
+	bool					t_bVibration;		// 振動用
+	int						t_nVibrationFrame;
+	int						t_nRespawnFrame;	// リスポーンフレーム
+	bool					t_bRespawn;			// リスポーンフラグ
+	
+}tNormalStarData;
+
+//-----------------------------
+// クラス定義
 //-----------------------------
 //******モブ星********
 class cNormalStar :public cBaseStar{
@@ -39,30 +62,55 @@ class cNormalStar :public cBaseStar{
 public:
 	void Update();
 	void Draw();
-
 	~cNormalStar();
 	cNormalStar();
 
-	// 星の設定
-	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+	//--- 網との処理 ---
+	void SetNetData();
+	void OnCollidToNet(int count);
+	
 
-	// ファイルで読み込んだデータをセット
-	void SetStarFromFile(int loop);
+	//--- ブラックホールとの処理 ---
+	void SetBlackHoleData(cBlackHole*);
+	void OnCollidToBlackHole(int Normal,int Black);
+	void OnCollidToDelete(int Normal);
+	
 
-	// 恒星との距離によってみえるか見えないかを変える処理
-	void StarVisibility(float distance);
+	//--- 星のランダム生成 ---
+	void CreateRamdom();
 
-	// 仮
-	enum STAFGE_NUM{
-		STAGE_01,
-		STAGE_MAX,
-	};
+	//--- 星のリスポーン ---
+	void Respawn(int num);
+
+	//--- 星のフラグオン & カウントアップ ----
+	void CountUp(int num){
+
+		if (!m_pStarData[num].t_bUse){
+			m_pStarData[num].t_bUse = true;
+			m_nCurrentNum++;
+		}
+
+	}
+	//--- 星のフラグオフ & カウントダウン ----
+	void CountDown(int num){
+
+		if (m_pStarData[num].t_bUse){
+			m_pStarData[num].t_bUse = false;
+			m_nCurrentNum--;
+		}
+	}
+
+	// Getter
+	tNormalStarData* GetStarData(){
+		return m_pStarData;
+	}
 
 private:
-	cCollider		m_Collider;			// あたり判定
-	cCircleOrbitMovement moveCircle;	// 円軌道するために必要
-	vector<SetNormalStar> a_Data;
-	STAFGE_NUM stageNum = STAGE_01; //仮
+	cNet*				m_pNetData;
+	tNormalStarData*	m_pStarData;
+	cBlackHole*			m_pBlackHoleData;
+
+	
 
 };
 #endif	//!___NORMAL_STARS_H___

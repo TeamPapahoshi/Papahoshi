@@ -29,11 +29,16 @@ cCollider::cCollider(){
 	m_tColBody.QuadSize = D3DXVECTOR2(0.0f, 0.0f);	// 四角のサイズ
 	m_tColBody.CirclePos = D3DXVECTOR2(0.0f, 0.0f);	// 円の中心座標
 	m_tColBody.fRadius = 0.0f;						// 円の半径
-	m_tColBody.TriangleVertexPos[0] = D3DXVECTOR2(0.0f, 0.0f);	//三角形の頂点
-m_tColBody.TriangleVertexPos[1] = D3DXVECTOR2(0.0f, 0.0f);
-m_tColBody.TriangleVertexPos[2] = D3DXVECTOR2(0.0f, 0.0f);
-sprite.SetVtxColorA(100.0f);					// 半透明でセット
-}
+
+	//三角形の頂点
+	m_tColBody.TriangleVertexPos[0] = D3DXVECTOR2(0.0f, 0.0f);	
+	m_tColBody.TriangleVertexPos[1] = D3DXVECTOR2(0.0f, 0.0f);
+	m_tColBody.TriangleVertexPos[2] = D3DXVECTOR2(0.0f, 0.0f);
+
+	sprite.LoadTexture(TEXTURE_FILENAME_CIRCLE_COLLIDER);
+
+	sprite.SetVtxColorA(100.0f);	// 半透明でセット
+}	
 
 
 //======================================================================
@@ -49,12 +54,10 @@ void cCollider::Draw(){
 	if (m_type == CIRCLE){
 		sprite.SetPos(m_tColBody.CirclePos);
 		sprite.SetSize(D3DXVECTOR2(m_tColBody.fRadius*2.0f, m_tColBody.fRadius*2.0f));
-		sprite.LoadTexture(TEXTURE_FILENAME_CIRCLE_COLLIDER);
 	}
 	if (m_type == QUAD){
 		sprite.SetPos(m_tColBody.QuadPos);
 		sprite.SetSize(m_tColBody.QuadSize);
-		sprite.LoadTexture(TEXTURE_FILENAME_CIRCLE_QUAD);
 	}
 
 	// 描画

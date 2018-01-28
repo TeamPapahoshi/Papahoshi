@@ -34,22 +34,22 @@
 // マクロ
 //-----------------------------
 // テクスチャファイル
-#define TEXTURE_FILNAME_KING_JELLY	("Image/Character/KingJelly.jpg")
-#define TEXTURE_FILNAME_JELLY		("Image/Character/Jelly.png")
-#define TEXTURE_FILNAME_STAR_LIGHT	("Image/Star/light.png")
-#define TEXTURE_FILNAME_STAR		("Image/Star/Star.png")
-#define TEXTURE_FILNAME_EF			("Image/Star/Effect.png")
-#define TEXTURE_FILNAME_EF02		("Image/Star/Effect2.png")
-#define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
-#define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
-#define TEXTURE_FILENAME_ARROW		("Image/Net/arrow.png")
+#define TEXTURE_FILNAME_KING_JELLY		("Image/Character/KingJelly.jpg")
+#define TEXTURE_FILNAME_JELLY			("Image/Character/Jelly.png")
+#define TEXTURE_FILNAME_STAR_LIGHT		("Image/Star/light.png")
+#define TEXTURE_FILNAME_STAR			("Image/Star/Star.png")
+#define TEXTURE_FILNAME_EF				("Image/Star/Effect.png")
+#define TEXTURE_FILNAME_EF02			("Image/Star/Effect2.png")
+#define TEXTURE_FILENAME_NET			("Image/Net/Net.png")
+#define TEXTURE_FILENAME_UKI			("Image/Net/uki.jpg")
+#define TEXTURE_FILENAME_ARROW			("Image/Net/arrow.png")
 #define TEXTURE_FILENAME_HALFCIRCLE		("Image/Net/half.png")
-#define TEXTURE_FILENAME_BLACK_HOLE	("Image/Star/blackhole.png")
+#define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
+#define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
-#define TEXTURE_FILENAME_SHIP ("data/texture/gyosen_big.png")
-#define TEXTURE_FILENAME_WAVE ("data/texture/line_wave1.png")
-
-#define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ
+#define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
+#define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
+#define TEXTURE_FILENAME_STAGECLEAR		("data/texture/akira000.png")	//仮のテクスチャ
 
 //-----------------------------
 // グローバル
@@ -81,6 +81,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_ARROW,
 	TEXTURE_FILENAME_HALFCIRCLE,
 	TEXTURE_FILENAME_BLACK_HOLE,
+	TEXTURE_FILENAME_SPACE_ROCK,
 };
 
 /*

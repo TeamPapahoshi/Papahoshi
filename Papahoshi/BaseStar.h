@@ -31,8 +31,38 @@ public:
 	}
 
 protected:
-	cSpriteParam	m_sprite;		// 描画用
+	cSpriteParam	m_sprite;		// 
+
+	int					m_nMaxNum;
+	int					m_nCurrentNum;
+	//--- フラグ ---
+	bool	m_bCapchared;	// 確保完了
+	//--- フレーム関連 ---
+	int m_nRespawnFream;	// リスポーン
 };
+
+
+class cBaseStarData{
+
+public:
+	virtual void Create();
+	virtual void Respawn();
+
+
+protected:
+
+	cSpriteParam			m_Sprite;			// 描画用
+	cCollider				m_Collider;			// あたり
+	bool					m_bUse;				// 使用フラグ
+	int						m_nRespawnFrame;	// リスポーンフレーム
+	bool					m_bRespawn;			// リスポーンフラグ
+
+
+};
+
+
+
+
 
 //----円軌道移動クラス------円軌道させたいクラスにもたせる(星以外にも使えます)
 class cCircleOrbitMovement{

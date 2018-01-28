@@ -13,10 +13,9 @@
 //------------------------------
 // インクルードファイル
 //------------------------------
-#include "d3dx9.h"		//D3DXVECTOR2他
-#include "rand.h"		//乱数生成用クラス
-#include "GameMain.h"	//エフェクトクラス取得用
-
+#include "d3dx9.h"		// D3DXVECTOR2他
+#include "rand.h"		// 乱数生成用クラス
+#include "GameMain.h"	// エフェクトクラス取得用
 #include <iostream>		// cout
 #include <fstream>		// fstream
 #include <vector>		// vector
@@ -42,6 +41,9 @@ using namespace std;
 
 #define MAX_RADIUS (200)	//Radiusの最高値
 
+//----- SAFE DELETE ------
+#define SAFE_DELETE(x)	if(x!=NULL){delete x; x=NULL})
+
 //----- デバッグ用機能 ------------
 //#define _DEBUG_TEXT_	//デバッグ用テキスト表示
 
@@ -52,8 +54,6 @@ using namespace std;
 #define _DEBUG_TEXT_PLAYER_	//プレイヤー情報　デバッグ表示
 #define _DEBUG_HEART_
 #endif
-
-
 #endif
 
 //---------------------------

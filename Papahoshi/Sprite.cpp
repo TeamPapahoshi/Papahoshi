@@ -66,6 +66,7 @@ cSpriteParam::cSpriteParam(){
 	m_scale		= D3DXVECTOR2(1.0f, 1.0f);
 	m_vtxColor	= D3DXCOLOR(255, 255, 255, 255);
 	m_rad		= 0.0f;
+	m_pTex		= NULL;
 
 	// ‰Šú’l(g‚í‚È‚¢ê‡‚Í‚±‚Ì‚Ü‚Ü‚Å)
 	m_texPatternDivideX=1;		

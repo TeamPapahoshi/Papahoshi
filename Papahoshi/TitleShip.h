@@ -29,6 +29,7 @@ class cTitleShip
 private:
 	cSpriteParam m_sprite;
 	int			 m_nMakeSmokeTime;
+	bool         m_bShipOutFlag;
 //-----------------------------
 protected:
 
@@ -39,8 +40,10 @@ public:
 
 	void Init();	//初期化処理
 	void UnInit();	//終了処理	
-	void Update();	//更新処理
+	void Update(bool bSceneChangeFlag);	//更新処理
 	void Draw();	//描画処理
+
+	bool GetShipOutFlag();	// 船離脱フラグの取得
 };
 
 #endif	//!___TITLESHIP_H___

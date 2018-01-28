@@ -1,7 +1,7 @@
 //======================================================================
-//	BlackHole
+//	SpaceRock
 //	
-//	概要＿：ブラックホール
+//	概要＿：隕石
 //	制作者：加藤　遼
 //	
 //======================================================================
@@ -15,13 +15,9 @@
 #include "Common.h"
 #include "Texture.h"
 #include "rand.h"
-#include "BlackHole.h"
+#include "SpaceRock.h"
 #include "Input.h"
 
-
-//-----------------------------
-// マクロ定義
-//-----------------------------
 #define STAR_SIZE	(100)
 
 #define VACUUM_RANGE	(200)
@@ -37,35 +33,32 @@
 //		コンストラクタ
 //
 //=======================================================================================
-cBlackHole::cBlackHole(){
+cSpaceRock::cSpaceRock(){
 
 	// 乱数の初期化
 	CRandam::InitRand();
 
 	// 星の最大数　後にファイルから読込したい
-	m_nMaxNum = MAX_BLACK_HOLE_NUM;
+	m_nMaxNum = MAX_SPACE_ROCK_NUM;
 	m_nCurrentNum = 0;
 
 	// 動的確保
-	m_pStarData = new tBlackHoleData[m_nMaxNum];
+	m_pStarData = new tSpaceRockData[m_nMaxNum];
 
 
 	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
 		// 初期化
-		m_pStarData[nCuntStar].t_Sprite.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
+		m_pStarData[nCuntStar].t_Sprite.SetPos(D3DXVECTOR2(100, 100));
 		m_pStarData[nCuntStar].t_Sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
-		m_pStarData[nCuntStar].t_Sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
+		m_pStarData[nCuntStar].t_Sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_SPACE_ROCK));
+		m_pStarData[nCuntStar].t_bUse = false;
 		m_pStarData[nCuntStar].t_bRespawn = false;
 		m_pStarData[nCuntStar].t_nRespawnFrame = 0;
-		m_pStarData[nCuntStar].t_bUse = false;
 
 		// あたり判定
-		m_pStarData[nCuntStar].t_VacuumCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_VacuumCollider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), VACUUM_RANGE);
-
-		m_pStarData[nCuntStar].t_DeleteCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_DeleteCollider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), DELETE_RANGE);
+		m_pStarData[nCuntStar].t_Collider.SetType(cCollider::CIRCLE);
+		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), STAR_SIZE / 2.0f);
 	}
 
 	//　フレームカウント
@@ -82,7 +75,7 @@ cBlackHole::cBlackHole(){
 //		デストラクタ
 //
 //=======================================================================================
-cBlackHole::~cBlackHole(){
+cSpaceRock::~cSpaceRock(){
 
 }
 
@@ -91,19 +84,13 @@ cBlackHole::~cBlackHole(){
 //		更新
 //
 //=======================================================================================
-void cBlackHole::Update(){
+void cSpaceRock::Update(){
 
-	
 	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
 
 		// あたり判定
-		m_pStarData[nCuntStar].t_VacuumCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_VacuumCollider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), VACUUM_RANGE);
-
-		m_pStarData[nCuntStar].t_DeleteCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_DeleteCollider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), DELETE_RANGE);
-
+		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), STAR_SIZE / 2.0f);
 
 		// α処理フェードイン
 		if (m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() < 255){
@@ -112,13 +99,13 @@ void cBlackHole::Update(){
 
 		// リスポーンフラグがオンの時生成開始
 		if (m_pStarData[nCuntStar].t_bRespawn){
-			Create(nCuntStar);
+			Respawn(nCuntStar);
 		}
 	}
 
 
 	// デバッグ用
-	if (GetKeyboardTrigger(DIK_C)){
+	if (GetKeyboardTrigger(DIK_V)){
 		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 			if (m_pStarData[nCuntStar].t_bUse)
 				continue;
@@ -126,42 +113,15 @@ void cBlackHole::Update(){
 			break;
 		}
 	}
-
-}
-
-//=======================================================================================
-//
-//		描画
-//
-//=======================================================================================
-void cBlackHole::Draw(){
-
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-
-		if (!m_pStarData[nCuntStar].t_bUse)
-			continue;
-
-		m_pStarData[nCuntStar].t_Sprite.Draw();
-		m_pStarData[nCuntStar].t_VacuumCollider.Draw();
-		m_pStarData[nCuntStar].t_DeleteCollider.Draw();
-
-	}
-
-	// デバッグプリント
-	PrintDebugProc("***ブラックホール***\n");
-	PrintDebugProc("C:生成\n");
-	PrintDebugProc("生成数 %d\n", m_nCurrentNum);
-	PrintDebugProc("****************\n");
-
 }
 
 
 //=======================================================================================
 //
-//		生成
+//		リスポーン
 //
 //=======================================================================================
-void cBlackHole::Create(int num){
+void cSpaceRock::Respawn(int num){
 
 	// フレーム加算
 	m_pStarData[num].t_nRespawnFrame++;
@@ -193,9 +153,48 @@ void cBlackHole::Create(int num){
 
 //=======================================================================================
 //
+//		描画
+//
+//=======================================================================================
+void cSpaceRock::Draw(){
+	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
+
+
+		if (!m_pStarData[nCuntStar].t_bUse)
+			continue;
+
+
+		m_pStarData[nCuntStar].t_Sprite.Draw();
+		m_pStarData[nCuntStar].t_Collider.Draw();
+
+	}
+
+	// デバッグプリント
+	PrintDebugProc("***隕石***\n");
+	PrintDebugProc("V:生成\n");
+	PrintDebugProc("生成数 %d\n", m_nCurrentNum);
+	PrintDebugProc("****************\n");
+}
+
+//=======================================================================================
+//
 //		星の設定
 //
 //=======================================================================================
-void cBlackHole::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+void cSpaceRock::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+
+}
+
+
+//=======================================================================================
+//
+//		網との処理
+//
+//=======================================================================================
+//--- 網と当たった時の処理 ---
+void cSpaceRock::OnCollidToNet(int count){
+
+	CountDown(count);
+	m_pStarData[count].t_bRespawn = true;	// リスポーン開始
 
 }

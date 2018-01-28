@@ -244,6 +244,9 @@
     <ClCompile Include="TitleWave.cpp">
       <Filter>ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト</Filter>
     </ClCompile>
+    <ClCompile Include="SpaceRock.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類</Filter>
+    </ClCompile>
     <ClCompile Include="Transition.cpp">
       <Filter>ソース ファイル\共通処理\トランジション</Filter>
     </ClCompile>
@@ -365,6 +368,12 @@
     </ClInclude>
     <ClInclude Include="TitleWave.h">
       <Filter>ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト</Filter>
+    </ClInclude>
+    <ClInclude Include="Net_Type2.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceRock.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類</Filter>
     </ClInclude>
     <ClInclude Include="Transition.h">
       <Filter>ソース ファイル\共通処理\トランジション</Filter>
