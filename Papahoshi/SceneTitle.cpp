@@ -31,7 +31,9 @@
 //		初期化
 //
 //=======================================================================================
-cSceneTitle::cSceneTitle(){
+cSceneTitle::cSceneTitle() : 
+m_bChange(false)
+{
 
 	// 使うオブジェクトのインスタンス
 	m_pTitleRogo = new cTitleRogo();	//タイトルロゴ
@@ -120,8 +122,9 @@ void cSceneTitle::Update(){
 	}
 
 	//船が画面外に出たらシーンチェンジ
-	if (m_pTitleShip->GetShipOutFlag())
+	if (m_pTitleShip->GetShipOutFlag() && !m_bChange)
 	{
+		m_bChange = true;
 		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::STAGE_SELECT, cTransition::TRANSITION_DICE_SCALE_CHANGE);
 	}
 }

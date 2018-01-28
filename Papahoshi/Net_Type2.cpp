@@ -537,6 +537,8 @@ void cNet::ShoutPhaseUpdate(){
 				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) + ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
 			m_ThreePurposePos[i].y = SCREEN_HEIGHT - (SCREEN_HEIGHT * m_fHalfCircleSize);
 			m_bThrow[i] = true;
+
+			//---------- 斜め投げ補正 ------------
 			
 			//****** デバック *******
 			//m_aPos[i] = m_ThreePurposePos[i];
