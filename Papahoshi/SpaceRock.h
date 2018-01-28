@@ -51,6 +51,9 @@ public:
 	~cSpaceRock();
 	cSpaceRock();
 
+	void OnCollidToNet(int count);
+
+
 	// Getter
 	tSpaceRockData* GetStarData(){
 		return m_pStarData;

@@ -184,3 +184,17 @@ void cSpaceRock::Draw(){
 void cSpaceRock::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
 
 }
+
+
+//=======================================================================================
+//
+//		網との処理
+//
+//=======================================================================================
+//--- 網と当たった時の処理 ---
+void cSpaceRock::OnCollidToNet(int count){
+
+	CountDown(count);
+	m_pStarData[count].t_bRespawn = true;	// リスポーン開始
+
+}
