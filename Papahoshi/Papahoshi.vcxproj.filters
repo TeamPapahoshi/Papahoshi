@@ -125,6 +125,9 @@
     <Filter Include="ソース ファイル\共通処理\トランジション">
       <UniqueIdentifier>{6fb95560-1caa-4413-bf3c-b1a7c40326c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\共通処理\スコア">
+      <UniqueIdentifier>{40977971-6c43-46bb-99b3-c18ea992495b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -244,11 +247,14 @@
     <ClCompile Include="TitleWave.cpp">
       <Filter>ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト</Filter>
     </ClCompile>
-    <ClCompile Include="SpaceRock.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類</Filter>
-    </ClCompile>
     <ClCompile Include="Transition.cpp">
       <Filter>ソース ファイル\共通処理\トランジション</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceRock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>ソース ファイル\共通処理\スコア</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -369,14 +375,12 @@
     <ClInclude Include="TitleWave.h">
       <Filter>ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト</Filter>
     </ClInclude>
-    <ClInclude Include="Net_Type2.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
-    </ClInclude>
-    <ClInclude Include="SpaceRock.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類</Filter>
-    </ClInclude>
     <ClInclude Include="Transition.h">
       <Filter>ソース ファイル\共通処理\トランジション</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceRock.h" />
+    <ClInclude Include="Score.h">
+      <Filter>ソース ファイル\共通処理\スコア</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

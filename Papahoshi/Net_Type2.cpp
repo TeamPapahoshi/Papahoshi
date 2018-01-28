@@ -57,6 +57,8 @@
 //半円
 #define MIN_SPEED	(1.0f)	//最低スピード
 #define SPEED_HALFCIRCLE	(10)	//10/1進む
+//斜め投げ補正
+#define ANG_NUM		(200.0f)
 
 //=====================================================
 //
@@ -539,7 +541,10 @@ void cNet::ShoutPhaseUpdate(){
 			m_bThrow[i] = true;
 
 			//---------- 斜め投げ補正 ------------
-			
+			if (m_nPostAngle == ANG_LEFT)
+				m_ThreePurposePos[i].x += ANG_NUM;
+			else
+				m_ThreePurposePos[i].x -= ANG_NUM;
 			//****** デバック *******
 			//m_aPos[i] = m_ThreePurposePos[i];
 			//gamePhase = GAME_PHASE::PHASE_MAX;

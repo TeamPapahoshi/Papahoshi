@@ -50,6 +50,16 @@
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
 #define TEXTURE_FILENAME_STAGECLEAR		("data/texture/akira000.png")	//仮のテクスチャ
+#define TEXTURE_FILENAME_0				("Image/GameUI/0.png")
+#define TEXTURE_FILENAME_1				("Image/GameUI/1.png")
+#define TEXTURE_FILENAME_2				("Image/GameUI/2.png")
+#define TEXTURE_FILENAME_3				("Image/GameUI/3.png")
+#define TEXTURE_FILENAME_4				("Image/GameUI/4.png")
+#define TEXTURE_FILENAME_5				("Image/GameUI/5.png")
+#define TEXTURE_FILENAME_6				("Image/GameUI/6.png")
+#define TEXTURE_FILENAME_7				("Image/GameUI/7.png")
+#define TEXTURE_FILENAME_8				("Image/GameUI/8.png")
+#define TEXTURE_FILENAME_9				("Image/GameUI/9.png")
 
 //-----------------------------
 // グローバル
@@ -82,6 +92,16 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_HALFCIRCLE,
 	TEXTURE_FILENAME_BLACK_HOLE,
 	TEXTURE_FILENAME_SPACE_ROCK,
+	TEXTURE_FILENAME_0,
+	TEXTURE_FILENAME_1,
+	TEXTURE_FILENAME_2,
+	TEXTURE_FILENAME_3,
+	TEXTURE_FILENAME_4,
+	TEXTURE_FILENAME_5,
+	TEXTURE_FILENAME_6,
+	TEXTURE_FILENAME_7,
+	TEXTURE_FILENAME_8,
+	TEXTURE_FILENAME_9,
 };
 
 /*
