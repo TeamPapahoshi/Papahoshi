@@ -16,12 +16,12 @@
 #include "Input.h"
 #include <fstream>
 #include <vector>
+#include "BaseStar.h"
 
 //------------------------------
 // マクロ定義
 //------------------------------
 #define FIXED_STAR_NUM	(1)
-
 
 //=======================================================================================
 //
@@ -47,6 +47,8 @@ cSceneGame::cSceneGame(){
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
 
+	
+
 
 	// 背景
 	m_pBG = new cBG();
@@ -63,6 +65,7 @@ cSceneGame::~cSceneGame(){
 	// デリート
 	delete m_pBG;
 	delete m_pNomalStar;
+	delete m_pBlackHole;
 
 }
 
@@ -83,6 +86,10 @@ void cSceneGame::Update(){
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
 	m_pSpaceRock->Update();
+
+
+
+	
 	
 	//当たり判定
 	CheckCollision();
@@ -102,12 +109,14 @@ void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// 背景
 
-	
+	//
 	m_pBlackHole->Draw();
 
-	m_pSpaceRock->Draw();
+	//m_pSpaceRock->Draw();
 
-	m_pNomalStar->Draw();
+	//m_pNomalStar->Draw();
+
+
 	
 	pNet->Draw();	//あみ
 }
@@ -177,46 +186,46 @@ void cSceneGame::CheckCollision(){
 	//	}
 	//}
 
-	// モブ星とブラックホールの吸い込み範囲とのあたり判定
-	for (int Normal = 0; Normal < MAX_NORMAL_STAR; Normal++){
+	//// モブ星とブラックホールの吸い込み範囲とのあたり判定
+	//for (int Normal = 0; Normal < MAX_NORMAL_STAR; Normal++){
 
-		if (!m_pNomalStar->GetStarData()[Normal].t_bUse)
-			continue;
+	//	if (!m_pNomalStar->GetStarData()[Normal].t_bUse)
+	//		continue;
 
-		for (int Black = 0; Black < MAX_BLACK_HOLE_NUM; Black++){
+	//	for (int Black = 0; Black < MAX_BLACK_HOLE_NUM; Black++){
 
-			if (!m_pBlackHole->GetStarData()[Black].t_bUse)
-				continue;
-
-
-			if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[Normal].t_Collider,
-				m_pBlackHole->GetStarData()[Black].t_VacuumCollider)){
-
-				m_pNomalStar->OnCollidToBlackHole(Normal, Black);
-
-			}
-		}
-	}
-	// モブ星とブラックホールの削除範囲とのあたり判定
-	for (int Normal = 0; Normal < MAX_NORMAL_STAR; Normal++){
-
-		if (!m_pNomalStar->GetStarData()[Normal].t_bUse)
-			continue;
-
-		for (int Black = 0; Black < MAX_BLACK_HOLE_NUM; Black++){
-
-			if (!m_pBlackHole->GetStarData()[Black].t_bUse)
-			continue;
+	//		if (!m_pBlackHole->GetStarData()[Black].t_bUse)
+	//			continue;
 
 
-			if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[Normal].t_Collider,
-				m_pBlackHole->GetStarData()[Black].t_DeleteCollider)){
+	//		if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[Normal].t_Collider,
+	//			m_pBlackHole->GetStarData()[Black].t_VacuumCollider)){
 
-				m_pNomalStar->OnCollidToDelete(Normal);
+	//			m_pNomalStar->OnCollidToBlackHole(Normal, Black);
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
+	//// モブ星とブラックホールの削除範囲とのあたり判定
+	//for (int Normal = 0; Normal < MAX_NORMAL_STAR; Normal++){
+
+	//	if (!m_pNomalStar->GetStarData()[Normal].t_bUse)
+	//		continue;
+
+	//	for (int Black = 0; Black < MAX_BLACK_HOLE_NUM; Black++){
+
+	//		if (!m_pBlackHole->GetStarData()[Black].t_bUse)
+	//		continue;
+
+
+	//		if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[Normal].t_Collider,
+	//			m_pBlackHole->GetStarData()[Black].t_DeleteCollider)){
+
+	//			m_pNomalStar->OnCollidToDelete(Normal);
+
+	//		}
+	//	}
+	//}
 
 
 

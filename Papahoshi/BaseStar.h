@@ -13,7 +13,7 @@
 //-----------------------------
 #include "Sprite.h"
 #include "Collision.h"
-
+#include "Common.h"
 //-----------------------------
 //クラス定義
 //-----------------------------
@@ -25,39 +25,42 @@ public:
 	virtual ~cBaseStar(){}
 	cBaseStar(){}
 
-	// 計算用の位置を取得
-	D3DXVECTOR2 GetPos(){
-		return m_sprite.GetPos();
-	}
+	
 
 protected:
-	cSpriteParam	m_sprite;		// 
-
 	int					m_nMaxNum;
-	int					m_nCurrentNum;
-	//--- フラグ ---
-	bool	m_bCapchared;	// 確保完了
-	//--- フレーム関連 ---
-	int m_nRespawnFream;	// リスポーン
+	int					m_nCurrentNum=0;
+
 };
 
 
+// 継承して構造体みたいに使う
 class cBaseStarData{
 
 public:
-	virtual void Create();
-	virtual void Respawn();
+	virtual ~cBaseStarData(){}
+
+	cBaseStarData(){
+		m_bUse = false;
+		m_bDraw = false;
+		m_bCreateEvent = false;
+		m_bCreateEnd	= false;
+		m_nRespawnFrame = 0;
+	}
 
 
-protected:
-
-	cSpriteParam			m_Sprite;			// 描画用
-	cCollider				m_Collider;			// あたり
-	bool					m_bUse;				// 使用フラグ
-	int						m_nRespawnFrame;	// リスポーンフレーム
-	bool					m_bRespawn;			// リスポーンフラグ
+	cSpriteParam	m_sprite;
+	cCollider		m_Collision;
 
 
+	bool			m_bUse;
+	bool			m_bDraw;
+	bool			m_bCreateEvent;
+	bool			m_bCreateEnd;
+	
+
+
+	int				m_nRespawnFrame;				// リスポーンフレーム
 };
 
 

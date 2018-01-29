@@ -61,11 +61,6 @@ cSpaceRock::cSpaceRock(){
 		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), STAR_SIZE / 2.0f);
 	}
 
-	//　フレームカウント
-	m_nRespawnFream = 0;
-
-	// 
-	m_bCapchared = false;
 
 
 }
