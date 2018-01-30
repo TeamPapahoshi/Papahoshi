@@ -29,9 +29,6 @@
 
 #define RESPAWN_FREAM	(20)
 
-//****************************************************************************************************************
-// ブラックホール
-//****************************************************************************************************************
 //=======================================================================================
 //
 //		コンストラクタ
@@ -42,37 +39,34 @@ cBlackHole::cBlackHole(){
 	// 乱数の初期化
 	CRandam::InitRand();
 
-	// 星の最大数　後にファイルから読込したい
+	// 使用数を格納ファイルから読み込むけどだいぶ変更したから
 	m_nMaxNum = MAX_BLACK_HOLE_NUM;
-	m_nCurrentNum = 0;
 
-	// 動的確保
-	m_pStarData = new tBlackHoleData[m_nMaxNum];
+	// 動的インスタンス
+	m_pStarData = new cBlackHoleData[m_nMaxNum]();
+	m_pRoot		= m_pStarData;							// 先頭アドレス保存
 
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
-		// 初期化
-		m_pStarData[nCuntStar].t_Sprite.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
-		m_pStarData[nCuntStar].t_Sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
-		m_pStarData[nCuntStar].t_Sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
-		m_pStarData[nCuntStar].t_bRespawn = false;
-		m_pStarData[nCuntStar].t_nRespawnFrame = 0;
-		m_pStarData[nCuntStar].t_bUse = false;
+	// 初期化
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		// あたり判定
-		m_pStarData[nCuntStar].t_VacuumCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_VacuumCollider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), VACUUM_RANGE);
+		
 
-		m_pStarData[nCuntStar].t_DeleteCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_DeleteCollider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), DELETE_RANGE);
+
+		m_pStarData->m_sprite.SetVtxColorA(10);
+		m_pStarData->rad = 0;
+
+		// 座標の決定
+		D3DXVECTOR2 CreateRamdomPos;
+		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
+		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+
+
 	}
 
-	//　フレームカウント
-	m_nRespawnFream = 0;
 
-	// 
-	m_bCapchared = false;
 
 
 }
@@ -84,6 +78,10 @@ cBlackHole::cBlackHole(){
 //=======================================================================================
 cBlackHole::~cBlackHole(){
 
+	m_pStarData = m_pRoot;
+	delete[]  m_pStarData;
+	m_pStarData = NULL;
+
 }
 
 //=======================================================================================
@@ -93,39 +91,40 @@ cBlackHole::~cBlackHole(){
 //=======================================================================================
 void cBlackHole::Update(){
 
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
+
+
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+		
 	
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
-
-		// あたり判定
-		m_pStarData[nCuntStar].t_VacuumCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_VacuumCollider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), VACUUM_RANGE);
-
-		m_pStarData[nCuntStar].t_DeleteCollider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_DeleteCollider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), DELETE_RANGE);
-
-
-		// α処理フェードイン
-		if (m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() < 255){
-			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() + 0.5f);
+		// イベントが呼び出される感じ
+		if (m_pStarData->m_bCreateEvent){
+			Create();
 		}
 
-		// リスポーンフラグがオンの時生成開始
-		if (m_pStarData[nCuntStar].t_bRespawn){
-			Create(nCuntStar);
-		}
+
+
+
+
+
 	}
 
+	// デバッグキー
+	if (GetKeyboardTrigger(DIK_K)){
+		m_pStarData = m_pRoot;	// 先頭に戻す
+		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-	// デバッグ用
-	if (GetKeyboardTrigger(DIK_C)){
-		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-			if (m_pStarData[nCuntStar].t_bUse)
+			if (m_pStarData->m_bUse)
 				continue;
-			m_pStarData[nCuntStar].t_bRespawn = true;
+
+			m_pStarData->m_bCreateEvent = true;
 			break;
 		}
 	}
+
+
 
 }
 
@@ -136,23 +135,19 @@ void cBlackHole::Update(){
 //=======================================================================================
 void cBlackHole::Draw(){
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
 
-		if (!m_pStarData[nCuntStar].t_bUse)
+	// 描画
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++,m_pStarData++){
+
+		if (!m_pStarData->m_bUse)
 			continue;
 
-		m_pStarData[nCuntStar].t_Sprite.Draw();
-		m_pStarData[nCuntStar].t_VacuumCollider.Draw();
-		m_pStarData[nCuntStar].t_DeleteCollider.Draw();
-
+			m_pStarData->m_sprite.Draw();
 	}
 
-	// デバッグプリント
-	PrintDebugProc("***ブラックホール***\n");
-	PrintDebugProc("C:生成\n");
-	PrintDebugProc("生成数 %d\n", m_nCurrentNum);
-	PrintDebugProc("****************\n");
-
+	PrintDebugProc("Kキーで生成仮\n");
 }
 
 
@@ -161,41 +156,43 @@ void cBlackHole::Draw(){
 //		生成
 //
 //=======================================================================================
-void cBlackHole::Create(int num){
+void cBlackHole::Create(){
+	
+	// 生成イベントの開始
+	if(!m_pStarData->m_bCreateEnd){
 
-	// フレーム加算
-	m_pStarData[num].t_nRespawnFrame++;
 
-	if (m_pStarData[num].t_nRespawnFrame > RESPAWN_FREAM){
 
-		// 使用済みのみ
-		if (!m_pStarData[num].t_bUse){
+		// ここ以外は同じ処理になるはずだからコピぺでいいはず
+		//****** ここに演出とか生成処理を書いていく **********
+		m_pStarData->m_bUse = true;
 
-			// 生成＆数える
-			CountUp(num);
 
-			// レスポーン終了フラグオフ
-			m_pStarData[num].t_bRespawn = false;
-			m_pStarData[num].t_nRespawnFrame = 0;
 
-			// αを０で開始
-			m_pStarData[num].t_Sprite.SetVtxColorA(255);
 
-			// 位置の決定	
-			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-			m_pStarData[num].t_Sprite.SetPos(CreateRamdomPos);		// 代入
+		// 回転てきとう
+		m_pStarData->rad += 0.01f;
+		m_pStarData->m_sprite.SetRad(m_pStarData->m_sprite.GetRad() + m_pStarData->rad);
+
+		//****************************************************
+
+
+
+		// 演出がおわったら生成終了フラグを立てる
+		//m_pStarData->m_bCreateEnd = true;
+
+		// 今回はある程度回転したら終了
+		if (m_pStarData->rad > 1.0f){
+			m_pStarData->m_bCreateEnd = true;
+
 		}
+
 	}
 
-}
 
-//=======================================================================================
-//
-//		星の設定
-//
-//=======================================================================================
-void cBlackHole::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
-
+	// 生成終了フラグが立ったらイベントフラグをオフにして終了
+	if (m_pStarData->m_bCreateEnd){
+		m_pStarData->m_bCreateEvent = false;
+		return;
+	}
 }

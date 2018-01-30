@@ -251,32 +251,32 @@ void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 	}
 
 
-	// ブラックホールの中心を取得
-	D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].t_Sprite.GetPos();
+	//// ブラックホールの中心を取得
+	//D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].t_Sprite.GetPos();
 
-	// ブラックホールと星との距離を求める
-	D3DXVECTOR2 Distance;
-	Distance.x = sqrt((m_pStarData[Normal].t_Sprite.GetPosX() - Center.x)*(m_pStarData[Normal].t_Sprite.GetPosX() - Center.x));
-	Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
+	//// ブラックホールと星との距離を求める
+	//D3DXVECTOR2 Distance;
+	//Distance.x = sqrt((m_pStarData[Normal].t_Sprite.GetPosX() - Center.x)*(m_pStarData[Normal].t_Sprite.GetPosX() - Center.x));
+	//Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
 
-	// 距離から移動量を算出
-	m_pStarData[Normal].t_Move.x = Distance.x / 800.0f;
-	m_pStarData[Normal].t_Move.y = Distance.y / 800.0f;
+	//// 距離から移動量を算出
+	//m_pStarData[Normal].t_Move.x = Distance.x / 800.0f;
+	//m_pStarData[Normal].t_Move.y = Distance.y / 800.0f;
 
-	// 移動量を反映
-	if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
-		m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
-	}
-	if (m_pStarData[Normal].t_Sprite.GetPosX() < Center.x){
-		m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + m_pStarData[Normal].t_Move.x);
-	}
+	//// 移動量を反映
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() < Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + m_pStarData[Normal].t_Move.x);
+	//}
 
-	if (m_pStarData[Normal].t_Sprite.GetPosY() > Center.y){
-		m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() - m_pStarData[Normal].t_Move.y);
-	}
-	if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
-		m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
-	}
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() > Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() - m_pStarData[Normal].t_Move.y);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
+	//}
 
 }
 

@@ -21,31 +21,28 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define MAX_BLACK_HOLE_NUM	(5)
+#define MAX_BLACK_HOLE_NUM	(100)
 
 
-
-//-----------------------------
-// 構造体定義
-//-----------------------------
-// ブラックホールのデータ
-typedef struct _tBlackHoleData{
-
-	cSpriteParam			t_Sprite;				// 描画用
-	cCollider				t_VacuumCollider;		// 吸い込み範囲
-	cCollider				t_DeleteCollider;		// 消滅範囲
-	cCircleOrbitMovement	t_MoveCircle;			// 円軌道用判定
-	bool					t_bUse;					// 使用フラグ
-	int						t_nRespawnFrame;		// リスポーンフレーム
-	bool					t_bRespawn;				// リスポーンフラグ
-
-}tBlackHoleData;
 
 //-----------------------------
 //クラス定義
 //-----------------------------
-//******ブラックホール********
-class cBlackHole :public cBaseStar{
+
+class cBlackHoleData :public cBaseStarData{
+
+public:
+	// 追加分だけ
+	cCollider		m_VacuumCollider;				// 吸い込み範囲
+	cCollider		m_DeleteCollider;
+
+
+	float rad;			// テスト用演出確認
+
+	
+};
+
+class cBlackHole :public cBaseStar{		//使わないかもだけど一応継承して
 
 public:
 	void Update();
@@ -54,35 +51,16 @@ public:
 	cBlackHole();
 
 
-	//--- 星のフラグオン & カウントアップ ----
-	void CountUp(int num){
-
-		if (!m_pStarData[num].t_bUse){
-			m_pStarData[num].t_bUse = true;
-			m_nCurrentNum++;
-		}
-
-	}
-	//--- 星のフラグオフ & カウントダウン ----
-	void CountDown(int num){
-
-		if (m_pStarData[num].t_bUse){
-			m_pStarData[num].t_bUse = false;
-			m_nCurrentNum--;
-		}
-	}
-
 	// Getter
-	tBlackHoleData* GetStarData(){
+	cBlackHoleData* GetStarData(){
 		return m_pStarData;
 	}
 
-	void Create(int num);
-
-	// 星の設定
-	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
+	void Create();
 
 private:
-	tBlackHoleData*	m_pStarData;
+	cBlackHoleData* m_pStarData;	// ブラックホールの必要データ
+	cBlackHoleData*	m_pRoot;		// 先頭アドレス格納用
+
 };
 #endif //!___BLACK_HOLE_H___
