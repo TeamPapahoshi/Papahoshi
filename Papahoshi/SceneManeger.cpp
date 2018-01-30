@@ -155,7 +155,7 @@ void cSceneManeger::Update(){
 		}
 	}
 
-	PrintDebugProc("spaceでシーン切り替え\n");
+	
 }
 
 //=======================================================================================
@@ -166,6 +166,15 @@ void cSceneManeger::Update(){
 //	
 //=======================================================================================
 void cSceneManeger::Draw(){
+
+
+//デバッグ用
+#ifdef _DEBUG
+	PrintDebugProc("━━━━シーン━━━━\n");
+	PrintDebugProc("spaceでシーン切り替え\n");
+	PrintDebugProc("シーン番号:%d\n", m_nCurrentSceneNum);
+	PrintDebugProc("━━━━━━━━━━━\n");
+#endif
 
 	if (m_pScene == NULL){
 		//なんかメッセージボックス出したほうがいいかな？
@@ -179,10 +188,7 @@ void cSceneManeger::Draw(){
 		pTransition->Draw();
 
 
-//デバッグ用
-#ifdef _DEBUG
-	PrintDebugProc("シーン番号:%d\n",m_nCurrentSceneNum);
-#endif
+
 
 }
 
