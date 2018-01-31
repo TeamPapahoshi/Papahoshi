@@ -129,12 +129,11 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::CheckCollision(){
 
-	cCollider c, t;
+	cCollider c,t;
 	c.SetType(cCollider::CollisionType::CIRCLE);
-	t.SetType(cCollider::CollisionType::TRIANGLE);
-	c.SetCircleCollider(D3DXVECTOR2(200.0f, 200.0f), 10.0f);
-	t.SetTriangleCollider(D3DXVECTOR2(200, 100), D3DXVECTOR2(300, 300), D3DXVECTOR2(100, 300));
+	c.SetCircleCollider(D3DXVECTOR2(700.0f, 580.0f), 10.0f);
 
+	t = pNet->GetCollider()[1];
 	if (cCollider::CheckCollisionCircleToTriangle(c, t)){
 		int i = 0;
 	}

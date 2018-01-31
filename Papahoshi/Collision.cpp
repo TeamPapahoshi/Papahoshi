@@ -122,7 +122,7 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 
 		//次の値を設定
 		next = i + 1;
-		if (next == 2)
+		if (next == 3)
 			next = 0;
 		//判定
 		/*
@@ -137,8 +137,16 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 			fabs(VectorCrossProduct(triVector[i], TtoCVector[i])) / VectorSize(triVector[i]) <= circle.GetCollider().fRadius)
 			return true;
 		//②☆
-		if ((circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) * (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) + (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) * (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) <= circle.GetCollider().fRadius * circle.GetCollider().fRadius ||
-			(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x) * (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x) + (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y) * (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y) <= circle.GetCollider().fRadius * circle.GetCollider().fRadius)
+		if ((circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) 
+			* (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) 
+			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y)
+			* (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) 
+			<= circle.GetCollider().fRadius * circle.GetCollider().fRadius ||
+			(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x)
+			* (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x)
+			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y)
+			* (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y)
+			<= circle.GetCollider().fRadius * circle.GetCollider().fRadius)
 			return true;
 		/*　あほの極み
 		if ((((int)(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) ^ 2) +
@@ -152,7 +160,7 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 	for (int i = 0; i < 3; i++){
 		//次の値を設定
 		next = i + 1;
-		if (next == 2)
+		if (next == 3)
 			next = 0;
 		//③ ①と②がすべての辺で成り立っていない時に、
 		//V[n]×M[n]≦0（線分の右側に頂点がある）
