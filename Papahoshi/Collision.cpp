@@ -141,11 +141,15 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 
 
 		//áAÅô
-		if ((circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) * (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x)
-			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) * (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y)
-			<= circle.GetCollider().fRadius * circle.GetCollider().fRadius
-			|| (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x) * (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x)
-			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y) * (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y)
+		if ((circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) 
+			* (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) 
+			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y)
+			* (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) 
+			<= circle.GetCollider().fRadius * circle.GetCollider().fRadius ||
+			(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x)
+			* (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x)
+			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y)
+			* (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y)
 			<= circle.GetCollider().fRadius * circle.GetCollider().fRadius)
 			return true;
 
