@@ -43,6 +43,11 @@ cSceneGame::cSceneGame(){
 	// Ë¶êŒ
 	m_pSpaceRock = new cSpaceRock();
 
+
+
+	// Ë¶êŒ
+	m_pSampleStar = new cSampleStar();
+
 	// ÉÇÉuêØ
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
@@ -66,7 +71,7 @@ cSceneGame::~cSceneGame(){
 	delete m_pBG;
 	delete m_pNomalStar;
 	delete m_pBlackHole;
-
+	delete m_pSampleStar;
 }
 
 //=======================================================================================
@@ -86,6 +91,7 @@ void cSceneGame::Update(){
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
 	m_pSpaceRock->Update();
+	m_pSampleStar->Update();
 
 
 
@@ -111,10 +117,10 @@ void cSceneGame::Draw(){
 
 	//
 	m_pBlackHole->Draw();
-
+	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
 
-	//m_pNomalStar->Draw();
+	m_pNomalStar->Draw();
 
 
 	
@@ -139,19 +145,19 @@ void cSceneGame::CheckCollision(){
 	}
 
 	// ñ‘Ç∆ÉÇÉuêØÇÃÇ†ÇΩÇËîªíË
-	for (int nCountStar = 0; nCountStar < MAX_NORMAL_STAR; nCountStar++){
+	//for (int nCountStar = 0; nCountStar < MAX_NORMAL_STAR; nCountStar++){
 
-		if (!m_pNomalStar->GetStarData()[nCountStar].t_bUse)
-			continue;
+	//	if (!m_pNomalStar->GetStarData()[nCountStar].t_bUse)
+	//		continue;
 
-		for (int nCountNet = 0; nCountNet < 2; nCountNet++){
-			if (cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].t_Collider, pNet->GetCollider()[nCountNet])){
+	//	for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+	//		if (cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].t_Collider, pNet->GetCollider()[nCountNet])){
 
-				m_pNomalStar->OnCollidToNet(nCountStar);
+	//			m_pNomalStar->OnCollidToNet(nCountStar);
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 
 	 
 	// ñ‘Ç∆Ë¶êŒÇÃÇ†ÇΩÇËîªíË

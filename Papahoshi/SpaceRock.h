@@ -53,7 +53,7 @@ public:
 
 	void OnCollidToNet(int count);
 
-
+	void SetCountAndUse(bool flag){}
 	// Getter
 	tSpaceRockData* GetStarData(){
 		return m_pStarData;

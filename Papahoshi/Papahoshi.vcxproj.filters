@@ -256,6 +256,9 @@
     <ClCompile Include="Score.cpp">
       <Filter>ソース ファイル\共通処理\スコア</Filter>
     </ClCompile>
+    <ClCompile Include="SampleStar.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -378,9 +381,14 @@
     <ClInclude Include="Transition.h">
       <Filter>ソース ファイル\共通処理\トランジション</Filter>
     </ClInclude>
-    <ClInclude Include="SpaceRock.h" />
     <ClInclude Include="Score.h">
       <Filter>ソース ファイル\共通処理\スコア</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleStar.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceRock.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

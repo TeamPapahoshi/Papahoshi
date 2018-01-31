@@ -25,12 +25,13 @@ public:
 	virtual ~cBaseStar(){}
 	cBaseStar(){}
 
-	
+	// フラグのオンオフと星の数を数える
+	virtual void SetCountAndUse(bool flag)=0;
+
 
 protected:
 	int					m_nMaxNum;
 	int					m_nCurrentNum=0;
-
 };
 
 
@@ -45,23 +46,32 @@ public:
 		m_bDraw = false;
 		m_bCreateEvent = false;
 		m_bCreateEnd	= false;
+		m_bDestroyEvent = false;
+		m_bDestroyEnd = false;
+		m_bRespawnEvent = false;
+		m_bRespawnEnd = false;
 		m_nRespawnFrame = 0;
 	}
 
-
+	// どの星でも使うやつ
 	cSpriteParam	m_sprite;
 	cCollider		m_Collision;
 
-
-	bool			m_bUse;
-	bool			m_bDraw;
-	bool			m_bCreateEvent;
-	bool			m_bCreateEnd;
 	
+	bool			m_bUse;			// ゲームないで有効かあたり判定とか
+	bool			m_bDraw;		// 描画フラグ
 
+	bool			m_bCreateEvent;	// 生成イベント
+	bool			m_bCreateEnd;
 
-	int				m_nRespawnFrame;				// リスポーンフレーム
+	bool			m_bDestroyEvent;// 削除イベント
+	bool			m_bDestroyEnd;
+
+	bool			m_bRespawnEvent;// リスポーンイベント
+	bool			m_bRespawnEnd;
+	int				m_nRespawnFrame;
 };
+
 
 
 
