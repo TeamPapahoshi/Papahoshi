@@ -122,6 +122,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト">
       <UniqueIdentifier>{0cb06d61-00b1-4bbe-89e1-8a17d6934195}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ゲージ">
+      <UniqueIdentifier>{80888055-f791-4c2b-951f-ebb03ed51830}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -241,6 +244,9 @@
     <ClCompile Include="TitleWave.cpp">
       <Filter>ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト</Filter>
     </ClCompile>
+    <ClCompile Include="Gage.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ゲージ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -359,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="Net_Type2.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClInclude>
+    <ClInclude Include="Gage.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ゲージ</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -42,6 +42,9 @@ cSceneGame::cSceneGame(){
 	// ƒ‚ƒu¯
 	m_pNomalStar = new cNormalStar();
 
+	// ƒQ[ƒW
+	m_pGage = new cGage();
+	m_pGage->Init();
 
 	// ”wŒi
 	m_pBG = new cBG();
@@ -58,7 +61,7 @@ cSceneGame::~cSceneGame(){
 	// ƒfƒŠ[ƒg
 	delete m_pBG;
 	delete m_pNomalStar;
-
+	delete m_pGage;
 }
 
 //=======================================================================================
@@ -74,6 +77,7 @@ void cSceneGame::Update(){
 	// XV
 	pNet->Update();		//‚ ‚Ý
 	m_pBG->Update();	// ”wŒi
+	m_pGage->Update();	// ƒQ[ƒW
 
 	m_pNomalStar->Update();
 	
@@ -99,6 +103,8 @@ void cSceneGame::Draw(){
 
 	m_pStageManager->Draw();
 	pNet->Draw();	//‚ ‚Ý
+
+	m_pGage->Draw();
 }
 
 

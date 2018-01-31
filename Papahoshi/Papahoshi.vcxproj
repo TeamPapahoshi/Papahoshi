@@ -24,6 +24,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FixedStars.cpp" />
     <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="Gage.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Meteor.cpp" />
@@ -66,6 +67,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FixedStars.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="Gage.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Meteor.h" />

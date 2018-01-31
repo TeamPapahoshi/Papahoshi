@@ -25,6 +25,7 @@
 #include "BG.h"
 #include "NormalStars.h"
 #include "FixedStars.h"
+#include "Gage.h"
 
 
 // 呼び出す星の数
@@ -51,7 +52,7 @@ private:
 
 	cNormalStar*				m_pNomalStar;		// モブ星
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
-	
+	cGage*						m_pGage;			// ゲージ
 
 	cStageManager*				m_pStageManager;	// ステージマネージャー
 
