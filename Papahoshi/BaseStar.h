@@ -29,6 +29,15 @@ public:
 	virtual void SetCountAndUse(bool flag)=0;
 
 
+
+	int GetMaxNum(){
+		return m_nMaxNum;
+	}
+	int GetCurrentNum(){
+		return 	m_nCurrentNum;
+		;
+	}
+
 protected:
 	int					m_nMaxNum;
 	int					m_nCurrentNum=0;
@@ -51,25 +60,32 @@ public:
 		m_bRespawnEvent = false;
 		m_bRespawnEnd = false;
 		m_nRespawnFrame = 0;
+		m_Move = D3DXVECTOR2(0.0f, 0.0f);
 	}
 
 	// どの星でも使うやつ
 	cSpriteParam	m_sprite;
 	cCollider		m_Collision;
 
-	
-	bool			m_bUse;			// ゲームないで有効かあたり判定とか
-	bool			m_bDraw;		// 描画フラグ
+	bool			m_bUse;				// ゲームないで有効かあたり判定とか
+	bool			m_bDraw;			// 描画フラグ
 
-	bool			m_bCreateEvent;	// 生成イベント
+	bool			m_bCreateEvent;		// 生成イベント
 	bool			m_bCreateEnd;
 
-	bool			m_bDestroyEvent;// 削除イベント
+	bool			m_bDestroyEvent;	// 削除イベント
 	bool			m_bDestroyEnd;
 
-	bool			m_bRespawnEvent;// リスポーンイベント
+	bool			m_bRespawnEvent;	// リスポーンイベント
 	bool			m_bRespawnEnd;
 	int				m_nRespawnFrame;
+
+	D3DXVECTOR2		m_Move;				// 移動量
+
+
+
+
+
 };
 
 

@@ -28,7 +28,6 @@ class cNormalStarData :public cBaseStarData{
 public:
 };
 
-
 class cNormalStar :public cBaseStar{
 
 public:
@@ -39,7 +38,7 @@ public:
 
 	//--- 網との処理 ---
 	void SetNetData();
-	void OnCollidToNet(int count);
+	void OnCollidToNet();
 	
 
 	//--- ブラックホールとの処理 ---
@@ -50,7 +49,6 @@ public:
 
 	void Create();		// 生成
 	void Destroy();		// 削除
-
 	void Respawn();		// リスポーン
 
 private:
@@ -62,7 +60,7 @@ public:
 
 	// Getter
 	cNormalStarData* GetStarData(){
-		return m_pStarData;
+		return m_pRoot;
 	}
 
 

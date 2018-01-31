@@ -28,9 +28,9 @@
 #define DELETE_RANGE	(20)
 
 #define RESPAWN_FREAM	(100)
-#define MAX_BLACK_HOLE_NUM	(100)
+#define MAX_BLACK_HOLE_NUM	(2)
 
-//= == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+//===================================================================================
 //
 //		コンストラクタ
 //
@@ -47,14 +47,11 @@ cBlackHole::cBlackHole(){
 	m_pStarData = new cBlackHoleData[m_nMaxNum]();	//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
-
-
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
@@ -67,8 +64,6 @@ cBlackHole::cBlackHole(){
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
 		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
-
-
 	}
 
 }
@@ -82,7 +77,6 @@ cBlackHole::~cBlackHole(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
-
 	delete[] m_pStarData;
 }
 //=======================================================================================
@@ -145,7 +139,6 @@ void cBlackHole::Update(){
 	//		m_pStarData->m_bDestroyEvent = true;
 	//	}
 	//}
-
 }
 
 //=======================================================================================
@@ -170,7 +163,6 @@ void cBlackHole::Draw(){
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
-
 	// デバッグプリント
 	PrintDebugProc("━━━━ブラックホール━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
@@ -179,8 +171,6 @@ void cBlackHole::Draw(){
 	PrintDebugProc("削除後自動リスポーン\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
-
-
 }
 //=======================================================================================
 //
@@ -192,8 +182,6 @@ void cBlackHole::Create(){
 	// 生成イベントの開始
 	if (!m_pStarData->m_bCreateEnd){
 
-
-
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
 		//****** ここに演出とか生成処理を書いていく **********
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
@@ -204,14 +192,10 @@ void cBlackHole::Create(){
 		//****************************************************
 
 
-
 		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 		//m_pStarData->m_bCreateEnd = true;
 
 		m_pStarData->m_bCreateEnd = true;
-
-
-
 	}
 
 
@@ -242,11 +226,7 @@ void cBlackHole::Destroy(){
 		SetCountAndUse(false);
 
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
-		//****** ここに演出とか処理を書いていく **********
-
-
-
-
+		//****** ここに演出とか処理を書いていく *************
 		//****************************************************
 
 
@@ -301,15 +281,11 @@ void cBlackHole::Respawn(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bRespawnEnd){
 
-
 		// 生成イベント開始
 		m_pStarData->m_bCreateEvent = true;
 
-
-
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;
-
 
 		m_pStarData->m_bRespawnEnd = false;
 		m_pStarData->m_bRespawnEvent = false;

@@ -68,6 +68,10 @@ cNormalStar::cNormalStar(){
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 
+		// 当たり判定
+		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE/2.0f);
+
 	}
 
 }
@@ -110,10 +114,13 @@ void cNormalStar::Update(){
 		else if (m_pStarData->m_bRespawnEvent){
 			Respawn();
 		}
+		
+		// 当たり判定
+		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+
 
 	}
-
-
 
 	// イベントの起動
 	// デバッグキー
@@ -166,6 +173,9 @@ void cNormalStar::Draw(){
 			continue;
 
 		m_pStarData->m_sprite.Draw();
+
+		if (m_pStarData->m_bUse)
+			m_pStarData->m_Collision.Draw();
 	}
 
 	// 先頭に戻す
@@ -326,7 +336,49 @@ void cNormalStar::Respawn(){
 //
 //=======================================================================================
 //--- 網と当たった時の処理 ---
-void cNormalStar::OnCollidToNet(int count){
+void cNormalStar::OnCollidToNet(){
+
+	// 網の方向に動かす
+	// 目的位置の座標を取得
+	D3DXVECTOR2 Center = D3DXVECTOR2(SCREEN_CENTER);
+
+
+
+	//// ブラックホールと星との距離を求める
+	//D3DXVECTOR2 Distance;
+	//Distance.x = sqrt((m_pStarData[Normal].t_Sprite.GetPosX() - Center.x)*(m_pStarData[Normal].t_Sprite.GetPosX() - Center.x));
+	//Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
+
+	//// 距離から移動量を算出
+	//m_pStarData[Normal].t_Move.x = Distance.x / 800.0f;
+	//m_pStarData[Normal].t_Move.y = Distance.y / 800.0f;
+
+	//// 移動量を反映
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() < Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + m_pStarData[Normal].t_Move.x);
+	//}
+
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() > Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() - m_pStarData[Normal].t_Move.y);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
+	//}
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
