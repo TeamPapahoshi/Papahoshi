@@ -17,17 +17,17 @@
 #include "NormalStars.h"
 #include "rand.h"
 #include "Input.h"
+#include <cmath>
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
 #define STAR_SIZE	(20)
 
-#define RESPAWN_FREAM (100)
+#define RESPAWN_FREAM (200)
 
-//****************************************************************************************************************
-// 普通の星
-//****************************************************************************************************************
+#define MAX_NORMAL_STAR_NUM	(50)
+
 //=======================================================================================
 //
 //		コンストラクタ
@@ -38,35 +38,41 @@ cNormalStar::cNormalStar(){
 	// 乱数の初期化
 	CRandam::InitRand();
 
-	// 星の最大数　後にファイルから読込したい
-	m_nMaxNum = MAX_NORMAL_STAR;
+	// 使用数を格納ファイルから読み込むけどだいぶ変更したから
+	m_nMaxNum = MAX_NORMAL_STAR_NUM;
 
-	// 動的確保
-	m_pStarData = new tNormalStarData[m_nMaxNum];
+	// 動的インスタンス
+	m_pStarData = new cNormalStarData[m_nMaxNum]();	//ここ注意
+	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
-		// 初期化
-		m_pStarData[nCuntStar].t_Sprite.SetPos(D3DXVECTOR2(100, 100));
-		m_pStarData[nCuntStar].t_Sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
-		m_pStarData[nCuntStar].t_Sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));
-		m_pStarData[nCuntStar].t_bUse = false;	
+	// 初期化
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		// あたり判定
-		m_pStarData[nCuntStar].t_Collider.SetType(cCollider::CIRCLE);
-		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData->t_Sprite.GetPos(), STAR_SIZE / 2.0f);
+
+		// 初期生成
+		m_pStarData->m_bDraw = true;
+		SetCountAndUse(true);
+
+		// サイズの変更
+		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
+
+		// テクスチャの設定
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));
+
+		// 座標の決定
+		D3DXVECTOR2 CreateRamdomPos;
+		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
+		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+
+
+		// 当たり判定
+		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE/2.0f);
+
 	}
-
-	//　フレームカウント
-	m_nRespawnFream = 0;
-
-	// 
-	m_bCapchared = false;
-
-	// 生成
-	CreateRamdom();
-
 
 }
 
@@ -77,13 +83,11 @@ cNormalStar::cNormalStar(){
 //=======================================================================================
 cNormalStar::~cNormalStar(){
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
 
-	
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
 
-
-	}
-
+	delete[] m_pStarData;
 }
 //=======================================================================================
 //
@@ -92,37 +96,63 @@ cNormalStar::~cNormalStar(){
 //=======================================================================================
 void cNormalStar::Update(){
 
-	
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
 
+	// イベント格納ループ？
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-
-
-		// あたり判定
-		m_pStarData[nCuntStar].t_Collider.SetCircleCollider(m_pStarData[nCuntStar].t_Sprite.GetPos(), STAR_SIZE / 2.0f);
-
-
-		// α処理
-		if (m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() < 255){
-
-			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(m_pStarData[nCuntStar].t_Sprite.GetVtxColorA() + 0.5f);
-
+		// イベントが呼び出される感じ
+		if (m_pStarData->m_bCreateEvent){
+			Create();
 		}
+
+		else if (m_pStarData->m_bDestroyEvent){
+			Destroy();
+		}
+
+		else if (m_pStarData->m_bRespawnEvent){
+			Respawn();
+		}
+		
+		// 当たり判定
+		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+
+
 	}
 
-
-	// リスポーン処理
-	if (m_bCapchared){
-		Respawn();
-	}
-
-	// デバッグ用
+	// イベントの起動
+	// デバッグキー
 	if (GetKeyboardTrigger(DIK_R)){
-		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-			m_pStarData[nCuntStar].t_bUse = false;
-			m_bCapchared = true;
+		m_pStarData = m_pRoot;	// 先頭に戻す
+		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+			m_pStarData->m_bDestroyEvent = true;
 		}
 	}
+	//if (GetKeyboardTrigger(DIK_K)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+	//		if (m_pStarData->m_bDraw)	// ここ注意
+	//			continue;
+
+	//		m_pStarData->m_bCreateEvent = true;
+	//		break;
+	//	}
+	//}
+	//// デバッグキー
+	//if (GetKeyboardTrigger(DIK_D)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+	//		if (!m_pStarData->m_bUse)	// ここ注意
+	//			continue;
+
+	//		m_pStarData->m_bDestroyEvent = true;
+	//		break;
+	//	}
+	//}
 
 }
 
@@ -133,111 +163,171 @@ void cNormalStar::Update(){
 //=======================================================================================
 void cNormalStar::Draw(){
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-		if (m_pStarData[nCuntStar].t_bUse){
-			m_pStarData[nCuntStar].t_Sprite.Draw();
-		//	m_pStarData[nCuntStar].t_Collider.Draw();
-		}
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
 
+	// 描画
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		if (!m_pStarData->m_bDraw)
+			continue;
+
+		m_pStarData->m_sprite.Draw();
+
+		if (m_pStarData->m_bUse)
+			m_pStarData->m_Collision.Draw();
 	}
+
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
 
 
 	// デバッグプリント
-	PrintDebugProc("***NormalStar***\n");
-	PrintDebugProc("R:Reset\n");
-	PrintDebugProc("RespawnFrame %d\n", m_nRespawnFream);
-	PrintDebugProc("****************\n");
+	PrintDebugProc("━━━━━━モブ星━━━━━━\n");
+	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
+	PrintDebugProc("Rキーでリセット\n");
+	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
+	PrintDebugProc("━━━━━━━━━━━━━━━\n");
+
 
 }
-
 //=======================================================================================
 //
-//		星の設定
+//		生成
 //
 //=======================================================================================
-void cNormalStar::Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int second){
+void cNormalStar::Create(){
 
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
+	// 生成イベントの開始
+	if (!m_pStarData->m_bCreateEnd){
 
 
 
+		// ここ以外は同じ処理になるはずだからコピぺでいいはず
+		//****** ここに演出とか生成処理を書いていく **********
+		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
+		m_pStarData->m_bDraw = true;
+
+
+
+		//****************************************************
+
+
+
+		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
+		//m_pStarData->m_bCreateEnd = true;
+
+		m_pStarData->m_bCreateEnd = true;
 
 
 
 	}
+
+
+	// 生成終了フラグが立ったらリセットして終了
+	if (m_pStarData->m_bCreateEnd){
+
+		//	リセット
+		m_pStarData->m_bCreateEnd = false;
+	
+		// フラグオン
+		SetCountAndUse(true);
+		m_pStarData->m_bCreateEvent = false;
+		return;
+	}
 }
+
 
 //=======================================================================================
 //
-//		星のランダム生成
+//		削除(一応作った)
 //
 //=======================================================================================
-void cNormalStar::CreateRamdom(){
+void cNormalStar::Destroy(){
+
+	// 生成イベントの開始
+	if (!m_pStarData->m_bDestroyEnd){
+
+		SetCountAndUse(false);
+
+		// ここ以外は同じ処理になるはずだからコピぺでいいはず
+		//****** ここに演出とか処理を書いていく **********
+
+
+
+
+		//****************************************************
+
+
+		// 演出がおわったら終了フラグを立てる->if(EffectEnd()){m_pStar->....}
+		m_pStarData->m_bDestroyEnd = true;
 
 	
-	// とりあえず画面の範囲に出す
-	for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-
-
-		// 使用済みは飛ばす
-		if (m_pStarData[nCuntStar].t_bUse)
-			continue;
-
-		// フラグを立てる
-		m_pStarData[nCuntStar].t_bUse = true;
-
-
-		// 位置の決定
-		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = CRandam::RandamRenge(0, SCREEN_HEIGHT);
-		m_pStarData[nCuntStar].t_Sprite.SetPos(CreateRamdomPos);		// 代入
 
 	}
 
+	// 生成終了フラグが立ったらリセットして終了
+	if (m_pStarData->m_bDestroyEnd){
+
+		// 終了したら即リスポーン準備
+		m_pStarData->m_bRespawnEvent = true;
+
+		//	リセット
+		m_pStarData->m_bDestroyEnd = false;
+		m_pStarData->m_bDraw = false;
+		m_pStarData->m_bDestroyEvent = false;
+
+		return;
+	}
 }
 
-//=======================================================================================
-//
-//		星のリスポーン
-//
-//=======================================================================================
+////=======================================================================================
+////
+////		リスポーン
+////
+////=======================================================================================
 void cNormalStar::Respawn(){
 
-	// フレーム加算開始(仮)
-	m_nRespawnFream++;
+	
+	if (!m_pStarData->m_bRespawnEnd){
 
-	if (m_nRespawnFream > RESPAWN_FREAM){
+		// フレーム加算開始
+		m_pStarData->m_nRespawnFrame++;
 
-		// カウントリセット
-		m_nRespawnFream = 0;
+		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
 
-		// フラグリセット
-		m_bCapchared = false;
-
-		// とりあえず画面の範囲に出す
-		for (int nCuntStar = 0; nCuntStar < m_nMaxNum; nCuntStar++){
-
-
-			// 使用済みは飛ばす
-			if (m_pStarData[nCuntStar].t_bUse)
-				continue;
-
-			// フラグを立てる
-			m_pStarData[nCuntStar].t_bUse = true;
-
-			// αを０で開始
-			m_pStarData[nCuntStar].t_Sprite.SetVtxColorA(0);
-
-			// 位置の決定
+			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = CRandam::RandamRenge(0, SCREEN_WIDTH);
-			CreateRamdomPos.y = CRandam::RandamRenge(0, SCREEN_HEIGHT);
-			m_pStarData[nCuntStar].t_Sprite.SetPos(CreateRamdomPos);		// 代入
+			CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
+			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
+
+			m_pStarData->m_bRespawnEnd = true;
 		}
 	}
+
+	// 生成終了フラグが立ったらリセットして終了
+	if (m_pStarData->m_bRespawnEnd){
+
+	
+		// 生成イベント開始
+		m_pStarData->m_bCreateEvent = true;
+
+
+
+		//	リセット
+		m_pStarData->m_nRespawnFrame = 0;
+
+
+		m_pStarData->m_bRespawnEnd = false;
+		m_pStarData->m_bRespawnEvent = false;
+		return;
+	}
 }
+
+
+
 
 
 //=======================================================================================
@@ -245,13 +335,119 @@ void cNormalStar::Respawn(){
 //		網との処理
 //
 //=======================================================================================
-void cNormalStar::OnCollidToNet(int count){
+//--- 網と当たった時の処理 ---
+void cNormalStar::OnCollidToNet(){
+
+	// 網の方向に動かす
+	// 目的位置の座標を取得
+	D3DXVECTOR2 Center = D3DXVECTOR2(SCREEN_CENTER);
 
 
-	// 仮
-	m_pStarData[count].t_bUse = false;
+
+	//// ブラックホールと星との距離を求める
+	//D3DXVECTOR2 Distance;
+	//Distance.x = sqrt((m_pStarData[Normal].t_Sprite.GetPosX() - Center.x)*(m_pStarData[Normal].t_Sprite.GetPosX() - Center.x));
+	//Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
+
+	//// 距離から移動量を算出
+	//m_pStarData[Normal].t_Move.x = Distance.x / 800.0f;
+	//m_pStarData[Normal].t_Move.y = Distance.y / 800.0f;
+
+	//// 移動量を反映
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() < Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + m_pStarData[Normal].t_Move.x);
+	//}
+
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() > Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() - m_pStarData[Normal].t_Move.y);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
+	//}
 
 
-	m_bCapchared = true;
 
+
+
+
+
+
+
+
+
+
+
+}
+
+//=======================================================================================
+//
+//		ブラックホールとの処理
+//
+//=======================================================================================
+//---- ブラックホールの情報を取得 -----
+void cNormalStar::SetBlackHoleData(cBlackHole* data){
+	
+}
+
+//---- ブラックホール吸い込み範囲に当たった時の処理 -----
+void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
+
+	// 振動する
+	//if (m_pStarData[Normal].t_bVibration){
+
+	//	m_pStarData[Normal].t_nVibrationFrame++;
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + 0.15f);
+
+	//	if (m_pStarData[Normal].t_nVibrationFrame > 5){
+	//		m_pStarData[Normal].t_bVibration = false;
+	//		m_pStarData[Normal].t_nVibrationFrame = 0;
+	//	}	
+	//}
+
+	//else if (!m_pStarData[Normal].t_bVibration){
+	//	m_pStarData[Normal].t_nVibrationFrame++;
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - 0.15f);
+	//	if (m_pStarData[Normal].t_nVibrationFrame > 5){
+	//		m_pStarData[Normal].t_bVibration = true;
+	//		m_pStarData[Normal].t_nVibrationFrame = 0;
+	//	}
+	//}
+
+
+	//// ブラックホールの中心を取得
+	//D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].t_Sprite.GetPos();
+
+	//// ブラックホールと星との距離を求める
+	//D3DXVECTOR2 Distance;
+	//Distance.x = sqrt((m_pStarData[Normal].t_Sprite.GetPosX() - Center.x)*(m_pStarData[Normal].t_Sprite.GetPosX() - Center.x));
+	//Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
+
+	//// 距離から移動量を算出
+	//m_pStarData[Normal].t_Move.x = Distance.x / 800.0f;
+	//m_pStarData[Normal].t_Move.y = Distance.y / 800.0f;
+
+	//// 移動量を反映
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosX() < Center.x){
+	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + m_pStarData[Normal].t_Move.x);
+	//}
+
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() > Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() - m_pStarData[Normal].t_Move.y);
+	//}
+	//if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
+	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
+	//}
+
+}
+
+//---- ブラックホールの削除範囲に当たった時の処理 -----
+void cNormalStar::OnCollidToDelete(int Normal){
+
+	
 }

@@ -13,7 +13,7 @@
 //-----------------------------
 #include "Sprite.h"
 #include "Collision.h"
-
+#include "Common.h"
 //-----------------------------
 //クラス定義
 //-----------------------------
@@ -25,14 +25,73 @@ public:
 	virtual ~cBaseStar(){}
 	cBaseStar(){}
 
-	// 計算用の位置を取得
-	D3DXVECTOR2 GetPos(){
-		return m_sprite.GetPos();
+	// フラグのオンオフと星の数を数える
+	virtual void SetCountAndUse(bool flag)=0;
+
+
+
+	int GetMaxNum(){
+		return m_nMaxNum;
+	}
+	int GetCurrentNum(){
+		return 	m_nCurrentNum;
+		;
 	}
 
 protected:
-	cSpriteParam	m_sprite;		// 描画用
+	int					m_nMaxNum;
+	int					m_nCurrentNum=0;
 };
+
+
+// 継承して構造体みたいに使う
+class cBaseStarData{
+
+public:
+	virtual ~cBaseStarData(){}
+
+	cBaseStarData(){
+		m_bUse = false;
+		m_bDraw = false;
+		m_bCreateEvent = false;
+		m_bCreateEnd	= false;
+		m_bDestroyEvent = false;
+		m_bDestroyEnd = false;
+		m_bRespawnEvent = false;
+		m_bRespawnEnd = false;
+		m_nRespawnFrame = 0;
+		m_Move = D3DXVECTOR2(0.0f, 0.0f);
+	}
+
+	// どの星でも使うやつ
+	cSpriteParam	m_sprite;
+	cCollider		m_Collision;
+
+	bool			m_bUse;				// ゲームないで有効かあたり判定とか
+	bool			m_bDraw;			// 描画フラグ
+
+	bool			m_bCreateEvent;		// 生成イベント
+	bool			m_bCreateEnd;
+
+	bool			m_bDestroyEvent;	// 削除イベント
+	bool			m_bDestroyEnd;
+
+	bool			m_bRespawnEvent;	// リスポーンイベント
+	bool			m_bRespawnEnd;
+	int				m_nRespawnFrame;
+
+	D3DXVECTOR2		m_Move;				// 移動量
+
+
+
+
+
+};
+
+
+
+
+
 
 //----円軌道移動クラス------円軌道させたいクラスにもたせる(星以外にも使えます)
 class cCircleOrbitMovement{

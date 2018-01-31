@@ -395,3 +395,10 @@ HRESULT ReadChunkData(HANDLE hFile, void *pBuffer, DWORD dwBuffersize, DWORD dwB
 	return S_OK;
 }
 
+//=================================================================
+// ボリュームの調整
+// 読み込んだサウンドごとに設定
+//=================================================================
+void SetVolume(float fVolume, SOUND_LABEL label){
+	g_apSourceVoice[label]->SetVolume(fVolume);
+}

@@ -32,6 +32,7 @@ public:
 	// ¯‚Ìİ’è
 	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
 
+	void SetCounAndUse(bool flag){}
 private:
 	cCollider		m_Collider;			// ‚ ‚½‚è”»’è
 	cCircleOrbitMovement moveCircle;

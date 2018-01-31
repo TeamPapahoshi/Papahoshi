@@ -34,17 +34,18 @@
 // マクロ
 //-----------------------------
 // テクスチャファイル
-#define TEXTURE_FILNAME_KING_JELLY	("Image/Character/KingJelly.jpg")
-#define TEXTURE_FILNAME_JELLY		("Image/Character/Jelly.png")
-#define TEXTURE_FILNAME_STAR_LIGHT	("Image/Star/light.png")
-#define TEXTURE_FILNAME_STAR		("Image/Star/Star.png")
-#define TEXTURE_FILNAME_EF			("Image/Star/Effect.png")
-#define TEXTURE_FILNAME_EF02		("Image/Star/Effect2.png")
-#define TEXTURE_FILENAME_NET		("Image/Net/Net.png")
-#define TEXTURE_FILENAME_UKI		("Image/Net/uki.jpg")
-#define TEXTURE_FILENAME_ARROW		("Image/Net/arrow.png")
+#define TEXTURE_FILNAME_KING_JELLY		("Image/Character/KingJelly.jpg")
+#define TEXTURE_FILNAME_JELLY			("Image/Character/Jelly.png")
+#define TEXTURE_FILNAME_STAR_LIGHT		("Image/Star/light.png")
+#define TEXTURE_FILNAME_STAR			("Image/Star/Star.png")
+#define TEXTURE_FILNAME_EF				("Image/Star/Effect.png")
+#define TEXTURE_FILNAME_EF02			("Image/Star/Effect2.png")
+#define TEXTURE_FILENAME_NET			("Image/Net/Net.png")
+#define TEXTURE_FILENAME_UKI			("Image/Net/uki.jpg")
+#define TEXTURE_FILENAME_ARROW			("Image/Net/arrow.png")
 #define TEXTURE_FILENAME_HALFCIRCLE		("Image/Net/half.png")
-#define TEXTURE_FILENAME_BLACK_HOLE	("Image/Star/blackhole.png")
+#define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
+#define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
 #define TEXTURE_FILENAME_SHIP ("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE ("data/texture/line_wave1.png")
@@ -65,6 +66,19 @@
 #define TEXTURE_FILENAME_ROGO11 ("Image/ROGO/logo_11+12.png")
 
 #define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ
+#define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
+#define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
+#define TEXTURE_FILENAME_STAGECLEAR		("data/texture/akira000.png")	//仮のテクスチャ
+#define TEXTURE_FILENAME_0				("Image/GameUI/0.png")
+#define TEXTURE_FILENAME_1				("Image/GameUI/1.png")
+#define TEXTURE_FILENAME_2				("Image/GameUI/2.png")
+#define TEXTURE_FILENAME_3				("Image/GameUI/3.png")
+#define TEXTURE_FILENAME_4				("Image/GameUI/4.png")
+#define TEXTURE_FILENAME_5				("Image/GameUI/5.png")
+#define TEXTURE_FILENAME_6				("Image/GameUI/6.png")
+#define TEXTURE_FILENAME_7				("Image/GameUI/7.png")
+#define TEXTURE_FILENAME_8				("Image/GameUI/8.png")
+#define TEXTURE_FILENAME_9				("Image/GameUI/9.png")
 
 //-----------------------------
 // グローバル
@@ -109,6 +123,17 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_BLACK_HOLE,
 	TEXTURE_FILENAME_GAGE,
 	TEXTURE_FILENAME_GAGEFLAME,
+	TEXTURE_FILENAME_SPACE_ROCK,
+	TEXTURE_FILENAME_0,
+	TEXTURE_FILENAME_1,
+	TEXTURE_FILENAME_2,
+	TEXTURE_FILENAME_3,
+	TEXTURE_FILENAME_4,
+	TEXTURE_FILENAME_5,
+	TEXTURE_FILENAME_6,
+	TEXTURE_FILENAME_7,
+	TEXTURE_FILENAME_8,
+	TEXTURE_FILENAME_9,
 };
 
 /*

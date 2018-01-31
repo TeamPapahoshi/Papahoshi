@@ -16,41 +16,18 @@
 #include "BaseStar.h"
 #include "Sprite.h"
 #include "Net_Type2.h"
+#include "BlackHole.h"
 
 #include <vector>
 #include <fstream>
 
-struct SetNormalStar{
-	D3DXVECTOR2 center;
-	D3DXVECTOR2 radius;
-	D3DXVECTOR2 size;
-	float		speed;
-};
-
-//-----------------------------
-// マクロ定義
-//-----------------------------
-#define STAGE_01_STAR_NUM	(5)
-#define MAX_NORMAL_STAR		(50)
-
-
-//-----------------------------
-// 構造体定義
-//-----------------------------
-// モブ星のデータ
-typedef struct _tNormalStarData{
-
-	cSpriteParam			t_Sprite;		// 描画用
-	cCollider				t_Collider;		// あたり判定
-	cCircleOrbitMovement	t_MoveCircle;	// 円軌道用
-	bool					t_bUse;			// 使用フラグ
-	
-}tNormalStarData;
-
 //-----------------------------
 // クラス定義
 //-----------------------------
-//******モブ星********
+class cNormalStarData :public cBaseStarData{
+public:
+};
+
 class cNormalStar :public cBaseStar{
 
 public:
@@ -60,39 +37,49 @@ public:
 	cNormalStar();
 
 	//--- 網との処理 ---
-	void OnCollidToNet(int count);
 	void SetNetData();
+	void OnCollidToNet();
+	
 
-	//--- 星のランダム生成 ---
-	void CreateRamdom();
+	//--- ブラックホールとの処理 ---
+	void SetBlackHoleData(cBlackHole*);
+	void OnCollidToBlackHole(int Normal,int Black);
+	void OnCollidToDelete(int Normal);
+	
 
-	//--- 星のリスポーン ---
-	void Respawn();
-
-
-	//--- 星の設定 ---
-	void Set(D3DXVECTOR2 center, D3DXVECTOR2 radius, D3DXVECTOR2 size, int time);
-
-
-	// Getter
-	tNormalStarData* GetStarData(){
-		return m_pStarData;
-	}
+	void Create();		// 生成
+	void Destroy();		// 削除
+	void Respawn();		// リスポーン
 
 private:
-	tNormalStarData*	m_pStarData;
-	int					m_nMaxNum;
+	cNormalStarData* m_pStarData;	// 必要データ
+	cNormalStarData*	m_pRoot;	// 先頭アドレス格納用
 
-	cNet*				m_pNetData;
+	//Set&Get
+public:
 
-	//--- フラグ ---
-	bool	m_bCapchared;	// 確保完了
-
-
-
-	//--- フレーム関連 ---
-	int m_nRespawnFream;	// リスポーン
+	// Getter
+	cNormalStarData* GetStarData(){
+		return m_pRoot;
+	}
 
 
+	// 生成とかでフラグを操作するときはこの関数を使って
+	//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+	void SetCountAndUse(bool flag){
+		if (flag){
+			if (!m_pStarData->m_bUse){
+				m_pStarData->m_bUse = true;
+				m_nCurrentNum++;
+			}
+		}
+		else{
+			if (m_pStarData->m_bUse){
+				m_pStarData->m_bUse = false;
+				m_nCurrentNum--;
+			}
+		}
+	}
+	//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 };
 #endif	//!___NORMAL_STARS_H___

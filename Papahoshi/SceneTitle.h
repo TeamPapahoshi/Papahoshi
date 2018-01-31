@@ -48,5 +48,6 @@ private:
 	//cCircleOrbitStar*	pCircleOrbitStar[CIRCLE_ORBIT_STAR_NUM];
 
 	bool		bSceneChangeFlag;
+	bool		m_bChange;	//シーンチェンジを呼んだらfalse
 };
 #endif //!___SCENE_TITLE_H___

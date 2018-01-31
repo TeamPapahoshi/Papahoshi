@@ -1,12 +1,12 @@
 //======================================================================
-//	BlackHole
+//	SampleStar
 //	
-//	概要＿：ブラックホール
+//	概要＿：コピー用星
 //	制作者：加藤　遼
 //	
 //======================================================================
-#ifndef ___BLACK_HOLE_H___
-#define ___BLACK_HOLE_H___
+#ifndef ___SAMPLE_STAR_H___
+#define ___SAMPLE_STAR_H___
 
 //-----------------------------
 //インクルードファイル
@@ -14,41 +14,42 @@
 #include "Sprite.h"
 #include "Collision.h"
 #include "BaseStar.h"
-#include <vector>
-#include <fstream>
+
 
 //-----------------------------
-// クラス定義
+//クラス定義
 //-----------------------------
-class cBlackHoleData :public cBaseStarData{
+//------- 構造体みたいに使う ---------
+class cSampleStarData :public cBaseStarData{
 public:
+	// この星だけ(例)
+	cCollider		m_VacuumCollider;				// 吸い込み範囲
+	cCollider		m_DeleteCollider;
+	float rad;										// テスト用演出確認
 };
 
-
-class cBlackHole :public cBaseStar{
+//--- シーンでインスタンス方  --------
+class cSampleStar :public cBaseStar{		
 
 public:
 	void Update();
 	void Draw();
-	~cBlackHole();
-	cBlackHole();
+	~cSampleStar();
+	cSampleStar();
 
 	void Create();		// 生成
 	void Destroy();		// 削除
-	void Respawn();		// リスポーン
 
 private:
-	cBlackHoleData* m_pStarData;	// 必要データ
-	cBlackHoleData*	m_pRoot;	// 先頭アドレス格納用
+	cSampleStarData* m_pStarData;	// 必要データ
+	cSampleStarData*	m_pRoot;	// 先頭アドレス格納用
 
-	//Set&Get
+//Set&Get
 public:
 
-	// Getter
-	cBlackHoleData* GetStarData(){
+	cSampleStarData* GetStarData(){
 		return m_pStarData;
 	}
-
 
 	// 生成とかでフラグを操作するときはこの関数を使って
 	//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
@@ -68,5 +69,4 @@ public:
 	}
 	//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 };
-
 #endif //!___BLACK_HOLE_H___

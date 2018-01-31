@@ -8,6 +8,7 @@
 #include "Collision.h"
 #include "Sprite.h"
 #include <cmath>	//少数の絶対値用
+#include "MathEX.h"
 
 using namespace std;
 
@@ -102,6 +103,7 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 		next = i + 1;
 		if (next == 3)
 			next = 0;
+
 		//三角形を構成するベクトル　*** もしエラー出たらここの向きかえる *** うちが変えます！！
 		triVector[i].x = triangle.GetCollider().TriangleVertexPos[next].x - triangle.GetCollider().TriangleVertexPos[i].x;
 		triVector[i].y = triangle.GetCollider().TriangleVertexPos[next].y - triangle.GetCollider().TriangleVertexPos[i].y;
@@ -122,7 +124,7 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 
 		//次の値を設定
 		next = i + 1;
-		if (next == 2)
+		if (next == 3)
 			next = 0;
 		//判定
 		/*
@@ -136,23 +138,27 @@ bool cCollider::CheckCollisionCircleToTriangle(cCollider circle, cCollider trian
 			VectorDotProduct(triVector[i], TtoCVector[next]) <= 0 &&
 			fabs(VectorCrossProduct(triVector[i], TtoCVector[i])) / VectorSize(triVector[i]) <= circle.GetCollider().fRadius)
 			return true;
+
+
+
 		//②☆
-		if ((circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) * (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) + (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) * (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) <= circle.GetCollider().fRadius * circle.GetCollider().fRadius ||
-			(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x) * (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x) + (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y) * (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y) <= circle.GetCollider().fRadius * circle.GetCollider().fRadius)
+		if ((circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) 
+			* (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) 
+			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y)
+			* (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) 
+			<= circle.GetCollider().fRadius * circle.GetCollider().fRadius ||
+			(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x)
+			* (circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x)
+			+ (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y)
+			* (circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y)
+			<= circle.GetCollider().fRadius * circle.GetCollider().fRadius)
 			return true;
-		/*　あほの極み
-		if ((((int)(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[i].x) ^ 2) +
-			((int)(circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[i].y) ^ 2) <=
-			(int)circle.GetCollider().fRadius ^ 2) ||
-			(((int)(circle.GetCollider().CirclePos.x - triangle.GetCollider().TriangleVertexPos[next].x) ^ 2) +
-			((int)(circle.GetCollider().CirclePos.y - triangle.GetCollider().TriangleVertexPos[next].y) ^ 2) <=
-			(int)circle.GetCollider().fRadius ^ 2))
-			return true;*/
+
 	}
 	for (int i = 0; i < 3; i++){
 		//次の値を設定
 		next = i + 1;
-		if (next == 2)
+		if (next == 3)
 			next = 0;
 		//③ ①と②がすべての辺で成り立っていない時に、
 		//V[n]×M[n]≦0（線分の右側に頂点がある）
@@ -171,44 +177,6 @@ float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB){
 	float ans;// 答え格納用
 	ans = sqrt((posA.x - posB.x)*(posA.x - posB.x) + (posA.y - posB.y)*(posA.y - posB.y));
 	return ans;
-}
-
-//=====================================================
-//
-//  ベクトルの内積を求める関数
-//
-//=====================================================
-float cCollider::VectorDotProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2){
-
-	//Dot = v1・v2 = x1*x2 + y1*y2 = |v1||v2|cos(θ)
-
-	return (v1.x * v2.x + v1.y * v2.y);
-}
-
-//====================================================
-//
-//  ベクトルの外積を求める関数
-//
-//====================================================
-float cCollider::VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2){
-
-	//v1×v2= x1*y2-x2*y1 = |v1||v2|sin(θ)
-
-	return (v1.x * v2.y - v2.x * v1.y);
-
-}
-
-//====================================================
-//
-// ベクトルの長さを求める関数
-//
-//====================================================
-float cCollider::VectorSize(D3DXVECTOR2 v){
-
-	//ルート(x二乗 + y二乗)
-
-	return sqrt(v.x * v.x + v.y * v.y);
-
 }
 
 

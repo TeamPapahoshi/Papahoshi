@@ -16,14 +16,12 @@
 #include "Input.h"
 #include <fstream>
 #include <vector>
-
-
+#include "BaseStar.h"
 
 //------------------------------
 // マクロ定義
 //------------------------------
 #define FIXED_STAR_NUM	(1)
-
 
 //=======================================================================================
 //
@@ -39,12 +37,26 @@ cSceneGame::cSceneGame(){
 	// 網
 	pNet = new cNet();
 
+	// ブラックホール
+	m_pBlackHole = new cBlackHole();
+
+	// 隕石
+	m_pSpaceRock = new cSpaceRock();
+
+
+
+	// 隕石
+	m_pSampleStar = new cSampleStar();
+
 	// モブ星
 	m_pNomalStar = new cNormalStar();
+	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
 
 	// ゲージ
 	m_pGage = new cGage();
 	m_pGage->Init();
+
+
 
 	// 背景
 	m_pBG = new cBG();
@@ -62,6 +74,8 @@ cSceneGame::~cSceneGame(){
 	delete m_pBG;
 	delete m_pNomalStar;
 	delete m_pGage;
+	delete m_pBlackHole;
+	delete m_pSampleStar;
 }
 
 //=======================================================================================
@@ -80,6 +94,13 @@ void cSceneGame::Update(){
 	m_pGage->Update();	// ゲージ
 
 	m_pNomalStar->Update();
+	m_pBlackHole->Update();
+	m_pSpaceRock->Update();
+	m_pSampleStar->Update();
+	
+
+
+	
 	
 	//当たり判定
 	CheckCollision();
@@ -99,9 +120,15 @@ void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// 背景
 
+	//
+	m_pBlackHole->Draw();
+	m_pSampleStar->Draw();
+	//m_pSpaceRock->Draw();
+
 	m_pNomalStar->Draw();
 
-	m_pStageManager->Draw();
+
+	
 	pNet->Draw();	//あみ
 
 	m_pGage->Draw();
@@ -115,27 +142,52 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::CheckCollision(){
 
-	cCollider c, t;
+	cCollider c,t;
 	c.SetType(cCollider::CollisionType::CIRCLE);
-	t.SetType(cCollider::CollisionType::TRIANGLE);
-	c.SetCircleCollider(D3DXVECTOR2(200.0f, 200.0f), 10.0f);
-	t.SetTriangleCollider(D3DXVECTOR2(200, 100), D3DXVECTOR2(300, 300), D3DXVECTOR2(100, 300));
+	c.SetCircleCollider(D3DXVECTOR2(700.0f, 580.0f), 10.0f);
 
+	t = pNet->GetCollider()[1];
 	if (cCollider::CheckCollisionCircleToTriangle(c, t)){
 		int i = 0;
 	}
 
-	// 網とモブ星のあたり判定
-	for (int i = 0; i < MAX_NORMAL_STAR; i++){
 
-		for (int j = 0; j < 2; j++){
-			if (cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[i].t_Collider, pNet->GetCollider()[j])){
 
-				m_pNomalStar->OnCollidToNet(i);
+
+	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
+
+		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+	 
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			if( cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
+
+				  //とりあえずけす
+				  m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
+
+			  }
+		  }
+	  }
+
+	
+	 
+	// 網と隕石のあたり判定
+	for (int nCountStar = 0; nCountStar <MAX_SPACE_ROCK_NUM; nCountStar++){
+
+		if (!m_pSpaceRock->GetStarData()[nCountStar].t_bUse)
+			continue;
+
+		for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+			if (cCollider::CheckCollisionCircleToTriangle(m_pSpaceRock->GetStarData()[nCountStar].t_Collider, pNet->GetCollider()[nCountNet])){
+
+				m_pSpaceRock->OnCollidToNet(nCountStar);
 
 			}
 		}
 	}
+
 
 
 }

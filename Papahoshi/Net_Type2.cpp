@@ -11,15 +11,6 @@
 //	456
 //	123
 //=============================================================================
-/*
-・あみのはりかたの調整　12/15  クリア！
-・まっすぐ飛ばせて指を離したら頂点広がる　12/18
-
-次やること
-あみのアンダーのデバック
-おそらくy関係に問題あり
-*/
-
 
 //-------------------------------------
 // インクルード部
@@ -57,6 +48,9 @@
 //半円
 #define MIN_SPEED	(1.0f)	//最低スピード
 #define SPEED_HALFCIRCLE	(10)	//10/1進む
+//斜め投げ補正
+#define ANG_NUM		(200.0f)
+
 
 //=====================================================
 //
@@ -398,9 +392,12 @@ void cNet::Input(){
 	for (int i = 0; i < 3; i++){
 		if (!m_bPressButton[i])
 			break;
-		if (i == 2)
+		if (i == 2){
 			m_bAllPress = true;
+			return;
+		}
 	}
+	m_bAllPress = false;
 
 }
 
@@ -537,7 +534,12 @@ void cNet::ShoutPhaseUpdate(){
 				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) + ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
 			m_ThreePurposePos[i].y = SCREEN_HEIGHT - (SCREEN_HEIGHT * m_fHalfCircleSize);
 			m_bThrow[i] = true;
-			
+
+			//---------- 斜め投げ補正 ------------
+			if (m_nPostAngle == ANG_LEFT)
+				m_ThreePurposePos[i].x += ANG_NUM;
+			else if (m_nPostAngle == ANG_RIGHT)
+				m_ThreePurposePos[i].x -= ANG_NUM;
 			//****** デバック *******
 			//m_aPos[i] = m_ThreePurposePos[i];
 			//gamePhase = GAME_PHASE::PHASE_MAX;
@@ -620,7 +622,10 @@ void cNet::PullPhaseUpdate(){
 		//引き上げ回数一定以上で終了
 		if (m_nPullNum >= PULL_NUM){
 			//シーン移動？
-			gamePhase = PHASE_MAX;
+			m_nPullNum = -1;
+			m_bPurpose = false;
+			gamePhase = PHASE_POST;
+			m_postPhase = POST_NON;
 		}
 
 		//初回設定
@@ -674,5 +679,7 @@ void cNet::PullPhaseUpdate(){
 cCollider* cNet::GetCollider(){
 	return m_aCollider;
 }
+
+
 
 #endif

@@ -15,18 +15,25 @@
 #include <d3d9.h>
 #include "SceneManeger.h"
 #include "Common.h"
-#include "Net.h"
-#include "Net_Type2.h"
+
 
 // ステージ
 #include "StageManager.h"
 
 // このステージで使うオブジェクト
 #include "BG.h"
+// 網
+#include "Net.h"
+#include "Net_Type2.h"
+
+// 星
+#include "SampleStar.h"
 #include "NormalStars.h"
 #include "FixedStars.h"
 #include "Gage.h"
 
+#include "BlackHole.h"
+#include "SpaceRock.h"
 
 // 呼び出す星の数
 #define STAR_NUM		(5)	//仮
@@ -51,8 +58,13 @@ private:
 	cNet *pNet;
 
 	cNormalStar*				m_pNomalStar;		// モブ星
+	cBlackHole*					m_pBlackHole;		// ブラックホール
+	cSpaceRock*					m_pSpaceRock;		// 隕石
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	cGage*						m_pGage;			// ゲージ
+
+
+	cSampleStar*				m_pSampleStar;
 
 	cStageManager*				m_pStageManager;	// ステージマネージャー
 

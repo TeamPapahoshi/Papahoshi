@@ -99,11 +99,6 @@ private:
 	tCollisionBody	m_tColBody;	// あたり判定の要素
 	cSpriteParam	sprite;		// スプライトパラメーター
 	CollisionType	m_type;		// あたり判定の種類
-
-	//数学的な関数だけど
-	static float	VectorDotProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの内積
-	static float	VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの外積
-	static float	VectorSize(D3DXVECTOR2 v);	//ベクトルの大きさ
 };
 
 // 計算関数

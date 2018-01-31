@@ -28,7 +28,7 @@
 //***************************************
 // シーンごとのテクスチャのポインタ番号
 //***************************************
-enum TEX_TITLE{
+	enum TEX_TITLE{
 		TEX_TITLE_KING_JELLY,
 		TEX_TITLE_JELLY,
 		TEX_TITLE_SPHERE_LIGHT,
@@ -67,6 +67,18 @@ enum TEX_STAGE_SELECT{
 		TEX_GAME_BLACK_HOLE,
 		TEX_GAME_GAGE,
 		TEX_GAME_GAGEFLAME,
+		TEX_GAME_SPACE_ROCK,
+
+		TEX_GAME_0,
+		TEX_GAME_1,
+		TEX_GAME_2,
+		TEX_GAME_3,
+		TEX_GAME_4,
+		TEX_GAME_5,
+		TEX_GAME_6,
+		TEX_GAME_7,
+		TEX_GAME_8,
+		TEX_GAME_9,
 		TEX_GAME_MAX
 	};
 	/*

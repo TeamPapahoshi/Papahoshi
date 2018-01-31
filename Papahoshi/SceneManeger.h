@@ -12,6 +12,7 @@
 //-----------------------------
 //インクルードファイル
 //-----------------------------
+#include "Transition.h"
 
 //-----------------------------
 //クラス定義
@@ -38,6 +39,7 @@ public:
 	};
 
 	static void ChangeScene(SCENE scene);	// 現在のシーンを引数のシーンへ更新
+	static void ChangeSceneSetTransition(SCENE scene, cTransition::TRANSITION_TYPE transition);	//トランジションを設定
 	static void	Update();					// 現在のシーンの更新関数
 	static void	Draw();						// 現在のシーンの描画関数
 
