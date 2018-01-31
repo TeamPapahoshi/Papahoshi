@@ -135,17 +135,6 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::CheckCollision(){
 
-	cCollider c,t;
-	c.SetType(cCollider::CollisionType::CIRCLE);
-	c.SetCircleCollider(D3DXVECTOR2(700.0f, 580.0f), 10.0f);
-
-	t = pNet->GetCollider()[1];
-	if (cCollider::CheckCollisionCircleToTriangle(c, t)){
-		int i = 0;
-	}
-
-
-
 
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 

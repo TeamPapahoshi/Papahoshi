@@ -53,7 +53,15 @@ D3DXVECTOR2 BezierCurve(float t, D3DXVECTOR2 cp1, D3DXVECTOR2 cp2, D3DXVECTOR2 c
 
 	D3DXVECTOR2 work;
 
-	//work.x = (1 - t)
+	work.x = PowerF((1.0f - t), 3) * cp1.x +
+		3 * PowerF((1.0f - t), 2) * t * cp2.x +
+		3 * (1.0f - t) * PowerF(t, 2) * cp3.x +
+		PowerF(t, 3) * cp4.x;
+
+	work.y = PowerF((1.0f - t), 3) * cp1.y +
+		3 * PowerF((1.0f - t), 2) * t * cp2.y +
+		3 * (1.0f - t) * PowerF(t, 2) * cp3.y +
+		PowerF(t, 3) * cp4.y;
 
 	return work;
 

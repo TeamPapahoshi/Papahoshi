@@ -30,8 +30,11 @@ enum{	//ネットの部品
 //----------------------------------------
 // 定数・マクロ定義
 //----------------------------------------
-#define NET_X_NUM	(6)	//あみの横分割数
-#define NET_Y_NUM	(6)	//あみの縦分割数
+#define NET_X_NUM	(30)	//あみの横分割数
+#define NET_Y_NUM	(30)	//あみの縦分割数
+
+#define PULL_NUM	(3)		//ズッズッてなる回数
+#define PULL_FRAME	(50)	//引く1回分のフレーム
 
 //----------------------------------------
 // クラス定義
@@ -46,6 +49,17 @@ public:
 	void Draw();	// 描画
 
 	cCollider* GetCollider();	//網の当たり判定を取得
+
+	//これが0のときに引いてます(待ち時間がない)
+	int GetFrameCnt(){
+		return m_nFrameCnt;
+	}
+
+	//引いている状態のときにtrueを返す
+	bool GetPullFlug(){
+		return (gamePhase == PHASE_PULL);
+	}
+
 
 private:
 	//---- 列挙型宣言 -----
