@@ -43,12 +43,14 @@ private:
 	D3DXVECTOR2 m_move;			// 移動量(追加)
 	float		m_rad;			// 角度
 	D3DXCOLOR	m_vtxColor;		// 頂点カラー
+	bool		m_texUV;		// テクスチャUV使用フラグ
 
 	// テクスチャUV
 	int		m_texPatternDivideX;		// テクスチャ内での分割数(X方向)
 	int		m_texPatternDivideY;		// テクスチャ内での分割数(Y方向)
 	int		m_intervalChangePattern;	// アニメーションの切り替わるタイミング(フレーム数)
 	int		m_currentAnimPattern;		// アニメーションパターン番号
+	D3DXVECTOR2   m_texUVRatio;			// テクスチャUVの割合
 
 public:
 
@@ -139,6 +141,24 @@ public:
 		m_vtxColor.a = data;
 	}
 
+	void SetTexUVFlag(void)
+	{
+		m_texUV = true;
+	}
+	void SetTexUVRatio(D3DXVECTOR2 data)
+	{
+		m_texUVRatio = data;
+	}
+	void SetTexUVRatioX(float data)
+	{
+		m_texUVRatio.x = data;
+	}
+	void SetTexUVRatioY(float data)
+	{
+		m_texUVRatio.y = data;
+	}
+
+
 	//----取得用----
 	int GetCurrentAnimPattern(){
 		return m_currentAnimPattern;
@@ -212,6 +232,19 @@ public:
 	}
 	float GetVtxColorA(){
 		return m_vtxColor.a;
+	}
+
+	D3DXVECTOR2 GetTexUVRatio()
+	{
+		return m_texUVRatio;
+	}
+	float GetTexUVRatioX()
+	{
+		return m_texUVRatio.x;
+	}
+	float GetTexUVRatioY()
+	{
+		return m_texUVRatio.y;
 	}
 	
 };

@@ -30,6 +30,8 @@
 #include "SampleStar.h"
 #include "NormalStars.h"
 #include "FixedStars.h"
+#include "Gage.h"
+
 #include "BlackHole.h"
 #include "SpaceRock.h"
 
@@ -59,6 +61,7 @@ private:
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
+	cGage*						m_pGage;			// ゲージ
 
 
 	cSampleStar*				m_pSampleStar;

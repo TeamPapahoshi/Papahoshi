@@ -52,6 +52,9 @@ cSceneGame::cSceneGame(){
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
 
+	// ゲージ
+	m_pGage = new cGage();
+	m_pGage->Init();
 	
 
 
@@ -70,6 +73,7 @@ cSceneGame::~cSceneGame(){
 	// デリート
 	delete m_pBG;
 	delete m_pNomalStar;
+	delete m_pGage;
 	delete m_pBlackHole;
 	delete m_pSampleStar;
 }
@@ -87,6 +91,7 @@ void cSceneGame::Update(){
 	// 更新
 	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
+	m_pGage->Update();	// ゲージ
 
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
@@ -125,6 +130,8 @@ void cSceneGame::Draw(){
 
 	
 	pNet->Draw();	//あみ
+
+	m_pGage->Draw();
 }
 
 
