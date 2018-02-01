@@ -18,21 +18,14 @@
 #include <vector>
 #include "BaseStar.h"
 
-//------------------------------
-// マクロ定義
-//------------------------------
-#define FIXED_STAR_NUM	(1)
 
+cCollider g_col[3];
 //=======================================================================================
 //
 //		初期化
 //
 //=======================================================================================
 cSceneGame::cSceneGame(){
-
-	// ステージマネージャ
-	m_pStageManager = new cStageManager();
-	cStageManager::ChangeStage(cStageManager::STAGE_01);
 
 	// 網
 	pNet = new cNet();
@@ -52,8 +45,12 @@ cSceneGame::cSceneGame(){
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
 
-	
-
+	g_col[0].SetType(cCollider::CIRCLE);
+	g_col[1].SetType(cCollider::CIRCLE);
+	g_col[2].SetType(cCollider::CIRCLE);
+	g_col[0].SetCircleCollider(D3DXVECTOR2(300, 200), 10);
+	g_col[1].SetCircleCollider(D3DXVECTOR2(500, 200), 10);
+	g_col[2].SetCircleCollider(D3DXVECTOR2(SCREEN_CENTER), 30);
 
 	// 背景
 	m_pBG = new cBG();
@@ -81,8 +78,6 @@ cSceneGame::~cSceneGame(){
 //=======================================================================================
 void cSceneGame::Update(){
 
-	// 更新
-	m_pStageManager->Update();
 
 	// 更新
 	pNet->Update();		//あみ
@@ -93,9 +88,29 @@ void cSceneGame::Update(){
 	m_pSpaceRock->Update();
 	m_pSampleStar->Update();
 
+	if (GetKeyboardPress(DIK_RIGHT)){
+		g_col[0].SetCircleCollider(D3DXVECTOR2(g_col[0].GetCollider().CirclePos.x + 1.0f, g_col[0].GetCollider().CirclePos.y),10);
+		g_col[1].SetCircleCollider(D3DXVECTOR2(g_col[1].GetCollider().CirclePos.x + 1.0f, g_col[1].GetCollider().CirclePos.y), 10);
+	}
+	if (GetKeyboardPress(DIK_LEFT)){
+		g_col[0].SetCircleCollider(D3DXVECTOR2(g_col[0].GetCollider().CirclePos.x - 1.0f, g_col[0].GetCollider().CirclePos.y), 10);
+		g_col[1].SetCircleCollider(D3DXVECTOR2(g_col[1].GetCollider().CirclePos.x - 1.0f, g_col[1].GetCollider().CirclePos.y), 10);
+	}
+	if (GetKeyboardPress(DIK_UP)){
+		g_col[0].SetCircleCollider(D3DXVECTOR2(g_col[0].GetCollider().CirclePos.x, g_col[0].GetCollider().CirclePos.y - 1.0f), 10);
+		g_col[1].SetCircleCollider(D3DXVECTOR2(g_col[1].GetCollider().CirclePos.x, g_col[1].GetCollider().CirclePos.y - 1.0f), 10);
+	}
+	if (GetKeyboardPress(DIK_DOWN)){
+		g_col[0].SetCircleCollider(D3DXVECTOR2(g_col[0].GetCollider().CirclePos.x, g_col[0].GetCollider().CirclePos.y + 1.0f), 10);
+		g_col[1].SetCircleCollider(D3DXVECTOR2(g_col[1].GetCollider().CirclePos.x, g_col[1].GetCollider().CirclePos.y + 1.0f), 10);
+	}
 
 
-	
+	if (CheckCollisionCircleToLine(g_col[2].GetCollider().CirclePos, 30, g_col[0].GetCollider().CirclePos, g_col[1].GetCollider().CirclePos))
+	{	
+		PrintDebugProc("aaa\n");
+
+	}
 	
 	//当たり判定
 	CheckCollision();
@@ -115,16 +130,20 @@ void cSceneGame::Draw(){
 
 	m_pBG->Draw();	// 背景
 
+			 
+	g_col[0].Draw();
+	g_col[1].Draw();
+	g_col[2].Draw();
 	//
-	m_pBlackHole->Draw();
-	m_pSampleStar->Draw();
-	//m_pSpaceRock->Draw();
+	//m_pBlackHole->Draw();
+	//m_pSampleStar->Draw();
+	////m_pSpaceRock->Draw();
 
-	m_pNomalStar->Draw();
+	//m_pNomalStar->Draw();
 
 
-	
-	pNet->Draw();	//あみ
+	//
+	//pNet->Draw();	//あみ
 }
 
 
@@ -135,37 +154,22 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::CheckCollision(){
 
-	cCollider c,t;
-	c.SetType(cCollider::CollisionType::CIRCLE);
-	c.SetCircleCollider(D3DXVECTOR2(700.0f, 580.0f), 10.0f);
-
-	t = pNet->GetCollider()[1];
-	if (cCollider::CheckCollisionCircleToTriangle(c, t)){
-		int i = 0;
-	}
-
-
-
-
-	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
+	//---網とモブ星の判定---
+	for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
 		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
 			  continue;
 
-	 
 		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
 
 			if( cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
 
-				  //とりあえずけす
-				  m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
+				m_pNomalStar->OnCollidToNet(nCountStar);
 
 			  }
 		  }
 	  }
 
-	
-	 
 	// 網と隕石のあたり判定
 	for (int nCountStar = 0; nCountStar <MAX_SPACE_ROCK_NUM; nCountStar++){
 

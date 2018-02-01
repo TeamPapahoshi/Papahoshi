@@ -94,22 +94,25 @@ public:
 
 	// 描画
 	void Draw();	
+
+	//数学的な関数だけど
+	static float	VectorDotProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの内積
+	static float	VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの外積
+	static float	VectorSize(D3DXVECTOR2 v);	//ベクトルの大きさ
 	
 private:
 	tCollisionBody	m_tColBody;	// あたり判定の要素
 	cSpriteParam	sprite;		// スプライトパラメーター
 	CollisionType	m_type;		// あたり判定の種類
 
-	//数学的な関数だけど
-	static float	VectorDotProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの内積
-	static float	VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);	//ベクトルの外積
-	static float	VectorSize(D3DXVECTOR2 v);	//ベクトルの大きさ
+
 };
 
 // 計算関数
 
 // 二点間の距離を求める
 float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB); 
+bool CheckCollisionCircleToLine(D3DXVECTOR2 circle, float Cradius, D3DXVECTOR2 leftpos, D3DXVECTOR2 rightpos);
 
 
 
