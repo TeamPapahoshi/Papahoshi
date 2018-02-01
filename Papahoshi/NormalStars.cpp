@@ -72,6 +72,10 @@ cNormalStar::cNormalStar(){
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE/2.0f);
 
+
+		// 移動の目的位置決定
+		m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+
 	}
 
 }
@@ -336,44 +340,50 @@ void cNormalStar::SetNetData(cNet* data){
 	m_pNetData = data;
 }
 
-
-
 //--- 網と当たった時の処理 ---
 void cNormalStar::OnCollidToNet(int num){
 
+	// 先頭から何番目か
 	m_pStarData = m_pRoot;
 	m_pStarData += num;
 
-	//m_pStarData->m_bUse = false;
+	// 網を引いているときのみ移動する
+	if (m_pNetData->GetPullFlug()){
 
-	// 網の方向に動かす
-	// 目的位置の座標を取得
-	D3DXVECTOR2 Center = D3DXVECTOR2(SCREEN_CENTER);
+		// 目的位置とと星との距離を求める
+		D3DXVECTOR2 Distance;
+		Distance.x = sqrt((m_pStarData->m_sprite.GetPosX() - m_pStarData->m_PurposPos.x)*(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_PurposPos.x));
+		Distance.y = sqrt((m_pStarData->m_sprite.GetPosY() - m_pStarData->m_PurposPos.y)*(m_pStarData->m_sprite.GetPosY() - m_pStarData->m_PurposPos.y));
 
-	// ブラックホールと星との距離を求める
-	D3DXVECTOR2 Distance;
-	Distance.x = sqrt((m_pStarData->m_sprite.GetPosX() - Center.x)*(m_pStarData->m_sprite.GetPosX() - Center.x));
-	Distance.y = sqrt((m_pStarData->m_sprite.GetPosY() - Center.y)*(m_pStarData->m_sprite.GetPosY() - Center.y));
+		// 距離から移動量を算出
+	//	if (m_pStarData->m_PurPosDist.x / 3.0f <= m_pStarData->m_Move.x){
+			m_pStarData->m_Move.x += m_pStarData->m_PurPosDist.x / 3.0f;
+	//	}
+		//else{
+		//	m_pStarData->m_Move.x = 0;
+		//}
+		//if (m_pStarData->m_PurPosDist.y / 3.0f <= m_pStarData->m_Move.y){
+			m_pStarData->m_Move.y += m_pStarData->m_PurPosDist.y / 3.0f ;
+		//}
+		//else{
+		//	m_pStarData->m_Move.y = 0;
+		//}
 
+		
+		// 移動量を反映
+		if (m_pStarData->m_sprite.GetPosX() > m_pStarData->m_PurposPos.x){
+			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
+		}
+		if ((m_pStarData->m_sprite.GetPosX() < m_pStarData->m_PurposPos.x)){
+			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
+		}
 
-
-	// 距離から移動量を算出
-	m_pStarData->m_Move.x = Distance.x / 800.0f;
-	m_pStarData->m_Move.y = Distance.y / 800.0f;
-
-	// 移動量を反映
-	if (m_pStarData->m_sprite.GetPosX() > Center.x){
-		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
-	}
-	if ((m_pStarData->m_sprite.GetPosX() < Center.x)){
-		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
-	}
-
-	if ((m_pStarData->m_sprite.GetPosY() < Center.y)){
-		m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
-	}
-	if ((m_pStarData->m_sprite.GetPosY() > Center.y)){
-		m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
+		if ((m_pStarData->m_sprite.GetPosY() < m_pStarData->m_PurposPos.y)){
+			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
+		}
+		if ((m_pStarData->m_sprite.GetPosY() > m_pStarData->m_PurposPos.y)){
+			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
+		}
 	}
 
 }

@@ -44,6 +44,7 @@ cSceneGame::cSceneGame(){
 	// ƒ‚ƒu¯
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
+	m_pNomalStar->SetNetData(pNet);
 
 	// ƒQ[ƒW
 	m_pGage = new cGage();
@@ -139,12 +140,12 @@ void cSceneGame::Draw(){
 	g_col[0].Draw();
 	g_col[1].Draw();
 	g_col[2].Draw();
-	//
-	//m_pBlackHole->Draw();
-	//m_pSampleStar->Draw();
-	////m_pSpaceRock->Draw();
+	
+	m_pBlackHole->Draw();
+	m_pSampleStar->Draw();
+	//m_pSpaceRock->Draw();
 
-	//m_pNomalStar->Draw();
+	m_pNomalStar->Draw();
 
 	
 	pNet->Draw();	//‚ ‚Ý
