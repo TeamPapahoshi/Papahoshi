@@ -24,8 +24,10 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FixedStars.cpp" />
     <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="Gage.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="MathEX.cpp" />
     <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="Net.cpp" />
     <ClCompile Include="Net_Type2.cpp" />
@@ -70,8 +72,10 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FixedStars.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="Gage.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MathEX.h" />
     <ClInclude Include="Meteor.h" />
     <ClInclude Include="Net.h" />
     <ClInclude Include="Net_Type2.h" />

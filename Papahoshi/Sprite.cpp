@@ -64,8 +64,10 @@ cSpriteParam::cSpriteParam(){
 	m_posFree[3] = D3DXVECTOR2(100.0f, 100.0f);
 	m_size		= D3DXVECTOR2(100.0f, 100.0f);
 	m_scale		= D3DXVECTOR2(1.0f, 1.0f);
+	m_texUVRatio = D3DXVECTOR2(1.0f, 1.0f);
 	m_vtxColor	= D3DXCOLOR(255, 255, 255, 255);
 	m_rad		= 0.0f;
+	m_texUV		= false;
 	m_pTex		= NULL;
 
 	// 初期値(使わない場合はこのままで)
@@ -133,10 +135,20 @@ void cSpriteParam::Draw(){
 	fPosYUp = (float)(m_currentAnimPattern / (NumAnimPattern / m_texPatternDivideY)) * TexPatternSizeY;
 	fPosYDown = fPosYUp + TexPatternSizeY;
 
-	pVtx[0].tex = D3DXVECTOR2(fPosXLeft, fPosYUp);
-	pVtx[1].tex = D3DXVECTOR2(fPosXRight, fPosYUp);
-	pVtx[2].tex = D3DXVECTOR2(fPosXLeft, fPosYDown);
-	pVtx[3].tex = D3DXVECTOR2(fPosXRight, fPosYDown);
+	if (m_texUV)
+	{
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(m_texUVRatio.x, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f, m_texUVRatio.y);
+		pVtx[3].tex = D3DXVECTOR2(m_texUVRatio.x, m_texUVRatio.y);
+	}
+	else
+	{
+		pVtx[0].tex = D3DXVECTOR2(fPosXLeft, fPosYUp);
+		pVtx[1].tex = D3DXVECTOR2(fPosXRight, fPosYUp);
+		pVtx[2].tex = D3DXVECTOR2(fPosXLeft, fPosYDown);
+		pVtx[3].tex = D3DXVECTOR2(fPosXRight, fPosYDown);
+	}
 
 	//----- rhw 更新 ------------
 	pVtx[0].rhw = pVtx[1].rhw = pVtx[2].rhw = pVtx[3].rhw = 1.0f;
@@ -210,10 +222,20 @@ void cSpriteParam::DrawFreePos(){
 	fPosYUp = (float)(m_currentAnimPattern / (NumAnimPattern / m_texPatternDivideY)) * TexPatternSizeY;
 	fPosYDown = fPosYUp + TexPatternSizeY;
 
-	pVtx[0].tex = D3DXVECTOR2(fPosXLeft, fPosYUp);
-	pVtx[1].tex = D3DXVECTOR2(fPosXRight, fPosYUp);
-	pVtx[2].tex = D3DXVECTOR2(fPosXLeft, fPosYDown);
-	pVtx[3].tex = D3DXVECTOR2(fPosXRight, fPosYDown);
+	if (m_texUV)
+	{
+		pVtx[0].tex = D3DXVECTOR2(0.0f			, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(m_texUVRatio.x, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f		    , m_texUVRatio.y);
+		pVtx[3].tex = D3DXVECTOR2(m_texUVRatio.x, m_texUVRatio.y);
+	}
+	else
+	{
+		pVtx[0].tex = D3DXVECTOR2(fPosXLeft, fPosYUp);
+		pVtx[1].tex = D3DXVECTOR2(fPosXRight, fPosYUp);
+		pVtx[2].tex = D3DXVECTOR2(fPosXLeft, fPosYDown);
+		pVtx[3].tex = D3DXVECTOR2(fPosXRight, fPosYDown);
+	}
 
 	//----- rhw 更新 ------------
 	pVtx[0].rhw = pVtx[1].rhw = pVtx[2].rhw = pVtx[3].rhw = 1.0f;

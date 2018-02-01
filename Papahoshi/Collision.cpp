@@ -8,6 +8,7 @@
 #include "Collision.h"
 #include "Sprite.h"
 #include <cmath>	//­”‚Ìâ‘Î’l—p
+#include "MathEX.h"
 
 using namespace std;
 

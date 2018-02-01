@@ -47,6 +47,25 @@
 #define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
 #define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
+#define TEXTURE_FILENAME_SHIP ("data/texture/gyosen_big.png")
+#define TEXTURE_FILENAME_WAVE ("data/texture/line_wave1.png")
+#define TEXTURE_FILENAME_GAGE ("Image/GAGE/gage1.png")
+#define TEXTURE_FILENAME_GAGEFLAME ("Image/GAGE/gageflamecover2.png")
+
+// タイトルロゴ
+#define TEXTURE_FILENAME_ROGO01 ("Image/ROGO/logo_01.png")
+#define TEXTURE_FILENAME_ROGO02 ("Image/ROGO/logo_02.png")
+#define TEXTURE_FILENAME_ROGO03 ("Image/ROGO/logo_03.png")
+#define TEXTURE_FILENAME_ROGO04 ("Image/ROGO/logo_04.png")
+#define TEXTURE_FILENAME_ROGO05 ("Image/ROGO/logo_05.png")
+#define TEXTURE_FILENAME_ROGO06 ("Image/ROGO/logo_06.png")
+#define TEXTURE_FILENAME_ROGO07 ("Image/ROGO/logo_07.png")
+#define TEXTURE_FILENAME_ROGO08 ("Image/ROGO/logo_08.png")
+#define TEXTURE_FILENAME_ROGO09 ("Image/ROGO/logo_09.png")
+#define TEXTURE_FILENAME_ROGO10 ("Image/ROGO/logo_10.png")
+#define TEXTURE_FILENAME_ROGO11 ("Image/ROGO/logo_11+12.png")
+
+#define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
 #define TEXTURE_FILENAME_STAGECLEAR		("data/texture/akira000.png")	//仮のテクスチャ
@@ -71,6 +90,17 @@ vector<char*> texTitle = {
 	TEXTURE_FILENAME_SPHERE_LIGHT,
 	TEXTURE_FILENAME_SHIP,
 	TEXTURE_FILENAME_WAVE,
+	TEXTURE_FILENAME_ROGO01,
+	TEXTURE_FILENAME_ROGO02,
+	TEXTURE_FILENAME_ROGO03,
+	TEXTURE_FILENAME_ROGO04,
+	TEXTURE_FILENAME_ROGO05,
+	TEXTURE_FILENAME_ROGO06,
+	TEXTURE_FILENAME_ROGO07,
+	TEXTURE_FILENAME_ROGO08,
+	TEXTURE_FILENAME_ROGO09,
+	TEXTURE_FILENAME_ROGO10,
+	TEXTURE_FILENAME_ROGO11,
 };
 
 //----StageSelect-----
@@ -91,6 +121,8 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_ARROW,
 	TEXTURE_FILENAME_HALFCIRCLE,
 	TEXTURE_FILENAME_BLACK_HOLE,
+	TEXTURE_FILENAME_GAGE,
+	TEXTURE_FILENAME_GAGEFLAME,
 	TEXTURE_FILENAME_SPACE_ROCK,
 	TEXTURE_FILENAME_0,
 	TEXTURE_FILENAME_1,

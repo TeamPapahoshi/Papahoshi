@@ -20,6 +20,7 @@
 #include "SceneGame.h"
 #include "Input.h"
 #include "debugproc.h"
+#include "MathEX.h"
 
 #ifdef  _TYPE_2_
 
@@ -42,22 +43,12 @@
 //待ち時間
 #define INTERVAL_THOROW_PULL	(90)	//投げから引き上げまでの待ち時間
 //引くとき
-#define PULL_NUM	(3)		//ズッズッてなる回数
-#define PULL_FRAME	(50)	//引くフレーム
 #define PULL_WAIT	(30)	//待ち時間？
 //半円
 #define MIN_SPEED	(1.0f)	//最低スピード
 #define SPEED_HALFCIRCLE	(10)	//10/1進む
 //斜め投げ補正
 #define ANG_NUM		(200.0f)
-
-
-//-------------------------------------------
-// プロトタイプ宣言
-//-------------------------------------------
-//D3DXVECTOR2 
-
-
 
 
 //=====================================================
@@ -222,7 +213,6 @@ void cNet::SetNet(){
 	}
 	m_center.SetPos(m_centerPos);
 
-	//** TOP以外未反映 **//
 	//----- あみのポジションを設定(とりあえず直線に) -----
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
@@ -285,6 +275,7 @@ void cNet::SetNet(){
 						workPos[3].y = uly - (udisY / NET_X_NUM) * (x + 1);
 					}
 					break;
+
 				case NET_PARTS_LEFT://LEFT
 					//値の調整
 					if (x == 0){
@@ -347,6 +338,27 @@ void cNet::SetNet(){
 			}
 		}
 	}
+
+	//---- 曲線状に座標を設定 ----- **成功したら上のやつ消す
+	for (int z = 0; z < NET_PARTS_MAX; z++){
+		for (int x = 0; x < NET_X_NUM; x++){
+			for (int y = 0; y < NET_Y_NUM; y++){
+
+				switch (z)
+				{
+				case NET_PARTS_RIGHT://RIGHT
+
+					break;
+
+				case NET_PARTS_LEFT:
+
+					break;
+
+				} //switch 
+
+			}
+		}
+	} //曲線終了
 
 }
 
@@ -687,5 +699,7 @@ void cNet::PullPhaseUpdate(){
 cCollider* cNet::GetCollider(){
 	return m_aCollider;
 }
+
+
 
 #endif

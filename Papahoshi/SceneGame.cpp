@@ -45,13 +45,16 @@ cSceneGame::cSceneGame(){
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
 
+	// ゲージ
+	m_pGage = new cGage();
+	m_pGage->Init();
 	g_col[0].SetType(cCollider::CIRCLE);
 	g_col[1].SetType(cCollider::CIRCLE);
 	g_col[2].SetType(cCollider::CIRCLE);
 	g_col[0].SetCircleCollider(D3DXVECTOR2(300, 200), 10);
 	g_col[1].SetCircleCollider(D3DXVECTOR2(500, 200), 10);
 	g_col[2].SetCircleCollider(D3DXVECTOR2(SCREEN_CENTER), 30);
-
+	
 	// 背景
 	m_pBG = new cBG();
 	m_pBG->SetBG(cBG::GAME_SKY);
@@ -67,6 +70,7 @@ cSceneGame::~cSceneGame(){
 	// デリート
 	delete m_pBG;
 	delete m_pNomalStar;
+	delete m_pGage;
 	delete m_pBlackHole;
 	delete m_pSampleStar;
 }
@@ -82,6 +86,7 @@ void cSceneGame::Update(){
 	// 更新
 	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
+	m_pGage->Update();	// ゲージ
 
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
@@ -109,7 +114,7 @@ void cSceneGame::Update(){
 	if (CheckCollisionCircleToLine(g_col[2].GetCollider().CirclePos, 30, g_col[0].GetCollider().CirclePos, g_col[1].GetCollider().CirclePos))
 	{	
 		PrintDebugProc("aaa\n");
-
+	
 	}
 	
 	//当たり判定
@@ -141,9 +146,10 @@ void cSceneGame::Draw(){
 
 	//m_pNomalStar->Draw();
 
+	
+	pNet->Draw();	//あみ
 
-	//
-	//pNet->Draw();	//あみ
+	m_pGage->Draw();
 }
 
 
@@ -155,7 +161,7 @@ void cSceneGame::Draw(){
 void cSceneGame::CheckCollision(){
 
 	//---網とモブ星の判定---
-	for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
+	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
 		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
 			  continue;
