@@ -179,16 +179,19 @@ float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB){
 	return ans;
 }
 
-
+//====================================================================
+//
 // 線分と円の衝突判定
-bool CheckCollisionCircleToLine(D3DXVECTOR2 circle, float Cradius, D3DXVECTOR2 leftpos, D3DXVECTOR2 rightpos){
+//
+//====================================================================
+bool CheckCollisionCircleToLine(D3DXVECTOR2 circlePos, float Cradius, D3DXVECTOR2 leftpos, D3DXVECTOR2 rightpos){
 
 	// 各ベクトル 
 	D3DXVECTOR2 VecS, VecA, VecB;
 	float d;
 	VecS = rightpos - leftpos;
-	VecA = circle - leftpos;
-	VecB = circle - rightpos;
+	VecA = circlePos - leftpos;
+	VecB = circlePos - rightpos;
 
 	d = fabs(cCollider::VectorCrossProduct(VecS, VecA) / cCollider::VectorSize(VecS));
 

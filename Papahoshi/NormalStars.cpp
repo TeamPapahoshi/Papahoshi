@@ -75,6 +75,8 @@ cNormalStar::cNormalStar(){
 
 		// 移動の目的位置決定
 		m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+		m_pStarData->m_PurPosDist.x =fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
+		m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
 
 	}
 
@@ -303,6 +305,10 @@ void cNormalStar::Respawn(){
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 
+			m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+			m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
+			m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
+
 			m_pStarData->m_bRespawnEnd = true;
 		}
 	}
@@ -347,44 +353,43 @@ void cNormalStar::OnCollidToNet(int num){
 	m_pStarData = m_pRoot;
 	m_pStarData += num;
 
+
 	// 網を引いているときのみ移動する
 	if (m_pNetData->GetPullFlug()){
 
-		// 目的位置とと星との距離を求める
-		D3DXVECTOR2 Distance;
-		Distance.x = sqrt((m_pStarData->m_sprite.GetPosX() - m_pStarData->m_PurposPos.x)*(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_PurposPos.x));
-		Distance.y = sqrt((m_pStarData->m_sprite.GetPosY() - m_pStarData->m_PurposPos.y)*(m_pStarData->m_sprite.GetPosY() - m_pStarData->m_PurposPos.y));
+		// 移動したい距離
+		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;
+		float DistGoalY = m_pStarData->m_PurPosDist.y / 3.0f;
 
-		// 距離から移動量を算出
-	//	if (m_pStarData->m_PurPosDist.x / 3.0f <= m_pStarData->m_Move.x){
-			m_pStarData->m_Move.x += m_pStarData->m_PurPosDist.x / 3.0f;
-	//	}
-		//else{
-		//	m_pStarData->m_Move.x = 0;
-		//}
-		//if (m_pStarData->m_PurPosDist.y / 3.0f <= m_pStarData->m_Move.y){
-			m_pStarData->m_Move.y += m_pStarData->m_PurPosDist.y / 3.0f ;
-		//}
-		//else{
-		//	m_pStarData->m_Move.y = 0;
-		//}
 
-		
+		// 距離から移動量を算出(フレーム数で割る)
+		m_pStarData->m_Move.x = DistGoalX/50.0f;
+		m_pStarData->m_Move.y = DistGoalY / 45.0f;
+
+
+
 		// 移動量を反映
 		if (m_pStarData->m_sprite.GetPosX() > m_pStarData->m_PurposPos.x){
 			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
 		}
-		if ((m_pStarData->m_sprite.GetPosX() < m_pStarData->m_PurposPos.x)){
+		else if ((m_pStarData->m_sprite.GetPosX() < m_pStarData->m_PurposPos.x)){
 			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
 		}
+		else{
 
+		}
 		if ((m_pStarData->m_sprite.GetPosY() < m_pStarData->m_PurposPos.y)){
 			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
 		}
-		if ((m_pStarData->m_sprite.GetPosY() > m_pStarData->m_PurposPos.y)){
+		else if ((m_pStarData->m_sprite.GetPosY() > m_pStarData->m_PurposPos.y)){
 			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
 		}
+		else{
+
+		}
+
 	}
+
 
 }
 
