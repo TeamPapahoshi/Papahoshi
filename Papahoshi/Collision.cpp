@@ -179,6 +179,69 @@ float CalculateDistanceAtoB(D3DXVECTOR2 posA, D3DXVECTOR2 posB){
 	return ans;
 }
 
+//====================================================================
+//
+// 線分と円の衝突判定
+//
+//====================================================================
+bool CheckCollisionCircleToLine(D3DXVECTOR2 circlePos, float Cradius, D3DXVECTOR2 leftpos, D3DXVECTOR2 rightpos){
+
+	// 各ベクトル 
+	D3DXVECTOR2 VecS, VecA, VecB;
+	float d;
+	VecS = rightpos - leftpos;
+	VecA = circlePos - leftpos;
+	VecB = circlePos - rightpos;
+
+	d = fabs(cCollider::VectorCrossProduct(VecS, VecA) / cCollider::VectorSize(VecS));
+
+	if (d <= Cradius){
+		if (cCollider::VectorDotProduct(VecA, VecS)*cCollider::VectorDotProduct(VecB, VecS) <= 0 )
+			return true;
+		if (Cradius > cCollider::VectorSize(VecA) || Cradius > cCollider::VectorSize(VecB))
+			return true;
+	}
+	return false;
+}
+
+//=====================================================
+//
+//  ベクトルの内積を求める関数
+//
+//=====================================================
+float cCollider::VectorDotProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2){
+
+	//Dot = v1・v2 = x1*x2 + y1*y2 = |v1||v2|cos(θ)
+
+	return (v1.x * v2.x + v1.y * v2.y);
+}
+
+//====================================================
+//
+//  ベクトルの外積を求める関数
+//
+//====================================================
+float cCollider::VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2){
+
+	//v1×v2= x1*y2-x2*y1 = |v1||v2|sin(θ)
+
+	return (v1.x * v2.y - v2.x * v1.y);
+
+}
+
+//====================================================
+//
+// ベクトルの長さを求める関数
+//
+//====================================================
+float cCollider::VectorSize(D3DXVECTOR2 v){
+
+	//ルート(x二乗 + y二乗)
+
+	return sqrt(v.x * v.x + v.y * v.y);
+
+}
+
 
 // 後に追加よてい
 

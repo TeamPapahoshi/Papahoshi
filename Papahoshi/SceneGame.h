@@ -54,9 +54,8 @@ public:
 
 private:
 	// このシーンでインスタンスするもののポインタ
-	cBG*				m_pBG;
-	cNet *pNet;
-
+	cBG*						m_pBG;
+	cNet						*pNet;
 	cNormalStar*				m_pNomalStar;		// モブ星
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
@@ -65,8 +64,6 @@ private:
 
 
 	cSampleStar*				m_pSampleStar;
-
-	cStageManager*				m_pStageManager;	// ステージマネージャー
 
 	void CheckCollision();	//当たり判定を取る
 };

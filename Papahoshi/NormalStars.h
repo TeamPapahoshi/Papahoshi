@@ -26,6 +26,9 @@
 //-----------------------------
 class cNormalStarData :public cBaseStarData{
 public:
+	D3DXVECTOR2 m_PurposPos = D3DXVECTOR2(0,0);		// 目的位置
+	D3DXVECTOR2 m_PurPosDist = D3DXVECTOR2(0, 0);		// 目的位置までの距離
+
 };
 
 class cNormalStar :public cBaseStar{
@@ -37,23 +40,24 @@ public:
 	cNormalStar();
 
 	//--- 網との処理 ---
-	void SetNetData();
-	void OnCollidToNet();
+	void SetNetData(cNet* data);
+	void OnCollidToNet(int num);
 	
-
 	//--- ブラックホールとの処理 ---
-	void SetBlackHoleData(cBlackHole*);
+	void SetBlackHoleData(cBlackHole* data);
 	void OnCollidToBlackHole(int Normal,int Black);
 	void OnCollidToDelete(int Normal);
 	
-
 	void Create();		// 生成
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
 
 private:
-	cNormalStarData* m_pStarData;	// 必要データ
-	cNormalStarData*	m_pRoot;	// 先頭アドレス格納用
+	cNormalStarData*	m_pStarData;		// 必要データ
+	cNormalStarData*	m_pRoot;			// 先頭アドレス格納用
+	cBlackHole*			m_pBlackHoleData;	// ブラックホールのデータを格納
+	cNet*				m_pNetData;			// 網のデータ格納
+
 
 	//Set&Get
 public:

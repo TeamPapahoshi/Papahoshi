@@ -57,7 +57,7 @@ public:
 
 	//ˆø‚¢‚Ä‚¢‚éó‘Ô‚Ì‚Æ‚«‚Étrue‚ğ•Ô‚·
 	bool GetPullFlug(){
-		return (gamePhase == PHASE_PULL);
+		return (gamePhase == PHASE_PULL && !m_nFrameCnt);
 	}
 
 	D3DXVECTOR2 GetNetStart(){
