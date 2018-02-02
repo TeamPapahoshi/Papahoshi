@@ -49,6 +49,8 @@
 #define SPEED_HALFCIRCLE	(10)	//10/1進む
 //斜め投げ補正
 #define ANG_NUM		(200.0f)
+//制御点を求める
+#define CONTROL_POINT_STD	(700.0f)
 
 
 //=====================================================
@@ -205,7 +207,7 @@ void cNet::SetNet(){
 
 	D3DXVECTOR2 workPos[4];
 	float tlx, ulx, trx, urx, tdisX, udisX, trY, tly, ury, uly, tdisY, udisY, yAng, xAng, LtoCdisX, CtoRdisX;
-
+	D3DXVECTOR2 v1, v2;	//制御点
 
 	//---- ウキの位置を設定 ----
 	for (int i = 0; i < 3; i++){
@@ -213,7 +215,7 @@ void cNet::SetNet(){
 	}
 	m_center.SetPos(m_centerPos);
 
-	//----- あみのポジションを設定(とりあえず直線に) -----
+	//---- 曲線状に座標を設定 ----- **成功したら上のやつ消す
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
@@ -221,22 +223,35 @@ void cNet::SetNet(){
 				switch (z)
 				{
 				case NET_PARTS_RIGHT://RIGHT
+
 					//値の調整
 					if (x == 0){
 						//必要情報を計算
 						if (y == 0){
-							tlx = ulx = m_aPos[0].x;
-							trx = urx = m_aPos[1].x;
-							tdisX = udisX = trx - tlx;
-							tly = uly = m_aPos[0].y;
-							trY = ury = m_aPos[1].y;
+
+							//制御点の計算
+							v1.y = (m_centerPos.y - m_aPos[0].y) / 5;
+							v2.y = (m_centerPos.y - m_aPos[0].y) / 5 * 4;
+							v1.x = CONTROL_POINT_STD - (m_centerPos.x - m_aPos[0].x);
+							v2.x = CONTROL_POINT_STD - (m_centerPos.x - m_aPos[0].x);
+
+							//初期化X
+							tlx = ulx = BezierCurve((y / NET_Y_NUM),
+								m_aPos[0], v1, v2, m_centerPos).x;	//左端、ベジェ
+							trx = urx = m_aPos[1].x;	//右端
+							tdisX = udisX = trx - tlx;	//左と右の距離
+
+							//Y
+							tly = uly = BezierCurve((y / NET_Y_NUM),
+								m_aPos[0], v1, v2, m_centerPos).y; //左端、ベジェ
+							trY = ury = m_aPos[1].y;	//右端
 							trY >= tly ? tdisY = udisY = trY - tly : tdisY = udisY = tly - trY;
-							trY >= tly ? yAng = 1.0f : yAng = 0.0f;
+							trY >= tly ? yAng = 1.0f : yAng = 0.0f;	//距離
+
+							//中心との距離
 							LtoCdisX = m_centerPos.x - m_aPos[0].x;
 							CtoRdisX = m_aPos[1].x - m_centerPos.x;
 							trY >= tly ? yAng = 1.0f : yAng = 0.0f;
-							LtoCdisX = m_centerPos.x - m_aPos[0].x;
-							CtoRdisX = m_aPos[1].x - m_centerPos.x;
 						}
 
 						//Xの調整
@@ -244,14 +259,16 @@ void cNet::SetNet(){
 						trx = urx;
 						tdisX = udisX;
 						urx = m_aPos[1].x - ((((CtoRdisX) / (NET_Y_NUM / 2.0f)) * (y + 1)) / 2.0f);
-						ulx = m_aPos[0].x + ((((LtoCdisX) / (NET_Y_NUM / 2.0f)) * (y + 1)) / 2.0f);
+						ulx = ulx = BezierCurve(((float)y / (float)NET_Y_NUM),
+							m_aPos[0], v1, v2, m_centerPos).x;
 						udisX = urx - ulx;
 
 						//Yの調整
 						tly = uly;
 						trY = ury;
 						tdisY = udisY;
-						uly = m_aPos[0].y + ((((m_centerPos.y - m_aPos[0].y) / NET_Y_NUM) * (y + 1)));
+						uly = uly = BezierCurve(((float)y / (float)NET_Y_NUM),
+							m_aPos[0], v1, v2, m_centerPos).y;
 						ury = m_aPos[1].y + ((((m_centerPos.y - m_aPos[1].y) / NET_Y_NUM) * (y + 1)));
 						ury >= uly ? udisY = ury - uly : udisY = uly - ury;
 					}
@@ -274,9 +291,11 @@ void cNet::SetNet(){
 						workPos[2].y = uly - (udisY / NET_X_NUM) * (x);
 						workPos[3].y = uly - (udisY / NET_X_NUM) * (x + 1);
 					}
+
 					break;
 
-				case NET_PARTS_LEFT://LEFT
+				case NET_PARTS_LEFT:
+
 					//値の調整
 					if (x == 0){
 						//必要情報を計算
@@ -330,31 +349,13 @@ void cNet::SetNet(){
 						workPos[2].y = uly - (udisY / NET_X_NUM) * (x);
 						workPos[3].y = uly - (udisY / NET_X_NUM) * (x + 1);
 					}
-					break;
-				}
-
-				//あみのポジション決定
-				m_aNet[z][y][x].SetPosFree(workPos[0], workPos[1], workPos[2], workPos[3]);
-			}
-		}
-	}
-
-	//---- 曲線状に座標を設定 ----- **成功したら上のやつ消す
-	for (int z = 0; z < NET_PARTS_MAX; z++){
-		for (int x = 0; x < NET_X_NUM; x++){
-			for (int y = 0; y < NET_Y_NUM; y++){
-
-				switch (z)
-				{
-				case NET_PARTS_RIGHT://RIGHT
-
-					break;
-
-				case NET_PARTS_LEFT:
 
 					break;
 
 				} //switch 
+
+				//あみのポジション決定
+				m_aNet[z][y][x].SetPosFree(workPos[0], workPos[1], workPos[2], workPos[3]);
 
 			}
 		}
