@@ -32,6 +32,7 @@ cSceneGame::cSceneGame(){
 
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
+	m_pBlackHole->SetNetData(pNet);
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
@@ -176,6 +177,24 @@ void cSceneGame::CheckCollision(){
 			  }
 		  }
 	  }
+
+
+	  //---網とブラックホールの判定---
+	  for (int nCountStar = 0; nCountStar < m_pBlackHole->GetMaxNum(); nCountStar++){
+
+		  if (!m_pBlackHole->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (cCollider::CheckCollisionCircleToTriangle(m_pBlackHole->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
+
+				  m_pBlackHole->OnCollidToNet(nCountStar);
+
+			  }
+		  }
+	  }
+
 
 	// 網と隕石のあたり判定
 	for (int nCountStar = 0; nCountStar <MAX_SPACE_ROCK_NUM; nCountStar++){

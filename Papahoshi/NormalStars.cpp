@@ -23,9 +23,7 @@
 //マクロ定義
 //-----------------------------
 #define STAR_SIZE	(20)
-
 #define RESPAWN_FREAM (200)
-
 #define MAX_NORMAL_STAR_NUM	(50)
 
 //=======================================================================================
@@ -75,6 +73,7 @@ cNormalStar::cNormalStar(){
 
 		// 移動の目的位置決定
 		m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+		// 目的地までの距離を測定
 		m_pStarData->m_PurPosDist.x =fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
 		m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
 
@@ -358,12 +357,12 @@ void cNormalStar::OnCollidToNet(int num){
 	if (m_pNetData->GetPullFlug()){
 
 		// 移動したい距離
-		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;
+		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;	// 三回に分けて移動する
 		float DistGoalY = m_pStarData->m_PurPosDist.y / 3.0f;
 
 
 		// 距離から移動量を算出(フレーム数で割る)
-		m_pStarData->m_Move.x = DistGoalX/50.0f;
+		m_pStarData->m_Move.x = DistGoalX / 50.0f;
 		m_pStarData->m_Move.y = DistGoalY / 45.0f;
 
 
