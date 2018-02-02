@@ -60,6 +60,21 @@ public:
 		return (gamePhase == PHASE_PULL && !m_nFrameCnt);
 	}
 
+	D3DXVECTOR2 GetNetStart(){
+		return m_centerPos;
+	}
+
+	D3DXVECTOR2 GetNetLeft(){
+		return m_aPos[0];
+	}
+
+	D3DXVECTOR2 GetNetCenter(){
+		return m_aPos[1];
+	}
+
+	D3DXVECTOR2 GetNetRight(){
+		return m_aPos[2];
+	}
 
 private:
 	//---- —ñ‹“Œ^éŒ¾ -----
