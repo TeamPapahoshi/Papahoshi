@@ -18,6 +18,7 @@
 float PowerF(float value, int power){
 
 	float ans = value;
+	power--;
 
 	while (power){
 		ans = ans * value;
@@ -35,6 +36,7 @@ float PowerF(float value, int power){
 int PowerN(int value, int power){
 
 	int ans = value;
+	power--;
 
 	while (power){
 		ans = ans * value;

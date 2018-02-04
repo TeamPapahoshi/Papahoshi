@@ -51,7 +51,7 @@
 #define ANG_NUM		(200.0f)
 //§Œä“_‚ğ‹‚ß‚é
 #define CP_DIVIDE	(4)			//ü•ª‚Ì•ªŠ„”
-#define CP_DISTANCE	(250.0f)	//ü•ª‚Æ‚Ì‹——£
+#define CP_DISTANCE	(50.0f)	//ü•ª‚Æ‚Ì‹——£
 
 
 //=====================================================
@@ -260,11 +260,11 @@ void cNet::SetNet(){
 							egSlop = VerticalLineSlope(aoSlop);
 							egInter = VerticalLineIntercept(e, aoSlop);
 							//§Œä“_F
-							cp1.y = LineY(CP_DISTANCE - d.x, dfSlop, dfInter);
-							cp1.x = CP_DISTANCE - d.x;
+							cp1.y = LineY(d.x - CP_DISTANCE, dfSlop, dfInter);
+							cp1.x = d.x - CP_DISTANCE;
 							//§Œä“_G
-							cp2.y = LineY(CP_DISTANCE - e.x , egSlop, egInter);
-							cp2.x = CP_DISTANCE - e.x;
+							cp2.y = LineY(e.x - CP_DISTANCE, egSlop, egInter);
+							cp2.x = e.x - CP_DISTANCE;
 
 							//‰Šú‰»X
 							tlx = ulx = BezierCurve((y / NET_Y_NUM),
