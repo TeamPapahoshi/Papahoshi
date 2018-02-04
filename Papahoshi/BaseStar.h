@@ -61,7 +61,7 @@ public:
 		m_bRespawnEnd = false;
 		m_nRespawnFrame = 0;
 		m_Move = D3DXVECTOR2(0.0f, 0.0f);
-		m_PurposPos = D3DXVECTOR2(0, 0);
+		m_Destination = D3DXVECTOR2(0, 0);
 		m_PurPosDist = D3DXVECTOR2(0, 0);
 	}
 
@@ -83,9 +83,9 @@ public:
 	int				m_nRespawnFrame;
 
 	D3DXVECTOR2		m_Move;				// 移動量
-	D3DXVECTOR2		m_PurposPos;		// 目的位置記憶
+	D3DXVECTOR2		m_Destination;		// 目的位置記憶
 	D3DXVECTOR2		m_PurPosDist;		// 目的位置までの距離記憶
-
+	D3DXVECTOR2		m_VecStarToDest;	// 星から目的地方向のベクトル
 
 };
 
