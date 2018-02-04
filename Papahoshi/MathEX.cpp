@@ -148,7 +148,11 @@ float VerticalLineIntercept(D3DXVECTOR2 crossP, float slope){
 //=====================================================
 float LineY(float x, float slope, float intersept){
 
-	return 0;
+	float ans;
+
+	ans = slope * x + intersept;
+
+	return ans;
 
 }
 
@@ -159,7 +163,11 @@ float LineY(float x, float slope, float intersept){
 //=====================================================
 float LineX(float y, float slope, float intersept){
 
-	return 0;
+	float ans;
+
+	ans = (y - intersept) / slope;
+
+	return ans;
 
 }
 

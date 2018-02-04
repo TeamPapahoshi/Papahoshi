@@ -50,7 +50,8 @@
 //斜め投げ補正
 #define ANG_NUM		(200.0f)
 //制御点を求める
-#define CONTROL_POINT_STD	(700.0f)
+#define CP_DIVIDE	(4)			//線分の分割数
+#define CP_DISTANCE	(250.0f)	//線分との距離
 
 
 //=====================================================
@@ -174,6 +175,11 @@ void cNet::Draw(){
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
+				if (m_centerPos == m_aPos[z] ||
+					m_centerPos == m_aPos[z + 1]){
+					y = NET_Y_NUM + 1;
+					break;
+				}
 				m_aNet[z][y][x].DrawFreePos();
 			}
 		}
@@ -207,7 +213,7 @@ void cNet::SetNet(){
 
 	D3DXVECTOR2 workPos[4];
 	float tlx, ulx, trx, urx, tdisX, udisX, trY, tly, ury, uly, tdisY, udisY, yAng, xAng, LtoCdisX, CtoRdisX;
-	D3DXVECTOR2 v1, v2;	//制御点
+	D3DXVECTOR2 cp1, cp2;	//制御点
 
 	//---- ウキの位置を設定 ----
 	for (int i = 0; i < 3; i++){
@@ -224,26 +230,51 @@ void cNet::SetNet(){
 				{
 				case NET_PARTS_RIGHT://RIGHT
 
-					//値の調整
+					//------ 網張りが必要ない場合は処理を行わない ------
+					if (m_centerPos == m_aPos[0] ||
+						m_centerPos == m_aPos[1]){
+						y = NET_Y_NUM + 1;
+						break;
+					}
+
+					//------- 値の調整 --------------
 					if (x == 0){
-						//必要情報を計算
+
+						//------ 必要情報を計算 ---------
 						if (y == 0){
 
-							//制御点の計算
-							v1.y = (m_centerPos.y - m_aPos[0].y) / 5;
-							v2.y = (m_centerPos.y - m_aPos[0].y) / 5 * 4;
-							v1.x = CONTROL_POINT_STD - (m_centerPos.x - m_aPos[0].x);
-							v2.x = CONTROL_POINT_STD - (m_centerPos.x - m_aPos[0].x);
+							//** 線分AOの制御点を計算 **
+							//変数宣言
+							D3DXVECTOR2 d, e;
+							float aoSlop, aoInter, dfSlop, dfInter, egSlop, egInter;
+							//分割点d,fを求める
+							d = LineSplitPoint(m_aPos[0], m_centerPos, 1, CP_DIVIDE - 1);
+							e = LineSplitPoint(m_aPos[0], m_centerPos, CP_DIVIDE - 1, 1);
+							//線分AOの式を求める
+							aoSlop = LineSlope(m_aPos[0], m_centerPos);
+							aoInter = LineIntercept(m_aPos[0], m_centerPos);
+							//線分AOと、分割点dを交点とした垂線DFを求める
+							dfSlop = VerticalLineSlope(aoSlop);
+							dfInter = VerticalLineIntercept(d, aoSlop);
+							//線分AOと、分割点eを交点とした垂線EGを求める
+							egSlop = VerticalLineSlope(aoSlop);
+							egInter = VerticalLineIntercept(e, aoSlop);
+							//制御点F
+							cp1.y = LineY(CP_DISTANCE - d.x, dfSlop, dfInter);
+							cp1.x = CP_DISTANCE - d.x;
+							//制御点G
+							cp2.y = LineY(CP_DISTANCE - e.x , egSlop, egInter);
+							cp2.x = CP_DISTANCE - e.x;
 
 							//初期化X
 							tlx = ulx = BezierCurve((y / NET_Y_NUM),
-								m_aPos[0], v1, v2, m_centerPos).x;	//左端、ベジェ
+								m_aPos[0], cp1, cp2, m_centerPos).x;	//左端、ベジェ
 							trx = urx = m_aPos[1].x;	//右端
 							tdisX = udisX = trx - tlx;	//左と右の距離
 
 							//Y
 							tly = uly = BezierCurve((y / NET_Y_NUM),
-								m_aPos[0], v1, v2, m_centerPos).y; //左端、ベジェ
+								m_aPos[0], cp1, cp2, m_centerPos).y; //左端、ベジェ
 							trY = ury = m_aPos[1].y;	//右端
 							trY >= tly ? tdisY = udisY = trY - tly : tdisY = udisY = tly - trY;
 							trY >= tly ? yAng = 1.0f : yAng = 0.0f;	//距離
@@ -260,7 +291,7 @@ void cNet::SetNet(){
 						tdisX = udisX;
 						urx = m_aPos[1].x - ((((CtoRdisX) / (NET_Y_NUM / 2.0f)) * (y + 1)) / 2.0f);
 						ulx = ulx = BezierCurve(((float)y / (float)NET_Y_NUM),
-							m_aPos[0], v1, v2, m_centerPos).x;
+							m_aPos[0], cp1, cp2, m_centerPos).x;
 						udisX = urx - ulx;
 
 						//Yの調整
@@ -268,7 +299,7 @@ void cNet::SetNet(){
 						trY = ury;
 						tdisY = udisY;
 						uly = uly = BezierCurve(((float)y / (float)NET_Y_NUM),
-							m_aPos[0], v1, v2, m_centerPos).y;
+							m_aPos[0], cp1, cp2, m_centerPos).y;
 						ury = m_aPos[1].y + ((((m_centerPos.y - m_aPos[1].y) / NET_Y_NUM) * (y + 1)));
 						ury >= uly ? udisY = ury - uly : udisY = uly - ury;
 					}
@@ -295,6 +326,13 @@ void cNet::SetNet(){
 					break;
 
 				case NET_PARTS_LEFT:
+
+					//網張りが必要ない場合は処理を行わない
+					if (m_centerPos == m_aPos[2] ||
+						m_centerPos == m_aPos[1]){
+						y = NET_Y_NUM + 1;
+						break;
+					}
 
 					//値の調整
 					if (x == 0){
