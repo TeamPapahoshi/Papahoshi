@@ -285,9 +285,6 @@
     <ClInclude Include="SceneGame.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム</Filter>
     </ClInclude>
-    <ClInclude Include="BaseStar.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス</Filter>
-    </ClInclude>
     <ClInclude Include="FixedStars.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\恒星</Filter>
     </ClInclude>
@@ -407,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="Gage.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ゲージ</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStar.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
