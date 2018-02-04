@@ -162,7 +162,23 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::CheckCollision(){
 
-	//---ñ‘Ç∆ÉÇÉuêØÇÃîªíË---
+	////---ñ‘Ç∆ÉÇÉuêØÇÃîªíË---
+	//  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
+
+	//	  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
+	//		  continue;
+
+	//	  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+	//		if( cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
+
+	//			m_pNomalStar->OnCollidToNet(nCountStar);
+
+	//		  }
+	//	  }
+	//  }
+
+	  //---ñ‘Ç∆ÉÇÉuêØÇÃîªíËtype2---
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
 		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
@@ -170,10 +186,13 @@ void cSceneGame::CheckCollision(){
 
 		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
 
-			if( cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
+			  if (pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, pNet->GetNetLeft(), pNet->GetNetRight())){
 
-				m_pNomalStar->OnCollidToNet(nCountStar);
+					  m_pNomalStar->OnCollidToNet(nCountStar);
+					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
 
+				  }
 			  }
 		  }
 	  }

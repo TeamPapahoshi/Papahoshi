@@ -200,3 +200,18 @@ float VectorSize(D3DXVECTOR2 v){
 	return sqrt(v.x * v.x + v.y * v.y);
 
 }
+
+//====================================================
+//
+// 単位ベクトルを求める
+//
+//====================================================
+D3DXVECTOR2 UnitVector(D3DXVECTOR2 v){
+
+	//
+	D3DXVECTOR2 ans;
+	ans = v /VectorSize(v);
+
+	return ans;
+
+}

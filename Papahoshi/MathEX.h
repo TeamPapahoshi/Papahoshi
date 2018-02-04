@@ -87,4 +87,8 @@ float VectorCrossProduct(D3DXVECTOR2 v1, D3DXVECTOR2 v2);
 float VectorSize(D3DXVECTOR2 v);
 // v ベクトル
 
+//----- 単位ベクトルを求める -----
+D3DXVECTOR2 UnitVector(D3DXVECTOR2 v);
+// v ベクトル
+
 #endif

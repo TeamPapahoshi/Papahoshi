@@ -170,6 +170,9 @@ void cBlackHole::Draw(){
 			continue;
 
 		m_pStarData->m_sprite.Draw();
+
+		if (m_pStarData->m_bUse)
+			m_pStarData->m_Collision.Draw();
 	}
 
 	// æ“ª‚É–ß‚·
@@ -344,25 +347,18 @@ void cBlackHole::OnCollidToNet(int num){
 
 
 		// ˆÚ“®—Ê‚ð”½‰f
-		if (m_pStarData->m_sprite.GetPosX() > m_pStarData->m_PurposPos.x){
+		if (m_pStarData->m_sprite.GetPosX() >= m_pStarData->m_PurposPos.x){
 			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
 		}
-		else if ((m_pStarData->m_sprite.GetPosX() < m_pStarData->m_PurposPos.x)){
+		else if ((m_pStarData->m_sprite.GetPosX() <= m_pStarData->m_PurposPos.x)){
 			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
 		}
-		else{
-
-		}
-		if ((m_pStarData->m_sprite.GetPosY() < m_pStarData->m_PurposPos.y)){
+		if ((m_pStarData->m_sprite.GetPosY() <= m_pStarData->m_PurposPos.y)){
 			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
 		}
-		else if ((m_pStarData->m_sprite.GetPosY() > m_pStarData->m_PurposPos.y)){
+		else if ((m_pStarData->m_sprite.GetPosY() >= m_pStarData->m_PurposPos.y)){
 			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
 		}
-		else{
-
-		}
-
 	}
 
 }
