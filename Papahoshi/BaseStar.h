@@ -26,7 +26,7 @@ public:
 	cBaseStar(){}
 
 	// フラグのオンオフと星の数を数える
-	virtual void SetCountAndUse(bool flag)=0;
+	//virtual void SetCountAndUse(bool flag)=0;
 
 
 

@@ -25,6 +25,8 @@
 //=======================================================================================
 cBaseStarData::cBaseStarData(){
 
+
+	// ‰Šú‰»
 	m_bUse = false;
 	m_bDraw = false;
 	m_bCreateEvent = false;
