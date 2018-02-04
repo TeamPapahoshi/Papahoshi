@@ -14,6 +14,7 @@
 #include "Sprite.h"
 #include "Collision.h"
 #include "BaseStar.h"
+#include "Net_Type2.h"
 #include <vector>
 #include <fstream>
 
@@ -33,6 +34,10 @@ public:
 	~cBlackHole();
 	cBlackHole();
 
+	//--- 網との処理 ---
+	void SetNetData(cNet* data);
+	void OnCollidToNet(int num);
+
 	void Create();		// 生成
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
@@ -40,6 +45,7 @@ public:
 private:
 	cBlackHoleData* m_pStarData;	// 必要データ
 	cBlackHoleData*	m_pRoot;	// 先頭アドレス格納用
+	cNet*			m_pNetData;
 
 	//Set&Get
 public:

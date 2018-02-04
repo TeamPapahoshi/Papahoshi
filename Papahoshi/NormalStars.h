@@ -26,8 +26,7 @@
 //-----------------------------
 class cNormalStarData :public cBaseStarData{
 public:
-	D3DXVECTOR2 m_PurposPos = D3DXVECTOR2(0,0);		// 目的位置
-	D3DXVECTOR2 m_PurPosDist = D3DXVECTOR2(0, 0);		// 目的位置までの距離
+
 
 };
 

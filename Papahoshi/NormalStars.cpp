@@ -23,9 +23,7 @@
 //マクロ定義
 //-----------------------------
 #define STAR_SIZE	(20)
-
 #define RESPAWN_FREAM (200)
-
 #define MAX_NORMAL_STAR_NUM	(50)
 
 //=======================================================================================
@@ -50,7 +48,6 @@ cNormalStar::cNormalStar(){
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-
 		// 初期生成
 		m_pStarData->m_bDraw = true;
 		SetCountAndUse(true);
@@ -65,16 +62,17 @@ cNormalStar::cNormalStar(){
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
 		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
+		//CreateRamdomPos = D3DXVECTOR2(SCREEN_WIDTH/2.0f+50, SCREEN_HEIGHT-100);
+		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE/2.0f);
 
-
 		// 移動の目的位置決定
 		m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+		// 目的地までの距離を測定
 		m_pStarData->m_PurPosDist.x =fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
 		m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
 
@@ -354,43 +352,66 @@ void cNormalStar::OnCollidToNet(int num){
 	m_pStarData += num;
 
 
-	// 網を引いているときのみ移動する
-	if (m_pNetData->GetPullFlug()){
+	//// 網を引いているときのみ移動する
+	//if (m_pNetData->GetPullFlug()){
+
+	//	// 移動したい距離
+	//	float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;	// 三回に分けて移動する
+	//	float DistGoalY = m_pStarData->m_PurPosDist.y / 3.0f;
+
+
+	//	// 距離から移動量を算出(フレーム数で割る)
+	//	m_pStarData->m_Move.x = DistGoalX / 50.0f;
+	//	m_pStarData->m_Move.y = DistGoalY / 45.0f;
+
+
+
+	//	// 移動量を反映
+	//	if (m_pStarData->m_sprite.GetPosX() > m_pStarData->m_PurposPos.x){
+	//		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
+	//	}
+	//	else if ((m_pStarData->m_sprite.GetPosX() < m_pStarData->m_PurposPos.x)){
+	//		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
+	//	}
+	//	else{
+
+	//	}
+	//	if ((m_pStarData->m_sprite.GetPosY() < m_pStarData->m_PurposPos.y)){
+	//		m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
+	//	}
+	//	else if ((m_pStarData->m_sprite.GetPosY() > m_pStarData->m_PurposPos.y)){
+	//		m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
+	//	}
+	//	else{
+
+	//	}
+
+	//}
 
 		// 移動したい距離
-		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;
+		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;	// 三回に分けて移動する
 		float DistGoalY = m_pStarData->m_PurPosDist.y / 3.0f;
 
 
 		// 距離から移動量を算出(フレーム数で割る)
-		m_pStarData->m_Move.x = DistGoalX/50.0f;
-		m_pStarData->m_Move.y = DistGoalY / 45.0f;
+		m_pStarData->m_Move.x = m_pStarData->m_PurPosDist.x/50.0f;
+		m_pStarData->m_Move.y = m_pStarData->m_PurPosDist.y/50.0f;
 
 
 
 		// 移動量を反映
-		if (m_pStarData->m_sprite.GetPosX() > m_pStarData->m_PurposPos.x){
+		if (m_pStarData->m_sprite.GetPosX() >= m_pStarData->m_PurposPos.x){
 			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
 		}
 		else if ((m_pStarData->m_sprite.GetPosX() < m_pStarData->m_PurposPos.x)){
 			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
 		}
-		else{
-
-		}
-		if ((m_pStarData->m_sprite.GetPosY() < m_pStarData->m_PurposPos.y)){
+		if ((m_pStarData->m_sprite.GetPosY() <= m_pStarData->m_PurposPos.y)){
 			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
 		}
 		else if ((m_pStarData->m_sprite.GetPosY() > m_pStarData->m_PurposPos.y)){
 			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
 		}
-		else{
-
-		}
-
-	}
-
-
 }
 
 
