@@ -53,7 +53,7 @@ public:
 
 	// Getter
 	cBlackHoleData* GetStarData(){
-		return m_pStarData;
+		return m_pRoot;
 	}
 
 

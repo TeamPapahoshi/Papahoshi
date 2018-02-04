@@ -393,26 +393,31 @@ void cNormalStar::SetBlackHoleData(cBlackHole* data){
 //---- ブラックホール吸い込み範囲に当たった時の処理 -----
 void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 
+	m_pStarData = m_pRoot;
+	m_pStarData += Normal;
+
 	// 振動する
-	//if (m_pStarData[Normal].t_bVibration){
+	if (m_pStarData->m_bVibration){
 
-	//	m_pStarData[Normal].t_nVibrationFrame++;
-	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + 0.15f);
+		m_pStarData->m_nVibrationFrame++;
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + 0.15f);
 
-	//	if (m_pStarData[Normal].t_nVibrationFrame > 5){
-	//		m_pStarData[Normal].t_bVibration = false;
-	//		m_pStarData[Normal].t_nVibrationFrame = 0;
-	//	}	
-	//}
+		if (m_pStarData->m_nVibrationFrame > 5){
+			m_pStarData->m_bVibration = false;
+			m_pStarData->m_nVibrationFrame = 0;
+		}	
+	}
 
-	//else if (!m_pStarData[Normal].t_bVibration){
-	//	m_pStarData[Normal].t_nVibrationFrame++;
-	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - 0.15f);
-	//	if (m_pStarData[Normal].t_nVibrationFrame > 5){
-	//		m_pStarData[Normal].t_bVibration = true;
-	//		m_pStarData[Normal].t_nVibrationFrame = 0;
-	//	}
-	//}
+	else if (!m_pStarData->m_bVibration){
+
+		m_pStarData->m_nVibrationFrame++;
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - 0.15f);
+
+		if (m_pStarData->m_nVibrationFrame > 5){
+			m_pStarData->m_bVibration = true;
+			m_pStarData->m_nVibrationFrame = 0;
+		}
+	}
 
 
 	//// ブラックホールの中心を取得

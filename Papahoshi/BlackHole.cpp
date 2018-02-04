@@ -22,7 +22,7 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define STAR_SIZE	(100)
+#define STAR_SIZE	(200)
 
 #define VACUUM_RANGE	(200)
 #define DELETE_RANGE	(20)
@@ -127,32 +127,32 @@ void cBlackHole::Update(){
 	}
 
 
-	//// イベントの起動
+	// イベントの起動
 	// デバッグキー
-	////if (GetKeyboardTrigger(DIK_B)){
-	////	m_pStarData = m_pRoot;	// 先頭に戻す
-	////	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	if (GetKeyboardTrigger(DIK_B)){
+		m_pStarData = m_pRoot;	// 先頭に戻す
+		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-	////		if (m_pStarData->m_bDraw)	// ここ注意
-	////			continue;
+			if (m_pStarData->m_bDraw)	// ここ注意
+				continue;
 
-	////		m_pStarData->m_bCreateEvent = true;
-	////		m_pStarData = m_pRoot;	// 先頭に戻す
-	////		break;
-	////	}
-	////}
-	//// デバッグキー
-	////if (GetKeyboardTrigger(DIK_M)){
-	////	m_pStarData = m_pRoot;	// 先頭に戻す
-	////	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+			m_pStarData->m_bCreateEvent = true;
+			m_pStarData = m_pRoot;	// 先頭に戻す
+			break;
+		}
+	}
+	// デバッグキー
+	if (GetKeyboardTrigger(DIK_M)){
+		m_pStarData = m_pRoot;	// 先頭に戻す
+		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-	////		if (!m_pStarData->m_bUse)	// ここ注意
-	////			continue;
-	////		m_pStarData->m_bDestroyEvent = true;
-	////		m_pStarData = m_pRoot;	// 先頭に戻す
-	////		break;
-	////	}
-	////}
+			if (!m_pStarData->m_bUse)	// ここ注意
+				continue;
+			m_pStarData->m_bDestroyEvent = true;
+			m_pStarData = m_pRoot;	// 先頭に戻す
+			break;
+		}
+	}
 	//if (GetKeyboardTrigger(DIK_R)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){

@@ -125,22 +125,6 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::CheckCollision(){
 
-	////---網とモブ星の判定---
-	//  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
-
-	//	  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
-	//		  continue;
-
-	//	  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
-
-	//		if( cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
-
-	//			m_pNomalStar->OnCollidToNet(nCountStar);
-
-	//		  }
-	//	  }
-	//  }
-
 	  //---網とモブ星の判定type2---
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
@@ -154,7 +138,6 @@ void cSceneGame::CheckCollision(){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
 					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
-
 				  }
 			  }
 		  }
@@ -168,51 +151,15 @@ void cSceneGame::CheckCollision(){
 
 		  for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
 
-
-			  if (!m_pBlackHole->GetStarData()[0].m_bUse)
+			  if (!m_pBlackHole->GetStarData()[nCountBlackHole].m_bUse)
 				  continue;
 
-			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[0].m_Collision)){
-				  int i = 0;
+			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_Collision)){
+				  m_pNomalStar->OnCollidToBlackHole(nCountStar, nCountBlackHole);
 
+				  }
 			  }
-
-		  }
 	  }
-
-
-	//  //---網とブラックホールの判定---
-	//  for (int nCountStar = 0; nCountStar < m_pBlackHole->GetMaxNum(); nCountStar++){
-
-	//	  if (!m_pBlackHole->GetStarData()[nCountStar].m_bUse)
-	//		  continue;
-
-	//	  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
-
-	//		  if (cCollider::CheckCollisionCircleToTriangle(m_pBlackHole->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
-
-	//			  m_pBlackHole->OnCollidToNet(nCountStar);
-
-	//		  }
-	//	  }
-	//  }
-
-
-	//// 網と隕石のあたり判定
-	//for (int nCountStar = 0; nCountStar <MAX_SPACE_ROCK_NUM; nCountStar++){
-
-	//	if (!m_pSpaceRock->GetStarData()[nCountStar].t_bUse)
-	//		continue;
-
-	//	for (int nCountNet = 0; nCountNet < 2; nCountNet++){
-	//		if (cCollider::CheckCollisionCircleToTriangle(m_pSpaceRock->GetStarData()[nCountStar].t_Collider, pNet->GetCollider()[nCountNet])){
-
-	//			m_pSpaceRock->OnCollidToNet(nCountStar);
-
-	//		}
-	//	}
-	//}
-
 
 
 }
