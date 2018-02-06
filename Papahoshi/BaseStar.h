@@ -60,6 +60,7 @@ public:
 		m_bRespawnEvent = false;
 		m_bRespawnEnd = false;
 		m_nRespawnFrame = 0;
+		m_nEffectSetTime = 0;
 		m_Move = D3DXVECTOR2(0.0f, 0.0f);
 	}
 
@@ -79,6 +80,8 @@ public:
 	bool			m_bRespawnEvent;	// リスポーンイベント
 	bool			m_bRespawnEnd;
 	int				m_nRespawnFrame;
+
+	int				m_nEffectSetTime;	// エフェクト設定間隔
 
 	D3DXVECTOR2		m_Move;				// 移動量
 

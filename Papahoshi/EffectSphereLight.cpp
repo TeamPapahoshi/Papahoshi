@@ -94,7 +94,7 @@ void cEffectSphereLight::Draw(){
 //					 int型				  life		[エフェクトの生存時間]
 //
 //=======================================================================================
-void cEffectSphereLight::SetEffectSphereLight(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life)
+void cEffectSphereLight::SetEffectSphereLight(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life)
 {
 	//未使用のエフェクトに設定
 	if (!m_bEffectUseFlag)
@@ -104,7 +104,7 @@ void cEffectSphereLight::SetEffectSphereLight(LPDIRECT3DTEXTURE9 ptex, D3DXVECTO
 		m_Sprite = new cSpriteParam;
 
 		//テクスチャの設定
-		m_Sprite->SetTexture(&ptex);
+		m_Sprite->SetTexture(ptex);
 
 		//色の設定
 		m_Sprite->SetVtxColor(color);

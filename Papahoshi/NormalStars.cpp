@@ -28,6 +28,11 @@
 
 #define MAX_NORMAL_STAR_NUM	(50)
 
+
+#define EFFECT_FRAME   (90)
+#define EFFECT_SIZE    (40.0f)
+#define EFFECT_RADIUS  (8.0f)
+
 //=======================================================================================
 //
 //		コンストラクタ
@@ -54,6 +59,7 @@ cNormalStar::cNormalStar(){
 		// 初期生成
 		m_pStarData->m_bDraw = true;
 		SetCountAndUse(true);
+		m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
@@ -119,6 +125,22 @@ void cNormalStar::Update(){
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
+		// エフェクト生成フレームの加算
+		m_pStarData->m_nEffectSetTime--;
+
+		//フレームが一定値になったらエフェクトの生成
+		if (m_pStarData->m_nEffectSetTime < 0)
+		{
+			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
+												 m_pStarData->m_sprite.GetPos(),
+												 D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
+												 m_pStarData->m_sprite.GetVtxColor(),
+												 EFFECT_FRAME / 2,
+												 D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
+												 4, 3);
+
+			m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
+		}
 
 	}
 

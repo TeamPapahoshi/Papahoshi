@@ -110,13 +110,12 @@ void cTitleShip::Update(bool bSceneChangeFlag){
 	if (m_nMakeSmokeTime <= 0)
 	{
 		//煙エフェクトの設定
-		GetEffectManeger()->SetEffectBase(GetEffectManeger()->EFFECT_SPHERE_LIGHT,
-										  *cTextureManeger::GetTextureTitle(TEX_TITLE_SPHERE_LIGHT),
-										  m_sprite.GetPos() + D3DXVECTOR2(65.0f, -40.0f),
-										  D3DXVECTOR2(25.0f, 25.0f),
-										  D3DXVECTOR2(0.3f, -1.0f),
-										  m_sprite.GetVtxColor(),
-										  90, 0);
+		GetEffectManeger()->SetEffectSphereLight(cTextureManeger::GetTextureTitle(TEX_TITLE_SPHERE_LIGHT),
+												 m_sprite.GetPos() + D3DXVECTOR2(65.0f, -40.0f),
+												 D3DXVECTOR2(25.0f, 25.0f),
+												 D3DXVECTOR2(0.3f, -1.0f),
+												 m_sprite.GetVtxColor(),
+												 90);
 		//生成時間の再設定
 		m_nMakeSmokeTime = MAKE_SMOKE_TIME;
 	}
