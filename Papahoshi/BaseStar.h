@@ -26,7 +26,7 @@ public:
 	cBaseStar(){}
 
 	// フラグのオンオフと星の数を数える
-	virtual void SetCountAndUse(bool flag)=0;
+	//virtual void SetCountAndUse(bool flag)=0;
 
 
 
@@ -49,6 +49,7 @@ class cBaseStarData{
 
 public:
 	virtual ~cBaseStarData(){}
+	cBaseStarData();
 
 	cBaseStarData(){
 		m_bUse = false;
@@ -84,10 +85,9 @@ public:
 	int				m_nEffectSetTime;	// エフェクト設定間隔
 
 	D3DXVECTOR2		m_Move;				// 移動量
-
-
-
-
+	D3DXVECTOR2		m_Destination;		// 目的位置記憶
+	D3DXVECTOR2		m_PurPosDist;		// 目的位置までの距離記憶
+	D3DXVECTOR2		m_VecStarToDest;	// 星から目的地方向のベクトル
 
 };
 

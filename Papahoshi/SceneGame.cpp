@@ -18,11 +18,6 @@
 #include <vector>
 #include "BaseStar.h"
 
-//------------------------------
-// マクロ定義
-//------------------------------
-#define FIXED_STAR_NUM	(1)
-
 //=======================================================================================
 //
 //		初期化
@@ -30,33 +25,27 @@
 //=======================================================================================
 cSceneGame::cSceneGame(){
 
-	// ステージマネージャ
-	m_pStageManager = new cStageManager();
-	cStageManager::ChangeStage(cStageManager::STAGE_01);
-
 	// 網
 	pNet = new cNet();
 
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
+	m_pBlackHole->SetNetData(pNet);
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
 
-
-
-	// 隕石
+	// サンプル
 	m_pSampleStar = new cSampleStar();
 
 	// モブ星
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
+	m_pNomalStar->SetNetData(pNet);
 
 	// ゲージ
 	m_pGage = new cGage();
 	m_pGage->Init();
-
-
 
 	// 背景
 	m_pBG = new cBG();
@@ -73,9 +62,11 @@ cSceneGame::~cSceneGame(){
 	// デリート
 	delete m_pBG;
 	delete m_pNomalStar;
+	delete m_pSpaceRock;
 	delete m_pGage;
 	delete m_pBlackHole;
 	delete m_pSampleStar;
+	delete pNet;
 }
 
 //=======================================================================================
@@ -86,21 +77,14 @@ cSceneGame::~cSceneGame(){
 void cSceneGame::Update(){
 
 	// 更新
-	m_pStageManager->Update();
-
-	// 更新
 	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
 	m_pGage->Update();	// ゲージ
-
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
 	m_pSpaceRock->Update();
 	m_pSampleStar->Update();
-	
 
-
-	
 	
 	//当たり判定
 	CheckCollision();
@@ -118,20 +102,19 @@ void cSceneGame::Update(){
 //=======================================================================================
 void cSceneGame::Draw(){
 
-	m_pBG->Draw();	// 背景
-
-	//
+	m_pBG->Draw();				// 背景
 	m_pBlackHole->Draw();
 	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
-
 	m_pNomalStar->Draw();
-
-
-	
-	pNet->Draw();	//あみ
-
+	pNet->Draw();				//あみ
 	m_pGage->Draw();
+
+	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
+
+
+		PrintDebugProc("使用フラグaaaaa %d\n", m_pBlackHole->GetStarData()[0].m_bUse);
+	}
 }
 
 
@@ -142,52 +125,41 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::CheckCollision(){
 
-	cCollider c,t;
-	c.SetType(cCollider::CollisionType::CIRCLE);
-	c.SetCircleCollider(D3DXVECTOR2(700.0f, 580.0f), 10.0f);
-
-	t = pNet->GetCollider()[1];
-	if (cCollider::CheckCollisionCircleToTriangle(c, t)){
-		int i = 0;
-	}
-
-
-
-
+	  //---網とモブ星の判定type2---
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
 		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
 			  continue;
 
-	 
 		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
 
-			if( cCollider::CheckCollisionCircleToTriangle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, pNet->GetCollider()[nCountNet])){
+			  if (pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, pNet->GetNetLeft(), pNet->GetNetRight())){
 
-				  //とりあえずけす
-				  m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
-
+					  m_pNomalStar->OnCollidToNet(nCountStar);
+					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
+				  }
 			  }
 		  }
 	  }
 
-	
-	 
-	// 網と隕石のあたり判定
-	for (int nCountStar = 0; nCountStar <MAX_SPACE_ROCK_NUM; nCountStar++){
+	  //モブ星とブラックホールの吸い込みの判定
+	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
-		if (!m_pSpaceRock->GetStarData()[nCountStar].t_bUse)
-			continue;
+		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
+			  continue;
 
-		for (int nCountNet = 0; nCountNet < 2; nCountNet++){
-			if (cCollider::CheckCollisionCircleToTriangle(m_pSpaceRock->GetStarData()[nCountStar].t_Collider, pNet->GetCollider()[nCountNet])){
+		  for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
 
-				m_pSpaceRock->OnCollidToNet(nCountStar);
+			  if (!m_pBlackHole->GetStarData()[nCountBlackHole].m_bUse)
+				  continue;
 
-			}
-		}
-	}
+			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_Collision)){
+				  m_pNomalStar->OnCollidToBlackHole(nCountStar, nCountBlackHole);
 
+				  }
+			  }
+	  }
 
 
 }

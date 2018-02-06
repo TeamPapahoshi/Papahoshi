@@ -16,6 +16,33 @@
 #include "BaseStar.h"
 #include "Input.h"
 
+
+
+//=======================================================================================
+//
+//		コンストラクタ
+//
+//=======================================================================================
+cBaseStarData::cBaseStarData(){
+
+
+	// 初期化
+	m_bUse = false;
+	m_bDraw = false;
+	m_bCreateEvent = false;
+	m_bCreateEnd = false;
+	m_bDestroyEvent = false;
+	m_bDestroyEnd = false;
+	m_bRespawnEvent = false;
+	m_bRespawnEnd = false;
+	m_nRespawnFrame = 0;
+	m_Move = D3DXVECTOR2(0.0f, 0.0f);
+	m_Destination = D3DXVECTOR2(0, 0);
+	m_PurPosDist = D3DXVECTOR2(0, 0);
+
+}
+
+
 //=======================================================================================
 //
 //		コンストラクタ
