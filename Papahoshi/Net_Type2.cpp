@@ -37,7 +37,7 @@
 #define ARROW_SIZE_X (300.0f)	//矢印のサイズ
 #define ARROW_SIZE_Y (120.0f)
 //スピード
-#define MAX_SPEED	(12.5f)
+#define MAX_SPEED	(15.5f)
 #define DECRE_SPEED (0.1f)	//１フレームごとに初速減らす量
 #define DECRE_THROW_SPEED	(0.1f)	//まさつ
 //待ち時間
@@ -338,11 +338,37 @@ void cNet::SetNet(){
 					if (x == 0){
 						//必要情報を計算
 						if (y == 0){
+
+							//** 線分AOの制御点を計算 **
+							//変数宣言
+							D3DXVECTOR2 d, e;
+							float aoSlop, aoInter, dfSlop, dfInter, egSlop, egInter;
+							//分割点d,fを求める
+							d = LineSplitPoint(m_aPos[2], m_centerPos, 1, CP_DIVIDE - 1);
+							e = LineSplitPoint(m_aPos[2], m_centerPos, CP_DIVIDE - 1, 1);
+							//線分AOの式を求める
+							aoSlop = LineSlope(m_aPos[2], m_centerPos);
+							aoInter = LineIntercept(m_aPos[2], m_centerPos);
+							//線分AOと、分割点dを交点とした垂線DFを求める
+							dfSlop = VerticalLineSlope(aoSlop);
+							dfInter = VerticalLineIntercept(d, aoSlop);
+							//線分AOと、分割点eを交点とした垂線EGを求める
+							egSlop = VerticalLineSlope(aoSlop);
+							egInter = VerticalLineIntercept(e, aoSlop);
+							//制御点F
+							cp1.y = LineY(d.x + (m_aPos[2].y - CP_DISTANCE), dfSlop, dfInter);
+							cp1.x = d.x + (m_aPos[2].y - CP_DISTANCE);
+							//制御点G
+							cp2.y = LineY(e.x + (m_aPos[2].y - CP_DISTANCE), egSlop, egInter);
+							cp2.x = e.x + (m_aPos[2].y - CP_DISTANCE);
+
 							tlx = ulx = m_aPos[1].x;
-							trx = urx = m_aPos[2].x;
+							trx = urx = BezierCurve(((float)y / (float)NET_Y_NUM),
+								m_aPos[2], cp1, cp2, m_centerPos).x;
 							tdisX = udisX = trx - tlx;
 							tly = uly = m_aPos[1].y;
-							trY = ury = m_aPos[2].y;
+							trY = ury = BezierCurve(((float)y / (float)NET_Y_NUM),
+								m_aPos[2], cp1, cp2, m_centerPos).y;
 							trY >= tly ? tdisY = udisY = trY - tly : tdisY = udisY = tly - trY;
 							trY >= tly ? yAng = 1.0f : yAng = 0.0f;
 							LtoCdisX = m_centerPos.x - m_aPos[1].x;
@@ -356,7 +382,8 @@ void cNet::SetNet(){
 						tlx = ulx;
 						trx = urx;
 						tdisX = udisX;
-						urx = m_aPos[2].x - ((((CtoRdisX) / (NET_Y_NUM / 2.0f)) * (y + 1)) / 2.0f);
+						urx = BezierCurve(((float)y / (float)NET_Y_NUM),
+							m_aPos[2], cp1, cp2, m_centerPos).x;
 						ulx = m_aPos[1].x + ((((LtoCdisX) / (NET_Y_NUM / 2.0f)) * (y + 1)) / 2.0f);
 						udisX = urx - ulx;
 
@@ -365,7 +392,8 @@ void cNet::SetNet(){
 						trY = ury;
 						tdisY = udisY;
 						uly = m_aPos[1].y + ((((m_centerPos.y - m_aPos[2].y) / NET_Y_NUM) * (y + 1)));
-						ury = m_aPos[2].y + ((((m_centerPos.y - m_aPos[1].y) / NET_Y_NUM) * (y + 1)));
+						ury = BezierCurve(((float)y / (float)NET_Y_NUM),
+							m_aPos[2], cp1, cp2, m_centerPos).y;
 						ury >= uly ? udisY = ury - uly : udisY = uly - ury;
 					}
 
