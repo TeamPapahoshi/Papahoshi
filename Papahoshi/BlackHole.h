@@ -23,6 +23,7 @@
 //-----------------------------
 class cBlackHoleData :public cBaseStarData{
 public:
+	cCollider m_VacumeRange;		// ‹z‚¢‚İ”ÍˆÍ
 };
 
 
@@ -52,7 +53,7 @@ public:
 
 	// Getter
 	cBlackHoleData* GetStarData(){
-		return m_pStarData;
+		return m_pRoot;
 	}
 
 

@@ -26,7 +26,8 @@
 //-----------------------------
 class cNormalStarData :public cBaseStarData{
 public:
-
+	bool	m_bVibration=true;
+	int		m_nVibrationFrame=0;
 
 };
 

@@ -20,6 +20,7 @@
 //使用するエフェクトのインクルード部
 #include "EffectCircle.h"
 #include "EffectSphereLight.h"
+#include "EffectSparkle.h"
 
 //-----------------------------
 //マクロ定義
@@ -112,37 +113,72 @@ void cEffectManeger::Draw()
 //		エフェクト設定関数
 //
 //=======================================================================================
-void cEffectManeger::SetEffectBase(EFFECT_NUM			effect,
-								   LPDIRECT3DTEXTURE9	ptex, 
-								   D3DXVECTOR2			pos, 
-								   D3DXVECTOR2			size, 
-								   D3DXVECTOR2			move,
-								   D3DXCOLOR			color, 
-								   int					life,
-								   int					division)
+void cEffectManeger::SetEffectCircle(LPDIRECT3DTEXTURE9*	ptex, 
+									 D3DXVECTOR2			pos, 
+								     D3DXVECTOR2			size, 
+								     D3DXCOLOR				color, 
+								     int					life,
+								     int					division)
 {
 	for (int SetEffectloop = 0; SetEffectloop < MAX_EFFECT; SetEffectloop++)
 	{
 		//未使用のエフェクトに設定
 		if (m_pEffect[SetEffectloop] != NULL)	continue;
 
-		switch (effect)
-		{
-		case EFFECT_CIRCLE:
-			//円形エフェクトの配置
-			m_pEffect[SetEffectloop] = new cEffectCircle;
-			m_pEffect[SetEffectloop]->SetEffectCircle(ptex, pos, size, color, life, division);
-			break;
+		//円形エフェクトの配置
+		m_pEffect[SetEffectloop] = new cEffectCircle;
+		m_pEffect[SetEffectloop]->SetEffectCircle(ptex, pos, size, color, life, division);
 		
-		case EFFECT_SPHERE_LIGHT:
-			//丸型の光エフェクト配置
-			m_pEffect[SetEffectloop] = new cEffectSphereLight;
-			m_pEffect[SetEffectloop]->SetEffectSphereLight(ptex, pos, size, move, color, life);
-			break;
+		break;
+	}
+}
 
-		default:
-			break;
-		}
+//=======================================================================================
+//
+//		エフェクト設定関数
+//
+//=======================================================================================
+void cEffectManeger::SetEffectSphereLight(LPDIRECT3DTEXTURE9*	ptex,
+										  D3DXVECTOR2			pos,
+										  D3DXVECTOR2			size,
+										  D3DXVECTOR2			move,
+										  D3DXCOLOR				color,
+										  int					life)
+{
+	for (int SetEffectloop = 0; SetEffectloop < MAX_EFFECT; SetEffectloop++)
+	{
+		//未使用のエフェクトに設定
+		if (m_pEffect[SetEffectloop] != NULL)	continue;
+
+		//丸型の光エフェクト配置
+		m_pEffect[SetEffectloop] = new cEffectSphereLight;
+		m_pEffect[SetEffectloop]->SetEffectSphereLight(ptex, pos, size, move, color, life);
+
+		break;
+	}
+}
+
+//=======================================================================================
+//
+//		エフェクト設定関数
+//
+//=======================================================================================
+void cEffectManeger::SetEffectSparkle(LPDIRECT3DTEXTURE9*	ptex,
+									  D3DXVECTOR2			pos,
+									  D3DXVECTOR2			size,
+									  D3DXCOLOR				color,
+									  int					life,
+									  D3DXVECTOR2			radius, 
+									  int					texdividex, 
+									  int					texdividey)
+{
+	for (int SetEffectloop = 0; SetEffectloop < MAX_EFFECT; SetEffectloop++)
+	{
+		//未使用のエフェクトに設定
+		if (m_pEffect[SetEffectloop] != NULL)	continue;
+
+		m_pEffect[SetEffectloop] = new cEffectSparkle;
+		m_pEffect[SetEffectloop]->SetEffectSparkle(ptex, pos, size, color, life, radius, texdividex, texdividey);
 
 		break;
 	}

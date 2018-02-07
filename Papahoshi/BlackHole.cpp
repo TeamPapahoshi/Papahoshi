@@ -22,13 +22,13 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define STAR_SIZE	(100)
+#define STAR_SIZE	(200)
 
 #define VACUUM_RANGE	(200)
 #define DELETE_RANGE	(20)
 
 #define RESPAWN_FREAM	(100)
-#define MAX_BLACK_HOLE_NUM	(2)
+#define MAX_BLACK_HOLE_NUM	(1)
 
 //===================================================================================
 //
@@ -47,11 +47,12 @@ cBlackHole::cBlackHole(){
 	m_pStarData = new cBlackHoleData[m_nMaxNum]();	//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
-	// 先頭に戻す
-	m_pStarData = m_pRoot;
-
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		// 初期生成
+		m_pStarData->m_bDraw = true;
+		SetCountAndUse(true);
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
@@ -68,6 +69,12 @@ cBlackHole::cBlackHole(){
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+
+	
+
+		// 吸い込み範囲
+	/*	m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
+		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);*/
 
 		//// 移動の目的位置決定
 		//m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
@@ -107,11 +114,11 @@ void cBlackHole::Update(){
 			Create();
 		}
 
-		else if (m_pStarData->m_bDestroyEvent){
+		if (m_pStarData->m_bDestroyEvent){
 			Destroy();
 		}
 
-		else if (m_pStarData->m_bRespawnEvent){
+		if (m_pStarData->m_bRespawnEvent){
 			Respawn();
 		}
 		// 当たり判定
@@ -130,6 +137,7 @@ void cBlackHole::Update(){
 				continue;
 
 			m_pStarData->m_bCreateEvent = true;
+			m_pStarData = m_pRoot;	// 先頭に戻す
 			break;
 		}
 	}
@@ -140,8 +148,8 @@ void cBlackHole::Update(){
 
 			if (!m_pStarData->m_bUse)	// ここ注意
 				continue;
-
 			m_pStarData->m_bDestroyEvent = true;
+			m_pStarData = m_pRoot;	// 先頭に戻す
 			break;
 		}
 	}
@@ -181,6 +189,8 @@ void cBlackHole::Draw(){
 	// デバッグプリント
 	PrintDebugProc("━━━━ブラックホール━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
+	PrintDebugProc("使用フラグ %d\n", m_pStarData->m_bUse);
+	PrintDebugProc("描画フラグ %d\n", m_pStarData->m_bDraw);
 	PrintDebugProc("Bキーで生成\n");
 	PrintDebugProc("Mキーで削除\n");
 	PrintDebugProc("削除後自動リスポーン\n");
@@ -235,7 +245,7 @@ void cBlackHole::Create(){
 //=======================================================================================
 void cBlackHole::Destroy(){
 
-	// 生成イベントの開始
+	// 削除イベントの開始
 	if (!m_pStarData->m_bDestroyEnd){
 
 		SetCountAndUse(false);
@@ -247,8 +257,6 @@ void cBlackHole::Destroy(){
 
 		// 演出がおわったら終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 		m_pStarData->m_bDestroyEnd = true;
-
-
 
 	}
 

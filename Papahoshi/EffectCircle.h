@@ -41,7 +41,7 @@ public:
 	void Draw(void);			//描画関数
 	void Uninit(void);			//終了関数
 
-	void SetEffectCircle(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division);	//円形エフェクトの設定関数
+	void SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division);	//円形エフェクトの設定関数
 };
 
 #endif	//!___EFFECTCIECLE_H___

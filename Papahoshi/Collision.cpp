@@ -56,10 +56,10 @@ void cCollider::Draw(){
 		sprite.SetPos(m_tColBody.CirclePos);
 		sprite.SetSize(D3DXVECTOR2(m_tColBody.fRadius*2.0f, m_tColBody.fRadius*2.0f));
 	}
-	if (m_type == QUAD){
-		sprite.SetPos(m_tColBody.QuadPos);
-		sprite.SetSize(m_tColBody.QuadSize);
-	}
+	//if (m_type == QUAD){
+	//	sprite.SetPos(m_tColBody.QuadPos);
+	//	sprite.SetSize(m_tColBody.QuadSize);
+	//}
 
 	// •`‰æ
 	sprite.Draw();

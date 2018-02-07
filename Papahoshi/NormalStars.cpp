@@ -27,6 +27,11 @@
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_STAR_NUM	(50)
 
+
+#define EFFECT_FRAME   (90)
+#define EFFECT_SIZE    (40.0f)
+#define EFFECT_RADIUS  (8.0f)
+
 //=======================================================================================
 //
 //		コンストラクタ
@@ -52,6 +57,7 @@ cNormalStar::cNormalStar(){
 		// 初期生成
 		m_pStarData->m_bDraw = true;
 		SetCountAndUse(true);
+		m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
@@ -92,10 +98,8 @@ cNormalStar::cNormalStar(){
 //=======================================================================================
 cNormalStar::~cNormalStar(){
 
-
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
-
 	delete[] m_pStarData;
 }
 //=======================================================================================
@@ -143,6 +147,27 @@ void cNormalStar::Update(){
 			Respawn();
 		}
 		
+		// 当たり判定
+		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+
+		// エフェクト生成フレームの加算
+		m_pStarData->m_nEffectSetTime--;
+
+		//フレームが一定値になったらエフェクトの生成
+		if (m_pStarData->m_nEffectSetTime < 0)
+		{
+			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
+												 m_pStarData->m_sprite.GetPos(),
+												 D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
+												 m_pStarData->m_sprite.GetVtxColor(),
+												 EFFECT_FRAME / 2,
+												 D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
+												 4, 3);
+
+			m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
+		}
+
 	}
 
 
@@ -389,32 +414,37 @@ void cNormalStar::OnCollidToNet(int num){
 //---- ブラックホールの情報を取得 -----
 void cNormalStar::SetBlackHoleData(cBlackHole* data){
 	m_pBlackHoleData = data;
-
+	
 }
 
 //---- ブラックホール吸い込み範囲に当たった時の処理 -----
 void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 
+	m_pStarData = m_pRoot;
+	m_pStarData += Normal;
+
 	// 振動する
-	//if (m_pStarData[Normal].t_bVibration){
+	if (m_pStarData->m_bVibration){
 
-	//	m_pStarData[Normal].t_nVibrationFrame++;
-	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + 0.15f);
+		m_pStarData->m_nVibrationFrame++;
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + 0.15f);
 
-	//	if (m_pStarData[Normal].t_nVibrationFrame > 5){
-	//		m_pStarData[Normal].t_bVibration = false;
-	//		m_pStarData[Normal].t_nVibrationFrame = 0;
-	//	}	
-	//}
+		if (m_pStarData->m_nVibrationFrame > 5){
+			m_pStarData->m_bVibration = false;
+			m_pStarData->m_nVibrationFrame = 0;
+		}	
+	}
 
-	//else if (!m_pStarData[Normal].t_bVibration){
-	//	m_pStarData[Normal].t_nVibrationFrame++;
-	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - 0.15f);
-	//	if (m_pStarData[Normal].t_nVibrationFrame > 5){
-	//		m_pStarData[Normal].t_bVibration = true;
-	//		m_pStarData[Normal].t_nVibrationFrame = 0;
-	//	}
-	//}
+	else if (!m_pStarData->m_bVibration){
+
+		m_pStarData->m_nVibrationFrame++;
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - 0.15f);
+
+		if (m_pStarData->m_nVibrationFrame > 5){
+			m_pStarData->m_bVibration = true;
+			m_pStarData->m_nVibrationFrame = 0;
+		}
+	}
 
 
 	//// ブラックホールの中心を取得

@@ -16,22 +16,26 @@
 //マクロ定義
 //-----------------------------
 //フレーム用
-#define FLAME_SIZE_X (180.0f)
-#define FLAME_SIZE_Y (50.0f)
+#define FLAME_SIZE_X (220.0f)
+#define FLAME_SIZE_Y (60.0f)
 
 #define FLAME_POS_X (SCREEN_WIDTH - FLAME_SIZE_X)
 #define FLAME_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y)
 
 //バー用
-#define GAGE_SIZE_X (140.0f)
+#define GAGE_SIZE_X (180.0f)
 #define GAGE_SIZE_Y (20.0f)
 
 #define GAGE_POS_X (SCREEN_WIDTH - FLAME_SIZE_X)
-#define GAGE_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y / 1.5f)
+#define GAGE_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y / 1.35f)
 
 #define MAX_GAGE_NUM (100.0f)
 
 #define GAGE_SET(GageNum) ((1.0f - (MAX_GAGE_NUM - GageNum) / MAX_GAGE_NUM))
+
+//エフェクト用
+#define GAGE_EFFECT_SET_FRAME (20)
+#define GAGE_EFFECT_SIZE (40.0f)
 
 //-----------------------------
 //列挙型定義
@@ -68,6 +72,7 @@ void cGage::Init(){
 	//ゲージのステータスの初期化
 	m_fGageNum = 0.0f;
 	m_bGageMax = false;
+	m_nGageEffectNum = CRandam::RandamRenge(0, GAGE_EFFECT_SET_FRAME);
 }
 
 //=======================================================================================
@@ -118,6 +123,27 @@ void cGage::Update(){
 	m_GageSprite.SetSizeX(GAGE_SIZE_X * GAGE_SET(m_fGageNum));
 	m_GageSprite.SetPosX(GAGE_POS_X + m_GageSprite.GetSizeX() / 2 - GAGE_SIZE_X / 2);
 	m_GageSprite.SetTexUVRatioX(1.0f * GAGE_SET(m_fGageNum));
+
+	//----- エフェクト設定 ------
+	//ゲージが伸びている場合のみエフェクト出現
+	if (m_GageSprite.GetSizeX() > 0)
+	{
+		//エフェクトカウンタの減少
+		m_nGageEffectNum--;
+
+		if (m_nGageEffectNum < 0)
+		{
+			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
+				m_GageSprite.GetPos(),
+				D3DXVECTOR2(GAGE_EFFECT_SIZE, GAGE_EFFECT_SIZE),
+				D3DXCOLOR(255, 255, 255, 255),
+				GAGE_EFFECT_SET_FRAME / 2,
+				m_GageSprite.GetSize(),
+				4, 3);
+
+			m_nGageEffectNum = CRandam::RandamRenge(0, GAGE_EFFECT_SET_FRAME);
+		}
+	}
 }
 
 //=======================================================================================
