@@ -27,6 +27,7 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Gage.cpp" />
     <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MathEX.cpp" />
     <ClCompile Include="Meteor.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Gage.h" />
     <ClInclude Include="GameMain.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MathEX.h" />
     <ClInclude Include="Meteor.h" />

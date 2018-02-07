@@ -137,6 +137,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\流星">
       <UniqueIdentifier>{3e930dbd-d953-47d0-86ff-c8fecc040d61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\UI">
+      <UniqueIdentifier>{e5783267-54c4-439a-857d-d92bef76ed69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -283,6 +286,9 @@
     <ClCompile Include="RyuseiLine.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -422,6 +428,10 @@
     </ClInclude>
     <ClInclude Include="Ryusei.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStar.h" />
+    <ClInclude Include="GameUI.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
     </ClInclude>
     <ClInclude Include="EffectSparkle.h" />
     <ClInclude Include="RyuseiLine.h">

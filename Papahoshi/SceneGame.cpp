@@ -50,6 +50,9 @@ cSceneGame::cSceneGame(){
 	m_pGage = new cGage();
 	m_pGage->Init();
 
+	//UI
+	m_pGameUI = new cGameUI();
+
 	// ”wŒi
 	m_pBG = new cBG();
 	m_pBG->SetBG(cBG::GAME_SKY);
@@ -71,6 +74,7 @@ cSceneGame::~cSceneGame(){
 	delete m_pBlackHole;
 	delete m_pSampleStar;
 	delete pNet;
+	delete m_pGameUI;
 }
 
 //=======================================================================================
@@ -89,6 +93,7 @@ void cSceneGame::Update(){
 	m_pSpaceRock->Update();
 	m_pSampleStar->Update();
 	m_pRyusei->Update();
+	m_pGameUI->Update();
 
 	
 	//“–‚½‚è”»’è
@@ -114,8 +119,9 @@ void cSceneGame::Draw(){
 	//m_pNomalStar->Draw();
 	pNet->Draw();				//‚ ‚Ý
 	m_pGage->Draw();
-
 	m_pRyusei->Draw();
+
+	m_pGameUI->Draw();
 
 	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
 

@@ -36,7 +36,11 @@
 #include "BlackHole.h"
 #include "SpaceRock.h"
 
+#include "GameUI.h"
 
+// 呼び出す星の数
+#define STAR_NUM		(5)	//仮
+#define FIXED_STAR_NUM	(1)	//仮
 
 //------------------------------
 // クラス定義
@@ -61,6 +65,8 @@ private:
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	cRyusei*					m_pRyusei;			// 流星
 	cGage*						m_pGage;			// ゲージ
+
+	cGameUI*					m_pGameUI;
 
 
 	cSampleStar*				m_pSampleStar;
