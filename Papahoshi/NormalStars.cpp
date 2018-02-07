@@ -124,8 +124,6 @@ void cNormalStar::Update(){
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y){
 			m_pStarData->m_bDestroyEvent = true;
 		}
-
-
 	}
 
 	// 先頭に戻す
@@ -414,7 +412,7 @@ void cNormalStar::OnCollidToNet(int num){
 //---- ブラックホールの情報を取得 -----
 void cNormalStar::SetBlackHoleData(cBlackHole* data){
 	m_pBlackHoleData = data;
-	
+
 }
 
 //---- ブラックホール吸い込み範囲に当たった時の処理 -----

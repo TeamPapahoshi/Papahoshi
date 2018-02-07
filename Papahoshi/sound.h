@@ -31,7 +31,6 @@ typedef enum
 	SOUND_LABEL_SE_EXPLOSION,	// ”š”­‰¹
 	SOUND_LABEL_SE_JUMP,		// ƒWƒƒƒ“ƒv‰¹
 	SOUND_LABEL_MAX,
-
 } SOUND_LABEL;
 
 //*****************************************************************************

@@ -38,6 +38,9 @@ cSceneGame::cSceneGame(){
 	// ƒTƒ“ƒvƒ‹
 	m_pSampleStar = new cSampleStar();
 
+	// —¬¯
+	m_pRyusei = new cRyusei();
+
 	// ƒ‚ƒu¯
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
@@ -66,6 +69,7 @@ cSceneGame::~cSceneGame(){
 	delete m_pBG;
 	delete m_pNomalStar;
 	delete m_pSpaceRock;
+	delete m_pRyusei;
 	delete m_pGage;
 	delete m_pBlackHole;
 	delete m_pSampleStar;
@@ -88,6 +92,7 @@ void cSceneGame::Update(){
 	m_pBlackHole->Update();
 	m_pSpaceRock->Update();
 	m_pSampleStar->Update();
+	m_pRyusei->Update();
 	m_pGameUI->Update();
 
 	
@@ -115,6 +120,8 @@ void cSceneGame::Draw(){
 	pNet->Draw();				//‚ ‚Ý
 	m_pGage->Draw();
 	m_pGameUI->Draw();
+
+	m_pRyusei->Draw();
 
 	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
 

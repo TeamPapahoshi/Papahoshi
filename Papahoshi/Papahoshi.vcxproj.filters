@@ -125,6 +125,18 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ゲージ">
       <UniqueIdentifier>{80888055-f791-4c2b-951f-ebb03ed51830}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\共通処理\トランジション">
+      <UniqueIdentifier>{6fb95560-1caa-4413-bf3c-b1a7c40326c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\スコア">
+      <UniqueIdentifier>{40977971-6c43-46bb-99b3-c18ea992495b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\数学的な関数">
+      <UniqueIdentifier>{c11d1d7e-7770-458d-ab9d-993c2102eb48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\流星">
+      <UniqueIdentifier>{3e930dbd-d953-47d0-86ff-c8fecc040d61}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\UI">
       <UniqueIdentifier>{e5783267-54c4-439a-857d-d92bef76ed69}</UniqueIdentifier>
     </Filter>
@@ -268,6 +280,9 @@
     <ClCompile Include="EffectSparkle.cpp">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClCompile>
+    <ClCompile Include="Ryusei.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
+    </ClCompile>
     <ClCompile Include="GameUI.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
     </ClCompile>
@@ -397,6 +412,9 @@
     <ClInclude Include="Transition.h" />
     <ClInclude Include="EffectSparkle.h">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    </ClInclude>
+    <ClInclude Include="Ryusei.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
     </ClInclude>
     <ClInclude Include="BaseStar.h" />
     <ClInclude Include="GameUI.h">
