@@ -28,4 +28,9 @@ private:
 	//UIのベースアイテム
 	cSpriteParam m_baseSprite[4];
 
+	//----- ベースUI ------
+	void ChangeColorBaseUI();
+	int		m_nChangeColorBaseUI;
+	float	m_fDirectColorBaseUI;
+
 };
