@@ -1,12 +1,12 @@
 //======================================================================
-//	NormalStars
+//	Ryusei.h
 //	
-//	概要＿：星クラスなど
+//	概要＿：流星
 //	制作者：加藤　遼
 //	
 //======================================================================
-#ifndef ___NORMAL_STARS_H___
-#define ___NORMAL_STARS_H___
+#ifndef ___RYUSEI_H___
+#define ___RYUSEI_H___
 
 //-----------------------------
 //インクルードファイル
@@ -15,55 +15,39 @@
 #include "Collision.h"
 #include "BaseStar.h"
 #include "Sprite.h"
-#include "Net_Type2.h"
-#include "BlackHole.h"
-
-#include <vector>
-#include <fstream>
 
 //-----------------------------
 // クラス定義
 //-----------------------------
-class cNormalStarData :public cBaseStarData{
+class cRyuseiData :public cBaseStarData{
 public:
 	bool	m_bVibration = true;
-	int		m_nVibrationFrame=0;
+	int		m_nVibrationFrame = 0;
 
 };
 
-class cNormalStar :public cBaseStar{
+class cRyusei :public cBaseStar{
 
 public:
 	void Update();
 	void Draw();
-	~cNormalStar();
-	cNormalStar();
+	~cRyusei();
+	cRyusei();
 
-	//--- 網との処理 ---
-	void SetNetData(cNet* data);
-	void OnCollidToNet(int num);
-	
-	//--- ブラックホールとの処理 ---
-	void SetBlackHoleData(cBlackHole* data);
-	void OnCollidToBlackHole(int Normal,int Black);
-	void OnCollidToDelete(int Normal);
-	
 	void Create();		// 生成
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
 
 private:
-	cNormalStarData*	m_pStarData;		// 必要データ
-	cNormalStarData*	m_pRoot;			// 先頭アドレス格納用
-	cBlackHole*			m_pBlackHoleData;	// ブラックホールのデータを格納
-	cNet*				m_pNetData;			// 網のデータ格納
+	cRyuseiData*	m_pStarData;		// 必要データ
+	cRyuseiData*	m_pRoot;			// 先頭アドレス格納用
 
 
 	//Set&Get
 public:
 
 	// Getter
-	cNormalStarData* GetStarData(){
+	cRyuseiData* GetStarData(){
 		return m_pRoot;
 	}
 
@@ -86,4 +70,4 @@ public:
 	}
 	//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 };
-#endif	//!___NORMAL_STARS_H___
+#endif	//!___RYUSEI_H___

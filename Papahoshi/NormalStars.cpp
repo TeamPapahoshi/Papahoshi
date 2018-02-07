@@ -118,8 +118,6 @@ void cNormalStar::Update(){
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y){
 			m_pStarData->m_bDestroyEvent = true;
 		}
-
-
 	}
 
 	// æ“ª‚É–ß‚·

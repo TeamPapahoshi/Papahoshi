@@ -30,14 +30,13 @@
 #include "SampleStar.h"
 #include "NormalStars.h"
 #include "FixedStars.h"
+#include "Ryusei.h"
 #include "Gage.h"
 
 #include "BlackHole.h"
 #include "SpaceRock.h"
 
-// 呼び出す星の数
-#define STAR_NUM		(5)	//仮
-#define FIXED_STAR_NUM	(1)	//仮
+
 
 //------------------------------
 // クラス定義
@@ -60,6 +59,7 @@ private:
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
+	cRyusei*					m_pRyusei;			// 流星
 	cGage*						m_pGage;			// ゲージ
 
 

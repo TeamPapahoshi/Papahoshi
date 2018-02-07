@@ -38,6 +38,7 @@
 #define TEXTURE_FILNAME_JELLY			("Image/Character/Jelly.png")
 #define TEXTURE_FILNAME_STAR_LIGHT		("Image/Star/light.png")
 #define TEXTURE_FILNAME_STAR			("Image/Star/Star.png")
+#define TEXTURE_FILNAME_RYUSEI			("Image/Star/Ryusei.jpg")
 #define TEXTURE_FILNAME_EF				("Image/Star/Effect.png")
 #define TEXTURE_FILNAME_EF02			("Image/Star/Effect2.png")
 #define TEXTURE_FILENAME_NET			("Image/Net/Net.png")
@@ -47,10 +48,10 @@
 #define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
 #define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
-#define TEXTURE_FILENAME_SHIP ("data/texture/gyosen_big.png")
-#define TEXTURE_FILENAME_WAVE ("data/texture/line_wave1.png")
-#define TEXTURE_FILENAME_GAGE ("Image/GAGE/gage1.png")
-#define TEXTURE_FILENAME_GAGEFLAME ("Image/GAGE/gageflamecover2.png")
+#define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
+#define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
+#define TEXTURE_FILENAME_GAGE			("Image/GAGE/gage1.png")
+#define TEXTURE_FILENAME_GAGEFLAME		("Image/GAGE/gageflamecover2.png")
 
 // タイトルロゴ
 #define TEXTURE_FILENAME_ROGO01 ("Image/ROGO/logo_01.png")
@@ -65,7 +66,7 @@
 #define TEXTURE_FILENAME_ROGO10 ("Image/ROGO/logo_10.png")
 #define TEXTURE_FILENAME_ROGO11 ("Image/ROGO/logo_11+12.png")
 
-#define TEXTURE_FILENAME_STAGECLEAR  ("data/texture/akira000.png")	//仮のテクスチャ
+#define TEXTURE_FILENAME_STAGECLEAR		("data/texture/akira000.png")	//仮のテクスチャ
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
 #define TEXTURE_FILENAME_STAGECLEAR		("data/texture/akira000.png")	//仮のテクスチャ
@@ -134,6 +135,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_7,
 	TEXTURE_FILENAME_8,
 	TEXTURE_FILENAME_9,
+	TEXTURE_FILNAME_RYUSEI,
 };
 
 /*
