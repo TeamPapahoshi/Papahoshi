@@ -35,6 +35,8 @@
 #include "BlackHole.h"
 #include "SpaceRock.h"
 
+#include "GameUI.h"
+
 // ŒÄ‚Ño‚·¯‚Ì”
 #define STAR_NUM		(5)	//‰¼
 #define FIXED_STAR_NUM	(1)	//‰¼
@@ -61,6 +63,8 @@ private:
 	cSpaceRock*					m_pSpaceRock;		// è¦Î
 	vector<cFixedStar*>			m_pFixedStar;		// P¯
 	cGage*						m_pGage;			// ƒQ[ƒW
+
+	cGameUI*					m_pGameUI;
 
 
 	cSampleStar*				m_pSampleStar;

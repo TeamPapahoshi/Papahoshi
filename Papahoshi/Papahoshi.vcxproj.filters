@@ -125,6 +125,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ゲージ">
       <UniqueIdentifier>{80888055-f791-4c2b-951f-ebb03ed51830}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\UI">
+      <UniqueIdentifier>{e5783267-54c4-439a-857d-d92bef76ed69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -265,6 +268,9 @@
     <ClCompile Include="EffectSparkle.cpp">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -391,6 +397,10 @@
     <ClInclude Include="Transition.h" />
     <ClInclude Include="EffectSparkle.h">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStar.h" />
+    <ClInclude Include="GameUI.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
