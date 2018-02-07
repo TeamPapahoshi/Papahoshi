@@ -43,7 +43,7 @@ public:
 	void Draw(void);			//描画関数
 	void Uninit(void);			//終了関数
 
-	void SetEffectSphereLight(LPDIRECT3DTEXTURE9 ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life);	//円形エフェクトの設定関数
+	void SetEffectSphereLight(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life);	//円形エフェクトの設定関数
 };
 
 

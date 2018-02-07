@@ -20,6 +20,7 @@
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="EffectCircle.cpp" />
     <ClCompile Include="EffectManeger.cpp" />
+    <ClCompile Include="EffectSparkle.cpp" />
     <ClCompile Include="EffectSphereLight.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FixedStars.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="Direct3D.h" />
     <ClInclude Include="EffectCircle.h" />
     <ClInclude Include="EffectManeger.h" />
+    <ClInclude Include="EffectSparkle.h" />
     <ClInclude Include="EffectSphereLight.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FixedStars.h" />

@@ -52,6 +52,9 @@ private:
 	int		m_currentAnimPattern;		// アニメーションパターン番号
 	D3DXVECTOR2   m_texUVRatio;			// テクスチャUVの割合
 
+	//アルファブレンドスイッチ
+	bool	m_bAddBlend;		//加算合成
+
 public:
 
 	cSpriteParam();									// コンストラクタ

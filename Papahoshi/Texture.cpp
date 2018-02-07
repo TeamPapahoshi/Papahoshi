@@ -48,6 +48,11 @@
 #define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
 #define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
+#define TEXTURE_FILENAME_SHIP ("data/texture/gyosen_big.png")
+#define TEXTURE_FILENAME_WAVE ("data/texture/line_wave1.png")
+#define TEXTURE_FILENAME_GAGE ("Image/GAGE/gage1.png")
+#define TEXTURE_FILENAME_GAGEFLAME ("Image/GAGE/gageflamecover2.png")
+#define TEXTURE_FILENAME_EFFECT_SPARKLE ("Image/Pirticle/kirakira2.png")
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
 #define TEXTURE_FILENAME_GAGE			("Image/GAGE/gage1.png")
@@ -125,6 +130,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_GAGE,
 	TEXTURE_FILENAME_GAGEFLAME,
 	TEXTURE_FILENAME_SPACE_ROCK,
+	TEXTURE_FILENAME_EFFECT_SPARKLE,
 	TEXTURE_FILENAME_0,
 	TEXTURE_FILENAME_1,
 	TEXTURE_FILENAME_2,
