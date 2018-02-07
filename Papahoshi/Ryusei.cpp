@@ -23,7 +23,7 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(20)
+#define STAR_SIZE	(18)
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_RYUSEI_NUM	(1)
 
@@ -44,6 +44,7 @@ cRyusei::cRyusei(){
 	// 動的インスタンス
 	m_pStarData = new cRyuseiData[m_nMaxNum]();		//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
+
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -78,21 +79,25 @@ cRyusei::cRyusei(){
 		m_pStarData->cp2 = D3DXVECTOR2(SCREEN_WIDTH, 0);
 		m_pStarData->cp3 = D3DXVECTOR2(SCREEN_WIDTH, 0);
 		m_pStarData->cp4 = D3DXVECTOR2(0, SCREEN_HEIGHT);
+
+
+
+		// CORE
+		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
+
+		m_pStarData->m_Core.SetAddBlend(true);
+		// サイズの変更
+		m_pStarData->m_Core.SetSize(D3DXVECTOR2(23, 23));
+		// テクスチャの設定
+		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
+		// 色
+		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(0, 0, 255, 255));
 	}
-
-	// CORE
-	m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
-	// サイズの変更
-	m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
-	// テクスチャの設定
-	m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
-	// 色
-	m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(0, 0, 255, 255));
-
-
 
 	// インスタンス
 	m_pLine = new cRyuseiLine();
+
+
 }
 
 //=======================================================================================
@@ -130,6 +135,8 @@ void cRyusei::Update(){
 		// ベジェ曲線上を動かす
 		g_t += 0.002f;
 		m_pStarData->m_sprite.SetPos(BezierCurve(g_t, m_pStarData->cp1, m_pStarData->cp2, m_pStarData->cp3, m_pStarData->cp4));
+
+		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
 
 
 	}
@@ -202,6 +209,7 @@ void cRyusei::Draw(){
 			continue;
 
 		m_pStarData->m_sprite.Draw();
+		m_pStarData->m_Core.Draw();
 
 
 		//if (m_pStarData->m_bUse)
