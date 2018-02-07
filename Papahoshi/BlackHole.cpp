@@ -28,7 +28,7 @@
 #define DELETE_RANGE	(20)
 
 #define RESPAWN_FREAM	(100)
-#define MAX_BLACK_HOLE_NUM	(0)
+#define MAX_BLACK_HOLE_NUM	(1)
 
 //===================================================================================
 //

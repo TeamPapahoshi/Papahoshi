@@ -15,14 +15,34 @@
 #include "Collision.h"
 #include "BaseStar.h"
 #include "Sprite.h"
+#include "RyuseiLine.h"
+
+#define MAX_LINE_EFFECT	(1)
+
+
+// 構造体定義
+typedef struct _tLineEffect{
+
+	cSpriteParam	m_sprite;
+	bool			m_bUse;						// 使用フラグ
+	float			m_nLifeTime;				// 生存時間
+
+}tLineEffect;
+
+
 
 //-----------------------------
 // クラス定義
 //-----------------------------
 class cRyuseiData :public cBaseStarData{
 public:
-	bool	m_bVibration = true;
-	int		m_nVibrationFrame = 0;
+	tLineEffect m_effect[MAX_LINE_EFFECT];
+
+	
+	D3DXVECTOR2 cp1, cp2, cp3, cp4;	// ベジェ曲線計算用
+
+	cSpriteParam m_Core;			//　核
+
 
 };
 
@@ -41,6 +61,11 @@ public:
 private:
 	cRyuseiData*	m_pStarData;		// 必要データ
 	cRyuseiData*	m_pRoot;			// 先頭アドレス格納用
+
+	cRyuseiLine*	m_pLine;
+
+
+
 
 
 	//Set&Get

@@ -100,6 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//XVˆ—
 				Update();
 				//•`‰æˆ—
+
 				Draw();
 			}
 		}

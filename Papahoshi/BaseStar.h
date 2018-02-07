@@ -51,20 +51,6 @@ public:
 	virtual ~cBaseStarData(){}
 	cBaseStarData();
 
-	cBaseStarData(){
-		m_bUse = false;
-		m_bDraw = false;
-		m_bCreateEvent = false;
-		m_bCreateEnd	= false;
-		m_bDestroyEvent = false;
-		m_bDestroyEnd = false;
-		m_bRespawnEvent = false;
-		m_bRespawnEnd = false;
-		m_nRespawnFrame = 0;
-		m_nEffectSetTime = 0;
-		m_Move = D3DXVECTOR2(0.0f, 0.0f);
-	}
-
 	// どの星でも使うやつ
 	cSpriteParam	m_sprite;
 	cCollider		m_Collision;
@@ -90,11 +76,6 @@ public:
 	D3DXVECTOR2		m_VecStarToDest;	// 星から目的地方向のベクトル
 
 };
-
-
-
-
-
 
 //----円軌道移動クラス------円軌道させたいクラスにもたせる(星以外にも使えます)
 class cCircleOrbitMovement{
