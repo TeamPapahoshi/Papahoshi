@@ -119,9 +119,9 @@ void cSceneGame::Draw(){
 	m_pNomalStar->Draw();
 	pNet->Draw();				//‚ ‚Ý
 	m_pGage->Draw();
-	m_pGameUI->Draw();
-
 	m_pRyusei->Draw();
+
+	m_pGameUI->Draw();
 
 	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
 
