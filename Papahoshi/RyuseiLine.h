@@ -42,6 +42,7 @@ private:
 	tRyuseiLine*	m_pRyuseiLine;
 	tRyuseiLine*	m_pRoot;
 
+
 	tRyuseiLine*	m_pRyuseiLineOut;
 	tRyuseiLine*	m_pRootOut;
 

@@ -17,7 +17,7 @@
 //-----------------------------
 #define LIFE_TIME	(50)
 #define SIZE		(10)
-#define MAX_RYUSEI_LINE (100)
+#define MAX_RYUSEI_LINE (55)
 
 //-----------------------------
 //列挙型定義
@@ -55,9 +55,7 @@ cRyuseiLine::cRyuseiLine(){
 		m_pRyuseiLine->t_sprite.SetSize(D3DXVECTOR2(SIZE, SIZE));
 		m_pRyuseiLine->t_sprite.SetAddBlend(true);
 		m_pRyuseiLine->t_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
-
 	}
-
 
 	for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLineOut++){
 		// 初期値
@@ -66,7 +64,7 @@ cRyuseiLine::cRyuseiLine(){
 		m_pRyuseiLineOut->t_sprite.SetSize(D3DXVECTOR2(15, 15));
 		m_pRyuseiLineOut->t_sprite.SetAddBlend(true);
 		m_pRyuseiLineOut->t_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
-		m_pRyuseiLineOut->t_sprite.SetVtxColor(D3DXCOLOR(0, 0, 255, 155));
+		m_pRyuseiLineOut->t_sprite.SetVtxColor(D3DXCOLOR(0, 0,255, 155));
 
 	}
 }
@@ -89,32 +87,27 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos){
 	// 先頭に戻す
 	m_pRyuseiLine = m_pRoot;
 
-	g_frame++;
+	// 生成
+	for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLine++){
 
-	if (g_frame >= 0){
+		if (m_pRyuseiLine->t_bUse)
+			continue;
 
-		g_frame = 0;
-		// 生成
-		for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLine++){
+		// 初期値
+		m_pRyuseiLine->t_bUse = true;
+		m_pRyuseiLine->t_LifeTime = LIFE_TIME;
+		m_pRyuseiLine->t_sprite.SetSize(D3DXVECTOR2(SIZE, SIZE));
+		m_pRyuseiLine->t_sprite.SetPos(pos);
 
-			if (m_pRyuseiLine->t_bUse)
-				continue;
-
-			// 初期値
-			m_pRyuseiLine->t_bUse = true;
-			m_pRyuseiLine->t_LifeTime = LIFE_TIME;
-			m_pRyuseiLine->t_sprite.SetSize(D3DXVECTOR2(SIZE, SIZE));
-			m_pRyuseiLine->t_sprite.SetPos(pos);
-
-			break;
-		}
+		break;
 	}
+
 	// 先頭に戻す
 	m_pRyuseiLine = m_pRoot;
 
 	// 更新
 	for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLine++){
-		
+
 		if (!m_pRyuseiLine->t_bUse)
 			continue;
 
@@ -135,34 +128,26 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos){
 		if (m_pRyuseiLine->t_LifeTime <= 0){
 			m_pRyuseiLine->t_bUse = false;
 		}
-		
-	}
 
+	}
 
 	// 先頭に戻す
 	m_pRyuseiLineOut = m_pRootOut;
 
-	g_frame++;
+	// 生成
+	for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLineOut++){
 
-	if (g_frame >= 0){
+		if (m_pRyuseiLineOut->t_bUse)
+			continue;
 
-		g_frame = 0;
-		// 生成
-		for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLineOut++){
+		// 初期値
+		m_pRyuseiLineOut->t_bUse = true;
+		m_pRyuseiLineOut->t_LifeTime = LIFE_TIME;
+		m_pRyuseiLineOut->t_sprite.SetSize(D3DXVECTOR2(SIZE, SIZE));
+		m_pRyuseiLineOut->t_sprite.SetPos(pos);
 
-			if (m_pRyuseiLineOut->t_bUse)
-				continue;
-
-			// 初期値
-			m_pRyuseiLineOut->t_bUse = true;
-			m_pRyuseiLineOut->t_LifeTime = LIFE_TIME;
-			m_pRyuseiLineOut->t_sprite.SetSize(D3DXVECTOR2(SIZE, SIZE));
-			m_pRyuseiLineOut->t_sprite.SetPos(pos);
-
-			break;
-		}
+		break;
 	}
-
 
 	// 先頭に戻す
 	m_pRyuseiLineOut = m_pRootOut;

@@ -19,29 +19,16 @@
 
 #define MAX_LINE_EFFECT	(1)
 
-
-// 構造体定義
-typedef struct _tLineEffect{
-
-	cSpriteParam	m_sprite;
-	bool			m_bUse;						// 使用フラグ
-	float			m_nLifeTime;				// 生存時間
-
-}tLineEffect;
-
-
-
 //-----------------------------
 // クラス定義
 //-----------------------------
 class cRyuseiData :public cBaseStarData{
 public:
-	tLineEffect m_effect[MAX_LINE_EFFECT];
 
-	
-	D3DXVECTOR2 cp1, cp2, cp3, cp4;	// ベジェ曲線計算用
-
-	cSpriteParam m_Core;			//　核
+	D3DXVECTOR2		cp1, cp2, cp3, cp4;	// ベジェ曲線計算用
+	float			time=0;
+	cSpriteParam	m_Core;				//　核
+	cRyuseiLine		m_Line;
 
 
 };
@@ -61,7 +48,6 @@ public:
 private:
 	cRyuseiData*	m_pStarData;		// 必要データ
 	cRyuseiData*	m_pRoot;			// 先頭アドレス格納用
-
 	cRyuseiLine*	m_pLine;
 
 

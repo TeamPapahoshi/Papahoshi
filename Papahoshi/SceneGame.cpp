@@ -50,7 +50,7 @@ cSceneGame::cSceneGame(){
 	m_pGage = new cGage();
 	m_pGage->Init();
 
-	//UI
+	// UI
 	m_pGameUI = new cGameUI();
 
 	// ”wŒi
@@ -120,14 +120,7 @@ void cSceneGame::Draw(){
 	pNet->Draw();				//‚ ‚Ý
 	m_pGage->Draw();
 	m_pRyusei->Draw();
-
 	m_pGameUI->Draw();
-
-	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
-
-
-		PrintDebugProc("Žg—pƒtƒ‰ƒOaaaaa %d\n", m_pBlackHole->GetStarData()[0].m_bUse);
-	}
 }
 
 
@@ -147,7 +140,8 @@ void cSceneGame::CheckCollision(){
 		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
 
 			  if (pNet->GetPullFlug()){
-				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, pNet->GetNetLeft(), pNet->GetNetRight())){
+				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, 
+					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, pNet->GetNetLeft(), pNet->GetNetRight())){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
 					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
