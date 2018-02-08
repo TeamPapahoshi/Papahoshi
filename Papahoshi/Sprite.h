@@ -160,6 +160,9 @@ public:
 	{
 		m_texUVRatio.y = data;
 	}
+	void SetAddBlend(bool data){
+		m_bAddBlend = data;
+	}
 
 
 	//----Žæ“¾—p----

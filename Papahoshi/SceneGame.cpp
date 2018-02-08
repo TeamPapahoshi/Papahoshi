@@ -113,10 +113,10 @@ void cSceneGame::Update(){
 void cSceneGame::Draw(){
 
 	m_pBG->Draw();				// ”wŒi
-	m_pBlackHole->Draw();
-	m_pSampleStar->Draw();
+	//m_pBlackHole->Draw();
+	//m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
-	m_pNomalStar->Draw();
+	//m_pNomalStar->Draw();
 	pNet->Draw();				//‚ ‚Ý
 	m_pGage->Draw();
 	m_pRyusei->Draw();

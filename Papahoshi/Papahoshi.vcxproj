@@ -37,6 +37,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="rand.cpp" />
     <ClCompile Include="Ryusei.cpp" />
+    <ClCompile Include="RyuseiLine.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="SampleStar.cpp" />
     <ClCompile Include="SaveClearFlag.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Ryusei.h" />
+    <ClInclude Include="RyuseiLine.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="SampleStar.h" />
     <ClInclude Include="SaveClearFlag.h" />

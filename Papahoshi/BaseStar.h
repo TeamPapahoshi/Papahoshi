@@ -77,11 +77,6 @@ public:
 
 };
 
-
-
-
-
-
 //----円軌道移動クラス------円軌道させたいクラスにもたせる(星以外にも使えます)
 class cCircleOrbitMovement{
 

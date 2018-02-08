@@ -23,10 +23,11 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(200)
+#define STAR_SIZE	(18)
 #define RESPAWN_FREAM (200)
-#define MAX_NORMAL_RYUSEI_NUM	(20)
+#define MAX_NORMAL_RYUSEI_NUM	(1)
 
+float g_t=0;
 //=======================================================================================
 //
 //		コンストラクタ
@@ -45,7 +46,6 @@ cRyusei::cRyusei(){
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
 
-
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
@@ -54,33 +54,49 @@ cRyusei::cRyusei(){
 		SetCountAndUse(true);
 
 		// サイズの変更
-		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE - 10*nCountStarNum, STAR_SIZE - 10*nCountStarNum));
+		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
+
+		// 色
+		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
+
+		// 加算合成ON
+		m_pStarData->m_sprite.SetAddBlend(true);
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
 		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-		CreateRamdomPos = D3DXVECTOR2(SCREEN_WIDTH/2.0f+100*nCountStarNum,SCREEN_HEIGHT/2.0f);
-		m_pStarData->m_sprite.SetPos(CreateRamdomPos);	
+		CreateRamdomPos = D3DXVECTOR2(0,SCREEN_HEIGHT/2.0f);
 
-		// 当たり判定
-		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
+		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
-		// 移動の目的位置決定
-		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 100);
-		// 星から目的地方向の単位ベクトルを求める
-		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
+		// ベジェ曲線関連
+		m_pStarData->cp1 = D3DXVECTOR2(SCREEN_WIDTH, 0);
+		m_pStarData->cp2 = D3DXVECTOR2(SCREEN_WIDTH, 0);
+		m_pStarData->cp3 = D3DXVECTOR2(SCREEN_WIDTH, 0);
+		m_pStarData->cp4 = D3DXVECTOR2(0, SCREEN_HEIGHT);
 
 
-		// 目的地までの距離を測定
-		m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_Destination.x - m_pStarData->m_sprite.GetPos().x);
-		m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_Destination.y - m_pStarData->m_sprite.GetPos().y);
 
+		// CORE
+		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
+
+		m_pStarData->m_Core.SetAddBlend(true);
+		// サイズの変更
+		m_pStarData->m_Core.SetSize(D3DXVECTOR2(23, 23));
+		// テクスチャの設定
+		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
+		// 色
+		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(0, 0, 255, 255));
 	}
+
+	// インスタンス
+	m_pLine = new cRyuseiLine();
+
 
 }
 
@@ -90,6 +106,8 @@ cRyusei::cRyusei(){
 //
 //=======================================================================================
 cRyusei::~cRyusei(){
+
+	delete m_pLine;
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -102,6 +120,8 @@ cRyusei::~cRyusei(){
 //=======================================================================================
 void cRyusei::Update(){
 
+	m_pLine->Update(m_pStarData->m_sprite.GetPos());
+
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
@@ -111,6 +131,13 @@ void cRyusei::Update(){
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+
+		// ベジェ曲線上を動かす
+		g_t += 0.002f;
+		m_pStarData->m_sprite.SetPos(BezierCurve(g_t, m_pStarData->cp1, m_pStarData->cp2, m_pStarData->cp3, m_pStarData->cp4));
+
+		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
+
 
 	}
 
@@ -134,7 +161,6 @@ void cRyusei::Update(){
 		}
 
 	}
-
 
 	// イベントの起動
 	// デバッグキー
@@ -173,12 +199,6 @@ void cRyusei::Update(){
 //=======================================================================================
 void cRyusei::Draw(){
 
-	// 加算合成で描画をするための設定
-	GetDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
-	GetDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);			// αデスティネーションカラーの指定
-	GetDevice()->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);			// Z比較なし
-
-
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
@@ -189,18 +209,19 @@ void cRyusei::Draw(){
 			continue;
 
 		m_pStarData->m_sprite.Draw();
+		m_pStarData->m_Core.Draw();
 
-		if (m_pStarData->m_bUse)
-			m_pStarData->m_Collision.Draw();
+
+		//if (m_pStarData->m_bUse)
+			//m_pStarData->m_Collision.Draw();
 	}
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
-	// 加算合成の描画設定を元に戻す
-	GetDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
-	GetDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// αデスティネーションカラーの指定
-	GetDevice()->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);			// Z比較あり
+
+	m_pLine->Draw();
+	
 
 	// デバッグプリント
 	PrintDebugProc("━━━━━━流星━━━━━━\n");
@@ -272,17 +293,10 @@ void cRyusei::Destroy(){
 
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
 		//****** ここに演出とか処理を書いていく **********
-
-
-
-
-		//****************************************************
-
+		//************************************************
 
 		// 演出がおわったら終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 		m_pStarData->m_bDestroyEnd = true;
-
-
 
 	}
 
@@ -351,3 +365,4 @@ void cRyusei::Respawn(){
 		return;
 	}
 }
+

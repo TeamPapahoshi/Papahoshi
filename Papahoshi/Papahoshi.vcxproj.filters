@@ -262,25 +262,28 @@
     <ClCompile Include="Gage.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ゲージ</Filter>
     </ClCompile>
-    <ClCompile Include="MathEX.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleStar.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Score.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Transition.cpp">
+      <Filter>ソース ファイル\共通処理\トランジション</Filter>
     </ClCompile>
     <ClCompile Include="SpaceRock.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Transition.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Score.cpp">
+      <Filter>ソース ファイル\共通処理\スコア</Filter>
     </ClCompile>
-    <ClCompile Include="EffectSparkle.cpp">
-      <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    <ClCompile Include="SampleStar.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星</Filter>
+    </ClCompile>
+    <ClCompile Include="MathEX.cpp">
+      <Filter>ソース ファイル\共通処理\数学的な関数</Filter>
     </ClCompile>
     <ClCompile Include="Ryusei.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectSparkle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RyuseiLine.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
     </ClCompile>
     <ClCompile Include="GameUI.cpp">
@@ -384,6 +387,9 @@
     <ClInclude Include="Animation.h">
       <Filter>ソース ファイル\共通処理\アニメーション</Filter>
     </ClInclude>
+    <ClInclude Include="Net_Type2.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClInclude>
     <ClInclude Include="EffectSphereLight.h">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClInclude>
@@ -399,19 +405,26 @@
     <ClInclude Include="TitleWave.h">
       <Filter>ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト</Filter>
     </ClInclude>
-    <ClInclude Include="Net_Type2.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    <ClInclude Include="Transition.h">
+      <Filter>ソース ファイル\共通処理\トランジション</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>ソース ファイル\共通処理\スコア</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleStar.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceRock.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MathEX.h">
+      <Filter>ソース ファイル\共通処理\数学的な関数</Filter>
     </ClInclude>
     <ClInclude Include="Gage.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ゲージ</Filter>
     </ClInclude>
-    <ClInclude Include="MathEX.h" />
-    <ClInclude Include="SampleStar.h" />
-    <ClInclude Include="Score.h" />
-    <ClInclude Include="SpaceRock.h" />
-    <ClInclude Include="Transition.h" />
-    <ClInclude Include="EffectSparkle.h">
-      <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    <ClInclude Include="BaseStar.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス</Filter>
     </ClInclude>
     <ClInclude Include="Ryusei.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
@@ -419,6 +432,10 @@
     <ClInclude Include="BaseStar.h" />
     <ClInclude Include="GameUI.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectSparkle.h" />
+    <ClInclude Include="RyuseiLine.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\流星</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
