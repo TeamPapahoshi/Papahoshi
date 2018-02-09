@@ -13,6 +13,11 @@
 #include <Windows.h>	//HRESULT他
 #include "Common.h"		//FPS計測機能オンオフの確認
 
+//------------------------------
+// マクロ定義 
+//------------------------------
+#define FRAME_RATE		(1000 / 60)		// フレームレート
+
 
 HRESULT InitFrame(void);
 void UnInitFrame(void);

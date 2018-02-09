@@ -38,6 +38,9 @@
 
 #include "GameUI.h"
 
+#include "Timer.h"
+
+
 // 呼び出す星の数
 #define STAR_NUM		(5)	//仮
 #define FIXED_STAR_NUM	(1)	//仮
@@ -68,10 +71,14 @@ private:
 
 	cGameUI*					m_pGameUI;
 
+	cTimer*						m_pTimer;			// タイマー
+
 
 	cSampleStar*				m_pSampleStar;
 
 	void CheckCollision();	//当たり判定を取る
 };
+
+
 
 #endif //!___SCENE_TITLE_H___

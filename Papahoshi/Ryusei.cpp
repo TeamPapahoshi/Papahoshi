@@ -19,6 +19,7 @@
 #include "Input.h"
 #include "MathEX.h"
 #include <cmath>
+#include "GameUI.h"
 
 //-----------------------------
 //マクロ定義
@@ -83,7 +84,9 @@ cRyusei::cRyusei(){
 		m_pStarData->m_Core.SetAddBlend(true);
 		m_pStarData->m_Core.SetSize(D3DXVECTOR2(18, 18));// サイズの変更
 		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));// テクスチャの設定
-		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(0, 0, 255, 155));		// 色
+		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR((float)CRandam::RandamRenge(0, 255), (float)CRandam::RandamRenge(0, 255),
+													(float)CRandam::RandamRenge(0, 255), 155));		// 色
+
 
 	}
 }
@@ -121,8 +124,11 @@ void cRyusei::Update(){
 		m_pStarData->m_sprite.SetPos(BezierCurve(m_pStarData->time, m_pStarData->cp1, m_pStarData->cp2, m_pStarData->cp3, m_pStarData->cp4));
 		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
 
-		// 軌跡
-		m_pStarData->m_Line.Update(m_pStarData->m_sprite.GetPos());
+		// 軌跡の更新
+		m_pStarData->m_Line.Update(m_pStarData->m_sprite.GetPos(), m_pStarData->m_Core.GetVtxColor());
+
+		//// 画面外に出たらフラグオフ
+		//if ()
 
 	}
 

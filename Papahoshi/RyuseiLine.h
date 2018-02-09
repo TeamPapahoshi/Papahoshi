@@ -36,7 +36,7 @@ class cRyuseiLine
 public:
 	cRyuseiLine();	//コンストラクタ
 	~cRyuseiLine();	//デストラクタ
-	void Update(D3DXVECTOR2 pos);
+	void Update(D3DXVECTOR2 pos,D3DXCOLOR col);
 	void Draw(void);
 private:	
 	tRyuseiLine*	m_pRyuseiLine;

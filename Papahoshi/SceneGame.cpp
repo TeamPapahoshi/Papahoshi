@@ -53,6 +53,10 @@ cSceneGame::cSceneGame(){
 	// UI
 	m_pGameUI = new cGameUI();
 
+	// ƒ^ƒCƒ}[
+	m_pTimer = new cTimer();
+	m_pTimer->StartCountDown(60);
+
 	// ”wŒi
 	m_pBG = new cBG();
 	m_pBG->SetBG(cBG::GAME_SKY);
@@ -75,6 +79,8 @@ cSceneGame::~cSceneGame(){
 	delete m_pSampleStar;
 	delete pNet;
 	delete m_pGameUI;
+	delete m_pTimer;
+
 }
 
 //=======================================================================================
@@ -94,10 +100,11 @@ void cSceneGame::Update(){
 	m_pSampleStar->Update();
 	m_pRyusei->Update();
 	m_pGameUI->Update();
+	m_pTimer->Update();
 
-	
 	//“–‚½‚è”»’è
 	CheckCollision();
+
 
 	// ƒV[ƒ“XV
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -113,14 +120,15 @@ void cSceneGame::Update(){
 void cSceneGame::Draw(){
 
 	m_pBG->Draw();				// ”wŒi
-	//m_pBlackHole->Draw();
-	//m_pSampleStar->Draw();
+	m_pBlackHole->Draw();
+	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
-	//m_pNomalStar->Draw();
+	m_pNomalStar->Draw();
 	pNet->Draw();				//‚ ‚Ý
 	m_pGage->Draw();
-	m_pRyusei->Draw();
+	//m_pRyusei->Draw();
 	m_pGameUI->Draw();
+
 }
 
 

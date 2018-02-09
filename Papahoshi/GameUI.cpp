@@ -17,8 +17,8 @@
 // 定数・マクロ定義
 //----------------------------
 #define WHITE_TEX_NAME		"Image/GameUI/white.png"	//白テクスチャ
-#define UI_WIDTH_DIVIDE		(4.0f)
-#define UI_HEIGHT_DIVIDE	(50.0f)
+//#define UI_WIDTH_DIVIDE		(4.0f)
+//#define UI_HEIGHT_DIVIDE	(50.0f)
 
 //背景カラー
 #define START_COLOR			(D3DXCOLOR(255.0f, 199.0f, 199.0f, 255.0f))

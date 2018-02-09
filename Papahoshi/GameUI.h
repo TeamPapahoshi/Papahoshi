@@ -28,6 +28,26 @@
 //------------------------
 // クラス定義
 //------------------------
+//----- UIアイテム ------
+class cUIItem{
+
+public:
+	cUIItem(int nTex, D3DXVECTOR2 pos, float size, D3DXCOLOR col, float speed);
+	~cUIItem();
+	void Update();
+	void Draw();
+
+	bool CallFin(){
+		return m_bFin;
+	}
+
+private:
+	cSpriteParam	m_sprite;
+	float			m_fSpeed;
+	bool			m_bFin;
+};
+
+
 //----- UIクラス ------
 class cGameUI{
 
@@ -48,23 +68,4 @@ private:
 	cUIItem*	m_aItem;
 	//void
 
-};
-
-//----- UIアイテム ------
-class cUIItem{
-
-public:
-	cUIItem(int nTex, D3DXVECTOR2 pos, float size, D3DXCOLOR col, float speed);
-	~cUIItem();
-	void Update();
-	void Draw();
-
-	bool CallFin(){
-		return m_bFin;
-	}
-
-private:
-	cSpriteParam	m_sprite;
-	float			m_fSpeed;
-	bool			m_bFin;
 };

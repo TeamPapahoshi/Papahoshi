@@ -2,31 +2,79 @@
 //	Timer
 //	
 //	概要＿：Timerの管理
-//	制作者：花井　雄矢
+//	制作者：加藤　遼
 //	
 //======================================================================
 #include "Timer.h"
 #include "Frame.h"
+#include "debugproc.h"
 
-static DWORD g_dwStartTime;
-static DWORD g_dwErupsedTime;
+//=======================================================================================
+//
+//		コンストラクタ
+//
+//=======================================================================================
+cTimer::cTimer(){
 
-void Timer_Start(void){
-	g_dwStartTime = Frame_timeGetTime();
+
+	// タイマー分解能を設定(1ms単位）
+	timeBeginPeriod(1);
+
+	m_CurrentTime = 0;
+	m_StartTime = timeGetTime();
+	m_TimerStart = true;
+
+	m_nFrameRate = FRAME_RATE;
+	m_nCountFrame = 0;
+	m_nFrameTime = 0;
+
+	m_fCountDownFrame = 0;
+
+
+
 
 }
-void Timer_Reset(void){
 
-	g_dwErupsedTime = 0;
-	g_dwStartTime = Frame_timeGetTime();
+//=======================================================================================
+//
+//		デストラクタ
+//
+//=======================================================================================
+cTimer::~cTimer(){
 
 }
 
-void Timer_Stop(void){
-	DWORD dwStopTime = Frame_timeGetTime();
-	g_dwErupsedTime += dwStopTime - g_dwStartTime;
-}
 
-DWORD Timer_GetTime(void){
-	return g_dwErupsedTime;
+//=======================================================================================
+//
+//		更新
+//
+//=======================================================================================
+void cTimer::Update(){
+
+	// フレームを数える
+	m_nCountFrame++;
+	m_fCountDownFrame++;
+
+
+	if (m_fCountDownFrame*m_nFrameRate / 1000.0f >= 1.0f){	//1s立ったらカウントダウン
+
+		m_fCountDownFrame = 0;
+		m_fCountDownTime--;
+
+	}
+
+	// フレーム数を時間に換算
+	m_nFrameTime = m_nCountFrame*m_nFrameRate / 1000.0f;	// /s
+
+
+
+
+
+	if (m_StartTime)
+		m_CurrentTime = timeGetTime() - m_StartTime;
+
+	PrintDebugProc("Time(timeGetTime) %f\n", m_CurrentTime / 1000.0f);
+	PrintDebugProc("Time(frame) %f\n", m_nFrameTime);
+	PrintDebugProc("CountDown %f\n", m_fCountDownTime);
 }

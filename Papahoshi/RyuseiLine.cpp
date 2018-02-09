@@ -82,8 +82,10 @@ cRyuseiLine::~cRyuseiLine(){
 //		更新
 //
 //=======================================================================================
-void cRyuseiLine::Update(D3DXVECTOR2 pos){
+void cRyuseiLine::Update(D3DXVECTOR2 pos,D3DXCOLOR col){
 
+
+	//**********************IN*********************************************
 	// 先頭に戻す
 	m_pRyuseiLine = m_pRoot;
 
@@ -130,7 +132,10 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos){
 		}
 
 	}
+	//**************************************************************************************************
 
+
+	//***********************************OUT************************************************************
 	// 先頭に戻す
 	m_pRyuseiLineOut = m_pRootOut;
 
@@ -140,7 +145,7 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos){
 		if (m_pRyuseiLineOut->t_bUse)
 			continue;
 
-		// 初期値
+		// 生成値
 		m_pRyuseiLineOut->t_bUse = true;
 		m_pRyuseiLineOut->t_LifeTime = LIFE_TIME;
 		m_pRyuseiLineOut->t_sprite.SetSize(D3DXVECTOR2(SIZE, SIZE));
@@ -161,6 +166,9 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos){
 		// LifeTimeを減らす
 		m_pRyuseiLineOut->t_LifeTime--;
 
+		// 色を合わせる
+		m_pRyuseiLineOut->t_sprite.SetVtxColor(col);
+
 		// LifeTimeとサイズを合わせる
 		m_pRyuseiLineOut->t_sprite.SetSize(D3DXVECTOR2(SIZE*m_pRyuseiLineOut->t_LifeTime / LIFE_TIME, SIZE*m_pRyuseiLineOut->t_LifeTime / LIFE_TIME));
 
@@ -173,6 +181,7 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos){
 
 	}
 
+	//**************************************************************************************************************
 
 }
 
@@ -200,13 +209,4 @@ void cRyuseiLine::Draw(){
 		if (m_pRyuseiLineOut->t_bUse)
 			m_pRyuseiLineOut->t_sprite.Draw();
 	}
-
-	// 先頭に戻す
-	m_pRyuseiLine = m_pRoot;
-	// デバッグプリント
-	PrintDebugProc("━━━━流星エフェクト━━━━\n");
-	PrintDebugProc("生存時間 %f\n", m_pRyuseiLine->t_LifeTime);
-	PrintDebugProc("使用フラグ %d\n", m_pRyuseiLine->t_bUse);
-	PrintDebugProc("━━━━━━━━━━━━━━━\n");
-
 }

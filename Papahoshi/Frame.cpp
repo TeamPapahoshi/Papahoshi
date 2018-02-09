@@ -16,17 +16,11 @@
 #include <mmsystem.h>
 #pragma comment( lib, "winmm.lib" )	// Windowsマルチメディアライブラリ
 
+#define _FPS_MEASURE_
 
 #ifdef _FPS_MEASURE_
-#include "DebugText.h"
+#include "debugproc.h"
 #endif
-
-
-//------------------------------
-// マクロ定義 
-//------------------------------
-#define FRAME_RATE		(1000 / 60)		// フレームレート
-
 
 //------------------------------
 // グローバル変数宣言 
@@ -150,9 +144,6 @@ DWORD Frame_timeGetTime(void){
 }
 
 
-
-
-
 //---------------------------------------------------------- FPS計測時 ----------------------------------------------------------
 #ifdef _FPS_MEASURE_
 
@@ -213,10 +204,7 @@ void	MeasureFPS(void){
 //
 //=======================================================================================
 void UpdateFPSText(void) {
-
-	char aStr[256];
-	wsprintf(aStr, "FPS %d\n", g_nCurrentFPS);
-	DebugTextAdd(aStr);
+	PrintDebugProc("FPS %d\n", g_nCurrentFPS);
 }
 #endif
 
