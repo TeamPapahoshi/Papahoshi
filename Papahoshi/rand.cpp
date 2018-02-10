@@ -99,7 +99,10 @@ int CRandam::GetRand(void)
 int CRandam::RandamRenge(int nMin, int nMax)
 {
 	unsigned int value = GetRand();
-	return nMin + value % (nMax - nMin);
+	if (nMax)
+		return nMin + value % (nMax - nMin);
+	else
+		return 0;
 }
 
 //============================

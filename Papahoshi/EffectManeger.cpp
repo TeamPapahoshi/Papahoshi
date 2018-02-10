@@ -21,6 +21,7 @@
 #include "EffectCircle.h"
 #include "EffectSphereLight.h"
 #include "EffectSparkle.h"
+#include "EffectBezierCurve.h"
 
 //-----------------------------
 //マクロ定義
@@ -179,6 +180,31 @@ void cEffectManeger::SetEffectSparkle(LPDIRECT3DTEXTURE9*	ptex,
 
 		m_pEffect[SetEffectloop] = new cEffectSparkle;
 		m_pEffect[SetEffectloop]->SetEffectSparkle(ptex, pos, size, color, life, radius, texdividex, texdividey);
+
+		break;
+	}
+}
+
+//=======================================================================================
+//
+//		エフェクト設定関数
+//
+//=======================================================================================
+void cEffectManeger::SetEffectBezierCurve(LPDIRECT3DTEXTURE9* ptex, 
+										  D3DXVECTOR2 pos, 
+										  D3DXVECTOR2 size, 
+										  D3DXCOLOR color, 
+										  int life, 
+										  D3DXVECTOR2 startpoint, 
+										  D3DXVECTOR2 endpoint)
+{
+	for (int SetEffectloop = 0; SetEffectloop < MAX_EFFECT; SetEffectloop++)
+	{
+		//未使用のエフェクトに設定
+		if (m_pEffect[SetEffectloop] != NULL)	continue;
+
+		m_pEffect[SetEffectloop] = new cEffectBezierCurve;
+		m_pEffect[SetEffectloop]->SetEffectBezierCurve(ptex, pos, size, color, life, startpoint, endpoint);
 
 		break;
 	}

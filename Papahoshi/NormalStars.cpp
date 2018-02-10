@@ -27,10 +27,17 @@
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_STAR_NUM	(50)
 
-
+//光沢のエフェクト用
 #define EFFECT_FRAME   (90)
 #define EFFECT_SIZE    (40.0f)
 #define EFFECT_RADIUS  (8.0f)
+
+//網にかかった時のエフェクト用
+
+
+//ゲージに移動するときのエフェクト用
+#define EFFECT_BEZIERCURVE_FRAME (60)
+#define EFFECT_BEZIERCURVE_SIZE (22.0f)
 
 //=======================================================================================
 //
@@ -121,12 +128,41 @@ void cNormalStar::Update(){
 
 
 		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y){
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+		{
 			m_pStarData->m_bDestroyEvent = true;
+
+			if (!m_pStarData->m_bEffectSetFlag)
+			{
+				// エフェクトの設定
+				GetEffectManeger()->SetEffectBezierCurve(cTextureManeger::GetTextureGame(TEX_GAME_UKI),
+					m_pStarData->m_sprite.GetPos(),
+					D3DXVECTOR2(EFFECT_BEZIERCURVE_SIZE, EFFECT_BEZIERCURVE_SIZE),
+					D3DXCOLOR(255, 255, 255, 255),
+					EFFECT_BEZIERCURVE_FRAME,
+					m_pStarData->m_sprite.GetPos(),
+					m_pGageData->GetGageSprite().GetPos() + m_pGageData->GetGageSprite().GetSize() / 2);
+
+				//エフェクト使用フラグをOnに
+				m_pStarData->m_bEffectSetFlag = true;
+
+			}
+
 		}
 
+		//エフェクト表示中
+		if (m_pStarData->m_bEffectSetFlag)
+		{
+			//エフェクト表示フレームの加算
+			m_pStarData->m_nEffectFrame++;
+			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame == EFFECT_BEZIERCURVE_FRAME)
+			{
+				m_pGageData->GageAdd();
+			}
+		}
 
 	}
+
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -151,23 +187,25 @@ void cNormalStar::Update(){
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
-		// エフェクト生成フレームの加算
-		m_pStarData->m_nEffectSetTime--;
-
-		//フレームが一定値になったらエフェクトの生成
-		if (m_pStarData->m_nEffectSetTime < 0)
+		if (m_pStarData->m_bDraw)
 		{
-			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
-												 m_pStarData->m_sprite.GetPos(),
-												 D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
-												 m_pStarData->m_sprite.GetVtxColor(),
-												 EFFECT_FRAME / 2,
-												 D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
-												 4, 3);
+			// エフェクト生成フレームの加算
+			m_pStarData->m_nEffectSetTime--;
 
-			m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
+			//フレームが一定値になったらエフェクトの生成
+			if (m_pStarData->m_nEffectSetTime < 0)
+			{
+				GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
+																	  m_pStarData->m_sprite.GetPos(),
+																	  D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
+																	  m_pStarData->m_sprite.GetVtxColor(),
+																	  EFFECT_FRAME / 2,
+																	  D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
+																	  EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
+
+				m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
+			}
 		}
-
 	}
 
 
@@ -274,7 +312,7 @@ void cNormalStar::Create(){
 
 		//	リセット
 		m_pStarData->m_bCreateEnd = false;
-	
+
 		// フラグオン
 		SetCountAndUse(true);
 		m_pStarData->m_bCreateEvent = false;
@@ -300,7 +338,6 @@ void cNormalStar::Destroy(){
 
 
 
-
 		//****************************************************
 
 
@@ -314,13 +351,13 @@ void cNormalStar::Destroy(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
 
-		// 終了したら即リスポーン準備
-		m_pStarData->m_bRespawnEvent = true;
-
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;
 		m_pStarData->m_bDraw = false;
 		m_pStarData->m_bDestroyEvent = false;
+
+		// 終了したら即リスポーン準備
+		m_pStarData->m_bRespawnEvent = true;
 
 		return;
 	}
@@ -370,6 +407,9 @@ void cNormalStar::Respawn(){
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;
 
+
+		m_pStarData->m_bEffectSetFlag = false;
+		m_pStarData->m_nEffectFrame = 0;
 
 		m_pStarData->m_bRespawnEnd = false;
 		m_pStarData->m_bRespawnEvent = false;
@@ -480,4 +520,15 @@ void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 void cNormalStar::OnCollidToDelete(int Normal){
 
 	
+}
+
+//=======================================================================================
+//
+//		ゲージとの処理
+//
+//=======================================================================================
+//---- ゲージの情報を取得 -----
+void cNormalStar::SetGageData(cGage* data)
+{
+	m_pGageData = data;
 }

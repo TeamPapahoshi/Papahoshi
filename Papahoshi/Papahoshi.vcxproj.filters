@@ -265,6 +265,9 @@
     <ClCompile Include="EffectSparkle.cpp">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClCompile>
+    <ClCompile Include="EffectBezierCurve.cpp">
+      <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -390,6 +393,10 @@
     <ClInclude Include="SpaceRock.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="EffectSparkle.h">
+      <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStar.h" />
+    <ClInclude Include="EffectBezierCurve.h">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClInclude>
   </ItemGroup>

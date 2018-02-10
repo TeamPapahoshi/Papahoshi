@@ -17,6 +17,7 @@
 #include "Sprite.h"
 #include "Net_Type2.h"
 #include "BlackHole.h"
+#include "Gage.h"
 
 #include <vector>
 #include <fstream>
@@ -26,9 +27,9 @@
 //-----------------------------
 class cNormalStarData :public cBaseStarData{
 public:
-	bool	m_bVibration=true;
-	int		m_nVibrationFrame=0;
-
+	bool	m_bVibration = true;
+	int		m_nVibrationFrame = 0;
+	int		m_nEffectFrame = 0;
 };
 
 class cNormalStar :public cBaseStar{
@@ -47,6 +48,9 @@ public:
 	void SetBlackHoleData(cBlackHole* data);
 	void OnCollidToBlackHole(int Normal,int Black);
 	void OnCollidToDelete(int Normal);
+
+	//--- ゲージとの処理 ---
+	void SetGageData(cGage* data);
 	
 	void Create();		// 生成
 	void Destroy();		// 削除
@@ -57,7 +61,7 @@ private:
 	cNormalStarData*	m_pRoot;			// 先頭アドレス格納用
 	cBlackHole*			m_pBlackHoleData;	// ブラックホールのデータを格納
 	cNet*				m_pNetData;			// 網のデータ格納
-
+	cGage*				m_pGageData;		// ゲージのデータ格納
 
 	//Set&Get
 public:

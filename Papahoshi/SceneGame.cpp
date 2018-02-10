@@ -26,11 +26,11 @@
 cSceneGame::cSceneGame(){
 
 	// 網
-	pNet = new cNet();
+	m_pNet = new cNet();
 
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
-	m_pBlackHole->SetNetData(pNet);
+	m_pBlackHole->SetNetData(m_pNet);
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
@@ -38,14 +38,15 @@ cSceneGame::cSceneGame(){
 	// サンプル
 	m_pSampleStar = new cSampleStar();
 
-	// モブ星
-	m_pNomalStar = new cNormalStar();
-	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
-	m_pNomalStar->SetNetData(pNet);
-
 	// ゲージ
 	m_pGage = new cGage();
 	m_pGage->Init();
+
+	// モブ星
+	m_pNomalStar = new cNormalStar();
+	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
+	m_pNomalStar->SetNetData(m_pNet);
+	m_pNomalStar->SetGageData(m_pGage);
 
 	// 背景
 	m_pBG = new cBG();
@@ -66,7 +67,7 @@ cSceneGame::~cSceneGame(){
 	delete m_pGage;
 	delete m_pBlackHole;
 	delete m_pSampleStar;
-	delete pNet;
+	delete m_pNet;
 }
 
 //=======================================================================================
@@ -77,7 +78,7 @@ cSceneGame::~cSceneGame(){
 void cSceneGame::Update(){
 
 	// 更新
-	pNet->Update();		//あみ
+	m_pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
 	m_pGage->Update();	// ゲージ
 	m_pNomalStar->Update();
@@ -107,8 +108,8 @@ void cSceneGame::Draw(){
 	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
-	pNet->Draw();				//あみ
 	m_pGage->Draw();
+	m_pNet->Draw();				//あみ
 
 	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
 
@@ -133,8 +134,8 @@ void cSceneGame::CheckCollision(){
 
 		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
 
-			  if (pNet->GetPullFlug()){
-				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, pNet->GetNetLeft(), pNet->GetNetRight())){
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
 					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
