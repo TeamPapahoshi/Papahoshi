@@ -80,6 +80,9 @@ enum TEX_STAGE_SELECT{
 		TEX_GAME_7,
 		TEX_GAME_8,
 		TEX_GAME_9,
+
+		TEX_GAME_RYUSEI,
+
 		TEX_GAME_MAX
 	};
 	/*

@@ -28,6 +28,7 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Gage.cpp" />
     <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MathEX.cpp" />
     <ClCompile Include="Meteor.cpp" />
@@ -36,6 +37,8 @@
     <ClCompile Include="NormalStars.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="rand.cpp" />
+    <ClCompile Include="Ryusei.cpp" />
+    <ClCompile Include="RyuseiLine.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="SampleStar.cpp" />
     <ClCompile Include="SaveClearFlag.cpp" />
@@ -78,6 +81,7 @@
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Gage.h" />
     <ClInclude Include="GameMain.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MathEX.h" />
     <ClInclude Include="Meteor.h" />
@@ -86,6 +90,8 @@
     <ClInclude Include="NormalStars.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="rand.h" />
+    <ClInclude Include="Ryusei.h" />
+    <ClInclude Include="RyuseiLine.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="SampleStar.h" />
     <ClInclude Include="SaveClearFlag.h" />

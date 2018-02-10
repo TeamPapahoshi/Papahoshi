@@ -146,7 +146,7 @@ void cNormalStar::Update(){
 				//エフェクト使用フラグをOnに
 				m_pStarData->m_bEffectSetFlag = true;
 
-			}
+		}
 
 		}
 
@@ -158,7 +158,7 @@ void cNormalStar::Update(){
 			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame == EFFECT_BEZIERCURVE_FRAME)
 			{
 				m_pGageData->GageAdd();
-			}
+	}
 		}
 
 	}
@@ -189,22 +189,22 @@ void cNormalStar::Update(){
 
 		if (m_pStarData->m_bDraw)
 		{
-			// エフェクト生成フレームの加算
-			m_pStarData->m_nEffectSetTime--;
+		// エフェクト生成フレームの加算
+		m_pStarData->m_nEffectSetTime--;
 
-			//フレームが一定値になったらエフェクトの生成
-			if (m_pStarData->m_nEffectSetTime < 0)
-			{
-				GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
-																	  m_pStarData->m_sprite.GetPos(),
-																	  D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
-																	  m_pStarData->m_sprite.GetVtxColor(),
-																	  EFFECT_FRAME / 2,
-																	  D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
+		//フレームが一定値になったらエフェクトの生成
+		if (m_pStarData->m_nEffectSetTime < 0)
+		{
+			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
+												 m_pStarData->m_sprite.GetPos(),
+												 D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
+												 m_pStarData->m_sprite.GetVtxColor(),
+												 EFFECT_FRAME / 2,
+												 D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
 																	  EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
 
-				m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
-			}
+			m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
+		}
 		}
 	}
 
@@ -312,7 +312,7 @@ void cNormalStar::Create(){
 
 		//	リセット
 		m_pStarData->m_bCreateEnd = false;
-
+	
 		// フラグオン
 		SetCountAndUse(true);
 		m_pStarData->m_bCreateEvent = false;

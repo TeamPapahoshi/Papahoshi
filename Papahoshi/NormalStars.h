@@ -30,6 +30,9 @@ public:
 	bool	m_bVibration = true;
 	int		m_nVibrationFrame = 0;
 	int		m_nEffectFrame = 0;
+	bool	m_bVibration = true;
+	int		m_nVibrationFrame=0;
+
 };
 
 class cNormalStar :public cBaseStar{
@@ -48,7 +51,7 @@ public:
 	void SetBlackHoleData(cBlackHole* data);
 	void OnCollidToBlackHole(int Normal,int Black);
 	void OnCollidToDelete(int Normal);
-
+	
 	//--- ÉQÅ[ÉWÇ∆ÇÃèàóù ---
 	void SetGageData(cGage* data);
 	

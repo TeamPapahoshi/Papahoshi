@@ -30,10 +30,16 @@
 #include "SampleStar.h"
 #include "NormalStars.h"
 #include "FixedStars.h"
+#include "Ryusei.h"
 #include "Gage.h"
 
 #include "BlackHole.h"
 #include "SpaceRock.h"
+
+#include "GameUI.h"
+
+#include "Timer.h"
+
 
 // 呼び出す星の数
 #define STAR_NUM		(5)	//仮
@@ -55,17 +61,24 @@ public:
 private:
 	// このシーンでインスタンスするもののポインタ
 	cBG*						m_pBG;
-	cNet*						m_pNet;
+	cNet						*pNet;
 	cNormalStar*				m_pNomalStar;		// モブ星
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
+	cRyusei*					m_pRyusei;			// 流星
 	cGage*						m_pGage;			// ゲージ
+
+	cGameUI*					m_pGameUI;
+
+	cTimer*						m_pTimer;			// タイマー
 
 
 	cSampleStar*				m_pSampleStar;
 
 	void CheckCollision();	//当たり判定を取る
 };
+
+
 
 #endif //!___SCENE_TITLE_H___

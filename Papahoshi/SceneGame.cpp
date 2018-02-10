@@ -38,15 +38,25 @@ cSceneGame::cSceneGame(){
 	// サンプル
 	m_pSampleStar = new cSampleStar();
 
-	// ゲージ
-	m_pGage = new cGage();
-	m_pGage->Init();
+	// 流星
+	m_pRyusei = new cRyusei();
 
 	// モブ星
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
 	m_pNomalStar->SetNetData(m_pNet);
 	m_pNomalStar->SetGageData(m_pGage);
+
+	// ゲージ
+	m_pGage = new cGage();
+	m_pGage->Init();
+
+	// UI
+	m_pGameUI = new cGameUI();
+
+	// タイマー
+	m_pTimer = new cTimer();
+	m_pTimer->StartCountDown(60);
 
 	// 背景
 	m_pBG = new cBG();
@@ -64,10 +74,14 @@ cSceneGame::~cSceneGame(){
 	delete m_pBG;
 	delete m_pNomalStar;
 	delete m_pSpaceRock;
+	delete m_pRyusei;
 	delete m_pGage;
 	delete m_pBlackHole;
 	delete m_pSampleStar;
-	delete m_pNet;
+	delete pNet;
+	delete m_pGameUI;
+	delete m_pTimer;
+
 }
 
 //=======================================================================================
@@ -78,17 +92,20 @@ cSceneGame::~cSceneGame(){
 void cSceneGame::Update(){
 
 	// 更新
-	m_pNet->Update();		//あみ
+	pNet->Update();		//あみ
 	m_pBG->Update();	// 背景
 	m_pGage->Update();	// ゲージ
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
 	m_pSpaceRock->Update();
 	m_pSampleStar->Update();
-
+	m_pRyusei->Update();
+	m_pGameUI->Update();
+	m_pTimer->Update();
 	
 	//当たり判定
 	CheckCollision();
+
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -109,13 +126,9 @@ void cSceneGame::Draw(){
 	//m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
 	m_pGage->Draw();
-	m_pNet->Draw();				//あみ
+	//m_pRyusei->Draw();
+	m_pGameUI->Draw();
 
-	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
-
-
-		PrintDebugProc("使用フラグaaaaa %d\n", m_pBlackHole->GetStarData()[0].m_bUse);
-	}
 }
 
 
@@ -134,8 +147,9 @@ void cSceneGame::CheckCollision(){
 
 		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
 
-			  if (m_pNet->GetPullFlug()){
-				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
+			  if (pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, 
+					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, pNet->GetNetLeft(), pNet->GetNetRight())){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
 					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;

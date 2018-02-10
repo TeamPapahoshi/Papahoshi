@@ -74,7 +74,9 @@ cSpriteParam::cSpriteParam(){
 	m_texPatternDivideX=1;		
 	m_texPatternDivideY=1;		
 	m_intervalChangePattern = 999;			
-	m_currentAnimPattern=0;		
+	m_currentAnimPattern=0;	
+
+	m_bAddBlend = false;
 
 }
 
@@ -96,6 +98,15 @@ void cSpriteParam::Draw(){
 	//----------------------------
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// デバイス情報
 	tVertex2D *pVtx;							// 頂点情報
+
+	//---------------------------
+	// アルファブレンドを設定
+	//---------------------------
+	if (m_bAddBlend){
+		pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
+		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);			// αデスティネーションカラーの指定
+		pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);			// Z比較なし
+	}
 
 	//----------------------------
 	// 頂点バッファの頂点情報を更新
@@ -177,6 +188,13 @@ void cSpriteParam::Draw(){
 	// 描画
 	//----------------------------
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON_SPRITE);
+
+	//----------------------------
+	// 描画設定を初期化
+	//----------------------------
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// αデスティネーションカラーの指定
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);			// Z比較あり
 }
 
 
@@ -275,7 +293,6 @@ void cSpriteParam::DrawFreePos(){
 void cSpriteParam::LoadTexture(LPCSTR fileName){
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// Direct3Dデバイス
-
 	D3DXCreateTextureFromFile(pDevice, fileName, &m_pTex);
 }
 

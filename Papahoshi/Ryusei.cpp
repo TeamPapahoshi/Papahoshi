@@ -1,7 +1,7 @@
 //======================================================================
-//	BlackHole
+//	Ryusei
 //	
-//	概要＿：ブラックホール
+//	概要＿：流星処理
 //	制作者：加藤　遼
 //	
 //======================================================================
@@ -14,38 +14,38 @@
 #include "debugproc.h"
 #include "Common.h"
 #include "Texture.h"
+#include "Ryusei.h"
 #include "rand.h"
-#include "BlackHole.h"
 #include "Input.h"
-
+#include "MathEX.h"
+#include <cmath>
+#include "GameUI.h"
 
 //-----------------------------
-// マクロ定義
+//マクロ定義
 //-----------------------------
-#define STAR_SIZE	(200)
+#define STAR_SIZE	(16)
+#define RESPAWN_FREAM (200)
+#define MAX_NORMAL_RYUSEI_NUM	(10)
 
-#define VACUUM_RANGE	(200)
-#define DELETE_RANGE	(20)
 
-#define RESPAWN_FREAM	(100)
-#define MAX_BLACK_HOLE_NUM	(1)
-
-//===================================================================================
+//=======================================================================================
 //
 //		コンストラクタ
 //
 //=======================================================================================
-cBlackHole::cBlackHole(){
+cRyusei::cRyusei(){
 
 	// 乱数の初期化
 	CRandam::InitRand();
 
 	// 使用数を格納ファイルから読み込むけどだいぶ変更したから
-	m_nMaxNum = MAX_BLACK_HOLE_NUM;
+	m_nMaxNum = MAX_NORMAL_RYUSEI_NUM;
 
 	// 動的インスタンス
-	m_pStarData = new cBlackHoleData[m_nMaxNum]();	//ここ注意
+	m_pStarData = new cRyuseiData[m_nMaxNum]();		//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
+
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -58,34 +58,37 @@ cBlackHole::cBlackHole(){
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
 
 		// テクスチャの設定
-		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
+
+		// 色
+		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
+
+		// 加算合成ON
+		m_pStarData->m_sprite.SetAddBlend(true);
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+		CreateRamdomPos.y = 0;
+		//CreateRamdomPos = D3DXVECTOR2(0,SCREEN_HEIGHT/2.0f);
+		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
-		// 当たり判定
-		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		// ベジェ曲線関連
+		m_pStarData->cp1 = CreateRamdomPos;
+		m_pStarData->cp2 = CreateRamdomPos;
+		m_pStarData->cp3 = CreateRamdomPos;
+		m_pStarData->cp4 = D3DXVECTOR2(CreateRamdomPos.x-250.0f,SCREEN_HEIGHT);
 
-		// 当たり判定
-		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
-		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
-	
+		// CORE
+		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
+		m_pStarData->m_Core.SetAddBlend(true);
+		m_pStarData->m_Core.SetSize(D3DXVECTOR2(18, 18));// サイズの変更
+		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));// テクスチャの設定
+		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR((float)CRandam::RandamRenge(0, 255), (float)CRandam::RandamRenge(0, 255),
+													(float)CRandam::RandamRenge(0, 255), 155));		// 色
 
-		// 吸い込み範囲
-	/*	m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
-		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);*/
 
-		//// 移動の目的位置決定
-		//m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-		//// 目的地までの距離を測定
-		//m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
-		//m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
 	}
-
 }
 
 //=======================================================================================
@@ -93,7 +96,7 @@ cBlackHole::cBlackHole(){
 //		デストラクタ
 //
 //=======================================================================================
-cBlackHole::~cBlackHole(){
+cRyusei::~cRyusei(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -104,12 +107,35 @@ cBlackHole::~cBlackHole(){
 //		更新
 //
 //=======================================================================================
-void cBlackHole::Update(){
+void cRyusei::Update(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
-	// イベント格納ループ？
+	// 更新
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		// 当たり判定
+		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+
+		// ベジェ曲線上を動かす
+		m_pStarData->time += 0.002f;
+		m_pStarData->m_sprite.SetPos(BezierCurve(m_pStarData->time, m_pStarData->cp1, m_pStarData->cp2, m_pStarData->cp3, m_pStarData->cp4));
+		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
+
+		// 軌跡の更新
+		m_pStarData->m_Line.Update(m_pStarData->m_sprite.GetPos(), m_pStarData->m_Core.GetVtxColor());
+
+		//// 画面外に出たらフラグオフ
+		//if ()
+
+	}
+
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
+
+	// イベント格納
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		// イベントが呼び出される感じ
@@ -124,47 +150,37 @@ void cBlackHole::Update(){
 		if (m_pStarData->m_bRespawnEvent){
 			Respawn();
 		}
-		// 当たり判定
-		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
-		// 当たり判定
-		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
-		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
-	}
 
+	}
 
 	// イベントの起動
 	// デバッグキー
-	if (GetKeyboardTrigger(DIK_B)){
+	if (GetKeyboardTrigger(DIK_R)){
 		m_pStarData = m_pRoot;	// 先頭に戻す
 		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
-			if (m_pStarData->m_bDraw)	// ここ注意
-				continue;
-
-			m_pStarData->m_bCreateEvent = true;
-			m_pStarData = m_pRoot;	// 先頭に戻す
-			break;
-		}
-	}
-	// デバッグキー
-	if (GetKeyboardTrigger(DIK_M)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
-			if (!m_pStarData->m_bUse)	// ここ注意
-				continue;
 			m_pStarData->m_bDestroyEvent = true;
-			m_pStarData = m_pRoot;	// 先頭に戻す
-			break;
 		}
 	}
-	//if (GetKeyboardTrigger(DIK_R)){
+	//if (GetKeyboardTrigger(DIK_K)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-	//		m_pStarData->m_bDestroyEvent = true;
+	//		if (m_pStarData->m_bDraw)	// ここ注意
+	//			continue;
+	//		m_pStarData->m_bCreateEvent = true;
+	//		break;
 	//	}
 	//}
+	//// デバッグキー
+	//if (GetKeyboardTrigger(DIK_D)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		if (!m_pStarData->m_bUse)	// ここ注意
+	//			continue;
+	//		m_pStarData->m_bDestroyEvent = true;
+	//		break;
+	//	}
+	//}
+
 }
 
 //=======================================================================================
@@ -172,7 +188,7 @@ void cBlackHole::Update(){
 //		描画
 //
 //=======================================================================================
-void cBlackHole::Draw(){
+void cRyusei::Draw(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -184,36 +200,39 @@ void cBlackHole::Draw(){
 			continue;
 
 		m_pStarData->m_sprite.Draw();
+		m_pStarData->m_Core.Draw();
+		m_pStarData->m_Line.Draw();
 
-		if (m_pStarData->m_bUse){
-			m_pStarData->m_Collision.Draw();
-			m_pStarData->m_VacumeRange.Draw();
-		}
+
+		//if (m_pStarData->m_bUse)
+			//m_pStarData->m_Collision.Draw();
 	}
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
+
+
 	// デバッグプリント
-	PrintDebugProc("━━━━ブラックホール━━━━\n");
+	PrintDebugProc("━━━━━━流星━━━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
-	PrintDebugProc("使用フラグ %d\n", m_pStarData->m_bUse);
-	PrintDebugProc("描画フラグ %d\n", m_pStarData->m_bDraw);
-	PrintDebugProc("Bキーで生成\n");
-	PrintDebugProc("Mキーで削除\n");
-	PrintDebugProc("削除後自動リスポーン\n");
+	PrintDebugProc("Rキーでリセット\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
+
+
 }
 //=======================================================================================
 //
 //		生成
 //
 //=======================================================================================
-void cBlackHole::Create(){
+void cRyusei::Create(){
 
 	// 生成イベントの開始
 	if (!m_pStarData->m_bCreateEnd){
+
+
 
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
 		//****** ここに演出とか生成処理を書いていく **********
@@ -225,10 +244,14 @@ void cBlackHole::Create(){
 		//****************************************************
 
 
+
 		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 		//m_pStarData->m_bCreateEnd = true;
 
 		m_pStarData->m_bCreateEnd = true;
+
+
+
 	}
 
 
@@ -251,17 +274,16 @@ void cBlackHole::Create(){
 //		削除(一応作った)
 //
 //=======================================================================================
-void cBlackHole::Destroy(){
+void cRyusei::Destroy(){
 
-	// 削除イベントの開始
+	// 生成イベントの開始
 	if (!m_pStarData->m_bDestroyEnd){
 
 		SetCountAndUse(false);
 
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
-		//****** ここに演出とか処理を書いていく *************
-		//****************************************************
-
+		//****** ここに演出とか処理を書いていく **********
+		//************************************************
 
 		// 演出がおわったら終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 		m_pStarData->m_bDestroyEnd = true;
@@ -288,7 +310,7 @@ void cBlackHole::Destroy(){
 ////		リスポーン
 ////
 ////=======================================================================================
-void cBlackHole::Respawn(){
+void cRyusei::Respawn(){
 
 
 	if (!m_pStarData->m_bRespawnEnd){
@@ -305,11 +327,11 @@ void cBlackHole::Respawn(){
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 
-			//// 移動の目的位置決定
-			//m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-			//// 目的地までの距離を測定
-			//m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
-			//m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
+			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+			m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_Destination.x - m_pStarData->m_sprite.GetPos().x);
+			m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_Destination.y - m_pStarData->m_sprite.GetPos().y);
+			// 星から目的地方向の単位ベクトルを求める
+			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
 			m_pStarData->m_bRespawnEnd = true;
 		}
@@ -318,11 +340,15 @@ void cBlackHole::Respawn(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bRespawnEnd){
 
+
 		// 生成イベント開始
 		m_pStarData->m_bCreateEvent = true;
 
+
+
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;
+
 
 		m_pStarData->m_bRespawnEnd = false;
 		m_pStarData->m_bRespawnEvent = false;
@@ -330,51 +356,3 @@ void cBlackHole::Respawn(){
 	}
 }
 
-//=======================================================================================
-//
-//		網との処理
-//
-//=======================================================================================
-//--- 網のデータ取得 ---
-void cBlackHole::SetNetData(cNet* data){
-	m_pNetData = data;
-}
-
-//--- 網と当たった時の処理 ---
-void cBlackHole::OnCollidToNet(int num){
-
-	// 先頭から何番目か
-	m_pStarData = m_pRoot;
-	m_pStarData += num;
-
-
-	// 網を引いているときのみ移動する
-	if (m_pNetData->GetPullFlug()){
-
-		// 移動したい距離
-		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;	// 三回に分けて移動する
-		float DistGoalY = m_pStarData->m_PurPosDist.y / 3.0f;
-
-
-		// 距離から移動量を算出(フレーム数で割る)
-		m_pStarData->m_Move.x = DistGoalX / 50.0f;
-		m_pStarData->m_Move.y = DistGoalY / 45.0f;
-
-
-
-		// 移動量を反映
-	/*	if (m_pStarData->m_sprite.GetPosX() >= m_pStarData->m_PurposPos.x){
-			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
-		}
-		else if ((m_pStarData->m_sprite.GetPosX() <= m_pStarData->m_PurposPos.x)){
-			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
-		}
-		if ((m_pStarData->m_sprite.GetPosY() <= m_pStarData->m_PurposPos.y)){
-			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
-		}
-		else if ((m_pStarData->m_sprite.GetPosY() >= m_pStarData->m_PurposPos.y)){
-			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
-		}*/
-	}
-
-}
