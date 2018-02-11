@@ -45,6 +45,17 @@
 #define STAR_NUM		(5)	//仮
 #define FIXED_STAR_NUM	(1)	//仮
 
+
+//------------------------------
+// 列挙体定義
+//------------------------------
+// ゲームの状態
+enum eGameState{
+	GAME_STATE_SET,		// 3,2,1 Start
+	GAME_STATE_MAIN,	// メイン
+	GAME_STATE_END,		// TimeUp
+};
+
 //------------------------------
 // クラス定義
 //------------------------------
@@ -68,13 +79,23 @@ private:
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	cRyusei*					m_pRyusei;			// 流星
 	cGage*						m_pGage;			// ゲージ
-
 	cGameUI*					m_pGameUI;
-
 	cTimer*						m_pTimer;			// タイマー
-
-
 	cSampleStar*				m_pSampleStar;
+
+
+	// ゲームの状態
+	eGameState					m_eGameState;
+	void SetUpdate();
+	void MainUpdate();
+	void EndUpdate();
+
+	// ゲームメイン用
+	bool m_bFever;				// フィーバタイムかどうか
+
+
+
+
 
 	void CheckCollision();	//当たり判定を取る
 };

@@ -24,7 +24,7 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(16)
+#define STAR_SIZE	(15)
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_RYUSEI_NUM	(10)
 
@@ -82,7 +82,7 @@ cRyusei::cRyusei(){
 		// CORE
 		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
 		m_pStarData->m_Core.SetAddBlend(true);
-		m_pStarData->m_Core.SetSize(D3DXVECTOR2(18, 18));// サイズの変更
+		m_pStarData->m_Core.SetSize(D3DXVECTOR2(17, 17));// サイズの変更
 		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));// テクスチャの設定
 		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR((float)CRandam::RandamRenge(0, 255), (float)CRandam::RandamRenge(0, 255),
 													(float)CRandam::RandamRenge(0, 255), 155));		// 色
@@ -201,7 +201,7 @@ void cRyusei::Draw(){
 
 		m_pStarData->m_sprite.Draw();
 		m_pStarData->m_Core.Draw();
-		m_pStarData->m_Line.Draw();
+		//m_pStarData->m_Line.Draw();
 
 
 		//if (m_pStarData->m_bUse)
@@ -328,8 +328,6 @@ void cRyusei::Respawn(){
 
 
 			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-			m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_Destination.x - m_pStarData->m_sprite.GetPos().x);
-			m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_Destination.y - m_pStarData->m_sprite.GetPos().y);
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 

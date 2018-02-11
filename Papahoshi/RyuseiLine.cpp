@@ -61,7 +61,7 @@ cRyuseiLine::cRyuseiLine(){
 		// ‰Šú’l
 		m_pRyuseiLineOut->t_bUse = false;
 		m_pRyuseiLineOut->t_LifeTime = LIFE_TIME;
-		m_pRyuseiLineOut->t_sprite.SetSize(D3DXVECTOR2(15, 15));
+		m_pRyuseiLineOut->t_sprite.SetSize(D3DXVECTOR2(18, 18));
 		m_pRyuseiLineOut->t_sprite.SetAddBlend(true);
 		m_pRyuseiLineOut->t_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
 		m_pRyuseiLineOut->t_sprite.SetVtxColor(D3DXCOLOR(0, 0,255, 155));

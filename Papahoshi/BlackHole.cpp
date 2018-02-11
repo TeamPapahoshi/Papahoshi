@@ -17,6 +17,7 @@
 #include "rand.h"
 #include "BlackHole.h"
 #include "Input.h"
+#include "GameUI.h"
 
 
 //-----------------------------
@@ -61,8 +62,8 @@ cBlackHole::cBlackHole(){
 
 		// À•W‚ÌŒˆ’è
 		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
+		CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// ‘ã“ü
 
 		// “–‚½‚è”»’è
@@ -186,11 +187,11 @@ void cBlackHole::Draw(){
 		m_pStarData->m_sprite.Draw();
 
 		// ƒQ[ƒ€“à‚Å—LŒø‚È‚ç‚ ‚½‚è”»’è‚ð•`‰æ
-		if (m_pStarData->m_bUse){
+	/*	if (m_pStarData->m_bUse){
 			m_pStarData->m_Collision.Draw();
 			m_pStarData->m_VacumeRange.Draw();
 			m_pStarData->m_DeleteRange.Draw();
-		}
+		}*/
 	}
 
 	// æ“ª‚É–ß‚·
@@ -348,33 +349,5 @@ void cBlackHole::OnCollidToNet(int num){
 	m_pStarData += num;
 
 
-	// –Ô‚ðˆø‚¢‚Ä‚¢‚é‚Æ‚«‚Ì‚ÝˆÚ“®‚·‚é
-	if (m_pNetData->GetPullFlug()){
-
-		// ˆÚ“®‚µ‚½‚¢‹——£
-		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;	// ŽO‰ñ‚É•ª‚¯‚ÄˆÚ“®‚·‚é
-		float DistGoalY = m_pStarData->m_PurPosDist.y / 3.0f;
-
-
-		// ‹——£‚©‚çˆÚ“®—Ê‚ðŽZo(ƒtƒŒ[ƒ€”‚ÅŠ„‚é)
-		m_pStarData->m_Move.x = DistGoalX / 50.0f;
-		m_pStarData->m_Move.y = DistGoalY / 45.0f;
-
-
-
-		// ˆÚ“®—Ê‚ð”½‰f
-	/*	if (m_pStarData->m_sprite.GetPosX() >= m_pStarData->m_PurposPos.x){
-			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
-		}
-		else if ((m_pStarData->m_sprite.GetPosX() <= m_pStarData->m_PurposPos.x)){
-			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
-		}
-		if ((m_pStarData->m_sprite.GetPosY() <= m_pStarData->m_PurposPos.y)){
-			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
-		}
-		else if ((m_pStarData->m_sprite.GetPosY() >= m_pStarData->m_PurposPos.y)){
-			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
-		}*/
-	}
 
 }
