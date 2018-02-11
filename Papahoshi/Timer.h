@@ -20,29 +20,22 @@ public:
 	cTimer();
 	~cTimer();
 
-	void Start(){
-		m_TimerStart = true;
-		m_StartTime = timeGetTime();
-	}
-
 	void Init(){
-
-
 	}
 	void UnInit(){
 
 	}
 
-	void StartCountDown(int Time){
-
-		// 時間をフレーム数に換算
-		//m_fCountDownFrame = Time*1000.0f / m_nFrameRate;
-
+	// カウントダウン開始
+	void StartCountDown(float Time){
 		m_fCountDownTime = Time;
-
-	
-
+		m_bCountDown = true;
 	}
+	void ResetCountDown(float Time){
+		m_fCountDownTime;
+		m_bCountDown = false;
+	}
+
 
 	void Update();
 
@@ -51,12 +44,13 @@ private:
 	// 直接時間をはかる方法
 	DWORD	m_CurrentTime;	// 現在時間
 	DWORD	m_StartTime;	// 開始時間
-	bool	m_TimerStart;
 
 	// フレーム数から時間に換算
 	float		m_nFrameRate;		// このゲームのフレームレート
 	float		m_nCountFrame;		// フレームを数える
 	float		m_nFrameTime;		// 時間に換算
+
+	bool		m_bCountDown;		// カウントダウン開始フラグ
 	float		m_fCountDownFrame;	// カウントダウン用フレーム
 	float		m_fCountDownTime;	// カウントダウン用時間
 

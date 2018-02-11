@@ -55,7 +55,6 @@ cSceneGame::cSceneGame(){
 
 	// タイマー
 	m_pTimer = new cTimer();
-	m_pTimer->StartCountDown(60);
 
 	// 背景
 	m_pBG = new cBG();

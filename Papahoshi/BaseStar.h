@@ -28,15 +28,8 @@ public:
 	// フラグのオンオフと星の数を数える
 	//virtual void SetCountAndUse(bool flag)=0;
 
-
-
-	int GetMaxNum(){
-		return m_nMaxNum;
-	}
-	int GetCurrentNum(){
-		return 	m_nCurrentNum;
-		;
-	}
+	int GetMaxNum(){ return m_nMaxNum; }
+	int GetCurrentNum(){return 	m_nCurrentNum;}
 
 protected:
 	int					m_nMaxNum;
@@ -74,7 +67,6 @@ public:
 	D3DXVECTOR2		m_Destination;		// 目的位置記憶
 	D3DXVECTOR2		m_PurPosDist;		// 目的位置までの距離記憶
 	D3DXVECTOR2		m_VecStarToDest;	// 星から目的地方向のベクトル
-
 };
 
 //----円軌道移動クラス------円軌道させたいクラスにもたせる(星以外にも使えます)
