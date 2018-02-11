@@ -61,7 +61,7 @@ public:
 private:
 	// このシーンでインスタンスするもののポインタ
 	cBG*						m_pBG;
-	cNet						*pNet;
+	cNet*						m_pNet;
 	cNormalStar*				m_pNomalStar;		// モブ星
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
