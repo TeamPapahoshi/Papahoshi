@@ -40,6 +40,7 @@ cBaseStarData::cBaseStarData(){
 	m_Destination = D3DXVECTOR2(0, 0);
 	m_PurPosDist = D3DXVECTOR2(0, 0);
 
+	m_bEffectSetFlag = false;
 }
 
 

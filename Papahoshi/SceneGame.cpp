@@ -26,11 +26,11 @@
 cSceneGame::cSceneGame(){
 
 	// 網
-	pNet = new cNet();
+	m_pNet = new cNet();
 
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
-	m_pBlackHole->SetNetData(pNet);
+	m_pBlackHole->SetNetData(m_pNet);
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
@@ -44,7 +44,8 @@ cSceneGame::cSceneGame(){
 	// モブ星
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
-	m_pNomalStar->SetNetData(pNet);
+	m_pNomalStar->SetNetData(m_pNet);
+	m_pNomalStar->SetGageData(m_pGage);
 
 	// ゲージ
 	m_pGage = new cGage();
@@ -123,7 +124,6 @@ void cSceneGame::Draw(){
 	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
-	pNet->Draw();				//あみ
 	m_pGage->Draw();
 	//m_pRyusei->Draw();
 	m_pGameUI->Draw();

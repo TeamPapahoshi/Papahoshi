@@ -37,6 +37,11 @@
 #define GAGE_EFFECT_SET_FRAME (20)
 #define GAGE_EFFECT_SIZE (40.0f)
 
+//円形エフェクト用
+#define GAGE_EFFECT_CIRCLE_SET_FRAME (20)
+#define GAGE_EFFECT_CIRCLE_SIZE (12.5f)
+#define GAGE_EFFECT_NUM_MAX (10)
+
 //-----------------------------
 //列挙型定義
 //-----------------------------
@@ -91,20 +96,7 @@ void cGage::UnInit(){
 //=======================================================================================
 void cGage::Update(){
 
-	if (!m_bGageMax)
-	{//ゲージがマックスでなければ
-		//暫定でキー入力でゲージが増えるように
-		if (GetKeyboardPress(DIK_P))
-			m_fGageNum += 0.5f;
-
-		//最大値になったらゲージマックス状態に
-		if (m_fGageNum >= MAX_GAGE_NUM)
-		{
-			m_bGageMax = true;
-			m_GageSprite.SetVtxColor(D3DXCOLOR(0, 255, 128, 255));
-		}
-	}
-	else
+	if (m_bGageMax)
 	{//ゲージマックス状態からゲージを徐々に減らす
 		m_fGageNum -= 0.8f;
 		if (m_fGageNum <= 0.0f)
@@ -139,7 +131,7 @@ void cGage::Update(){
 				D3DXCOLOR(255, 255, 255, 255),
 				GAGE_EFFECT_SET_FRAME / 2,
 				m_GageSprite.GetSize(),
-				4, 3);
+				EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
 
 			m_nGageEffectNum = CRandam::RandamRenge(0, GAGE_EFFECT_SET_FRAME);
 		}
@@ -154,4 +146,31 @@ void cGage::Update(){
 void cGage::Draw(){
 	m_FlameSprite.Draw();
 	m_GageSprite.Draw();
+}
+
+//=======================================================================================
+//
+//		描画
+//
+//=======================================================================================
+void cGage::GageAdd()
+{
+	//ゲージがマックスでなければ
+		//暫定で固定値でゲージが増えるように
+	m_fGageNum += 0.5f;
+
+	//加算時にエフェクト設定
+	GetEffectManeger()->SetEffectCircle(cTextureManeger::GetTextureGame(TEX_GAME_STAR),
+										D3DXVECTOR2(m_GageSprite.GetPos().x + m_GageSprite.GetSize().x / 2, m_GageSprite.GetPos().y),
+										D3DXVECTOR2(GAGE_EFFECT_CIRCLE_SIZE, GAGE_EFFECT_CIRCLE_SIZE),
+										m_GageSprite.GetVtxColor(),
+										GAGE_EFFECT_CIRCLE_SET_FRAME,
+										GAGE_EFFECT_NUM_MAX);
+
+		//最大値になったらゲージマックス状態に
+	if (m_fGageNum >= MAX_GAGE_NUM)
+	{
+		m_bGageMax = true;
+		m_GageSprite.SetVtxColor(D3DXCOLOR(0, 255, 128, 255));
+	}
 }
