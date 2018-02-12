@@ -26,11 +26,11 @@
 cSceneGame::cSceneGame(){
 
 	// 網
-	pNet = new cNet();
+	m_pNet = new cNet();
 
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
-	m_pBlackHole->SetNetData(pNet);
+	m_pBlackHole->SetNetData(m_pNet);
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
@@ -41,21 +41,30 @@ cSceneGame::cSceneGame(){
 	// 流星
 	m_pRyusei = new cRyusei();
 
-	// モブ星
-	m_pNomalStar = new cNormalStar();
-	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
-	m_pNomalStar->SetNetData(pNet);
-
 	// ゲージ
 	m_pGage = new cGage();
 	m_pGage->Init();
 
-	//UI
+	// モブ星
+	m_pNomalStar = new cNormalStar();
+	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
+	m_pNomalStar->SetNetData(m_pNet);
+	m_pNomalStar->SetGageData(m_pGage);
+
+	// UI
 	m_pGameUI = new cGameUI();
+
+	// タイマー
+	m_pTimer = new cTimer();
 
 	// 背景
 	m_pBG = new cBG();
 	m_pBG->SetBG(cBG::GAME_SKY);
+
+
+	// ゲームの状態
+	m_eGameState = GAME_STATE_SET;
+	m_bFever = false;
 }
 
 //=======================================================================================
@@ -73,8 +82,9 @@ cSceneGame::~cSceneGame(){
 	delete m_pGage;
 	delete m_pBlackHole;
 	delete m_pSampleStar;
-	delete pNet;
+	delete m_pNet;
 	delete m_pGameUI;
+	delete m_pTimer;
 }
 
 //=======================================================================================
@@ -84,21 +94,28 @@ cSceneGame::~cSceneGame(){
 //=======================================================================================
 void cSceneGame::Update(){
 
-	// 更新
-	pNet->Update();		//あみ
-	m_pBG->Update();	// 背景
-	m_pGage->Update();	// ゲージ
-	m_pNomalStar->Update();
-	m_pBlackHole->Update();
-	m_pSpaceRock->Update();
-	m_pSampleStar->Update();
-	m_pRyusei->Update();
-	m_pGameUI->Update();
+	// ゲームの状態で分岐
+	switch (m_eGameState)
+	{
+	case GAME_STATE_SET:
+		SetUpdate();
+		break;
+	case GAME_STATE_MAIN:		// ここも関数にしてもいいかも
+		MainUpdate();
+		break;
+	case GAME_STATE_END:
+		EndUpdate();
+		break;
+	default:
+		break;
+	}
 
-	
-	//当たり判定
-	CheckCollision();
+	// ↓すべての状態で更新↓
 
+	// シーン更新
+	if (GetKeyboardTrigger(DIK_G)){
+		m_eGameState = GAME_STATE_MAIN;
+	}
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
@@ -112,23 +129,94 @@ void cSceneGame::Update(){
 //=======================================================================================
 void cSceneGame::Draw(){
 
+
+	// ゲームの状態で分岐(分ける必要ないかも)
+	switch (m_eGameState)
+	{
+	case GAME_STATE_SET:
+		PrintDebugProc("━━ゲームの状態━━\n");
+		PrintDebugProc("SET\n");
+		PrintDebugProc("Gキーでメインへ\n");
+		PrintDebugProc("━━━━━━━━━━\n");
+		break;
+	case GAME_STATE_MAIN:
+		PrintDebugProc("━━ゲームの状態━━\n");
+		PrintDebugProc("MAIN\n");
+		m_bFever ? PrintDebugProc("Fever\n") : PrintDebugProc("Normal\n");
+		PrintDebugProc("Gキーでメインへ\n");
+		PrintDebugProc("FキーでFEVER or NORMAL\n");
+		PrintDebugProc("━━━━━━━━━━\n");
+		break;
+	case GAME_STATE_END:
+		PrintDebugProc("━━ゲームの状態━━\n");
+		PrintDebugProc("END\n");
+		PrintDebugProc("Gキーでメインへ\n");
+		PrintDebugProc("━━━━━━━━━━\n");
+		break;
+	default:
+		break;
+	}
+
 	m_pBG->Draw();				// 背景
-	//m_pBlackHole->Draw();
-	//m_pSampleStar->Draw();
+	m_pBlackHole->Draw();
+	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
-	//m_pNomalStar->Draw();
-	pNet->Draw();				//あみ
+	m_pNomalStar->Draw();
 	m_pGage->Draw();
 	m_pRyusei->Draw();
-
 	m_pGameUI->Draw();
-
-	for (int nCountBlackHole = 0; nCountBlackHole < m_pBlackHole->GetMaxNum(); nCountBlackHole++){
-
-
-		PrintDebugProc("使用フラグaaaaa %d\n", m_pBlackHole->GetStarData()[0].m_bUse);
-	}
+	m_pNet->Draw();
 }
+
+
+//============================================
+//
+// SET
+//
+//============================================
+void cSceneGame::SetUpdate(){
+
+}
+
+//============================================
+//
+// MAIN
+//
+//============================================
+void cSceneGame::MainUpdate(){
+
+	m_pNet->Update();			//あみ
+	m_pBG->Update();			// 背景
+	m_pGage->Update();			// ゲージ
+	m_pNomalStar->Update();
+	m_pBlackHole->Update();
+	m_pSpaceRock->Update();
+	m_pSampleStar->Update();
+	m_pGameUI->Update();
+	m_pTimer->Update();
+	CheckCollision();			//当たり判定
+
+	// フィーバタイムの時
+	if (m_bFever){
+		m_pRyusei->Update();
+	}
+
+
+	if (GetKeyboardTrigger(DIK_F)){
+		m_bFever ? m_bFever = false : m_bFever = true;
+	}
+	
+}
+
+//============================================
+//
+// END
+//
+//============================================
+void cSceneGame::EndUpdate(){
+
+}
+
 
 
 //============================================
@@ -146,8 +234,9 @@ void cSceneGame::CheckCollision(){
 
 		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
 
-			  if (pNet->GetPullFlug()){
-				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, pNet->GetNetLeft(), pNet->GetNetRight())){
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, 
+					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
 					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
@@ -167,12 +256,10 @@ void cSceneGame::CheckCollision(){
 			  if (!m_pBlackHole->GetStarData()[nCountBlackHole].m_bUse)
 				  continue;
 
-			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_Collision)){
+			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_VacumeRange)){
 				  m_pNomalStar->OnCollidToBlackHole(nCountStar, nCountBlackHole);
 
 				  }
 			  }
 	  }
-
-
 }

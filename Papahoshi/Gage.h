@@ -48,10 +48,17 @@ public:		//外部から参照可能
 	void Update(void);
 	void Draw(void);
 
+	void GageAdd(void);	//ゲージ加算
+
 	//----- ゲッタ ------
 	bool GetGagemax(void)
 	{
 		return m_bGageMax;
+	}
+
+	cSpriteParam GetGageSprite(void)
+	{
+		return m_GageSprite;
 	}
 };
 

@@ -293,7 +293,6 @@ void cSpriteParam::DrawFreePos(){
 void cSpriteParam::LoadTexture(LPCSTR fileName){
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// Direct3Dデバイス
-
 	D3DXCreateTextureFromFile(pDevice, fileName, &m_pTex);
 }
 

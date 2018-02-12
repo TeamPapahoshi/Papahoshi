@@ -17,18 +17,18 @@
 #include "rand.h"
 #include "BlackHole.h"
 #include "Input.h"
+#include "GameUI.h"
 
 
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define STAR_SIZE	(200)
+#define STAR_SIZE			(100)	// サイズ
+#define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
+#define MAX_BLACK_HOLE_NUM	(1)		// 最大数
+#define VACUUM_RANGE		(200)	// 吸い込み範囲
+#define DELETE_RANGE		(20)	// 削除範囲
 
-#define VACUUM_RANGE	(200)
-#define DELETE_RANGE	(20)
-
-#define RESPAWN_FREAM	(100)
-#define MAX_BLACK_HOLE_NUM	(1)
 
 //===================================================================================
 //
@@ -62,30 +62,22 @@ cBlackHole::cBlackHole(){
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
+		CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
-		// 当たり判定
+		// 吸い込み範囲
 		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
 		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
-	
 
-		// 吸い込み範囲
-	/*	m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
-		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);*/
-
-		//// 移動の目的位置決定
-		//m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-		//// 目的地までの距離を測定
-		//m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
-		//m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
+		// 削除範囲
+		m_pStarData->m_DeleteRange.SetType(cCollider::CIRCLE);
+		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 	}
-
 }
 
 //=======================================================================================
@@ -109,7 +101,21 @@ void cBlackHole::Update(){
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
-	// イベント格納ループ？
+	// 更新
+	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		// 当たり判定
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
+		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
+
+	}
+
+
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
+
+	// イベント格納
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		// イベントが呼び出される感じ
@@ -124,14 +130,7 @@ void cBlackHole::Update(){
 		if (m_pStarData->m_bRespawnEvent){
 			Respawn();
 		}
-		// 当たり判定
-		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
-		// 当たり判定
-		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
-		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
 	}
-
 
 	// イベントの起動
 	// デバッグキー
@@ -180,15 +179,19 @@ void cBlackHole::Draw(){
 	// 描画
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+		// 描画フラグがないものは飛ばす
 		if (!m_pStarData->m_bDraw)
 			continue;
 
+		// 星
 		m_pStarData->m_sprite.Draw();
 
-		if (m_pStarData->m_bUse){
+		// ゲーム内で有効ならあたり判定を描画
+	/*	if (m_pStarData->m_bUse){
 			m_pStarData->m_Collision.Draw();
 			m_pStarData->m_VacumeRange.Draw();
-		}
+			m_pStarData->m_DeleteRange.Draw();
+		}*/
 	}
 
 	// 先頭に戻す
@@ -197,8 +200,6 @@ void cBlackHole::Draw(){
 	// デバッグプリント
 	PrintDebugProc("━━━━ブラックホール━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
-	PrintDebugProc("使用フラグ %d\n", m_pStarData->m_bUse);
-	PrintDebugProc("描画フラグ %d\n", m_pStarData->m_bDraw);
 	PrintDebugProc("Bキーで生成\n");
 	PrintDebugProc("Mキーで削除\n");
 	PrintDebugProc("削除後自動リスポーン\n");
@@ -348,33 +349,5 @@ void cBlackHole::OnCollidToNet(int num){
 	m_pStarData += num;
 
 
-	// 網を引いているときのみ移動する
-	if (m_pNetData->GetPullFlug()){
-
-		// 移動したい距離
-		float DistGoalX = m_pStarData->m_PurPosDist.x / 3.0f;	// 三回に分けて移動する
-		float DistGoalY = m_pStarData->m_PurPosDist.y / 3.0f;
-
-
-		// 距離から移動量を算出(フレーム数で割る)
-		m_pStarData->m_Move.x = DistGoalX / 50.0f;
-		m_pStarData->m_Move.y = DistGoalY / 45.0f;
-
-
-
-		// 移動量を反映
-	/*	if (m_pStarData->m_sprite.GetPosX() >= m_pStarData->m_PurposPos.x){
-			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - m_pStarData->m_Move.x);
-		}
-		else if ((m_pStarData->m_sprite.GetPosX() <= m_pStarData->m_PurposPos.x)){
-			m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + m_pStarData->m_Move.x);
-		}
-		if ((m_pStarData->m_sprite.GetPosY() <= m_pStarData->m_PurposPos.y)){
-			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
-		}
-		else if ((m_pStarData->m_sprite.GetPosY() >= m_pStarData->m_PurposPos.y)){
-			m_pStarData->m_sprite.SetPosY(m_pStarData->m_sprite.GetPosY() + m_pStarData->m_Move.y);
-		}*/
-	}
 
 }

@@ -16,6 +16,7 @@
 #include "Input.h"		//入力装置管理
 #include "SceneManeger.h"
 #include "sound.h"
+#include "Timer.h"
 
 //デバッグ
 #ifdef _DEBUG

@@ -20,7 +20,11 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define MAX_EFFECT (100)
+#define MAX_EFFECT (200)
+
+//----- エフェクト分割数の定義 -----
+#define EFFECT_SPARKLE_TEX_DIVIDE_X (4)
+#define EFFECT_SPARKLE_TEX_DIVIDE_Y (3)
 
 //-----------------------------
 //列挙型定義
@@ -34,9 +38,9 @@
 class cBaseEffect
 {
 protected:
-	int		m_nLifeFleam;		//エフェクト生存フレーム
-	bool	m_bEffectUseFlag;	//エフェクト使用フラグ
-	int		m_nDivision;		//エフェクトに使用するポリゴンの個数
+	int			  m_nLifeFleam;		//エフェクト生存フレーム
+	bool		  m_bEffectUseFlag;	//エフェクト使用フラグ
+	int			  m_nDivision;		//エフェクトに使用するポリゴンの個数
 	D3DXVECTOR2   m_fEffectRadius;	//エフェクトを生成する半径
 
 public:
@@ -48,6 +52,7 @@ public:
 	virtual void SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division){};
 	virtual void SetEffectSphereLight(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life){};
 	virtual void SetEffectSparkle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, D3DXVECTOR2 radius, int texdividex, int texdividey){};
+	virtual void SetEffectBezierCurve(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, D3DXVECTOR2 startpoint, D3DXVECTOR2 endpoint){};
 
 	//使用中フラグの取得
 	bool GetUseFlag(void)
@@ -70,6 +75,7 @@ public:
 	void SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division);
 	void SetEffectSphereLight(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXVECTOR2 move, D3DXCOLOR color, int life);
 	void SetEffectSparkle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, D3DXVECTOR2 radius, int texdividex, int texdividey);
+	void SetEffectBezierCurve(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, D3DXVECTOR2 startpoint, D3DXVECTOR2 endpoint);
 
 protected:
 

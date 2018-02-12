@@ -19,15 +19,16 @@
 #include "Input.h"
 #include "MathEX.h"
 #include <cmath>
+#include "GameUI.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(18)
+#define STAR_SIZE	(15)
 #define RESPAWN_FREAM (200)
-#define MAX_NORMAL_RYUSEI_NUM	(1)
+#define MAX_NORMAL_RYUSEI_NUM	(10)
 
-float g_t=0;
+
 //=======================================================================================
 //
 //		コンストラクタ
@@ -68,36 +69,26 @@ cRyusei::cRyusei(){
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-		CreateRamdomPos = D3DXVECTOR2(0,SCREEN_HEIGHT/2.0f);
-
-		CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
+		CreateRamdomPos.y = 0;
+		//CreateRamdomPos = D3DXVECTOR2(0,SCREEN_HEIGHT/2.0f);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 		// ベジェ曲線関連
-		m_pStarData->cp1 = D3DXVECTOR2(SCREEN_WIDTH, 0);
-		m_pStarData->cp2 = D3DXVECTOR2(SCREEN_WIDTH, 0);
-		m_pStarData->cp3 = D3DXVECTOR2(SCREEN_WIDTH, 0);
-		m_pStarData->cp4 = D3DXVECTOR2(0, SCREEN_HEIGHT);
-
-
+		m_pStarData->cp1 = CreateRamdomPos;
+		m_pStarData->cp2 = CreateRamdomPos;
+		m_pStarData->cp3 = CreateRamdomPos;
+		m_pStarData->cp4 = D3DXVECTOR2(CreateRamdomPos.x-250.0f,SCREEN_HEIGHT);
 
 		// CORE
 		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
-
 		m_pStarData->m_Core.SetAddBlend(true);
-		// サイズの変更
-		m_pStarData->m_Core.SetSize(D3DXVECTOR2(23, 23));
-		// テクスチャの設定
-		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
-		// 色
-		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(0, 0, 255, 255));
+		m_pStarData->m_Core.SetSize(D3DXVECTOR2(17, 17));// サイズの変更
+		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));// テクスチャの設定
+		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR((float)CRandam::RandamRenge(0, 255), (float)CRandam::RandamRenge(0, 255),
+													(float)CRandam::RandamRenge(0, 255), 155));		// 色
+
+
 	}
-
-	// インスタンス
-	m_pLine = new cRyuseiLine();
-
-
 }
 
 //=======================================================================================
@@ -106,8 +97,6 @@ cRyusei::cRyusei(){
 //
 //=======================================================================================
 cRyusei::~cRyusei(){
-
-	delete m_pLine;
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -120,8 +109,6 @@ cRyusei::~cRyusei(){
 //=======================================================================================
 void cRyusei::Update(){
 
-	m_pLine->Update(m_pStarData->m_sprite.GetPos());
-
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
@@ -133,11 +120,15 @@ void cRyusei::Update(){
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
 		// ベジェ曲線上を動かす
-		g_t += 0.002f;
-		m_pStarData->m_sprite.SetPos(BezierCurve(g_t, m_pStarData->cp1, m_pStarData->cp2, m_pStarData->cp3, m_pStarData->cp4));
-
+		m_pStarData->time += 0.002f;
+		m_pStarData->m_sprite.SetPos(BezierCurve(m_pStarData->time, m_pStarData->cp1, m_pStarData->cp2, m_pStarData->cp3, m_pStarData->cp4));
 		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
 
+		// 軌跡の更新
+		m_pStarData->m_Line.Update(m_pStarData->m_sprite.GetPos(), m_pStarData->m_Core.GetVtxColor());
+
+		//// 画面外に出たらフラグオフ
+		//if ()
 
 	}
 
@@ -210,6 +201,7 @@ void cRyusei::Draw(){
 
 		m_pStarData->m_sprite.Draw();
 		m_pStarData->m_Core.Draw();
+		//m_pStarData->m_Line.Draw();
 
 
 		//if (m_pStarData->m_bUse)
@@ -220,8 +212,6 @@ void cRyusei::Draw(){
 	m_pStarData = m_pRoot;
 
 
-	m_pLine->Draw();
-	
 
 	// デバッグプリント
 	PrintDebugProc("━━━━━━流星━━━━━━\n");
@@ -338,8 +328,6 @@ void cRyusei::Respawn(){
 
 
 			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-			m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_Destination.x - m_pStarData->m_sprite.GetPos().x);
-			m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_Destination.y - m_pStarData->m_sprite.GetPos().y);
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 

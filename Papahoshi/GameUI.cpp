@@ -52,7 +52,7 @@ cGameUI::cGameUI(){
 
 	for (int i = 0; i < MAX_BASEUI_ITEM; i++){
 		m_aItem[i] = NULL;
-	}
+}
 
 }
 
