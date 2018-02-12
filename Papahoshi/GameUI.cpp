@@ -11,14 +11,13 @@
 // インクルード部
 //----------------------------
 #include "GameUI.h"
+#include "Texture.h"
 
 
 //----------------------------
 // 定数・マクロ定義
 //----------------------------
 #define WHITE_TEX_NAME		"Image/GameUI/white.png"	//白テクスチャ
-#define UI_WIDTH_DIVIDE		(4.0f)
-#define UI_HEIGHT_DIVIDE	(50.0f)
 
 //背景カラー
 #define START_COLOR			(D3DXCOLOR(255.0f, 199.0f, 199.0f, 255.0f))
@@ -51,6 +50,10 @@ cGameUI::cGameUI(){
 	m_nChangeColorBaseUI = START_CHANGE_COL;
 	m_fDirectColorBaseUI = COLOR_CHANGE_SPEED;
 
+	for (int i = 0; i < MAX_BASEUI_ITEM; i++){
+		m_aItem[i] = NULL;
+	}
+
 }
 
 //====================================
@@ -75,6 +78,9 @@ void cGameUI::Update(){
 	//----- ベースUIの色を変更 ------
 	ChangeColorBaseUI();
 
+	//----- アイテムの管理 ------
+	UpdateItem();
+
 }
 
 //====================================
@@ -87,6 +93,11 @@ void cGameUI::Draw(){
 	for (int i = 0; i < 4; i++){
 		m_baseSprite[i].Draw();
 	}
+
+	/*for (int i = 0; i < MAX_BASEUI_ITEM; i++){
+		if (m_aItem[i])
+			m_aItem[i]->Draw();
+	}*/
 
 }
 
@@ -152,5 +163,55 @@ void cGameUI::ChangeColorBaseUI(){
 		}
 
 	}
+
+}
+
+
+//===========================================
+//
+// アイテムの管理
+//
+//===========================================
+void cGameUI::UpdateItem(){
+
+	for (int i = 0; i < MAX_BASEUI_ITEM; i++){
+
+		//--------- 新規アイテムを作成 -----------
+		if (!m_aItem[i]){
+		
+		}
+
+		//--------- すでにあるアイテムを更新 --------
+		else{
+
+		}
+
+	}
+}
+
+
+
+//================================================================================================
+//
+//    UI Item
+//
+//================================================================================================
+cUIItem::cUIItem(ITEM_TYPE Tex, D3DXVECTOR2 pos, float size, D3DXCOLOR col, float speed){
+
+	//------- 変数の初期化 ---------
+	m_bFin = false;
+
+	//------- テクスチャの設定 ---------
+	m_sprite.SetTexture(cTextureManeger::GetTextureGame((TEX_GAME)(TEX_GAME::TEX_KIRA_CIRCLE1 + Tex)));
+	
+	//------- ポジションとサイズ --------
+	m_sprite.SetPos(pos);
+	m_sprite.SetSize(D3DXVECTOR2(size, size));
+
+	//------- 色 --------
+	m_sprite.SetVtxColor(col);
+
+	//------- スピード --------
+	m_fSpeed = speed;
 
 }

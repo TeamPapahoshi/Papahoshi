@@ -71,6 +71,7 @@ m_fThrowSpeed(0.0f)
 {
 
 	//---- 中心点の初期化 ----
+	//m_centerPos = D3DXVECTOR2(SCREEN_WIDTH / 4.0f + (SCREEN_WIDTH / 4.0f * 3.0f / 2.0f), SCREEN_HEIGHT + 30.0f);
 	m_centerPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT + 30.0f);
 
 	//---- 四頂点の初期化 ----
@@ -395,6 +396,7 @@ void cNet::SetNet(){
 						ury = BezierCurve(((float)y / (float)NET_Y_NUM),
 							m_aPos[2], cp1, cp2, m_centerPos).y;
 						ury >= uly ? udisY = ury - uly : udisY = uly - ury;
+						//trY >= uly ? udisY = trY - uly : udisY = uly - trY;
 					}
 
 					//座標の設定
@@ -402,6 +404,7 @@ void cNet::SetNet(){
 					workPos[1].x = tlx + ((tdisX / NET_X_NUM) * (x + 1));
 					workPos[2].x = ulx + ((udisX / NET_X_NUM) * x);
 					workPos[3].x = ulx + ((udisX / NET_X_NUM) * (x + 1));
+
 
 					if (yAng){	//みぎのほうが下にある
 						workPos[0].y = tly + (tdisY / NET_X_NUM) * (x);
@@ -712,6 +715,7 @@ void cNet::PullPhaseUpdate(){
 			m_nPullNum = -1;
 			m_bPurpose = false;
 			gamePhase = PHASE_POST;
+			m_aPos[0] = m_aPos[1] = m_aPos[2] = m_centerPos;
 			m_postPhase = POST_NON;
 		}
 

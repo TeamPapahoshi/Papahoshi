@@ -6,6 +6,9 @@
 //
 //=====================================================
 
+#ifndef __GAME_UI_H__
+#define __GAME_UI_H__
+
 //-----------------------
 // インクルード部
 //-----------------------
@@ -15,7 +18,7 @@
 //-----------------------
 // 定数定義
 //-----------------------
-#define MAX_BASEUI_ITEM		(100)
+#define MAX_BASEUI_ITEM		(30)
 
 #define UI_WIDTH_DIVIDE		(4.0f)
 #define UI_HEIGHT_DIVIDE	(50.0f)
@@ -28,6 +31,38 @@
 //------------------------
 // クラス定義
 //------------------------
+//----- UIアイテム ------
+class cUIItem{
+
+public:
+	enum ITEM_TYPE{
+		CIRCLE1,
+		CIRCLE2,
+		CIRCLE3,
+		PENTAGON1,
+		PENTAGON2,
+		LIGHT1,
+		LIGHT2,
+		CRYSTAL1,
+		CRYSTAL2,
+		MAX,
+	};
+
+	cUIItem(ITEM_TYPE Tex, D3DXVECTOR2 pos, float size, D3DXCOLOR col, float speed);
+	~cUIItem();
+	void Update();
+	void Draw();
+
+	bool CallFin(){
+		return m_bFin;
+	}
+
+private:
+	cSpriteParam	m_sprite;
+	float			m_fSpeed;
+	bool			m_bFin;
+};
+
 //----- UIクラス ------
 class cGameUI{
 
@@ -45,26 +80,11 @@ private:
 	int		m_nChangeColorBaseUI;
 	float	m_fDirectColorBaseUI;
 	//----- ベースUIのキラキラ部分 ------
-	cUIItem*	m_aItem;
-	//void
+	cUIItem*	m_aItem[MAX_BASEUI_ITEM];
+	void		UpdateItem();
+	int			SetItem();
 
 };
 
-//----- UIアイテム ------
-class cUIItem{
 
-public:
-	cUIItem(int nTex, D3DXVECTOR2 pos, float size, D3DXCOLOR col, float speed);
-	~cUIItem();
-	void Update();
-	void Draw();
-
-	bool CallFin(){
-		return m_bFin;
-	}
-
-private:
-	cSpriteParam	m_sprite;
-	float			m_fSpeed;
-	bool			m_bFin;
-};
+#endif
