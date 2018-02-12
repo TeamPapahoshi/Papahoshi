@@ -73,14 +73,14 @@ cNormalStar::cNormalStar(){
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetAnimationFlag(true);
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
-		m_pStarData->m_sprite.SetTexPatternDevide(5, 5);
-		m_pStarData->m_sprite.SetIntervalChangePattern(5);
+		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 
 		// 生成座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
 		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-	//	CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
+		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 		// 当たり判定

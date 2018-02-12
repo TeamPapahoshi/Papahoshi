@@ -301,7 +301,7 @@ void cSpriteParam::AnimationLoop(){
 
 	m_CountAnimationFrame++;
 
-	if (m_currentAnimPattern >= m_texPatternDivideX*m_texPatternDivideY){
+	if (m_currentAnimPattern > m_texPatternDivideX*m_texPatternDivideY-1){
 		m_currentAnimPattern = 0;
 	}
 
