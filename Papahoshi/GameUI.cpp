@@ -13,6 +13,7 @@
 #include "GameUI.h"
 #include "Texture.h"
 #include "rand.h"
+#include "Score.h"
 
 //----------------------------
 // 定数・マクロ定義
@@ -30,6 +31,10 @@
 #define SIZE_MAX_ITEM		(5000)	//50.00f
 #define SPEED_MIN_ITME		(1)
 #define SPEED_MAX_ITME		(20)
+
+//スコア表示位置
+#define SCORE_POS		(D3DXVECTOR2(40.0f, 100.0f))
+#define SCORE_SIZE		(D3DXVECTOR2(43.0f, 43.0f))
 
 
 //====================================
@@ -59,7 +64,10 @@ cGameUI::cGameUI(){
 
 	for (int i = 0; i < MAX_BASEUI_ITEM; i++){
 		m_aItem[i] = NULL;
-}
+	}
+
+	//----- スコアの初期化 -----
+	SetScore(0);
 
 }
 
@@ -88,6 +96,9 @@ void cGameUI::Update(){
 	//----- アイテムの管理 ------
 	UpdateItem();
 
+	//----- スコアの更新 ------
+	UpdateScore();
+
 }
 
 //====================================
@@ -97,14 +108,19 @@ void cGameUI::Update(){
 //====================================
 void cGameUI::Draw(){
 
+	//------ ベースUI --------
 	for (int i = 0; i < 4; i++){
 		m_baseSprite[i].Draw();
 	}
 
+	//----- UIアイテム ------
 	for (int i = 0; i < MAX_BASEUI_ITEM; i++){
 		if (m_aItem[i])
 			m_aItem[i]->Draw();
 	}
+
+	//----- スコア -------
+	DrawScore(SCORE_POS, SCORE_SIZE);
 
 }
 
