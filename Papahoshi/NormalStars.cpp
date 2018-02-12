@@ -72,9 +72,27 @@ cNormalStar::cNormalStar(){
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetAnimationFlag(true);
-		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
 		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
+		// 星の色の決定
+		m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+		switch (m_pStarData->m_nStarColorNum)
+		{
+		case 0:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+			break;
+		case 1:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+			break;
+		case 2:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+			break;
+		default:
+			break;
+		}
+
+
+
 
 		// 生成座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
@@ -392,6 +410,26 @@ void cNormalStar::Respawn(){
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
+			// 星の色の決定
+			m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+			switch (m_pStarData->m_nStarColorNum)
+			{
+			case 0:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+				break;
+			case 1:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+				break;
+			case 2:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+				break;
+			default:
+				break;
+			}
+
+
+
+			// リスポーン処理終了
 			m_pStarData->m_bRespawnEnd = true;
 		}
 	}
