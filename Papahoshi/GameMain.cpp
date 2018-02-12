@@ -169,7 +169,7 @@ void Draw(void){
 		cSceneManeger::Draw();
 
 		//エフェクトの初期化
-		g_CEffectManeger.Draw();
+		//g_CEffectManeger.Draw();
 
 #ifdef _DEBUG
 		//デバッグ表示用テキストの描画

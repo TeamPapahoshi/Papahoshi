@@ -48,10 +48,10 @@
 #define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
 #define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
-#define TEXTURE_FILENAME_SHIP ("data/texture/gyosen_big.png")
-#define TEXTURE_FILENAME_WAVE ("data/texture/line_wave1.png")
-#define TEXTURE_FILENAME_GAGE ("Image/GAGE/gage1.png")
-#define TEXTURE_FILENAME_GAGEFLAME ("Image/GAGE/gageflamecover2.png")
+#define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
+#define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
+#define TEXTURE_FILENAME_GAGE			("Image/GAGE/gage1.png")
+#define TEXTURE_FILENAME_GAGEFLAME		("Image/GAGE/gageflamecover2.png")
 #define TEXTURE_FILENAME_EFFECT_SPARKLE ("Image/Pirticle/kirakira2.png")
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
@@ -96,6 +96,11 @@
 #define TEXTURE_FILENAME_7				("Image/GameUI/7.png")
 #define TEXTURE_FILENAME_8				("Image/GameUI/8.png")
 #define TEXTURE_FILENAME_9				("Image/GameUI/9.png")
+
+// 星スプライト
+#define TEXTURE_FILENAME_BULE_STAR_ANIM		("Image/Star/buleStarAnim.png")
+
+
 
 //-----------------------------
 // グローバル
@@ -162,6 +167,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_LIGHT2,
 	TEXTURE_FILENAME_CRYSTAL1,
 	TEXTURE_FILENAME_CRYSTAL2,
+	TEXTURE_FILENAME_BULE_STAR_ANIM,
 };
 
 /*
