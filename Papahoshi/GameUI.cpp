@@ -69,6 +69,18 @@ cGameUI::cGameUI(){
 	//----- スコアの初期化 -----
 	SetScore(0);
 
+	//----- 文字・スコア -------
+	m_scoreString.LoadTexture("Image/GameUI/scorepng.png");
+	m_scoreString.SetSize(D3DXVECTOR2(326.0f, 93.0f));
+	m_scoreString.SetScale(D3DXVECTOR2(0.6f, 0.6f));
+	m_scoreString.SetPos(D3DXVECTOR2(100.0f, 50.0f));
+
+	//------ 文字・タイム --------
+	m_timeString.LoadTexture("Image/GameUI/time.png");
+	m_timeString.SetSize(D3DXVECTOR2(248.0f, 91.0f));
+	m_timeString.SetScale(D3DXVECTOR2(0.6f, 0.6f));
+	m_timeString.SetPos(D3DXVECTOR2(80.0f, 170.0f));
+
 }
 
 //====================================
@@ -121,6 +133,10 @@ void cGameUI::Draw(){
 
 	//----- スコア -------
 	DrawScore(SCORE_POS, SCORE_SIZE);
+
+	//----- 文字 -----
+	m_scoreString.Draw();
+	m_timeString.Draw();
 
 }
 

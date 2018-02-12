@@ -18,7 +18,7 @@
 //-----------------------
 // íËêîíËã`
 //-----------------------
-#define MAX_BASEUI_ITEM		(30)
+#define MAX_BASEUI_ITEM		(50)
 
 #define UI_WIDTH_DIVIDE		(4.0f)
 #define UI_HEIGHT_DIVIDE	(50.0f)
@@ -83,6 +83,10 @@ private:
 	cUIItem*	m_aItem[MAX_BASEUI_ITEM];
 	void		UpdateItem();
 	int			SetItem();
+
+	//------ ï∂éöï\é¶ -----
+	cSpriteParam m_scoreString;
+	cSpriteParam m_timeString;
 
 };
 
