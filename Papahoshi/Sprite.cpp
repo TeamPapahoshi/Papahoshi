@@ -69,12 +69,15 @@ cSpriteParam::cSpriteParam(){
 	m_rad		= 0.0f;
 	m_texUV		= false;
 	m_pTex		= NULL;
+	
 
 	// 初期値(使わない場合はこのままで)
 	m_texPatternDivideX=1;		
 	m_texPatternDivideY=1;		
 	m_intervalChangePattern = 999;			
 	m_currentAnimPattern=0;	
+	m_bTexAnimationLoop = false;
+	m_CountAnimationFrame = 0;
 
 	m_bAddBlend = false;
 
@@ -282,6 +285,35 @@ void cSpriteParam::DrawFreePos(){
 	// 描画
 	//----------------------------
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON_SPRITE);
+
+}
+
+//=======================================================================================
+//
+//		アニメーション
+//
+//=======================================================================================
+void cSpriteParam::AnimationLoop(){
+
+
+	if (!m_bTexAnimationLoop)
+		return;
+
+	m_CountAnimationFrame++;
+
+	if (m_currentAnimPattern >= m_texPatternDivideX*m_texPatternDivideY){
+		m_currentAnimPattern = 0;
+	}
+
+	if (m_CountAnimationFrame >= m_intervalChangePattern){
+
+		m_CountAnimationFrame = 0;
+
+		m_currentAnimPattern++;
+	}
+
+
+	
 }
 
 

@@ -24,7 +24,7 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(20)
+#define STAR_SIZE	(30)
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_STAR_NUM	(50)
 
@@ -71,12 +71,16 @@ cNormalStar::cNormalStar(){
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
 
 		// テクスチャの設定
-		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));
+		m_pStarData->m_sprite.SetAnimationFlag(true);
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
+		m_pStarData->m_sprite.SetTexPatternDevide(5, 5);
+		m_pStarData->m_sprite.SetIntervalChangePattern(5);
 
 		// 生成座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
 		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+	//	CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 		// 当たり判定
@@ -141,9 +145,13 @@ void cNormalStar::Update(){
 				//エフェクト使用フラグをOnに
 				m_pStarData->m_bEffectSetFlag = true;
 
-		}
+			}
 
 		}
+
+		// アニメーション
+		m_pStarData->m_sprite.AnimationLoop();
+	
 
 		//エフェクト表示中
 		if (m_pStarData->m_bEffectSetFlag)
@@ -265,6 +273,8 @@ void cNormalStar::Draw(){
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
 	PrintDebugProc("Rキーでリセット\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
+
+	PrintDebugProc("Anim %d\n", m_pStarData->m_sprite.GetCurrentAnimPattern());
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 
 
