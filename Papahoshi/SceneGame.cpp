@@ -213,8 +213,16 @@ void cSceneGame::MainUpdate(){
 
 	// フィーバタイムの時
 	if (m_bFever){
+		//このフラグOnにしたらアナウンスを呼ぶ
 		m_pRyusei->Update();
 	}
+
+	//ゲーム終了でアナウンスを呼ぶ
+	/*
+	if(){
+		m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
+	}
+	*/
 
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
