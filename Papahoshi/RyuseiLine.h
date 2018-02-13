@@ -26,6 +26,7 @@ typedef struct _tRyuseiLine{
 	cSpriteParam	t_sprite;
 	bool			t_bUse;
 	float			t_LifeTime;
+	float			t_fFrame=0;
 }tRyuseiLine;
 
 //-----------------------------

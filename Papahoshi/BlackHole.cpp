@@ -23,7 +23,7 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define STAR_SIZE			(100)	// サイズ
+#define STAR_SIZE			(200)	// サイズ
 #define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
 #define VACUUM_RANGE		(200)	// 吸い込み範囲
@@ -59,6 +59,10 @@ cBlackHole::cBlackHole(){
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
+		m_pStarData->m_sprite.SetTexPatternDevide(10, 6);
+		m_pStarData->m_sprite.SetIntervalChangePattern(8);
+		m_pStarData->m_sprite.SetAnimationFlag(true);
+	
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
@@ -108,6 +112,7 @@ void cBlackHole::Update(){
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
+		m_pStarData->m_sprite.AnimationLoop();
 
 	}
 
@@ -204,6 +209,7 @@ void cBlackHole::Draw(){
 	PrintDebugProc("Mキーで削除\n");
 	PrintDebugProc("削除後自動リスポーン\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
+	PrintDebugProc("%d\n", m_pStarData->m_sprite.GetCurrentAnimPattern());
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 }
 //=======================================================================================
