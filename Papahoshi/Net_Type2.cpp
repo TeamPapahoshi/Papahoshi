@@ -85,6 +85,7 @@ m_fThrowSpeed(0.0f)
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
 				m_aNet[z][y][x].SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_NET));	// テクスチャのセット
+				m_aNet[z][y][x].SetAddBlend(true);
 			}
 		}
 	}

@@ -217,6 +217,15 @@ void cSceneGame::MainUpdate(){
 		m_pRyusei->Update();
 	}
 
+	//アナウンスの更新
+	if (m_pAnnounce){
+		m_pAnnounce->Update();
+		if (m_pAnnounce->CallFin()){
+			delete m_pAnnounce;
+			m_pAnnounce = NULL;
+		}
+	}
+
 	//ゲーム終了でアナウンスを呼ぶ
 	/*
 	if(){
@@ -226,6 +235,8 @@ void cSceneGame::MainUpdate(){
 
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
+		if (m_bFever)
+			m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Fever);
 	}
 	
 }
