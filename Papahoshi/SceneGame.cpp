@@ -165,11 +165,11 @@ void cSceneGame::Draw(){
 	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
-	m_pGage->Draw();
 	m_pRyusei->Draw();
-	m_pGameUI->Draw();
 	m_pNet->Draw();
 
+	m_pGameUI->Draw();
+	m_pGage->Draw();
 	if (m_pAnnounce)
 		m_pAnnounce->Draw();
 }

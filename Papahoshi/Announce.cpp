@@ -57,6 +57,7 @@ cAnnounce::cAnnounce(eAnnounceType type){
 	m_anuType = type;
 	m_faseNum = 1;
 	m_stringSprite.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f));
+	m_stringSprite.SetScale(D3DXVECTOR2(1.5f, 1.5f));
 
 }
 

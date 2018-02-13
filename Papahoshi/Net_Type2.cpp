@@ -215,6 +215,13 @@ void cNet::SetNet(){
 	D3DXVECTOR2 workPos[4];
 	float tlx, ulx, trx, urx, tdisX, udisX, trY, tly, ury, uly, tdisY, udisY, yAng, xAng, LtoCdisX, CtoRdisX;
 	D3DXVECTOR2 cp1, cp2;	//制御点
+	bool skip;
+
+	//---- 変数の初期化 ----
+	for (int i = 0; i < 4; i++){
+		workPos[i] = m_centerPos;
+	}
+	skip = false;
 
 	//---- ウキの位置を設定 ----
 	for (int i = 0; i < 3; i++){
@@ -234,7 +241,7 @@ void cNet::SetNet(){
 					//------ 網張りが必要ない場合は処理を行わない ------
 					if (m_centerPos == m_aPos[0] ||
 						m_centerPos == m_aPos[1]){
-						y = NET_Y_NUM + 1;
+						skip = true;
 						break;
 					}
 
@@ -331,7 +338,7 @@ void cNet::SetNet(){
 					//網張りが必要ない場合は処理を行わない
 					if (m_centerPos == m_aPos[2] ||
 						m_centerPos == m_aPos[1]){
-						y = NET_Y_NUM + 1;
+						skip = true;
 						break;
 					}
 
@@ -424,8 +431,9 @@ void cNet::SetNet(){
 				} //switch 
 
 				//あみのポジション決定
-				m_aNet[z][y][x].SetPosFree(workPos[0], workPos[1], workPos[2], workPos[3]);
-
+				if (!skip)
+					m_aNet[z][y][x].SetPosFree(workPos[0], workPos[1], workPos[2], workPos[3]);
+				skip = false;
 			}
 		}
 	} //曲線終了
