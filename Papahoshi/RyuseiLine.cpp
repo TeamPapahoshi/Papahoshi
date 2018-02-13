@@ -77,7 +77,7 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos,D3DXCOLOR col){
 	m_pRyuseiLine = m_pRoot;
 	m_pRyuseiLine->t_fFrame++;
 
-	if (m_pRyuseiLine->t_fFrame > 1){
+	if (m_pRyuseiLine->t_fFrame > 2){
 
 		m_pRyuseiLine->t_fFrame = 0;
 		// ê∂ê¨

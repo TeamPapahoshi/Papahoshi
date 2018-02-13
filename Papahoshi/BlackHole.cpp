@@ -60,7 +60,7 @@ cBlackHole::cBlackHole(){
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
 		m_pStarData->m_sprite.SetTexPatternDevide(10, 6);
-		m_pStarData->m_sprite.SetIntervalChangePattern(8);
+		m_pStarData->m_sprite.SetIntervalChangePattern(4);
 		m_pStarData->m_sprite.SetAnimationFlag(true);
 	
 
