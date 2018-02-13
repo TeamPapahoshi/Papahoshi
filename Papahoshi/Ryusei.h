@@ -31,6 +31,8 @@ public:
 	cRyuseiLine		m_Line;
 
 
+	D3DXVECTOR2		m_VecMove;			// ˆÚ“®•ûŒü‚ÌƒxƒNƒgƒ‹
+
 };
 
 class cRyusei :public cBaseStar{
