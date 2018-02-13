@@ -100,6 +100,10 @@
 // 星スプライト
 #define TEXTURE_FILENAME_BULE_STAR_ANIM		("Image/Star/buleStarAnim.png")
 
+//アナウンス
+#define TEXTURE_FILENAME_ANU_START		("Image/GameUI/start!.png")
+#define TEXTURE_FILENAME_ANU_FIEVER		("Image/GameUI/fever!.png")
+#define TEXTURE_FILENAME_ANU_FINISH		("Image/GameUI/finish!.png")
 
 
 //-----------------------------
@@ -168,6 +172,9 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_CRYSTAL1,
 	TEXTURE_FILENAME_CRYSTAL2,
 	TEXTURE_FILENAME_BULE_STAR_ANIM,
+	TEXTURE_FILENAME_ANU_START,
+	TEXTURE_FILENAME_ANU_FIEVER,
+	TEXTURE_FILENAME_ANU_FINISH,
 };
 
 /*

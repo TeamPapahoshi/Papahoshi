@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Announce.cpp" />
     <ClCompile Include="BaseStar.cpp" />
     <ClCompile Include="BG.cpp" />
     <ClCompile Include="BlackHole.cpp" />
@@ -64,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Announce.h" />
     <ClInclude Include="BaseStar.h" />
     <ClInclude Include="BG.h" />
     <ClInclude Include="BlackHole.h" />

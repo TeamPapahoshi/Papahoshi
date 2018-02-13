@@ -65,6 +65,9 @@ cSceneGame::cSceneGame(){
 	// ゲームの状態
 	m_eGameState = GAME_STATE_SET;
 	m_bFever = false;
+
+	//アナウンスのセット
+	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
 }
 
 //=======================================================================================
@@ -166,6 +169,9 @@ void cSceneGame::Draw(){
 	m_pRyusei->Draw();
 	m_pGameUI->Draw();
 	m_pNet->Draw();
+
+	if (m_pAnnounce)
+		m_pAnnounce->Draw();
 }
 
 
@@ -175,6 +181,15 @@ void cSceneGame::Draw(){
 //
 //============================================
 void cSceneGame::SetUpdate(){
+
+	m_pAnnounce->Update();
+
+	//アナウンス終了で次へ
+	if (m_pAnnounce->CallFin()){
+		delete m_pAnnounce;
+		m_pAnnounce = NULL;
+		m_eGameState = GAME_STATE_MAIN;
+	}
 
 }
 
@@ -201,7 +216,6 @@ void cSceneGame::MainUpdate(){
 		m_pRyusei->Update();
 	}
 
-
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
 	}
@@ -214,6 +228,11 @@ void cSceneGame::MainUpdate(){
 //
 //============================================
 void cSceneGame::EndUpdate(){
+
+	//アナウンス終了で次へ
+	if (m_pAnnounce->CallFin())
+		int i = 0;
+		//りざると
 
 }
 
