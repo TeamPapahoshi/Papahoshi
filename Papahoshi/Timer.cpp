@@ -83,18 +83,7 @@ void cTimer::Update(){
 	}
 
 	// フレーム数を時間に換算
-	m_nFrameTime = m_nCountFrame*m_nFrameRate / 1000.0f;	// /s
-
-
-	// デバッグキー
-	if (GetKeyboardTrigger(DIK_S)){
-		StartCountDown(60);
-	}
-
-	// デバッグキー
-	if (GetKeyboardTrigger(DIK_R)){
-
-	}
+	m_nFrameTime = m_nCountFrame*m_nFrameRate / 1000.0f;	// 
 
 
 	// 実際の時間
