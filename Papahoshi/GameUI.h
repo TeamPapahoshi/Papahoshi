@@ -88,6 +88,7 @@ private:
 	cSpriteParam m_scoreString;
 	cSpriteParam m_timeString;
 
+
 };
 
 

@@ -103,6 +103,10 @@
 #define TEXTURE_FILENAME_GREEN_STAR_ANIM		("Image/Star/greenStarAnim.png")
 #define TEXTURE_FILENAME_PINK_STAR_ANIM		("Image/Star/pinkStarAnim.png")
 
+//アナウンス
+#define TEXTURE_FILENAME_ANU_START		("Image/GameUI/start!.png")
+#define TEXTURE_FILENAME_ANU_FIEVER		("Image/GameUI/fever!.png")
+#define TEXTURE_FILENAME_ANU_FINISH		("Image/GameUI/finish!.png")
 
 
 //-----------------------------
@@ -174,6 +178,13 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_YELLOW_STAR_ANIM,
 	TEXTURE_FILENAME_GREEN_STAR_ANIM,
 	TEXTURE_FILENAME_PINK_STAR_ANIM,
+	TEXTURE_FILENAME_ANU_START,
+	TEXTURE_FILENAME_ANU_FIEVER,
+	TEXTURE_FILENAME_ANU_FINISH,
+};
+
+vector<char*> texResult = {
+
 };
 
 /*
@@ -221,6 +232,9 @@ void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 	case cSceneManeger::GAME:
 		filename = texGame;		// ファイル名をセット
 		break;
+	case cSceneManeger::RESULT:
+		// ファイル名をセット
+		filename = texResult;
 		/*
 		case cSceneManeger::SAMPLE:
 			// ファイル名をセット

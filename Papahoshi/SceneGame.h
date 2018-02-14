@@ -38,6 +38,7 @@
 
 #include "GameUI.h"
 
+#include "Announce.h"
 #include "Timer.h"
 
 
@@ -82,6 +83,7 @@ private:
 	cGameUI*					m_pGameUI;
 	cTimer*						m_pTimer;			// タイマー
 	cSampleStar*				m_pSampleStar;
+	cAnnounce*					m_pAnnounce;
 
 
 	// ゲームの状態

@@ -9,6 +9,7 @@
 #include "Frame.h"
 #include "debugproc.h"
 #include "Input.h"
+#include "Texture.h"
 
 //=======================================================================================
 //
@@ -31,6 +32,16 @@ cTimer::cTimer(){
 	m_fCountDownFrame = 0;
 	m_fCountDownTime = 0;
 	m_bCountDown = false;
+
+	//---- テクスチャ初期化 ----
+	D3DXVECTOR2 pos, size;
+	pos = D3DXVECTOR2(150.0f, 230.0f);
+	size = D3DXVECTOR2(55.0f, 55.0f);
+	for (int i = TIME_SEC_PLACE - 1; i >= 0; i--){
+		m_aSecSprite[i].SetPos(D3DXVECTOR2(pos.x + (size.x * 0.8f) * i, pos.y));
+		m_aSecSprite[i].SetSize(size);
+	}
+
 }
 
 //=======================================================================================
@@ -93,4 +104,27 @@ void cTimer::Update(){
 	PrintDebugProc("Time(frame) %f\n", m_nFrameTime);
 	PrintDebugProc("CountDown %f\n", m_fCountDownTime);
 	PrintDebugProc("Sキーでカウントダウン\n", m_fCountDownTime);
+}
+
+//===================================================
+//
+// 描画関数
+//
+//===================================================
+void cTimer::Draw(){
+
+	int work1, work2;
+	work2 = (int)m_fCountDownTime;
+
+	for (int i = TIME_SEC_PLACE - 1; i >= 0; i--)
+	{
+		//----- スコアのスプライト情報を更新 -----
+		work1 = work2 % 10;
+		work2 = work2 / 10;
+		m_aSecSprite[i].SetTexture(cTextureManeger::GetTextureGame((TEX_GAME)(TEX_GAME_0 + work1)));
+
+		//----- 描画 -----
+		m_aSecSprite[i].Draw();
+	}
+
 }

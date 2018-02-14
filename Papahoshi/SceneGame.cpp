@@ -17,6 +17,8 @@
 #include <fstream>
 #include <vector>
 #include "BaseStar.h"
+#include "Transition.h"
+#include "SceneManeger.h"
 
 //=======================================================================================
 //
@@ -65,6 +67,9 @@ cSceneGame::cSceneGame(){
 	// ゲームの状態
 	m_eGameState = GAME_STATE_SET;
 	m_bFever = false;
+
+	//アナウンスのセット
+	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
 }
 
 //=======================================================================================
@@ -109,7 +114,7 @@ void cSceneGame::Update(){
 	default:
 		break;
 	}
-
+	
 	// ↓すべての状態で更新↓
 
 	// シーン更新
@@ -118,7 +123,7 @@ void cSceneGame::Update(){
 	}
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
-		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
+		cSceneManeger::ChangeScene(cSceneManeger::RESULT);
 	}
 }
 
@@ -162,10 +167,14 @@ void cSceneGame::Draw(){
 	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
-	m_pGage->Draw();
 	m_pRyusei->Draw();
-	m_pGameUI->Draw();
 	m_pNet->Draw();
+
+	m_pGameUI->Draw();
+	m_pGage->Draw();
+	m_pTimer->Draw();
+	if (m_pAnnounce)
+		m_pAnnounce->Draw();
 }
 
 
@@ -175,6 +184,16 @@ void cSceneGame::Draw(){
 //
 //============================================
 void cSceneGame::SetUpdate(){
+
+	m_pAnnounce->Update();
+
+	//アナウンス終了で次へ
+	if (m_pAnnounce->CallFin()){
+		delete m_pAnnounce;
+		m_pAnnounce = NULL;
+		m_eGameState = GAME_STATE_MAIN;
+		m_pTimer->StartCountDown(LIMIT_TIME);
+	}
 
 }
 
@@ -198,12 +217,29 @@ void cSceneGame::MainUpdate(){
 
 	// フィーバタイムの時
 	if (m_bFever){
+		//このフラグOnにしたらアナウンスを呼ぶ
 		m_pRyusei->Update();
 	}
 
+	//アナウンスの更新
+	if (m_pAnnounce){
+		m_pAnnounce->Update();
+		if (m_pAnnounce->CallFin()){
+			delete m_pAnnounce;
+			m_pAnnounce = NULL;
+		}
+	}
+
+	//ゲーム終了でアナウンスを呼ぶ
+	if(!(m_pTimer->GetTime())){
+		m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
+		m_eGameState = GAME_STATE_END;
+	}
 
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
+		if (m_bFever)
+			m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Fever);
 	}
 	
 }
@@ -214,6 +250,19 @@ void cSceneGame::MainUpdate(){
 //
 //============================================
 void cSceneGame::EndUpdate(){
+
+	if (!m_pAnnounce)
+		return;
+
+	m_pAnnounce->Update();
+
+	//アナウンス終了で次へ
+	if (m_pAnnounce->CallFin())
+	{
+		delete m_pAnnounce;
+		m_pAnnounce = NULL;
+		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::SCENE::RESULT, cTransition::TRANSITION_TYPE::TRANSITION_DICE_SCALE_CHANGE);
+	}
 
 }
 

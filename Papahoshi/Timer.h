@@ -12,7 +12,13 @@
 #include "Common.h"
 #include "debugproc.h"
 #include  "Frame.h"
+#include "Sprite.h"
 
+//-------------------------------
+// 定数定義
+//-------------------------------
+#define TIME_SEC_PLACE	(2)	//秒の位の数
+#define LIMIT_TIME		(60)
 
 class cTimer{
 
@@ -36,6 +42,12 @@ public:
 		m_bCountDown = false;
 	}
 
+	float GetTime(){
+		return m_fCountDownTime;
+	}
+
+	void Draw();
+
 
 	void Update();
 
@@ -54,7 +66,8 @@ private:
 	float		m_fCountDownFrame;	// カウントダウン用フレーム
 	float		m_fCountDownTime;	// カウントダウン用時間
 
-
+	//描画用スプライト
+	cSpriteParam	m_aSecSprite[TIME_SEC_PLACE];
 
 };
 
