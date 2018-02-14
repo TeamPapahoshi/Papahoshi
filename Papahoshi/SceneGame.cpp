@@ -17,6 +17,8 @@
 #include <fstream>
 #include <vector>
 #include "BaseStar.h"
+#include "Transition.h"
+#include "SceneManeger.h"
 
 //=======================================================================================
 //
@@ -26,11 +28,11 @@
 cSceneGame::cSceneGame(){
 
 	// 網
-	pNet = new cNet();
+	m_pNet = new cNet();
 
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
-	m_pBlackHole->SetNetData(pNet);
+	m_pBlackHole->SetNetData(m_pNet);
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
@@ -48,7 +50,7 @@ cSceneGame::cSceneGame(){
 	// モブ星
 	m_pNomalStar = new cNormalStar();
 	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
-	m_pNomalStar->SetNetData(pNet);
+	m_pNomalStar->SetNetData(m_pNet);
 	m_pNomalStar->SetGageData(m_pGage);
 
 	// UI
@@ -170,6 +172,7 @@ void cSceneGame::Draw(){
 
 	m_pGameUI->Draw();
 	m_pGage->Draw();
+	m_pTimer->Draw();
 	if (m_pAnnounce)
 		m_pAnnounce->Draw();
 }
@@ -189,6 +192,7 @@ void cSceneGame::SetUpdate(){
 		delete m_pAnnounce;
 		m_pAnnounce = NULL;
 		m_eGameState = GAME_STATE_MAIN;
+		m_pTimer->StartCountDown(LIMIT_TIME);
 	}
 
 }
@@ -227,11 +231,10 @@ void cSceneGame::MainUpdate(){
 	}
 
 	//ゲーム終了でアナウンスを呼ぶ
-	/*
-	if(){
+	if(!(m_pTimer->GetTime())){
 		m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
+		m_eGameState = GAME_STATE_END;
 	}
-	*/
 
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
@@ -248,10 +251,18 @@ void cSceneGame::MainUpdate(){
 //============================================
 void cSceneGame::EndUpdate(){
 
+	if (!m_pAnnounce)
+		return;
+
+	m_pAnnounce->Update();
+
 	//アナウンス終了で次へ
 	if (m_pAnnounce->CallFin())
-		int i = 0;
-		//りざると
+	{
+		delete m_pAnnounce;
+		m_pAnnounce = NULL;
+		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::SCENE::RESULT, cTransition::TRANSITION_TYPE::TRANSITION_DICE_SCALE_CHANGE);
+	}
 
 }
 
