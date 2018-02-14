@@ -69,12 +69,15 @@ cSpriteParam::cSpriteParam(){
 	m_rad		= 0.0f;
 	m_texUV		= false;
 	m_pTex		= NULL;
+	
 
 	// 初期値(使わない場合はこのままで)
 	m_texPatternDivideX=1;		
 	m_texPatternDivideY=1;		
 	m_intervalChangePattern = 999;			
 	m_currentAnimPattern=0;	
+	m_bTexAnimationLoop = false;
+	m_CountAnimationFrame = 0;
 
 	m_bAddBlend = false;
 
@@ -217,6 +220,15 @@ void cSpriteParam::DrawFreePos(){
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// デバイス情報
 	tVertex2D *pVtx;							// 頂点情報
 
+	//---------------------------
+	// アルファブレンドを設定
+	//---------------------------
+	if (m_bAddBlend){
+		pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
+		pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);			// αデスティネーションカラーの指定
+		pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);			// Z比較なし
+	}
+
 	//----------------------------
 	// 頂点バッファの頂点情報を更新
 	//----------------------------
@@ -282,6 +294,42 @@ void cSpriteParam::DrawFreePos(){
 	// 描画
 	//----------------------------
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON_SPRITE);
+
+	//----------------------------
+	// 描画設定を初期化
+	//----------------------------
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// αデスティネーションカラーの指定
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);			// Z比較あり
+
+}
+
+//=======================================================================================
+//
+//		アニメーション
+//
+//=======================================================================================
+void cSpriteParam::AnimationLoop(){
+
+
+	if (!m_bTexAnimationLoop)
+		return;
+
+	m_CountAnimationFrame++;
+
+	if (m_currentAnimPattern > m_texPatternDivideX*m_texPatternDivideY-1){
+		m_currentAnimPattern = 0;
+	}
+
+	if (m_CountAnimationFrame >= m_intervalChangePattern){
+
+		m_CountAnimationFrame = 0;
+
+		m_currentAnimPattern++;
+	}
+
+
+	
 }
 
 

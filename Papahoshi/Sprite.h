@@ -46,9 +46,11 @@ private:
 	bool		m_texUV;		// テクスチャUV使用フラグ
 
 	// テクスチャUV
+	bool	m_bTexAnimationLoop;		// テクスチャアニメーションを使用(Loopのみ)
 	int		m_texPatternDivideX;		// テクスチャ内での分割数(X方向)
 	int		m_texPatternDivideY;		// テクスチャ内での分割数(Y方向)
 	int		m_intervalChangePattern;	// アニメーションの切り替わるタイミング(フレーム数)
+	int		m_CountAnimationFrame;		// アニメーションカウント用
 	int		m_currentAnimPattern;		// アニメーションパターン番号
 	D3DXVECTOR2   m_texUVRatio;			// テクスチャUVの割合
 
@@ -62,6 +64,7 @@ public:
 	void DrawFreePos();								// 正方形じゃない描画
 	void LoadTexture(LPCSTR fileName);				// テクスチャのロード
 	void SetTexture(LPDIRECT3DTEXTURE9* pTex);		// テクスチャのセット
+	void AnimationLoop();							// アニメーションループのみ
 
 	D3DXVECTOR2 AffinTranceform(float x, float y);	// アフィン変換
 
@@ -76,6 +79,10 @@ public:
 	void SetCurrentAnimPattern(int data){
 		m_currentAnimPattern = data;
 	}
+	void SetAnimationFlag(bool data){
+		m_bTexAnimationLoop = true;
+	}
+
 
 	void SetPosFree(D3DXVECTOR2 data1, D3DXVECTOR2 data2, D3DXVECTOR2 data3, D3DXVECTOR2 data4){
 		m_posFree[0] = data1;

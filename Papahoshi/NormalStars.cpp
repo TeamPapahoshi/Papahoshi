@@ -19,11 +19,12 @@
 #include "Input.h"
 #include "MathEX.h"
 #include <cmath>
+#include "GameUI.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(20)
+#define STAR_SIZE	(30)
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_STAR_NUM	(50)
 
@@ -70,14 +71,34 @@ cNormalStar::cNormalStar(){
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
 
 		// テクスチャの設定
-		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR));
+		m_pStarData->m_sprite.SetAnimationFlag(true);
+		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+		m_pStarData->m_sprite.SetIntervalChangePattern(7);
+		// 星の色の決定
+		m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+		switch (m_pStarData->m_nStarColorNum)
+		{
+		case 0:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+			break;
+		case 1:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+			break;
+		case 2:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+			break;
+		default:
+			break;
+		}
 
-		// 座標の決定
+
+
+
+		// 生成座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
+		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
 		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-
-		//CreateRamdomPos = D3DXVECTOR2(SCREEN_WIDTH/2.0f+50, SCREEN_HEIGHT-100);
+		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
 		// 当たり判定
@@ -89,10 +110,6 @@ cNormalStar::cNormalStar(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 		
-
-		// 目的地までの距離を測定
-		m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_Destination.x - m_pStarData->m_sprite.GetPos().x);
-		m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_Destination.y - m_pStarData->m_sprite.GetPos().y);
 
 	}
 
@@ -146,9 +163,13 @@ void cNormalStar::Update(){
 				//エフェクト使用フラグをOnに
 				m_pStarData->m_bEffectSetFlag = true;
 
-		}
+			}
 
 		}
+
+		// アニメーション
+		m_pStarData->m_sprite.AnimationLoop();
+	
 
 		//エフェクト表示中
 		if (m_pStarData->m_bEffectSetFlag)
@@ -257,8 +278,8 @@ void cNormalStar::Draw(){
 
 		m_pStarData->m_sprite.Draw();
 
-		if (m_pStarData->m_bUse)
-			m_pStarData->m_Collision.Draw();
+		//if (m_pStarData->m_bUse)
+		//	m_pStarData->m_Collision.Draw();
 	}
 
 	// 先頭に戻す
@@ -270,6 +291,8 @@ void cNormalStar::Draw(){
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
 	PrintDebugProc("Rキーでリセット\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
+
+	PrintDebugProc("Anim %d\n", m_pStarData->m_sprite.GetCurrentAnimPattern());
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 
 
@@ -378,19 +401,35 @@ void cNormalStar::Respawn(){
 
 		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
 
-			// 座標の決定
+			// 生成座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
+			CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
 			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
-
-			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-			m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_Destination.x - m_pStarData->m_sprite.GetPos().x);
-			m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_Destination.y - m_pStarData->m_sprite.GetPos().y);
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
+			// 星の色の決定
+			m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+			switch (m_pStarData->m_nStarColorNum)
+			{
+			case 0:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+				break;
+			case 1:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+				break;
+			case 2:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+				break;
+			default:
+				break;
+			}
+
+
+
+			// リスポーン処理終了
 			m_pStarData->m_bRespawnEnd = true;
 		}
 	}
@@ -487,32 +526,16 @@ void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 	}
 
 
-	//// ブラックホールの中心を取得
-	//D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].t_Sprite.GetPos();
+	// ブラックホールの中心を取得
+	D3DXVECTOR2 Center = m_pBlackHoleData->GetStarData()[Black].m_sprite.GetPos();
 
-	//// ブラックホールと星との距離を求める
-	//D3DXVECTOR2 Distance;
-	//Distance.x = sqrt((m_pStarData[Normal].t_Sprite.GetPosX() - Center.x)*(m_pStarData[Normal].t_Sprite.GetPosX() - Center.x));
-	//Distance.y = sqrt((m_pStarData[Normal].t_Sprite.GetPosY() - Center.y)*(m_pStarData[Normal].t_Sprite.GetPosY() - Center.y));
+	// 星からブラックホール方向への単位ベクトルを求める
+	D3DXVECTOR2 VecStarToBlack;
+	VecStarToBlack = UnitVector(Center - m_pStarData->m_sprite.GetPos())*0.1f;
 
-	//// 距離から移動量を算出
-	//m_pStarData[Normal].t_Move.x = Distance.x / 800.0f;
-	//m_pStarData[Normal].t_Move.y = Distance.y / 800.0f;
-
-	//// 移動量を反映
-	//if (m_pStarData[Normal].t_Sprite.GetPosX() > Center.x){
-	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() - m_pStarData[Normal].t_Move.x);
-	//}
-	//if (m_pStarData[Normal].t_Sprite.GetPosX() < Center.x){
-	//	m_pStarData[Normal].t_Sprite.SetPosX(m_pStarData[Normal].t_Sprite.GetPosX() + m_pStarData[Normal].t_Move.x);
-	//}
-
-	//if (m_pStarData[Normal].t_Sprite.GetPosY() > Center.y){
-	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() - m_pStarData[Normal].t_Move.y);
-	//}
-	//if (m_pStarData[Normal].t_Sprite.GetPosY() < Center.y){
-	//	m_pStarData[Normal].t_Sprite.SetPosY(m_pStarData[Normal].t_Sprite.GetPosY() + m_pStarData[Normal].t_Move.y);
-	//}
+	// 移動反映
+	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + VecStarToBlack);
+	
 
 }
 

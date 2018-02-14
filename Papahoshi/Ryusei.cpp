@@ -24,9 +24,9 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(16)
+#define STAR_SIZE	(30)
 #define RESPAWN_FREAM (200)
-#define MAX_NORMAL_RYUSEI_NUM	(10)
+#define MAX_NORMAL_RYUSEI_NUM	(50)
 
 
 //=======================================================================================
@@ -56,9 +56,11 @@ cRyusei::cRyusei(){
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
+		
 
 		// テクスチャの設定
-		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
 
 		// 色
 		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
@@ -68,26 +70,22 @@ cRyusei::cRyusei(){
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = 0;
-		//CreateRamdomPos = D3DXVECTOR2(0,SCREEN_HEIGHT/2.0f);
+		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + STAR_SIZE, GAME_SCREEN_RIGHT + 200);
+		CreateRamdomPos.y = -(float)CRandam::RandamRenge(0, 800);
+		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
-		// ベジェ曲線関連
-		m_pStarData->cp1 = CreateRamdomPos;
-		m_pStarData->cp2 = CreateRamdomPos;
-		m_pStarData->cp3 = CreateRamdomPos;
-		m_pStarData->cp4 = D3DXVECTOR2(CreateRamdomPos.x-250.0f,SCREEN_HEIGHT);
+		// 移動方向の単位ベクトルを求める
+		m_pStarData->m_VecMove = 2 * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y+ SCREEN_HEIGHT) - CreateRamdomPos);
 
 		// CORE
 		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
 		m_pStarData->m_Core.SetAddBlend(true);
-		m_pStarData->m_Core.SetSize(D3DXVECTOR2(18, 18));// サイズの変更
-		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_RYUSEI));// テクスチャの設定
+		m_pStarData->m_Core.SetSize(D3DXVECTOR2(STAR_SIZE + 50, STAR_SIZE + 50));// サイズの変更
+		m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));// テクスチャの設定
 		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR((float)CRandam::RandamRenge(0, 255), (float)CRandam::RandamRenge(0, 255),
 													(float)CRandam::RandamRenge(0, 255), 155));		// 色
-
-
+		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(255,255,0,155));		// 色
 	}
 }
 
@@ -119,16 +117,17 @@ void cRyusei::Update(){
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
-		// ベジェ曲線上を動かす
-		m_pStarData->time += 0.002f;
-		m_pStarData->m_sprite.SetPos(BezierCurve(m_pStarData->time, m_pStarData->cp1, m_pStarData->cp2, m_pStarData->cp3, m_pStarData->cp4));
-		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
+
+		m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecMove);
+		m_pStarData->m_sprite.SetRad(m_pStarData->m_sprite.GetRad() - 0.01f);
 
 		// 軌跡の更新
 		m_pStarData->m_Line.Update(m_pStarData->m_sprite.GetPos(), m_pStarData->m_Core.GetVtxColor());
 
 		//// 画面外に出たらフラグオフ
-		//if ()
+		if (m_pStarData->m_sprite.GetPosY() >= SCREEN_HEIGHT || m_pStarData->m_sprite.GetPosX() <= GAME_SCREEN_LEFT){
+			m_pStarData->m_bDestroyEvent = true;
+		}
 
 	}
 
@@ -199,13 +198,10 @@ void cRyusei::Draw(){
 		if (!m_pStarData->m_bDraw)
 			continue;
 
-		m_pStarData->m_sprite.Draw();
-		m_pStarData->m_Core.Draw();
 		m_pStarData->m_Line.Draw();
+		m_pStarData->m_Core.Draw();
+		m_pStarData->m_sprite.Draw();
 
-
-		//if (m_pStarData->m_bUse)
-			//m_pStarData->m_Collision.Draw();
 	}
 
 	// 先頭に戻す
@@ -322,15 +318,17 @@ void cRyusei::Respawn(){
 
 			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+			CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + STAR_SIZE, GAME_SCREEN_RIGHT + 200);
+			CreateRamdomPos.y = -(float)CRandam::RandamRenge(0, 800);
+			//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
+			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
+			// 移動方向の単位ベクトルを求める
+			m_pStarData->m_VecMove = 2 * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
 
-			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-			m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_Destination.x - m_pStarData->m_sprite.GetPos().x);
-			m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_Destination.y - m_pStarData->m_sprite.GetPos().y);
+			
 			// 星から目的地方向の単位ベクトルを求める
+			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
 			m_pStarData->m_bRespawnEnd = true;
@@ -340,16 +338,11 @@ void cRyusei::Respawn(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bRespawnEnd){
 
-
 		// 生成イベント開始
 		m_pStarData->m_bCreateEvent = true;
 
-
-
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;
-
-
 		m_pStarData->m_bRespawnEnd = false;
 		m_pStarData->m_bRespawnEvent = false;
 		return;

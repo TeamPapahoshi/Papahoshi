@@ -30,7 +30,7 @@ public:
 	bool	m_bVibration = true;
 	int		m_nVibrationFrame = 0;
 	int		m_nEffectFrame = 0;
-
+	int		m_nStarColorNum = 0;
 };
 
 class cNormalStar :public cBaseStar{

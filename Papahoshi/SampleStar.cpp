@@ -105,29 +105,29 @@ void cSampleStar::Update(){
 
 	// イベントの起動
 	// デバッグキー
-	if (GetKeyboardTrigger(DIK_K)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//if (GetKeyboardTrigger(DIK_K)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-			if (m_pStarData->m_bDraw)	// ここ注意
-				continue;
+	//		if (m_pStarData->m_bDraw)	// ここ注意
+	//			continue;
 
-			m_pStarData->m_bCreateEvent = true;
-			break;
-		}
-	}
-	// デバッグキー
-	if (GetKeyboardTrigger(DIK_D)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		m_pStarData->m_bCreateEvent = true;
+	//		break;
+	//	}
+	//}
+	//// デバッグキー
+	//if (GetKeyboardTrigger(DIK_D)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-			if (!m_pStarData->m_bUse)	// ここ注意
-				continue;
+	//		if (!m_pStarData->m_bUse)	// ここ注意
+	//			continue;
 
-			m_pStarData->m_bDestroyEvent = true;
-			break;
-		}
-	}
+	//		m_pStarData->m_bDestroyEvent = true;
+	//		break;
+	//	}
+	//}
 
 
 
@@ -154,11 +154,11 @@ void cSampleStar::Draw(){
 
 
 	// デバッグプリント
-	PrintDebugProc("━━━━サンプル━━━\n");
+	/*PrintDebugProc("━━━━サンプル━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
 	PrintDebugProc("Kキーで生成\n");
 	PrintDebugProc("Dキーで削除\n");
-	PrintDebugProc("━━━━━━━━━━━\n");
+	PrintDebugProc("━━━━━━━━━━━\n");*/
 }
 
 

@@ -48,15 +48,26 @@
 #define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
 #define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
-#define TEXTURE_FILENAME_SHIP ("data/texture/gyosen_big.png")
-#define TEXTURE_FILENAME_WAVE ("data/texture/line_wave1.png")
-#define TEXTURE_FILENAME_GAGE ("Image/GAGE/gage1.png")
-#define TEXTURE_FILENAME_GAGEFLAME ("Image/GAGE/gageflamecover2.png")
+#define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
+#define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
+#define TEXTURE_FILENAME_GAGE			("Image/GAGE/gage1.png")
+#define TEXTURE_FILENAME_GAGEFLAME		("Image/GAGE/gageflamecover2.png")
 #define TEXTURE_FILENAME_EFFECT_SPARKLE ("Image/Pirticle/kirakira2.png")
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
 #define TEXTURE_FILENAME_GAGE			("Image/GAGE/gage1.png")
 #define TEXTURE_FILENAME_GAGEFLAME		("Image/GAGE/gageflamecover2.png")
+
+//キラキラ
+#define TEXTURE_FILENAME_CIRCLE1	("Image/Pirticle/S__109092866.jpg")
+#define TEXTURE_FILENAME_CIRCLE2	("Image/Pirticle/S__109092868.jpg")
+#define TEXTURE_FILENAME_CIRCLE3	("Image/Pirticle/S__109092873.jpg")
+#define TEXTURE_FILENAME_PENTAGON1	("Image/Pirticle/S__109092867.jpg")
+#define TEXTURE_FILENAME_PENTAGON2	("Image/Pirticle/S__109092874.jpg")
+#define TEXTURE_FILENAME_LIGHT1		("Image/Pirticle/S__109092870.jpg")
+#define TEXTURE_FILENAME_LIGHT2		("Image/Pirticle/S__109092869.jpg")
+#define TEXTURE_FILENAME_CRYSTAL1	("Image/Pirticle/S__109092871.jpg")
+#define TEXTURE_FILENAME_CRYSTAL2	("Image/Pirticle/S__109092872.jpg")
 
 // タイトルロゴ
 #define TEXTURE_FILENAME_ROGO01 ("Image/ROGO/logo_01.png")
@@ -85,6 +96,18 @@
 #define TEXTURE_FILENAME_7				("Image/GameUI/7.png")
 #define TEXTURE_FILENAME_8				("Image/GameUI/8.png")
 #define TEXTURE_FILENAME_9				("Image/GameUI/9.png")
+
+// 星スプライト
+#define TEXTURE_FILENAME_BULE_STAR_ANIM		("Image/Star/buleStarAnim.png")
+#define TEXTURE_FILENAME_YELLOW_STAR_ANIM		("Image/Star/yellowStarAnim.png")
+#define TEXTURE_FILENAME_GREEN_STAR_ANIM		("Image/Star/greenStarAnim.png")
+#define TEXTURE_FILENAME_PINK_STAR_ANIM		("Image/Star/pinkStarAnim.png")
+
+//アナウンス
+#define TEXTURE_FILENAME_ANU_START		("Image/GameUI/start!.png")
+#define TEXTURE_FILENAME_ANU_FIEVER		("Image/GameUI/fever!.png")
+#define TEXTURE_FILENAME_ANU_FINISH		("Image/GameUI/finish!.png")
+
 
 //-----------------------------
 // グローバル
@@ -142,6 +165,22 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_8,
 	TEXTURE_FILENAME_9,
 	TEXTURE_FILNAME_RYUSEI,
+	TEXTURE_FILENAME_CIRCLE1,
+	TEXTURE_FILENAME_CIRCLE2,
+	TEXTURE_FILENAME_CIRCLE3,
+	TEXTURE_FILENAME_PENTAGON1,
+	TEXTURE_FILENAME_PENTAGON2,
+	TEXTURE_FILENAME_LIGHT1,
+	TEXTURE_FILENAME_LIGHT2,
+	TEXTURE_FILENAME_CRYSTAL1,
+	TEXTURE_FILENAME_CRYSTAL2,
+	TEXTURE_FILENAME_BULE_STAR_ANIM,
+	TEXTURE_FILENAME_YELLOW_STAR_ANIM,
+	TEXTURE_FILENAME_GREEN_STAR_ANIM,
+	TEXTURE_FILENAME_PINK_STAR_ANIM,
+	TEXTURE_FILENAME_ANU_START,
+	TEXTURE_FILENAME_ANU_FIEVER,
+	TEXTURE_FILENAME_ANU_FINISH,
 };
 
 vector<char*> texResult = {
