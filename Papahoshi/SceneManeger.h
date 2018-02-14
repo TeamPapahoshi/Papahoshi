@@ -46,6 +46,7 @@ public:
 	static void Uninit();
 
 	static void SetSceneNum(SCENE scene);	// 現在のシーン番号の設定
+	static SCENE GetSceneNum(void);			// 現在のシーン番号の受け取り
 
 private:
 	static	cBaseScene* m_pScene;			// 現在のシーン

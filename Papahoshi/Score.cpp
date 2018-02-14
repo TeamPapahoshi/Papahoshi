@@ -82,7 +82,17 @@ void DrawScore(D3DXVECTOR2 pos, D3DXVECTOR2 size){
 		//----- スコアのスプライト情報を更新 -----
 		work1 = work2 % 10;
 		work2 = work2 / 10;
-		g_aScoreSprite[i].SetTexture(cTextureManeger::GetTextureGame((TEX_GAME)(TEX_GAME_0 + work1)));
+		switch (cSceneManeger::GetSceneNum())
+		{
+		case cSceneManeger::GAME:
+			g_aScoreSprite[i].SetTexture(cTextureManeger::GetTextureGame((TEX_GAME)(TEX_GAME_0 + work1)));
+			break;
+		case cSceneManeger::RESULT:
+			g_aScoreSprite[i].SetTexture(cTextureManeger::GetTextureResult((TEX_RESULT)(TEX_RESULT_0 + work1)));
+			break;
+		default:
+			break;
+		}
 		g_aScoreSprite[i].SetPos(D3DXVECTOR2(pos.x + (size.x * 0.8f) * i, pos.y));
 		g_aScoreSprite[i].SetSize(size);
 
