@@ -125,7 +125,7 @@ void cSceneTitle::Update(){
 	if (m_pTitleShip->GetShipOutFlag() && !m_bChange)
 	{
 		m_bChange = true;
-		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::STAGE_SELECT, cTransition::TRANSITION_DICE_SCALE_CHANGE);
+		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::GAME, cTransition::TRANSITION_DICE_SCALE_CHANGE);
 	}
 }
 

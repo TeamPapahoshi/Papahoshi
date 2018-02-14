@@ -185,6 +185,9 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::SetUpdate(){
 
+	if (!cTransition::FinishCall())
+		return;
+
 	m_pAnnounce->Update();
 
 	//アナウンス終了で次へ
