@@ -19,14 +19,14 @@
 #define FLAME_SIZE_X (220.0f)
 #define FLAME_SIZE_Y (60.0f)
 
-#define FLAME_POS_X (SCREEN_WIDTH - FLAME_SIZE_X)
+#define FLAME_POS_X (FLAME_SIZE_X)
 #define FLAME_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y)
 
 //ÉoÅ[óp
-#define GAGE_SIZE_X (180.0f)
-#define GAGE_SIZE_Y (20.0f)
+#define GAGE_SIZE_X (FLAME_SIZE_X - 40.0f)
+#define GAGE_SIZE_Y (FLAME_SIZE_Y - 40.0f)
 
-#define GAGE_POS_X (SCREEN_WIDTH - FLAME_SIZE_X)
+#define GAGE_POS_X (FLAME_SIZE_X)
 #define GAGE_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y / 1.35f)
 
 #define MAX_GAGE_NUM (100.0f)

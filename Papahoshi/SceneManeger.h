@@ -35,7 +35,7 @@ public:
 		TITLE,	//タイトル
 		STAGE_SELECT,	//ステージ選択
 		GAME,	//ゲームメイン
-		//RESULT,	//リザルト
+		RESULT,	//リザルト
 	};
 
 	static void ChangeScene(SCENE scene);	// 現在のシーンを引数のシーンへ更新

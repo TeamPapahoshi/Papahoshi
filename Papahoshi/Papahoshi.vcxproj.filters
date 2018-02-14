@@ -137,6 +137,12 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\流星">
       <UniqueIdentifier>{3e930dbd-d953-47d0-86ff-c8fecc040d61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\04リザルト">
+      <UniqueIdentifier>{3543751e-a532-46d3-9399-0f90d3fbb091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\04リザルト\ランキング">
+      <UniqueIdentifier>{57c46215-6535-4353-a1b7-c688e552c847}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -292,6 +298,12 @@
     <ClCompile Include="EffectBezierCurve.cpp">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClCompile>
+    <ClCompile Include="SceneResult.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト</Filter>
+    </ClCompile>
+    <ClCompile Include="Ranking.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト\ランキング</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -441,5 +453,11 @@
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClInclude>
     <ClInclude Include="GameUI.h" />
+    <ClInclude Include="SceneResult.h">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト\ランキング</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

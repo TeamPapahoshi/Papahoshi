@@ -144,6 +144,10 @@ vector<char*> texGame = {
 	TEXTURE_FILNAME_RYUSEI,
 };
 
+vector<char*> texResult = {
+
+};
+
 /*
 //----Sample-----
 vector<char*> texSample = {
@@ -189,6 +193,9 @@ void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 	case cSceneManeger::GAME:
 		filename = texGame;		// ファイル名をセット
 		break;
+	case cSceneManeger::RESULT:
+		// ファイル名をセット
+		filename = texResult;
 		/*
 		case cSceneManeger::SAMPLE:
 			// ファイル名をセット

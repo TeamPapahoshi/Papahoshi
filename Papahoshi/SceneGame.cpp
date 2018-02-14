@@ -26,11 +26,11 @@
 cSceneGame::cSceneGame(){
 
 	// 網
-	m_pNet = new cNet();
+	pNet = new cNet();
 
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
-	m_pBlackHole->SetNetData(m_pNet);
+	m_pBlackHole->SetNetData(pNet);
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
@@ -41,15 +41,15 @@ cSceneGame::cSceneGame(){
 	// 流星
 	m_pRyusei = new cRyusei();
 
-	// モブ星
-	m_pNomalStar = new cNormalStar();
-	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
-	m_pNomalStar->SetNetData(m_pNet);
-	m_pNomalStar->SetGageData(m_pGage);
-
 	// ゲージ
 	m_pGage = new cGage();
 	m_pGage->Init();
+
+	// モブ星
+	m_pNomalStar = new cNormalStar();
+	m_pNomalStar->SetBlackHoleData(m_pBlackHole);
+	m_pNomalStar->SetNetData(pNet);
+	m_pNomalStar->SetGageData(m_pGage);
 
 	// UI
 	m_pGameUI = new cGameUI();
@@ -109,7 +109,7 @@ void cSceneGame::Update(){
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
-		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
+		cSceneManeger::ChangeScene(cSceneManeger::RESULT);
 	}
 }
 
@@ -125,9 +125,9 @@ void cSceneGame::Draw(){
 	m_pSampleStar->Draw();
 	//m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
-	m_pGage->Draw();
 	//m_pRyusei->Draw();
 	m_pGameUI->Draw();
+	m_pGage->Draw();
 
 }
 
