@@ -27,6 +27,7 @@
 #define STAR_SIZE	(30)
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_RYUSEI_NUM	(50)
+#define MOVE_SPEED			(2.5f)
 
 
 //=======================================================================================
@@ -75,8 +76,8 @@ cRyusei::cRyusei(){
 		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
-		// 移動方向の単位ベクトルを求める
-		m_pStarData->m_VecMove = 2 * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y+ SCREEN_HEIGHT) - CreateRamdomPos);
+		// 移動方向の単位ベクトルを求めて速さの補正
+		m_pStarData->m_VecMove = MOVE_SPEED * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
 
 		// CORE
 		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
@@ -324,7 +325,7 @@ void cRyusei::Respawn(){
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			// 移動方向の単位ベクトルを求める
-			m_pStarData->m_VecMove = 2 * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
+			m_pStarData->m_VecMove = MOVE_SPEED * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
 
 			
 			// 星から目的地方向の単位ベクトルを求める

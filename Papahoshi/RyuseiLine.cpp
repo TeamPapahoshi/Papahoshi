@@ -17,7 +17,7 @@
 //-----------------------------
 #define LIFE_TIME	(60)
 #define SIZE		(40)
-#define MAX_RYUSEI_LINE (30)
+#define MAX_RYUSEI_LINE (50)
 //-----------------------------
 //óÒãìå^íËã`
 //-----------------------------
@@ -77,7 +77,7 @@ void cRyuseiLine::Update(D3DXVECTOR2 pos,D3DXCOLOR col){
 	m_pRyuseiLine = m_pRoot;
 	m_pRyuseiLine->t_fFrame++;
 
-	if (m_pRyuseiLine->t_fFrame > 1){
+	if (m_pRyuseiLine->t_fFrame > 2){
 
 		m_pRyuseiLine->t_fFrame = 0;
 		// ê∂ê¨

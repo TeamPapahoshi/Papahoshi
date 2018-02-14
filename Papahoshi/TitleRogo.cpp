@@ -32,8 +32,8 @@
 #define PUSHBUTTON_POS_X (SCREEN_WIDTH / 2)
 #define PUSHBUTTON_POS_Y (SCREEN_HEIGHT / 2 + 100)
 
-#define PUSHBUTTON_SIZE_X (200)
-#define PUSHBUTTON_SIZE_Y (100)
+#define PUSHBUTTON_SIZE_X (340)
+#define PUSHBUTTON_SIZE_Y (90)
 
 #define PUSHBUTTON_SCALE_MAG (0.125f)		//É^ÉCÉgÉãÉçÉSÇÃà⁄ìÆó 
 
@@ -59,7 +59,7 @@
 //=======================================================================================
 cTitleRogo::cTitleRogo()
 {
-
+	m_Pushsprite.LoadTexture("Image/GameUI/press_any_button.png");
 }
 
 //=======================================================================================

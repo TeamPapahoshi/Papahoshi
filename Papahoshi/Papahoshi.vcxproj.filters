@@ -460,7 +460,6 @@
     <ClInclude Include="EffectBezierCurve.h">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI.h" />
     <ClInclude Include="SceneResult.h">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト</Filter>
     </ClInclude>
@@ -473,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="ResultGirl.h">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト画面の女の子</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -41,12 +41,12 @@
 #define DECRE_SPEED (0.1f)	//１フレームごとに初速減らす量
 #define DECRE_THROW_SPEED	(0.1f)	//まさつ
 //待ち時間
-#define INTERVAL_THOROW_PULL	(90)	//投げから引き上げまでの待ち時間
+#define INTERVAL_THOROW_PULL	(50)	//投げから引き上げまでの待ち時間
 //引くとき
-#define PULL_WAIT	(30)	//待ち時間？
+#define PULL_WAIT	(15)	//待ち時間？
 //半円
 #define MIN_SPEED	(1.0f)	//最低スピード
-#define SPEED_HALFCIRCLE	(10)	//10/1進む
+#define SPEED_HALFCIRCLE	(5)	//10/1進む
 //斜め投げ補正
 #define ANG_NUM		(200.0f)
 //制御点を求める
