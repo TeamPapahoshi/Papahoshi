@@ -125,12 +125,12 @@ void cRyusei::Update(){
 		// 軌跡の更新
 		m_pStarData->m_Line.Update(m_pStarData->m_sprite.GetPos(), m_pStarData->m_Core.GetVtxColor());
 
-		//// 画面外に出たらフラグオフ
+		// 画面外に出たらフラグオフ
 		if (m_pStarData->m_sprite.GetPosY() >= SCREEN_HEIGHT || m_pStarData->m_sprite.GetPosX() <= GAME_SCREEN_LEFT){
 			m_pStarData->m_bDestroyEvent = true;
 		}
-
 	}
+
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
