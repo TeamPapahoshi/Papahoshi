@@ -295,13 +295,12 @@ void cSceneGame::CheckCollision(){
 					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
-					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
 				  }
 			  }
 		  }
 	  }
 
-	  //モブ星とブラックホールの吸い込みの判定
+	  //モブ星とブラックホール
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
 		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
@@ -312,10 +311,17 @@ void cSceneGame::CheckCollision(){
 			  if (!m_pBlackHole->GetStarData()[nCountBlackHole].m_bUse)
 				  continue;
 
+			  // 吸い込み範囲
 			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_VacumeRange)){
-				  m_pNomalStar->OnCollidToBlackHole(nCountStar, nCountBlackHole);
-
-				  }
+				  m_pNomalStar->OnCollidToBlackHoleVacumeRange(nCountStar, nCountBlackHole);
 			  }
+			  // 削除範囲
+			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_DeleteRange)){
+				  m_pNomalStar->OnCollidToBlackHoleDeleteRange(nCountStar);
+
+			  }
+
+		  }
 	  }
+
 }

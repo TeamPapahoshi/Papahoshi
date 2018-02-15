@@ -24,10 +24,10 @@
 //-----------------------------
 //É}ÉNÉçíËã`
 //-----------------------------
-#define STAR_SIZE	(30)
-#define RESPAWN_FREAM (200)
+#define STAR_SIZE				(30)
+#define RESPAWN_FREAM			(200)
 #define MAX_NORMAL_RYUSEI_NUM	(50)
-#define MOVE_SPEED			(2.5f)
+#define MOVE_SPEED				(2.5f)
 
 
 //=======================================================================================

@@ -47,8 +47,8 @@ public:
 	
 	//--- ブラックホールとの処理 ---
 	void SetBlackHoleData(cBlackHole* data);
-	void OnCollidToBlackHole(int Normal,int Black);
-	void OnCollidToDelete(int Normal);
+	void OnCollidToBlackHoleVacumeRange(int Normal,int Black);
+	void OnCollidToBlackHoleDeleteRange(int Normal);
 	
 	//--- ゲージとの処理 ---
 	void SetGageData(cGage* data);

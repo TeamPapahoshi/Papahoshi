@@ -24,7 +24,8 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(30)
+#define STAR_SIZE			(30)
+#define STAR_SIZE_MARGIN	(20)
 #define RESPAWN_FREAM (200)
 #define MAX_NORMAL_STAR_NUM	(50)
 
@@ -68,12 +69,14 @@ cNormalStar::cNormalStar(){
 		m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
 
 		// サイズの変更
-		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
+		float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
+		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetAnimationFlag(true);
 		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
+
 		// 星の色の決定
 		m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
 		switch (m_pStarData->m_nStarColorNum)
@@ -407,6 +410,10 @@ void cNormalStar::Respawn(){
 			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
+			// サイズの変更
+			float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
+			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
+
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
@@ -497,7 +504,7 @@ void cNormalStar::SetBlackHoleData(cBlackHole* data){
 }
 
 //---- ブラックホール吸い込み範囲に当たった時の処理 -----
-void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
+void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 
 	m_pStarData = m_pRoot;
 	m_pStarData += Normal;
@@ -540,8 +547,12 @@ void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 }
 
 //---- ブラックホールの削除範囲に当たった時の処理 -----
-void cNormalStar::OnCollidToDelete(int Normal){
+void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
 
+	m_pStarData = m_pRoot;
+	m_pStarData += Normal;
+
+	m_pStarData->m_bDestroyEvent = true;
 	
 }
 
