@@ -39,6 +39,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="rand.cpp" />
     <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="ResultGirl.cpp" />
     <ClCompile Include="Ryusei.cpp" />
     <ClCompile Include="RyuseiLine.cpp" />
     <ClCompile Include="Sample.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Ranking.h" />
+    <ClInclude Include="ResultGirl.h" />
     <ClInclude Include="Ryusei.h" />
     <ClInclude Include="RyuseiLine.h" />
     <ClInclude Include="Sample.h" />

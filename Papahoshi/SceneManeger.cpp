@@ -201,3 +201,12 @@ void cSceneManeger::Draw(){
 void cSceneManeger::SetSceneNum(SCENE secene){
 	m_nCurrentSceneNum = secene;
 }
+
+//=======================================================================================
+//
+//	Œ»İ‚ÌƒV[ƒ“”Ô†‚ğó‚¯æ‚è
+//
+//=======================================================================================
+cSceneManeger::SCENE cSceneManeger::GetSceneNum(void){
+	return m_nCurrentSceneNum;
+}

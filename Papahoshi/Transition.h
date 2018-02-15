@@ -39,12 +39,14 @@ public:
 	virtual ~cTransition(){}
 
 	void SetTransition(int nextScene);	//Ÿ‚ÌƒV[ƒ“”Ô†‚ğİ’è
-	bool FinishCall();
+	static bool FinishCall();
 
-	cTransition() : m_bFinish(false),m_nextScene(0),m_bOut(false){}
+	cTransition() : m_nextScene(0),m_bOut(false){
+		m_bFinish = false;
+	}
 
 protected:
-	bool m_bFinish;
+	static bool m_bFinish;
 	int m_nextScene;
 	bool m_bOut;
 };

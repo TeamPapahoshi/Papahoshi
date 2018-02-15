@@ -96,6 +96,7 @@
 #define TEXTURE_FILENAME_7				("Image/GameUI/7.png")
 #define TEXTURE_FILENAME_8				("Image/GameUI/8.png")
 #define TEXTURE_FILENAME_9				("Image/GameUI/9.png")
+#define TEXTURE_FILENAME_NUMBER         ("Image/GameUI/number.png")
 
 // 星スプライト
 #define TEXTURE_FILENAME_BULE_STAR_ANIM		("Image/Star/buleStarAnim.png")
@@ -184,6 +185,17 @@ vector<char*> texGame = {
 };
 
 vector<char*> texResult = {
+	TEXTURE_FILENAME_NUMBER,
+	TEXTURE_FILENAME_0,
+	TEXTURE_FILENAME_1,
+	TEXTURE_FILENAME_2,
+	TEXTURE_FILENAME_3,
+	TEXTURE_FILENAME_4,
+	TEXTURE_FILENAME_5,
+	TEXTURE_FILENAME_6,
+	TEXTURE_FILENAME_7,
+	TEXTURE_FILENAME_8,
+	TEXTURE_FILENAME_9,
 
 };
 
@@ -270,4 +282,9 @@ LPDIRECT3DTEXTURE9* cTextureManeger::GetTextureStageSelect(TEX_STAGE_SELECT texN
 LPDIRECT3DTEXTURE9* cTextureManeger::GetTextureGame(TEX_GAME texNum){	//ゲームメイン
 	return &p_texture[texNum];
 }
+
+LPDIRECT3DTEXTURE9* cTextureManeger::GetTextureResult(TEX_RESULT texNum){	//ゲームメイン
+	return &p_texture[texNum];
+}
+
 

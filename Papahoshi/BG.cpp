@@ -22,6 +22,7 @@
 //---------------------
 #define BG_FILNAME_SKY ("Image/BG/black.png")
 #define BG_STAR        ("Image/BG/bgstar.jpg")
+#define BG_RESULT	   ("Image/BG/bgresult.jpg")
 
 
 //=======================================================================================
@@ -35,6 +36,8 @@ void cBG::SetBG(BG bg){
 
 	type = bg;
 
+	sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
+
 	// 背景は同じものを複数ロードしないのでここで直接ロードします
 	switch (type)
 	{
@@ -47,6 +50,8 @@ void cBG::SetBG(BG bg){
 		sprite.LoadTexture(BG_FILNAME_SKY);
 		break;
 	case RESULT:
+		sprite.LoadTexture(BG_RESULT);
+		sprite.SetVtxColor(D3DXCOLOR(128,128,128,255));
 		break;
 	default:
 		break;

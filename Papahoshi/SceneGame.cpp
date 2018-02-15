@@ -185,6 +185,11 @@ void cSceneGame::Draw(){
 //============================================
 void cSceneGame::SetUpdate(){
 
+	m_pGameUI->Update();
+
+	if (!cTransition::FinishCall())
+		return;
+
 	m_pAnnounce->Update();
 
 	//アナウンス終了で次へ
@@ -250,6 +255,8 @@ void cSceneGame::MainUpdate(){
 //
 //============================================
 void cSceneGame::EndUpdate(){
+
+	m_pGameUI->Update();
 
 	if (!m_pAnnounce)
 		return;

@@ -20,7 +20,7 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define MAX_EFFECT (200)
+#define MAX_EFFECT (300)
 
 //----- エフェクト分割数の定義 -----
 #define EFFECT_SPARKLE_TEX_DIVIDE_X (4)

@@ -18,6 +18,15 @@
 #include "Transition.h"
 
 // このシーンで使うオブジェクト
+#include "Score.h"
+
+//-----------------------------
+// マクロ定義
+//-----------------------------
+#define SCORE_POS_X  (550)
+#define SCORE_POS_Y	 (60)
+#define SCORE_SIZE_X (80)
+#define SCORE_SIZE_Y (100)
 
 //-----------------------------
 // グローバル
@@ -35,8 +44,10 @@ cSceneResult::cSceneResult()
 	//オブジェクトの動的確保
 	m_pRanking = new cRanking();
 
-	//初期化処理
-	m_pRanking->Init();
+	m_pBG = new cBG();
+	m_pBG->SetBG(m_pBG->RESULT);
+
+	
 }
 
 //=======================================================================================
@@ -46,11 +57,10 @@ cSceneResult::cSceneResult()
 //=======================================================================================
 cSceneResult::~cSceneResult(){
 
-	//終了処理
-	m_pRanking->UnInit();
-
 	// 動的インスタンスするならdeleteをUnitとは別にここに
 	delete m_pRanking;
+	delete m_pBG;
+	
 }
 
 //=======================================================================================
@@ -62,6 +72,9 @@ void cSceneResult::Update(){
 	//更新処理
 	m_pRanking->Update();
 
+	m_pBG->Update();
+
+	UpdateScore();
 
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_SPACE)){
@@ -76,7 +89,9 @@ void cSceneResult::Update(){
 //=======================================================================================
 void cSceneResult::Draw(){
 	//描画処理
+	m_pBG->Draw();
 	m_pRanking->Draw();
+	DrawScore(D3DXVECTOR2(SCORE_POS_X, SCORE_POS_Y), D3DXVECTOR2(SCORE_SIZE_X, SCORE_SIZE_Y));
 }
 
 
