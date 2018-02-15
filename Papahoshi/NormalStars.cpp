@@ -1,7 +1,7 @@
 //======================================================================
-//	Star
+//	NormalStar
 //	
-//	概要＿：星処理
+//	概要＿：モブ星処理
 //	制作者：加藤　遼
 //	
 //======================================================================
@@ -36,7 +36,6 @@
 
 //網にかかった時のエフェクト用
 
-
 //ゲージに移動するときのエフェクト用
 #define EFFECT_BEZIERCURVE_FRAME (60)
 #define EFFECT_BEZIERCURVE_SIZE (22.0f)
@@ -57,8 +56,6 @@ cNormalStar::cNormalStar(){
 	// 動的インスタンス
 	m_pStarData = new cNormalStarData[m_nMaxNum]();	//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
-
-
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -93,9 +90,6 @@ cNormalStar::cNormalStar(){
 		default:
 			break;
 		}
-
-
-
 
 		// 生成座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
