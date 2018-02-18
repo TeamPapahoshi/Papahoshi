@@ -23,14 +23,17 @@
 #include "MathEX.h"
 #include "GameUI.h"
 
+#include "Score.h"
+
 //-----------------------------
 //マクロ定義
 //-----------------------------
-
 #define STAR_SIZE			(30)
 #define STAR_SIZE_MARGIN	(20)
 #define RESPAWN_FREAM		(200)
-#define MAX_NORMAL_STAR_NUM	(15)
+#define MAX_NORMAL_STAR_NUM	(50)
+#define LIFE_TIME			(2000)
+#define LIFE_TIME_MARGIN	(500)
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
@@ -61,57 +64,68 @@ cNormalStar::cNormalStar(){
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+		
+
 		// 初期生成
 		m_pStarData->m_bDraw = true;
 		SetCountAndUse(true);
 		m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
-
-		// サイズの変更
-		float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
-		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetAnimationFlag(true);
 		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 
-		// 星の色の決定
-		m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
-		switch (m_pStarData->m_nStarColorNum)
-		{
-		case 0:
-			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
-			break;
-		case 1:
-			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
-			break;
-		case 2:
-			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
-			break;
-		default:
-			break;
-		}
-
-		// 生成座標の決定
-		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
-		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
-
-		// 当たり判定
-		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE/2.0f);
-
-		// 移動の目的位置決定
-		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT-100);
-		// 星から目的地方向の単位ベクトルを求める
-		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
-		
+		Init();
 
 	}
-
 }
+void cNormalStar::Init(){
+
+	
+	// サイズの変更
+	float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
+	m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
+
+	// 星の色の決定
+	m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+	switch (m_pStarData->m_nStarColorNum)
+	{
+	case 0:
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+		break;
+	case 1:
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+		break;
+	case 2:
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+		break;
+	default:
+		break;
+	}
+
+	// 生成座標の決定
+	D3DXVECTOR2 CreateRamdomPos;
+	CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
+	CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT - 100);
+	//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
+	m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+
+	// 当たり判定
+	m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+	m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+
+
+	// 移動の目的位置決定
+	m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
+	// 星から目的地方向の単位ベクトルを求める
+	m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
+
+
+	// 正存時間の設定
+	m_pStarData->m_nLifeTime = CRandam::RandamRenge(LIFE_TIME, LIFE_TIME + LIFE_TIME_MARGIN);
+}
+
 
 //=======================================================================================
 //
@@ -137,15 +151,28 @@ void cNormalStar::Update(){
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+
+		// 使用されていないのは飛ばす
+		if (!m_pStarData->m_bUse)
+			continue;
+
+
+		// 正存時間減らす
+		m_pStarData->m_nLifeTime--;
+		if (m_pStarData->m_nLifeTime<=0){
+			m_pStarData->m_bDestroyEvent = true;
+		}
+
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
 
 		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y )
 		{
 			m_pStarData->m_bDestroyEvent = true;
+			m_pStarData->m_bAddScore = true;
 
 			if (!m_pStarData->m_bEffectSetFlag)
 			{
@@ -177,7 +204,7 @@ void cNormalStar::Update(){
 			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame == EFFECT_BEZIERCURVE_FRAME)
 			{
 				m_pGageData->GageAdd();
-	}
+			}
 		}
 
 	}
@@ -201,29 +228,25 @@ void cNormalStar::Update(){
 		if (m_pStarData->m_bRespawnEvent){
 			Respawn();
 		}
-		
-		// 当たり判定
-		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
 		if (m_pStarData->m_bDraw)
 		{
-		// エフェクト生成フレームの加算
-		m_pStarData->m_nEffectSetTime--;
+			// エフェクト生成フレームの加算
+			m_pStarData->m_nEffectSetTime--;
 
-		//フレームが一定値になったらエフェクトの生成
-		if (m_pStarData->m_nEffectSetTime < 0)
-		{
-			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
-												 m_pStarData->m_sprite.GetPos(),
-												 D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
-												 m_pStarData->m_sprite.GetVtxColor(),
-												 EFFECT_FRAME / 2,
-												 D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
-																	  EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
+			//フレームが一定値になったらエフェクトの生成
+			if (m_pStarData->m_nEffectSetTime < 0)
+			{
+				GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
+					m_pStarData->m_sprite.GetPos(),
+					D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
+					m_pStarData->m_sprite.GetVtxColor(),
+					EFFECT_FRAME / 2,
+					D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
+					EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
 
-			m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
-		}
+				m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
+			}
 		}
 	}
 
@@ -289,7 +312,6 @@ void cNormalStar::Draw(){
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
 	PrintDebugProc("Rキーでリセット\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
-
 	PrintDebugProc("Anim %d\n", m_pStarData->m_sprite.GetCurrentAnimPattern());
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 
@@ -312,6 +334,10 @@ void cNormalStar::Create(){
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
 		m_pStarData->m_bDraw = true;
 
+		if (m_pStarData->m_sprite.GetVtxColorA() <= 255){
+			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+		}
+
 
 
 		//****************************************************
@@ -319,9 +345,9 @@ void cNormalStar::Create(){
 
 
 		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
-		//m_pStarData->m_bCreateEnd = true;
 
-		m_pStarData->m_bCreateEnd = true;
+		if (m_pStarData->m_sprite.GetVtxColorA() >= 255)
+			m_pStarData->m_bCreateEnd = true;
 
 
 
@@ -372,6 +398,13 @@ void cNormalStar::Destroy(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
 
+		// スコア加算
+		if (m_pStarData->m_bAddScore){
+			AddScore(100);
+			m_pStarData->m_bAddScore = false;
+		}
+
+
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;
 		m_pStarData->m_bDraw = false;
@@ -399,36 +432,10 @@ void cNormalStar::Respawn(){
 
 		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
 
-			// 生成座標の決定
-			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
-			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+			Init();
 
-			// サイズの変更
-			float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
-			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
-
-			// 星から目的地方向の単位ベクトルを求める
-			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
-
-			// 星の色の決定
-			m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
-			switch (m_pStarData->m_nStarColorNum)
-			{
-			case 0:
-				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
-				break;
-			case 1:
-				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
-				break;
-			case 2:
-				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
-				break;
-			default:
-				break;
-			}
-
+			// αの設定
+			m_pStarData->m_sprite.SetVtxColorA(0);
 
 
 			// リスポーン処理終了
@@ -508,7 +515,7 @@ void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 	if (m_pStarData->m_bVibration){
 
 		m_pStarData->m_nVibrationFrame++;
-		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + 0.15f);
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + 0.25f);
 
 		if (m_pStarData->m_nVibrationFrame > 5){
 			m_pStarData->m_bVibration = false;
@@ -519,7 +526,7 @@ void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 	else if (!m_pStarData->m_bVibration){
 
 		m_pStarData->m_nVibrationFrame++;
-		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - 0.15f);
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - 0.25f);
 
 		if (m_pStarData->m_nVibrationFrame > 5){
 			m_pStarData->m_bVibration = true;
@@ -548,6 +555,7 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
 	m_pStarData += Normal;
 
 	m_pStarData->m_bDestroyEvent = true;
+	m_pStarData->m_bAddScore = false;
 	
 }
 
@@ -566,6 +574,7 @@ void cNormalStar::OnCollidToSpaceRock(int num){
 
 
 	m_pStarData->m_bDestroyEvent = true;
+	m_pStarData->m_bAddScore = false;
 }
 
 //=======================================================================================

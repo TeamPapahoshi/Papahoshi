@@ -110,10 +110,10 @@ void cSpaceRock::Update(){
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+
 		// 当たり判定
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
-		m_pStarData->m_sprite.AnimationLoop();
-
+	
 		// 破壊数によって色を変える
 		switch (m_pStarData->m_nDestroyStarNum){
 
@@ -134,9 +134,7 @@ void cSpaceRock::Update(){
 			break;
 		}
 
-
-
-
+		// 破壊カウントがゼロになると爆発
 		if (m_pStarData->m_nDestroyStarNum <= 0){
 
 			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;
