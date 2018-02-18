@@ -115,8 +115,8 @@ m_fThrowSpeed(0.0f)
 
 	//îºâ~
 	m_halfCircle.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_HALFCIRCLE));
-	m_halfCircle.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT));
-	m_halfCircle.SetSize(D3DXVECTOR2(SCREEN_WIDTH, SCREEN_HEIGHT));
+	m_halfCircle.SetPos(D3DXVECTOR2(GAME_SCREEN_LEFT + ((GAME_SCREEN_RIGHT - GAME_SCREEN_LEFT) / 2.0f), SCREEN_HEIGHT));
+	m_halfCircle.SetSize(D3DXVECTOR2(GAME_SCREEN_RIGHT - GAME_SCREEN_LEFT, GAME_SCREEN_UNDER - GAME_SCREEN_TOP));
 	m_halfCircle.SetScale(D3DXVECTOR2(0.0f, 0.0f));
 
 	//--------- ìñÇΩÇËîªíËÇÃèâä˙âª --------------
