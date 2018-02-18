@@ -135,11 +135,11 @@ void cSpaceRock::Update(){
 		}
 
 
-		// アニメーション
-		m_pStarData->m_ExplosionAnim.AnimationLoop();
 
 
 		if (m_pStarData->m_nDestroyStarNum <= 0){
+
+			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;
 			m_pStarData->m_bDestroyEvent = true;
 		}
 		
@@ -247,7 +247,8 @@ void cSpaceRock::Draw(){
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
 	PrintDebugProc("2キーで破壊数更新");
 	PrintDebugProc("破壊数 %d/%d\n", m_pStarData->m_nDestroyStarNum, DESTROY_STAR);
-	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
+	PrintDebugProc("爆発時間 %d/%d\n", m_pStarData->m_ExplosionFrame, EXPLOSION_FRAME);
+	PrintDebugProc("リスポーンインターバル %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 
 }
@@ -315,22 +316,27 @@ void cSpaceRock::Destroy(){
 		//****** ここに演出とか処理を書いていく *************
 
 		// 爆発フレームの更新
-		m_pStarData->m_ExplosionFrame++;
+		m_pStarData->m_ExplosionFrame--;
 
 		// フラグオン
 		m_pStarData->m_bExplosion = true;
 
-
-
+		// アニメーション
+		m_pStarData->m_ExplosionAnim.AnimationLoop();
 
 		//****************************************************
 
 		// 演出がおわったら終了フラグを立てる->if(EffectEnd()){m_pStar->....}
-		m_pStarData->m_bDestroyEnd = true;
+		if (m_pStarData->m_ExplosionFrame <= 0)
+			m_pStarData->m_bDestroyEnd = true;
+
 	}
 
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
+
+		m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
+		m_pStarData->m_bExplosion = false;								// 開始用フラグ
 
 		// 終了したら即リスポーン準備
 		m_pStarData->m_bRespawnEvent = true;
