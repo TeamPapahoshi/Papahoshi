@@ -5,6 +5,10 @@
 //  Mei Goto.
 //
 //=====================================================
+//
+// 次チアガールから
+//
+//=====================================================
 
 #ifndef __GAME_UI_H__
 #define __GAME_UI_H__
@@ -62,6 +66,35 @@ private:
 	cSpriteParam	m_sprite;
 	float			m_fSpeed;
 	bool			m_bFin;
+};
+
+//----- チアガール ------
+class cTheerGirl{
+
+public:
+	
+	//--- 列挙型 ----
+	enum eGirlMotion{
+		NOMAL,
+		FEVER,
+	};
+
+	cTheerGirl();
+	~cTheerGirl();
+	void Update();
+	void Draw();
+
+	void SetMotion(eGirlMotion motion){
+		m_motionType = motion;
+		m_nMotionNum = 0;
+		m_nMotionFrame = 0;
+	}
+
+
+private:
+	eGirlMotion		m_motionType;	//モーション
+	int				m_nMotionNum;	//現在のモーション番号
+	int				m_nMotionFrame;	//フレーム数
 };
 
 //----- UIクラス ------
