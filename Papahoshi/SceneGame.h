@@ -16,12 +16,12 @@
 #include "SceneManeger.h"
 #include "Common.h"
 
-
 // ステージ
 #include "StageManager.h"
 
 // このステージで使うオブジェクト
 #include "BG.h"
+
 // 網
 #include "Net.h"
 #include "Net_Type2.h"

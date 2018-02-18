@@ -299,6 +299,23 @@ void cSceneGame::CheckCollision(){
 			  }
 		  }
 	  }
+	  //---網と流星の判定type2---
+	  for (int nCountStar = 0; nCountStar < m_pRyusei->GetMaxNum(); nCountStar++){
+
+		  if (!m_pRyusei->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
+
+					 // m_pRyusei->OnCollidToNet(nCountStar);
+				  }
+			  }
+		  }
+	  }
 
 	  //モブ星とブラックホール
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){

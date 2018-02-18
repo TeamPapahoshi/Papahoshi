@@ -23,7 +23,7 @@
 #define VACUUM_RANGE		(200)
 #define DELETE_RANGE		(10)
 #define RESPAWN_FREAM		(20)
-#define MAX_SPACE_ROCK_NUM	(1)
+#define MAX_SPACE_ROCK_NUM	(5)
 
 
 //=======================================================================================

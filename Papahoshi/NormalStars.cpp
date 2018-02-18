@@ -5,12 +5,15 @@
 //	制作者：加藤　遼
 //	
 //======================================================================
+
 //-----------------------------
 //インクルードファイル
 //-----------------------------
 #include <Windows.h>
 #include <math.h>
 #include <fstream>
+#include <cmath>
+
 #include "debugproc.h"
 #include "Common.h"
 #include "Texture.h"
@@ -18,23 +21,21 @@
 #include "rand.h"
 #include "Input.h"
 #include "MathEX.h"
-#include <cmath>
 #include "GameUI.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
+
 #define STAR_SIZE			(30)
 #define STAR_SIZE_MARGIN	(20)
-#define RESPAWN_FREAM (200)
-#define MAX_NORMAL_STAR_NUM	(50)
+#define RESPAWN_FREAM		(200)
+#define MAX_NORMAL_STAR_NUM	(1)
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
 #define EFFECT_SIZE    (40.0f)
 #define EFFECT_RADIUS  (8.0f)
-
-//網にかかった時のエフェクト用
 
 //ゲージに移動するときのエフェクト用
 #define EFFECT_BEZIERCURVE_FRAME (60)

@@ -76,8 +76,14 @@ cRyusei::cRyusei(){
 		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
-		// 移動方向の単位ベクトルを求めて速さの補正
+		// 流れる方向の単位ベクトルを求めて速さの補正
 		m_pStarData->m_VecMove = MOVE_SPEED * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
+
+		// 移動の目的位置決定
+		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 100);
+		// 星から目的地方向の単位ベクトルを求める
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
+
 
 		// CORE
 		m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
@@ -350,3 +356,24 @@ void cRyusei::Respawn(){
 	}
 }
 
+//=======================================================================================
+//
+//		網との処理
+//
+//=======================================================================================
+//--- 網のデータ取得 ---
+void cRyusei::SetNetData(cNet* data){
+	m_pNetData = data;
+}
+
+//--- 網と当たった時の処理 ---
+void cRyusei::OnCollidToNet(int num){
+
+	// 先頭から何番目か
+	m_pStarData = m_pRoot;
+	m_pStarData += num;
+
+
+	// Vector確認用
+	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
+}

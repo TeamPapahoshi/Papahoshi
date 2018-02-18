@@ -18,7 +18,6 @@
 #include "Net_Type2.h"
 #include "BlackHole.h"
 #include "Gage.h"
-
 #include <vector>
 #include <fstream>
 
