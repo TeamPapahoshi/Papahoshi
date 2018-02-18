@@ -515,7 +515,7 @@ void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 	if (m_pStarData->m_bVibration){
 
 		m_pStarData->m_nVibrationFrame++;
-		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + 0.15f);
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + 0.25f);
 
 		if (m_pStarData->m_nVibrationFrame > 5){
 			m_pStarData->m_bVibration = false;
@@ -526,7 +526,7 @@ void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 	else if (!m_pStarData->m_bVibration){
 
 		m_pStarData->m_nVibrationFrame++;
-		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - 0.15f);
+		m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - 0.25f);
 
 		if (m_pStarData->m_nVibrationFrame > 5){
 			m_pStarData->m_bVibration = true;
