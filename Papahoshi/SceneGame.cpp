@@ -37,6 +37,7 @@ cSceneGame::cSceneGame(){
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
+	m_pSpaceRock->SetNetData(m_pNet);
 
 	// サンプル
 	m_pSampleStar = new cSampleStar();
@@ -292,6 +293,10 @@ void cSceneGame::EndUpdate(){
 //============================================
 void cSceneGame::CheckCollision(){
 
+
+	// 後できれいにまとめる
+	//************************************************************************************************************************************
+
 	  //---網とモブ星の判定type2---
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
@@ -322,13 +327,57 @@ void cSceneGame::CheckCollision(){
 
 			  if (m_pNet->GetPullFlug()){
 				  if (CheckCollisionCircleToLine(m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
-					  m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
+					  m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
+					  CheckCollisionCircleToLine(m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
 
 					  m_pRyusei->OnCollidToNet(nCountStar);
 				  }
 			  }
 		  }
 	  }
+
+	  //---網と隕石の判定type2---
+	  for (int nCountStar = 0; nCountStar < m_pSpaceRock->GetMaxNum(); nCountStar++){
+
+		  if (!m_pSpaceRock->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
+					  CheckCollisionCircleToLine(m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
+
+					  m_pSpaceRock->OnCollidToNet(nCountStar);
+				  }
+			  }
+		  }
+	  }
+
+	  //---網とブラックホールのの判定type2---
+	  for (int nCountStar = 0; nCountStar < m_pBlackHole->GetMaxNum(); nCountStar++){
+
+		  if (!m_pBlackHole->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
+					  CheckCollisionCircleToLine(m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
+
+					  m_pBlackHole->OnCollidToNet(nCountStar);
+				  }
+			  }
+		  }
+	  }
+
+	  //************************************************************************************************************************************
 
 	  //モブ星とブラックホール
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){

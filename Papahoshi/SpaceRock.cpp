@@ -18,6 +18,7 @@
 #include "SpaceRock.h"
 #include "Input.h"
 #include "GameUI.h"
+#include "MathEX.h"
 
 //-----------------------------
 // マクロ定義
@@ -140,7 +141,14 @@ void cSpaceRock::Update(){
 			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;
 			m_pStarData->m_bDestroyEvent = true;
 		}
-		
+
+		// 移動の目的位置決定
+		m_pStarData->m_Destination = m_pNetData->GetNetStart();
+		// 星から目的地方向の単位ベクトルを求める
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
+
+		// 爆発の位置
+		m_pStarData->m_ExplosionAnim.SetPos(m_pStarData->m_sprite.GetPos());
 
 	}
 
@@ -406,10 +414,20 @@ void cSpaceRock::Respawn(){
 //		網との処理
 //
 //=======================================================================================
-//--- 網と当たった時の処理 ---
+void cSpaceRock::SetNetData(cNet* data){
+	m_pNetData = data;
+}
+
 void cSpaceRock::OnCollidToNet(int count){
 
-	
+
+	// 先頭から何番目か
+	m_pStarData = m_pRoot;
+	m_pStarData += count;
+
+
+	// Vector確認用
+	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
 
 }
 
