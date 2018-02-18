@@ -110,7 +110,7 @@ float LineIntercept(D3DXVECTOR2 p1, D3DXVECTOR2 p2){
 	float a, b;
 
 	a = LineSlope(p1, p2);
-	b = a * p1.x - p1.y;
+	b = p1.y - a * p1.x;
 
 	return b;
 }
@@ -124,7 +124,10 @@ float VerticalLineSlope(float slope){
 
 	float ans;
 
-	ans = -1 / slope;
+	if (slope)
+		ans = -1 / slope;
+	else
+		ans = 0.0f;
 
 	return ans;
 }

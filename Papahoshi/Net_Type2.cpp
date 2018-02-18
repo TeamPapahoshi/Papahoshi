@@ -11,6 +11,13 @@
 //	456
 //	123
 //=============================================================================
+//
+//  ABの傾きが0.0fの時垂線を求めるときに
+//  0除算が行われてエラーが起きて、表示されなくなる。
+//  Y軸に平行な直線の傾きは定義できない？
+//
+//=============================================================================
+
 
 //-------------------------------------
 // インクルード部
@@ -72,7 +79,7 @@ m_fThrowSpeed(0.0f)
 
 	//---- 中心点の初期化 ----
 	//m_centerPos = D3DXVECTOR2(SCREEN_WIDTH / 4.0f + (SCREEN_WIDTH / 4.0f * 3.0f / 2.0f), SCREEN_HEIGHT + 30.0f);
-	m_centerPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT + 30.0f);
+	m_centerPos = D3DXVECTOR2(GAME_SCREEN_LEFT + (GAME_SCREEN_RIGHT - GAME_SCREEN_LEFT) / 2.0f, SCREEN_HEIGHT + 30.0f);
 
 	//---- 四頂点の初期化 ----
 	for (int i = 0; i < 3; i++)
@@ -102,7 +109,7 @@ m_fThrowSpeed(0.0f)
 
 	//矢印
 	m_arrow.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_ARROW));
-	m_arrow.SetPos(D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 80.0f));
+	m_arrow.SetPos(D3DXVECTOR2(m_centerPos.x, SCREEN_HEIGHT - 80.0f));
 	m_arrow.SetSize(D3DXVECTOR2(ARROW_SIZE_X, ARROW_SIZE_Y));
 	m_arrow.SetRad(D3DX_PI);
 
@@ -174,11 +181,14 @@ void cNet::Update(){
 void cNet::Draw(){
 
 	//あみ
+	//******
+	// z = 0
+	// y < NET_Y_NUM
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
-				if (m_centerPos == m_aPos[z] ||
-					m_centerPos == m_aPos[z + 1]){
+				if (m_centerPos <= m_aPos[z] ||
+					m_centerPos <= m_aPos[z + 1]){
 					y = NET_Y_NUM + 1;
 					break;
 				}
@@ -213,16 +223,15 @@ void cNet::Draw(){
 //====================================================
 void cNet::SetNet(){
 
-	D3DXVECTOR2 workPos[4];
-	float tlx, ulx, trx, urx, tdisX, udisX, trY, tly, ury, uly, tdisY, udisY, yAng, xAng, LtoCdisX, CtoRdisX;
-	D3DXVECTOR2 cp1, cp2;	//制御点
-	bool skip;
-
-	//---- 変数の初期化 ----
-	for (int i = 0; i < 4; i++){
-		workPos[i] = m_centerPos;
-	}
-	skip = false;
+	//---- ローカル変数 ----
+	D3DXVECTOR2 workPos[4];	//最終ポジション
+	bool skip;	//計算スキップフラブ
+	D3DXVECTOR2 cp1, cp2;	//縦ラインの制御点
+	D3DXVECTOR2 cp3, cp4;	//横ラインの制御点
+	D3DXVECTOR2	topXleft, topXright;		//上のXの両端
+	D3DXVECTOR2	underXleft, underXright;	//下の
+	D3DXVECTOR2	leftYtop, leftYunder;		//左の
+	D3DXVECTOR2	rightYtop, rightYunder;		//右の
 
 	//---- ウキの位置を設定 ----
 	for (int i = 0; i < 3; i++){
@@ -234,6 +243,12 @@ void cNet::SetNet(){
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
+
+				//---- 変数の初期化 ----
+				for (int i = 0; i < 4; i++){
+					workPos[i] = m_centerPos;
+				}
+				skip = false;
 
 				switch (z)
 				{
@@ -249,10 +264,10 @@ void cNet::SetNet(){
 					//------- 値の調整 --------------
 					if (x == 0){
 
-						//------ 必要情報を計算 ---------
+						//------ 最初の一回のみ計算 ---------
 						if (y == 0){
 
-							//** 線分AOの制御点を計算 **
+							//****** 線分AOの制御点を計算 *******
 							//変数宣言
 							D3DXVECTOR2 d, e;
 							float aoSlop, aoInter, dfSlop, dfInter, egSlop, egInter;
@@ -269,69 +284,66 @@ void cNet::SetNet(){
 							egSlop = VerticalLineSlope(aoSlop);
 							egInter = VerticalLineIntercept(e, aoSlop);
 							//制御点F
-							cp1.y = LineY(d.x - (m_aPos[0].y - CP_DISTANCE), dfSlop, dfInter);
 							cp1.x = d.x - (m_aPos[0].y - CP_DISTANCE);
+							cp1.y = LineY(cp1.x, dfSlop, dfInter);
 							//制御点G
-							cp2.y = LineY(e.x - (m_aPos[0].y - CP_DISTANCE), egSlop, egInter);
 							cp2.x = e.x - (m_aPos[0].y - CP_DISTANCE);
+							cp2.y = LineY(cp2.x, egSlop, egInter);
 
-							//初期化X
-							tlx = ulx = BezierCurve((y / NET_Y_NUM),
-								m_aPos[0], cp1, cp2, m_centerPos).x;	//左端、ベジェ
-							trx = urx = m_aPos[1].x;	//右端
-							tdisX = udisX = trx - tlx;	//左と右の距離
+							//********* 線分ABの制御点を計算 *******
+							//分割点d,fを求める
+							d = LineSplitPoint(m_aPos[0], m_aPos[1], 1, CP_DIVIDE - 1);
+							e = LineSplitPoint(m_aPos[0], m_aPos[1], CP_DIVIDE - 1, 1);
+							//線分ABの式を求める
+							aoSlop = LineSlope(m_aPos[0], m_aPos[1]);
+							aoInter = LineIntercept(m_aPos[0], m_aPos[1]);
+							//線分ABと、分割点dを交点とした垂線DFを求める
+							dfSlop = VerticalLineSlope(aoSlop);
+							dfInter = VerticalLineIntercept(d, aoSlop);
+							//線分ABと、分割点eを交点とした垂線EGを求める
+							egSlop = VerticalLineSlope(aoSlop);
+							egInter = VerticalLineIntercept(e, aoSlop);
+							//制御点F
+							cp3.x = d.x - (0.0f /*ずらす値*/);
+							cp3.y = LineY(cp3.x, dfSlop, dfInter);
+							//制御点G
+							cp4.x = e.x - (0.0f /*ずらす値*/);
+							cp4.y = LineY(cp4.x, egSlop, egInter);
 
-							//Y
-							tly = uly = BezierCurve((y / NET_Y_NUM),
-								m_aPos[0], cp1, cp2, m_centerPos).y; //左端、ベジェ
-							trY = ury = m_aPos[1].y;	//右端
-							trY >= tly ? tdisY = udisY = trY - tly : tdisY = udisY = tly - trY;
-							trY >= tly ? yAng = 1.0f : yAng = 0.0f;	//距離
-
-							//中心との距離
-							LtoCdisX = m_centerPos.x - m_aPos[0].x;
-							CtoRdisX = m_aPos[1].x - m_centerPos.x;
-							trY >= tly ? yAng = 1.0f : yAng = 0.0f;
 						}
 
-						//Xの調整
-						tlx = ulx;
-						trx = urx;
-						tdisX = udisX;
-						urx = m_aPos[1].x - ((((CtoRdisX) / (NET_Y_NUM / 2.0f)) * (y + 1)) / 2.0f);
-						ulx = ulx = BezierCurve(((float)y / (float)NET_Y_NUM),
-							m_aPos[0], cp1, cp2, m_centerPos).x;
-						udisX = urx - ulx;
+						//----- 行ごとに計算 ----
 
-						//Yの調整
-						tly = uly;
-						trY = ury;
-						tdisY = udisY;
-						uly = uly = BezierCurve(((float)y / (float)NET_Y_NUM),
-							m_aPos[0], cp1, cp2, m_centerPos).y;
-						ury = m_aPos[1].y + ((((m_centerPos.y - m_aPos[1].y) / NET_Y_NUM) * (y + 1)));
-						ury >= uly ? udisY = ury - uly : udisY = uly - ury;
+						//***** 上のXラインの両端を求める *****
+						topXleft = BezierCurve((float)y / (float)NET_Y_NUM, m_aPos[0], cp1, cp2, m_centerPos);
+						topXright = LineSplitPoint(m_aPos[1], m_centerPos, y, NET_Y_NUM - y);
+
+						//***** 下のXラインの両端を求める *****
+						underXleft = BezierCurve(((float)y + 1.0f) / (float)NET_Y_NUM, m_aPos[0], cp1, cp2, m_centerPos);
+						underXright = LineSplitPoint(m_aPos[1], m_centerPos, y + 1, NET_Y_NUM - (y + 1));
+
 					}
 
-					//座標の設定
-					workPos[0].x = tlx + ((tdisX / NET_X_NUM) * x);
-					workPos[1].x = tlx + ((tdisX / NET_X_NUM) * (x + 1));
-					workPos[2].x = ulx + ((udisX / NET_X_NUM) * x);
-					workPos[3].x = ulx + ((udisX / NET_X_NUM) * (x + 1));
+					//---- 毎回計算を行う -----
 
-					if (yAng){	//みぎのほうが下にある
-						workPos[0].y = tly + (tdisY / NET_X_NUM) * (x);
-						workPos[1].y = tly + (tdisY / NET_X_NUM) * (x + 1);
-						workPos[2].y = uly + (udisY / NET_X_NUM) * (x);
-						workPos[3].y = uly + (udisY / NET_X_NUM) * (x + 1);
-					}
-					else{
-						workPos[0].y = tly - (tdisY / NET_X_NUM) * (x);
-						workPos[1].y = tly - (tdisY / NET_X_NUM) * (x + 1);
-						workPos[2].y = uly - (udisY / NET_X_NUM) * (x);
-						workPos[3].y = uly - (udisY / NET_X_NUM) * (x + 1);
-					}
+					//***** 左のYラインの両端を求める *****
+					leftYtop = BezierCurve((float)x / (float)NET_X_NUM, m_aPos[0], cp3, cp4, m_aPos[1]);
+					leftYunder = m_centerPos;
 
+					//***** 右のYラインの両端を求める *****
+					rightYtop = BezierCurve(((float)x + 1.0f) / (float)NET_X_NUM, m_aPos[0], cp3, cp4, m_aPos[1]);
+					rightYunder = m_centerPos;
+					
+					//***** 最終ポジション決定 *****
+					workPos[0].x = LineSplitPoint(topXleft, topXright, x, NET_X_NUM - x).x;
+					workPos[1].x = LineSplitPoint(topXleft, topXright, x + 1, NET_X_NUM - (x + 1)).x;
+					workPos[2].x = LineSplitPoint(underXleft, underXright, x, NET_X_NUM - x).x;
+					workPos[3].x = LineSplitPoint(underXleft, underXright, x + 1, NET_X_NUM - (x + 1)).x;
+
+					workPos[0].y = LineSplitPoint(leftYtop, leftYunder, y, NET_Y_NUM - y).y;
+					workPos[1].y = LineSplitPoint(rightYtop, rightYunder, y, NET_Y_NUM - y).y;
+					workPos[2].y = LineSplitPoint(leftYtop, leftYunder, y + 1, NET_Y_NUM - (y + 1)).y;
+					workPos[3].y = LineSplitPoint(rightYtop, rightYunder, y + 1, NET_Y_NUM - (y + 1)).y;
 					break;
 
 				case NET_PARTS_LEFT:
@@ -348,84 +360,81 @@ void cNet::SetNet(){
 						//必要情報を計算
 						if (y == 0){
 
-							//** 線分AOの制御点を計算 **
+							//****** 線分COの制御点を計算 *******
 							//変数宣言
 							D3DXVECTOR2 d, e;
 							float aoSlop, aoInter, dfSlop, dfInter, egSlop, egInter;
 							//分割点d,fを求める
 							d = LineSplitPoint(m_aPos[2], m_centerPos, 1, CP_DIVIDE - 1);
 							e = LineSplitPoint(m_aPos[2], m_centerPos, CP_DIVIDE - 1, 1);
-							//線分AOの式を求める
+							//線分COの式を求める
 							aoSlop = LineSlope(m_aPos[2], m_centerPos);
 							aoInter = LineIntercept(m_aPos[2], m_centerPos);
-							//線分AOと、分割点dを交点とした垂線DFを求める
+							//線分COと、分割点dを交点とした垂線DFを求める
 							dfSlop = VerticalLineSlope(aoSlop);
 							dfInter = VerticalLineIntercept(d, aoSlop);
-							//線分AOと、分割点eを交点とした垂線EGを求める
+							//線分COと、分割点eを交点とした垂線EGを求める
 							egSlop = VerticalLineSlope(aoSlop);
 							egInter = VerticalLineIntercept(e, aoSlop);
 							//制御点F
-							cp1.y = LineY(d.x + (m_aPos[2].y - CP_DISTANCE), dfSlop, dfInter);
 							cp1.x = d.x + (m_aPos[2].y - CP_DISTANCE);
+							cp1.y = LineY(cp1.x, dfSlop, dfInter);
 							//制御点G
-							cp2.y = LineY(e.x + (m_aPos[2].y - CP_DISTANCE), egSlop, egInter);
 							cp2.x = e.x + (m_aPos[2].y - CP_DISTANCE);
+							cp2.y = LineY(cp2.x, egSlop, egInter);
 
-							tlx = ulx = m_aPos[1].x;
-							trx = urx = BezierCurve(((float)y / (float)NET_Y_NUM),
-								m_aPos[2], cp1, cp2, m_centerPos).x;
-							tdisX = udisX = trx - tlx;
-							tly = uly = m_aPos[1].y;
-							trY = ury = BezierCurve(((float)y / (float)NET_Y_NUM),
-								m_aPos[2], cp1, cp2, m_centerPos).y;
-							trY >= tly ? tdisY = udisY = trY - tly : tdisY = udisY = tly - trY;
-							trY >= tly ? yAng = 1.0f : yAng = 0.0f;
-							LtoCdisX = m_centerPos.x - m_aPos[1].x;
-							CtoRdisX = m_aPos[2].x - m_centerPos.x;
-							trY >= tly ? yAng = 1.0f : yAng = 0.0f;
-							LtoCdisX = m_centerPos.x - m_aPos[1].x;
-							CtoRdisX = m_aPos[2].x - m_centerPos.x;
+							//********* 線分BCの制御点を計算 *******
+							//分割点d,fを求める
+							d = LineSplitPoint(m_aPos[1], m_aPos[2], 1, CP_DIVIDE - 1);
+							e = LineSplitPoint(m_aPos[1], m_aPos[2], CP_DIVIDE - 1, 1);
+							//線分ABの式を求める
+							aoSlop = LineSlope(m_aPos[1], m_aPos[2]);
+							aoInter = LineIntercept(m_aPos[1], m_aPos[2]);
+							//線分ABと、分割点dを交点とした垂線DFを求める
+							dfSlop = VerticalLineSlope(aoSlop);
+							dfInter = VerticalLineIntercept(d, aoSlop);
+							//線分ABと、分割点eを交点とした垂線EGを求める
+							egSlop = VerticalLineSlope(aoSlop);
+							egInter = VerticalLineIntercept(e, aoSlop);
+							//制御点F
+							cp3.x = d.x - (0.0f /*ずらす値*/);
+							cp3.y = LineY(cp3.x, dfSlop, dfInter);
+							//制御点G
+							cp4.x = e.x - (0.0f /*ずらす値*/);
+							cp4.y = LineY(cp4.x, egSlop, egInter);
 						}
 
-						//Xの調整
-						tlx = ulx;
-						trx = urx;
-						tdisX = udisX;
-						urx = BezierCurve(((float)y / (float)NET_Y_NUM),
-							m_aPos[2], cp1, cp2, m_centerPos).x;
-						ulx = m_aPos[1].x + ((((LtoCdisX) / (NET_Y_NUM / 2.0f)) * (y + 1)) / 2.0f);
-						udisX = urx - ulx;
+						//----- 行ごとに計算 ----
 
-						//Yの調整
-						tly = uly;
-						trY = ury;
-						tdisY = udisY;
-						uly = m_aPos[1].y + ((((m_centerPos.y - m_aPos[2].y) / NET_Y_NUM) * (y + 1)));
-						ury = BezierCurve(((float)y / (float)NET_Y_NUM),
-							m_aPos[2], cp1, cp2, m_centerPos).y;
-						ury >= uly ? udisY = ury - uly : udisY = uly - ury;
-						//trY >= uly ? udisY = trY - uly : udisY = uly - trY;
+						//***** 上のXラインの両端を求める *****
+						topXleft = LineSplitPoint(m_aPos[1], m_centerPos, y, NET_Y_NUM - y);
+						topXright = BezierCurve((float)y / (float)NET_Y_NUM, m_aPos[2], cp1, cp2, m_centerPos);
+
+						//***** 下のXラインの両端を求める *****
+						underXleft = LineSplitPoint(m_aPos[1], m_centerPos, y + 1, NET_Y_NUM - (y + 1));
+						underXright = BezierCurve(((float)y + 1.0f) / (float)NET_Y_NUM, m_aPos[2], cp1, cp2, m_centerPos);
 					}
 
-					//座標の設定
-					workPos[0].x = tlx + ((tdisX / NET_X_NUM) * x);
-					workPos[1].x = tlx + ((tdisX / NET_X_NUM) * (x + 1));
-					workPos[2].x = ulx + ((udisX / NET_X_NUM) * x);
-					workPos[3].x = ulx + ((udisX / NET_X_NUM) * (x + 1));
+					//---- 毎回計算を行う -----
 
+					//***** 左のYラインの両端を求める *****
+					leftYtop = BezierCurve((float)x / (float)NET_X_NUM, m_aPos[1], cp3, cp4, m_aPos[2]);
+					leftYunder = m_centerPos;
 
-					if (yAng){	//みぎのほうが下にある
-						workPos[0].y = tly + (tdisY / NET_X_NUM) * (x);
-						workPos[1].y = tly + (tdisY / NET_X_NUM) * (x + 1);
-						workPos[2].y = uly + (udisY / NET_X_NUM) * (x);
-						workPos[3].y = uly + (udisY / NET_X_NUM) * (x + 1);
-					}
-					else{
-						workPos[0].y = tly - (tdisY / NET_X_NUM) * (x);
-						workPos[1].y = tly - (tdisY / NET_X_NUM) * (x + 1);
-						workPos[2].y = uly - (udisY / NET_X_NUM) * (x);
-						workPos[3].y = uly - (udisY / NET_X_NUM) * (x + 1);
-					}
+					//***** 右のYラインの両端を求める *****
+					rightYtop = BezierCurve(((float)x + 1.0f) / (float)NET_X_NUM, m_aPos[1], cp3, cp4, m_aPos[2]);
+					rightYunder = m_centerPos;
+
+					//***** 最終ポジション決定 *****
+					workPos[0].x = LineSplitPoint(topXleft, topXright, x, NET_X_NUM - x).x;
+					workPos[1].x = LineSplitPoint(topXleft, topXright, x + 1, NET_X_NUM - (x + 1)).x;
+					workPos[2].x = LineSplitPoint(underXleft, underXright, x, NET_X_NUM - x).x;
+					workPos[3].x = LineSplitPoint(underXleft, underXright, x + 1, NET_X_NUM - (x + 1)).x;
+
+					workPos[0].y = LineSplitPoint(leftYtop, leftYunder, y, NET_Y_NUM - y).y;
+					workPos[1].y = LineSplitPoint(rightYtop, rightYunder, y, NET_Y_NUM - y).y;
+					workPos[2].y = LineSplitPoint(leftYtop, leftYunder, y + 1, NET_Y_NUM - (y + 1)).y;
+					workPos[3].y = LineSplitPoint(rightYtop, rightYunder, y + 1, NET_Y_NUM - (y + 1)).y;
 
 					break;
 
@@ -434,7 +443,6 @@ void cNet::SetNet(){
 				//あみのポジション決定
 				if (!skip)
 					m_aNet[z][y][x].SetPosFree(workPos[0], workPos[1], workPos[2], workPos[3]);
-				skip = false;
 			}
 		}
 	} //曲線終了
@@ -626,11 +634,11 @@ void cNet::ShoutPhaseUpdate(){
 		if (!m_bPressButton[i] && !m_bThrow[i]){
 			//------- 離した瞬間に目的位置を代入 ----------
 			if (i == 1)
-				m_ThreePurposePos[i].x = SCREEN_WIDTH / 2.0f;
+				m_ThreePurposePos[i].x = m_centerPos.x;
 			else if (i == 0)
-				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) - ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
+				m_ThreePurposePos[i].x = (m_centerPos.x) - ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
 			else
-				m_ThreePurposePos[i].x = (SCREEN_WIDTH / 2.0f) + ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
+				m_ThreePurposePos[i].x = (m_centerPos.x) + ((SCREEN_WIDTH * m_fHalfCircleSize) / 2.0f);
 			m_ThreePurposePos[i].y = SCREEN_HEIGHT - (SCREEN_HEIGHT * m_fHalfCircleSize);
 			m_bThrow[i] = true;
 
