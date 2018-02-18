@@ -18,7 +18,6 @@
 #include "Net_Type2.h"
 #include "BlackHole.h"
 #include "Gage.h"
-
 #include <vector>
 #include <fstream>
 
@@ -47,8 +46,12 @@ public:
 	
 	//--- ブラックホールとの処理 ---
 	void SetBlackHoleData(cBlackHole* data);
-	void OnCollidToBlackHole(int Normal,int Black);
-	void OnCollidToDelete(int Normal);
+	void OnCollidToBlackHoleVacumeRange(int Normal,int Black);
+	void OnCollidToBlackHoleDeleteRange(int Normal);
+
+	//--- 隕石との処理との処理 ---
+	void SetSpaceRockData(cBlackHole* data);
+	void OnCollidToSpaceRock(int num);
 	
 	//--- ゲージとの処理 ---
 	void SetGageData(cGage* data);

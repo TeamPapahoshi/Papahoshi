@@ -146,6 +146,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\04リザルト\リザルト画面の女の子">
       <UniqueIdentifier>{9d6e12b0-d3ae-4ad8-8982-7d3b3eae8fcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\隕石">
+      <UniqueIdentifier>{3daea5ec-723b-4fe7-b844-4d8af6af132c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -271,9 +274,6 @@
     <ClCompile Include="Transition.cpp">
       <Filter>ソース ファイル\共通処理\トランジション</Filter>
     </ClCompile>
-    <ClCompile Include="SpaceRock.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Score.cpp">
       <Filter>ソース ファイル\共通処理\スコア</Filter>
     </ClCompile>
@@ -312,6 +312,9 @@
     </ClCompile>
     <ClCompile Include="ResultGirl.cpp">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト画面の女の子</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceRock.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\隕石</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -438,9 +441,6 @@
     <ClInclude Include="SampleStar.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星</Filter>
     </ClInclude>
-    <ClInclude Include="SpaceRock.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MathEX.h">
       <Filter>ソース ファイル\共通処理\数学的な関数</Filter>
     </ClInclude>
@@ -473,8 +473,9 @@
     <ClInclude Include="ResultGirl.h">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト画面の女の子</Filter>
     </ClInclude>
-    <ClInclude Include="GameUI.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
+    <ClInclude Include="GameUI.h" />
+    <ClInclude Include="SpaceRock.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\隕石</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,16 +1,19 @@
 //======================================================================
-//	Star
+//	NormalStar
 //	
-//	概要＿：星処理
+//	概要＿：モブ星処理
 //	制作者：加藤　遼
 //	
 //======================================================================
+
 //-----------------------------
 //インクルードファイル
 //-----------------------------
 #include <Windows.h>
 #include <math.h>
 #include <fstream>
+#include <cmath>
+
 #include "debugproc.h"
 #include "Common.h"
 #include "Texture.h"
@@ -18,23 +21,21 @@
 #include "rand.h"
 #include "Input.h"
 #include "MathEX.h"
-#include <cmath>
 #include "GameUI.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE	(30)
-#define RESPAWN_FREAM (200)
-#define MAX_NORMAL_STAR_NUM	(50)
+
+#define STAR_SIZE			(30)
+#define STAR_SIZE_MARGIN	(20)
+#define RESPAWN_FREAM		(200)
+#define MAX_NORMAL_STAR_NUM	(15)
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
 #define EFFECT_SIZE    (40.0f)
 #define EFFECT_RADIUS  (8.0f)
-
-//網にかかった時のエフェクト用
-
 
 //ゲージに移動するときのエフェクト用
 #define EFFECT_BEZIERCURVE_FRAME (60)
@@ -57,8 +58,6 @@ cNormalStar::cNormalStar(){
 	m_pStarData = new cNormalStarData[m_nMaxNum]();	//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
-
-
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
@@ -68,12 +67,14 @@ cNormalStar::cNormalStar(){
 		m_pStarData->m_nEffectSetTime = CRandam::RandamRenge(0, EFFECT_FRAME);
 
 		// サイズの変更
-		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
+		float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
+		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetAnimationFlag(true);
 		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
+
 		// 星の色の決定
 		m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
 		switch (m_pStarData->m_nStarColorNum)
@@ -90,9 +91,6 @@ cNormalStar::cNormalStar(){
 		default:
 			break;
 		}
-
-
-
 
 		// 生成座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
@@ -407,6 +405,10 @@ void cNormalStar::Respawn(){
 			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
+			// サイズの変更
+			float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
+			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
+
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
@@ -497,7 +499,7 @@ void cNormalStar::SetBlackHoleData(cBlackHole* data){
 }
 
 //---- ブラックホール吸い込み範囲に当たった時の処理 -----
-void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
+void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 
 	m_pStarData = m_pRoot;
 	m_pStarData += Normal;
@@ -540,9 +542,30 @@ void cNormalStar::OnCollidToBlackHole(int Normal, int Black){
 }
 
 //---- ブラックホールの削除範囲に当たった時の処理 -----
-void cNormalStar::OnCollidToDelete(int Normal){
+void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
 
+	m_pStarData = m_pRoot;
+	m_pStarData += Normal;
+
+	m_pStarData->m_bDestroyEvent = true;
 	
+}
+
+
+//=======================================================================================
+//
+//		隕石との処理
+//
+//=======================================================================================
+void cNormalStar::OnCollidToSpaceRock(int num){
+
+	m_pStarData = m_pRoot;
+	m_pStarData += num;
+
+
+
+
+	m_pStarData->m_bDestroyEvent = true;
 }
 
 //=======================================================================================
