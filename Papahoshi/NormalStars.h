@@ -20,6 +20,7 @@
 #include "Gage.h"
 #include <vector>
 #include <fstream>
+#include "Score.h"
 
 //-----------------------------
 // ƒNƒ‰ƒX’è‹`

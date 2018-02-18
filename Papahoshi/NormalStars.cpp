@@ -23,10 +23,11 @@
 #include "MathEX.h"
 #include "GameUI.h"
 
+#include "Score.h"
+
 //-----------------------------
 //マクロ定義
 //-----------------------------
-
 #define STAR_SIZE			(30)
 #define STAR_SIZE_MARGIN	(20)
 #define RESPAWN_FREAM		(200)
@@ -136,6 +137,11 @@ void cNormalStar::Update(){
 
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+
+		// 使用されていないのは飛ばす
+		if (!m_pStarData->m_bUse)
+			continue;
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
@@ -371,6 +377,10 @@ void cNormalStar::Destroy(){
 
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
+
+		// スコア加算
+		AddScore(1);
+
 
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;
