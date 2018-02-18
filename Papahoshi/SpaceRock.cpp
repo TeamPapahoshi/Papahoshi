@@ -110,10 +110,10 @@ void cSpaceRock::Update(){
 	// XV
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+
 		// “–‚½‚è”»’è
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
-		m_pStarData->m_sprite.AnimationLoop();
-
+	
 		// ”j‰ó”‚É‚æ‚Á‚ÄF‚ğ•Ï‚¦‚é
 		switch (m_pStarData->m_nDestroyStarNum){
 

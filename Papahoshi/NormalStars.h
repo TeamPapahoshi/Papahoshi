@@ -32,6 +32,8 @@ public:
 	int		m_nEffectFrame = 0;
 	int		m_nStarColorNum = 0;
 	bool	m_bAddScore = false;
+	int		m_nLifeTime = 0;
+
 };
 
 class cNormalStar :public cBaseStar{
@@ -69,6 +71,8 @@ private:
 	cNet*				m_pNetData;			// 網のデータ格納
 	cGage*				m_pGageData;		// ゲージのデータ格納
 
+	// リスポーンするときに初期化するもの
+	void Init();
 	//Set&Get
 public:
 
