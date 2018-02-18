@@ -64,8 +64,6 @@ cNormalStar::cNormalStar(){
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		
-
 		// 初期生成
 		m_pStarData->m_bDraw = true;
 		SetCountAndUse(true);
@@ -115,13 +113,6 @@ void cNormalStar::Init(){
 	m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 	m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
-
-	// 移動の目的位置決定
-	m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-	// 星から目的地方向の単位ベクトルを求める
-	m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
-
-
 	// 正存時間の設定
 	m_pStarData->m_nLifeTime = CRandam::RandamRenge(LIFE_TIME, LIFE_TIME + LIFE_TIME_MARGIN);
 }
@@ -167,6 +158,10 @@ void cNormalStar::Update(){
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 
+		// 移動の目的位置決定
+		m_pStarData->m_Destination = m_pNetData->GetNetStart();
+		// 星から目的地方向の単位ベクトルを求める
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
 		// 目的位置についたら消去イベント開始Ｙ軸で決める
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y )

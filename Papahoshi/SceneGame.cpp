@@ -292,13 +292,16 @@ void cSceneGame::CheckCollision(){
 
 			  if (m_pNet->GetPullFlug()){
 				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, 
-					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
+					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter())||
+					  CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
 				  }
 			  }
 		  }
 	  }
+
 	  //---–Ô‚Æ—¬¯‚Ì”»’ètype2---
 	  for (int nCountStar = 0; nCountStar < m_pRyusei->GetMaxNum(); nCountStar++){
 
