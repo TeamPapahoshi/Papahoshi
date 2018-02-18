@@ -30,7 +30,7 @@
 #define STAR_SIZE			(30)
 #define STAR_SIZE_MARGIN	(20)
 #define RESPAWN_FREAM		(200)
-#define MAX_NORMAL_STAR_NUM	(1)
+#define MAX_NORMAL_STAR_NUM	(15)
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
@@ -549,6 +549,23 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
 
 	m_pStarData->m_bDestroyEvent = true;
 	
+}
+
+
+//=======================================================================================
+//
+//		隕石との処理
+//
+//=======================================================================================
+void cNormalStar::OnCollidToSpaceRock(int num){
+
+	m_pStarData = m_pRoot;
+	m_pStarData += num;
+
+
+
+
+	m_pStarData->m_bDestroyEvent = true;
 }
 
 //=======================================================================================

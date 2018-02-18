@@ -65,11 +65,11 @@ cSceneGame::cSceneGame(){
 
 
 	// ゲームの状態
-	m_eGameState = GAME_STATE_SET;
+	m_eGameState = GAME_STATE_MAIN;
 	m_bFever = false;
 
 	//アナウンスのセット
-	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
+	//m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
 }
 
 //=======================================================================================
@@ -227,19 +227,19 @@ void cSceneGame::MainUpdate(){
 	}
 
 	//アナウンスの更新
-	if (m_pAnnounce){
-		m_pAnnounce->Update();
-		if (m_pAnnounce->CallFin()){
-			delete m_pAnnounce;
-			m_pAnnounce = NULL;
-		}
-	}
+	//if (m_pAnnounce){
+	//	m_pAnnounce->Update();
+	//	if (m_pAnnounce->CallFin()){
+	//		delete m_pAnnounce;
+	//		m_pAnnounce = NULL;
+	//	}
+	//}
 
-	//ゲーム終了でアナウンスを呼ぶ
-	if(!(m_pTimer->GetTime())){
-		m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
-		m_eGameState = GAME_STATE_END;
-	}
+	////ゲーム終了でアナウンスを呼ぶ
+	//if(!(m_pTimer->GetTime())){
+	//	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
+	//	m_eGameState = GAME_STATE_END;
+	//}
 
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
@@ -311,7 +311,7 @@ void cSceneGame::CheckCollision(){
 				  if (CheckCollisionCircleToLine(m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
 					  m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
 
-					 // m_pRyusei->OnCollidToNet(nCountStar);
+					  m_pRyusei->OnCollidToNet(nCountStar);
 				  }
 			  }
 		  }
@@ -337,8 +337,25 @@ void cSceneGame::CheckCollision(){
 				  m_pNomalStar->OnCollidToBlackHoleDeleteRange(nCountStar);
 
 			  }
-
 		  }
 	  }
 
+	  //モブ星と流星
+	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
+
+		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountSpaceRock = 0; nCountSpaceRock < m_pSpaceRock->GetMaxNum(); nCountSpaceRock++){
+
+			  if (!m_pSpaceRock->GetStarData()[nCountSpaceRock].m_bUse)
+				  continue;
+
+			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pSpaceRock->GetStarData()[nCountSpaceRock].m_Collision)){
+				  m_pNomalStar->OnCollidToSpaceRock(nCountStar);
+				  m_pSpaceRock->OnCollidToNormalStar(nCountSpaceRock);
+			  }
+			
+		  }
+	  }
 }

@@ -99,10 +99,11 @@
 #define TEXTURE_FILENAME_NUMBER         ("Image/GameUI/number.png")
 
 // 星スプライト
-#define TEXTURE_FILENAME_BULE_STAR_ANIM		("Image/Star/buleStarAnim.png")
+#define TEXTURE_FILENAME_BULE_STAR_ANIM			("Image/Star/buleStarAnim.png")
 #define TEXTURE_FILENAME_YELLOW_STAR_ANIM		("Image/Star/yellowStarAnim.png")
 #define TEXTURE_FILENAME_GREEN_STAR_ANIM		("Image/Star/greenStarAnim.png")
-#define TEXTURE_FILENAME_PINK_STAR_ANIM		("Image/Star/pinkStarAnim.png")
+#define TEXTURE_FILENAME_PINK_STAR_ANIM			("Image/Star/pinkStarAnim.png")
+#define TEXTURE_FILENAME_EXPLOSION_ANIM			("Image/Star/explosion000.png")
 
 //アナウンス
 #define TEXTURE_FILENAME_ANU_START		("Image/GameUI/start!.png")
@@ -182,6 +183,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_ANU_START,
 	TEXTURE_FILENAME_ANU_FIEVER,
 	TEXTURE_FILENAME_ANU_FINISH,
+	TEXTURE_FILENAME_EXPLOSION_ANIM,
 };
 
 vector<char*> texResult = {

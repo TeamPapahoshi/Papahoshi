@@ -48,6 +48,10 @@ public:
 	void SetBlackHoleData(cBlackHole* data);
 	void OnCollidToBlackHoleVacumeRange(int Normal,int Black);
 	void OnCollidToBlackHoleDeleteRange(int Normal);
+
+	//--- è¦Î‚Æ‚Ìˆ—‚Æ‚Ìˆ— ---
+	void SetSpaceRockData(cBlackHole* data);
+	void OnCollidToSpaceRock(int num);
 	
 	//--- ƒQ[ƒW‚Æ‚Ìˆ— ---
 	void SetGageData(cGage* data);
