@@ -18,6 +18,7 @@
 #include "BlackHole.h"
 #include "Input.h"
 #include "GameUI.h"
+#include "MathEX.h"
 
 //-----------------------------
 // マクロ定義
@@ -113,6 +114,16 @@ void cBlackHole::Update(){
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 		m_pStarData->m_sprite.AnimationLoop();
 
+		// 移動の目的位置決定
+		m_pStarData->m_Destination = m_pNetData->GetNetStart();
+		// 星から目的地方向の単位ベクトルを求める
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
+
+		// 目的位置についたら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+		{
+			m_pStarData->m_bDestroyEvent = true;
+		}
 	}
 
 	// 先頭に戻す
@@ -341,6 +352,7 @@ void cBlackHole::OnCollidToNet(int num){
 	m_pStarData = m_pRoot;
 	m_pStarData += num;
 
-
+	// Vector確認用
+	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
 
 }
