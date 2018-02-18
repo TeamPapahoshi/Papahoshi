@@ -304,11 +304,11 @@ void cNet::SetNet(){
 							egSlop = VerticalLineSlope(aoSlop);
 							egInter = VerticalLineIntercept(e, aoSlop);
 							//制御点F
-							cp3.x = d.x - (0.0f /*ずらす値*/);
-							cp3.y = LineY(cp3.x, dfSlop, dfInter);
+							cp3.y = d.y + ((m_aPos[1].y - m_aPos[0].y) / 2.0f);
+							cp3.x = LineX(cp3.y, dfSlop, dfInter);
 							//制御点G
-							cp4.x = e.x - (0.0f /*ずらす値*/);
-							cp4.y = LineY(cp4.x, egSlop, egInter);
+							cp4.y = e.y + ((m_aPos[1].y - m_aPos[0].y) / 2.0f);
+							cp4.x = LineY(cp4.y, egSlop, egInter);
 
 						}
 
@@ -397,11 +397,11 @@ void cNet::SetNet(){
 							egSlop = VerticalLineSlope(aoSlop);
 							egInter = VerticalLineIntercept(e, aoSlop);
 							//制御点F
-							cp3.x = d.x - (0.0f /*ずらす値*/);
-							cp3.y = LineY(cp3.x, dfSlop, dfInter);
+							cp3.y = d.y + ((m_aPos[1].y - m_aPos[2].y) / 2.0f);
+							cp3.x = LineY(cp3.y, dfSlop, dfInter);
 							//制御点G
-							cp4.x = e.x - (0.0f /*ずらす値*/);
-							cp4.y = LineY(cp4.x, egSlop, egInter);
+							cp4.y = e.y + ((m_aPos[1].y - m_aPos[2].y) / 2.0f);
+							cp4.x = LineY(cp4.y, egSlop, egInter);
 						}
 
 						//----- 行ごとに計算 ----
