@@ -134,9 +134,7 @@ void cSpaceRock::Update(){
 			break;
 		}
 
-
-
-
+		// ”j‰óƒJƒEƒ“ƒg‚ªƒ[ƒ‚É‚È‚é‚Æ”š”­
 		if (m_pStarData->m_nDestroyStarNum <= 0){
 
 			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;

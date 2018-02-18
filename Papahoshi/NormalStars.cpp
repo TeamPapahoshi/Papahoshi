@@ -31,7 +31,7 @@
 #define STAR_SIZE			(30)
 #define STAR_SIZE_MARGIN	(20)
 #define RESPAWN_FREAM		(200)
-#define MAX_NORMAL_STAR_NUM	(15)
+#define MAX_NORMAL_STAR_NUM	(50)
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
@@ -93,10 +93,12 @@ cNormalStar::cNormalStar(){
 			break;
 		}
 
+		
+	
 		// 生成座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT-100);
 		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
@@ -104,11 +106,13 @@ cNormalStar::cNormalStar(){
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE/2.0f);
 
+
 		// 移動の目的位置決定
-		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT-100);
+		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
-		
+
+	
 
 	}
 
@@ -149,9 +153,10 @@ void cNormalStar::Update(){
 
 
 		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y )
 		{
 			m_pStarData->m_bDestroyEvent = true;
+			m_pStarData->m_bAddScore = true;
 
 			if (!m_pStarData->m_bEffectSetFlag)
 			{
@@ -295,7 +300,6 @@ void cNormalStar::Draw(){
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
 	PrintDebugProc("Rキーでリセット\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
-
 	PrintDebugProc("Anim %d\n", m_pStarData->m_sprite.GetCurrentAnimPattern());
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 
@@ -379,7 +383,10 @@ void cNormalStar::Destroy(){
 	if (m_pStarData->m_bDestroyEnd){
 
 		// スコア加算
-		AddScore(1);
+		if (m_pStarData->m_bAddScore){
+			AddScore(100);
+			m_pStarData->m_bAddScore = false;
+		}
 
 
 		//	リセット
@@ -558,6 +565,7 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
 	m_pStarData += Normal;
 
 	m_pStarData->m_bDestroyEvent = true;
+	m_pStarData->m_bAddScore = false;
 	
 }
 
@@ -576,6 +584,7 @@ void cNormalStar::OnCollidToSpaceRock(int num){
 
 
 	m_pStarData->m_bDestroyEvent = true;
+	m_pStarData->m_bAddScore = false;
 }
 
 //=======================================================================================
