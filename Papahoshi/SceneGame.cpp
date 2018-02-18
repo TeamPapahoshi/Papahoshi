@@ -19,6 +19,7 @@
 #include "BaseStar.h"
 #include "Transition.h"
 #include "SceneManeger.h"
+#include "sound.h"
 
 //=======================================================================================
 //
@@ -68,6 +69,11 @@ cSceneGame::cSceneGame(){
 	m_eGameState = GAME_STATE_MAIN;
 	m_bFever = false;
 
+	//---- BGMの再生 ----
+	PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+	SetVolume(GAME_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+	SetVolume(FEVER_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
+
 	//アナウンスのセット
 	//m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
 }
@@ -90,6 +96,10 @@ cSceneGame::~cSceneGame(){
 	delete m_pNet;
 	delete m_pGameUI;
 	delete m_pTimer;
+
+	//----- BGMの停止 -----
+	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
 }
 
 //=======================================================================================

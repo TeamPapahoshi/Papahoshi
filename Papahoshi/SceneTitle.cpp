@@ -66,8 +66,10 @@ m_bChange(false)
 			10);
 	}
 	*/
-	// 音源
-	//PlaySound(SOUND_LABEL_BGM000);	
+	
+	//----- BGMの再生 ----
+	PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
+	SetVolume(TITLE_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
 
 	// シーンチェンジフラグの初期化
 	bSceneChangeFlag = false;
@@ -100,6 +102,9 @@ cSceneTitle::~cSceneTitle(){
 	m_pMeteor = NULL;
 	delete m_pBG;
 	m_pBG = NULL;
+
+	//----- BGMの停止 ----
+	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
 }
 
 //=======================================================================================
