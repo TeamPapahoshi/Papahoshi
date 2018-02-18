@@ -70,7 +70,7 @@ cBlackHole::cBlackHole(){
 
 		// “–‚½‚è”»’è
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f-30);
 
 		// ‹z‚¢ž‚Ý”ÍˆÍ
 		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
@@ -109,7 +109,7 @@ void cBlackHole::Update(){
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		// “–‚½‚è”»’è
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 30);
 		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 		m_pStarData->m_sprite.AnimationLoop();
@@ -200,11 +200,11 @@ void cBlackHole::Draw(){
 		m_pStarData->m_sprite.Draw();
 
 		// ƒQ[ƒ€“à‚Å—LŒø‚È‚ç‚ ‚½‚è”»’è‚ð•`‰æ
-		/*if (m_pStarData->m_bUse){
+		if (m_pStarData->m_bUse){
 			m_pStarData->m_Collision.Draw();
-			m_pStarData->m_VacumeRange.Draw();
-			m_pStarData->m_DeleteRange.Draw();
-		}*/
+			//m_pStarData->m_VacumeRange.Draw();
+			//m_pStarData->m_DeleteRange.Draw();
+		}
 	}
 
 	// æ“ª‚É–ß‚·
@@ -312,8 +312,8 @@ void cBlackHole::Respawn(){
 
 			// À•W‚ÌŒˆ’è
 			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
+			CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
+			CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			m_pStarData->m_bRespawnEnd = true;
