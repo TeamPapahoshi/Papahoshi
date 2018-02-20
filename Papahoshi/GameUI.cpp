@@ -36,6 +36,10 @@
 #define SCORE_POS		(D3DXVECTOR2(40.0f, 100.0f))
 #define SCORE_SIZE		(D3DXVECTOR2(43.0f, 43.0f))
 
+//チアガール
+#define THEER_ANIM_NOMAL_SPEED	(40)
+#define THEER_ANIM_FEVER_SPEED	(40)
+
 
 //====================================
 //
@@ -81,6 +85,9 @@ cGameUI::cGameUI(){
 	m_timeString.SetScale(D3DXVECTOR2(0.6f, 0.6f));
 	m_timeString.SetPos(D3DXVECTOR2(80.0f, 170.0f));
 
+	//---- チアガール ----
+	m_pTheerGirl = new cTheerGirl();
+
 }
 
 //====================================
@@ -110,6 +117,9 @@ void cGameUI::Update(){
 	//----- スコアの更新 ------
 	UpdateScore();
 
+	//----- チアガールの更新 -----
+	m_pTheerGirl->Update();
+
 }
 
 //====================================
@@ -136,6 +146,9 @@ void cGameUI::Draw(){
 	//----- 文字 -----
 	m_scoreString.Draw();
 	m_timeString.Draw();
+
+	//----- チアガール ------
+	m_pTheerGirl->Draw();
 
 }
 
@@ -331,6 +344,122 @@ void cUIItem::Update(){
 //
 //===============================================
 void cUIItem::Draw(){
+
+	m_sprite.Draw();
+
+}
+
+
+//===========================================================================================
+//
+// チアガール class
+//
+//===========================================================================================
+
+
+//==============================================
+//
+// コンストラクタ
+//
+//==============================================
+cTheerGirl::cTheerGirl() :
+m_motionType(NOMAL),
+m_nMotionNum(-1),
+m_nMotionFrame(999)
+{
+	//----- スプライト情報の初期化 -----
+	m_sprite.SetSize(D3DXVECTOR2(280.0f, 420.0f));
+	m_sprite.SetPos(D3DXVECTOR2(120.0f, 400.0f));
+	m_sprite.SetScale(D3DXVECTOR2(0.75f, 0.75f));
+	
+}
+
+//==============================================
+//
+// デストラクタ
+//
+//==============================================
+cTheerGirl::~cTheerGirl(){
+
+
+
+}
+
+//==============================================
+//
+// 更新関数
+//
+//==============================================
+void cTheerGirl::Update(){
+
+	int maxFrame = 0;
+	int maxMotion = 0;
+
+	//----- アニメーションフレームの加算 -------
+	m_nMotionFrame++;
+
+	//---- モーション更新しない場合はスキップ -----
+	switch (m_motionType)
+	{
+	case NOMAL:
+		maxFrame = THEER_ANIM_NOMAL_SPEED;
+		maxMotion = 4;
+		break;
+	case FEVER:
+		maxFrame = THEER_ANIM_FEVER_SPEED;
+		maxMotion = 2;
+		break;
+	}
+	if (m_nMotionFrame < maxFrame)
+		return;
+
+	//---- モーション更新 ----
+	m_nMotionFrame = 0;
+	m_nMotionNum++;
+	if (m_nMotionNum >= maxMotion)
+		m_nMotionNum = 0;
+
+	//---- 画像の更新 ------
+	switch (m_motionType)	//モーションの種類別
+	{
+	case NOMAL:
+
+		switch (m_nMotionNum)
+		{
+		case 0:
+		case 2:
+			m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_THEER_1));
+			break;
+		case 1:
+			m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_THEER_2));
+			break;
+		case 3:
+			m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_THEER_3));
+			break;
+		}
+
+		break;
+	case FEVER:
+		switch (m_nMotionNum)
+		{
+		case 0:
+			m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_THEER_4));
+			break;
+		case 1:
+			m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_THEER_5));
+			break;
+		}
+		break;
+	}
+
+}
+
+//==============================================
+//
+// 描画関数
+//
+//==============================================
+void cTheerGirl::Draw(){
 
 	m_sprite.Draw();
 
