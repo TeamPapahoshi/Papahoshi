@@ -20,6 +20,7 @@
 #include "Transition.h"
 #include "SceneManeger.h"
 #include "sound.h"
+#include "Common.h"
 
 //=======================================================================================
 //
@@ -67,16 +68,23 @@ cSceneGame::cSceneGame(){
 
 
 	// ゲームの状態
+#ifndef _DEBUG_DKIP_
+	m_eGameState = GAME_STATE_SET;
+#else
 	m_eGameState = GAME_STATE_MAIN;
+#endif
 	m_bFever = false;
+
 
 	//---- BGMの再生 ----
 	PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 	SetVolume(GAME_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 	SetVolume(FEVER_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
 
+#ifndef _DEBUG_DKIP_
 	//アナウンスのセット
-	//m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
+	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
+#endif
 }
 
 //=======================================================================================
@@ -241,20 +249,22 @@ void cSceneGame::MainUpdate(){
 	
 	}
 
+#ifndef _DEBUG_DKIP_
 	//アナウンスの更新
-	//if (m_pAnnounce){
-	//	m_pAnnounce->Update();
-	//	if (m_pAnnounce->CallFin()){
-	//		delete m_pAnnounce;
-	//		m_pAnnounce = NULL;
-	//	}
-	//}
+	if (m_pAnnounce){
+		m_pAnnounce->Update();
+		if (m_pAnnounce->CallFin()){
+			delete m_pAnnounce;
+			m_pAnnounce = NULL;
+		}
+	}
 
-	////ゲーム終了でアナウンスを呼ぶ
-	//if(!(m_pTimer->GetTime())){
-	//	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
-	//	m_eGameState = GAME_STATE_END;
-	//}
+	//ゲーム終了でアナウンスを呼ぶ
+	if(!(m_pTimer->GetTime())){
+		m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
+		m_eGameState = GAME_STATE_END;
+	}
+#endif
 
 	// 
 	if (m_pGage->GetGagemax()){

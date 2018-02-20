@@ -30,7 +30,7 @@ cTimer::cTimer(){
 	m_nCountFrame = 0;
 	m_nFrameTime = 0;
 	m_fCountDownFrame = 0;
-	m_fCountDownTime = 0;
+	m_fCountDownTime = LIMIT_TIME;
 	m_bCountDown = false;
 
 	//---- テクスチャ初期化 ----
