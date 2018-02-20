@@ -396,6 +396,7 @@ void cNormalStar::Destroy(){
 		// ƒXƒRƒA‰ÁŽZ
 		if (m_pStarData->m_bAddScore){
 			AddScore(100);
+			m_pGageData->GageAdd();
 			m_pStarData->m_bAddScore = false;
 		}
 

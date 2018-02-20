@@ -230,11 +230,15 @@ void cSceneGame::MainUpdate(){
 	m_pGameUI->Update();
 	m_pTimer->Update();
 	CheckCollision();			//当たり判定
+	m_pRyusei->Update();
+	m_pRyusei->SetRespawnFlag(false);
 
 	// フィーバタイムの時
 	if (m_bFever){
 		//このフラグOnにしたらアナウンスを呼ぶ
-		m_pRyusei->Update();
+		m_pRyusei->SetCreateEvent();
+		m_pRyusei->SetRespawnFlag(true);
+	
 	}
 
 	//アナウンスの更新
@@ -252,6 +256,17 @@ void cSceneGame::MainUpdate(){
 	//	m_eGameState = GAME_STATE_END;
 	//}
 
+	// 
+	if (m_pGage->GetGagemax()){
+
+		m_bFever = true;
+
+		if (m_bFever)
+			m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Fever);
+
+	}
+
+	
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
 		if (m_bFever)

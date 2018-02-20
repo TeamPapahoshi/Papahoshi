@@ -52,8 +52,10 @@ cRyusei::cRyusei(){
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		// 初期生成
-		m_pStarData->m_bDraw = true;
-		SetCountAndUse(true);
+		//m_pStarData->m_bDraw = true;
+		//SetCountAndUse(true);
+		//m_pStarData->m_bCreateEvent = true;
+
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
@@ -94,6 +96,7 @@ cRyusei::cRyusei(){
 													(float)CRandam::RandamRenge(0, 255), 155));		// 色
 		m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(255,255,0,155));		// 色
 	}
+	m_bFever = false;
 }
 
 //=======================================================================================
@@ -119,6 +122,9 @@ void cRyusei::Update(){
 
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		if (!m_pStarData->m_bUse)
+			continue;
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
@@ -232,6 +238,9 @@ void cRyusei::Draw(){
 //=======================================================================================
 void cRyusei::Create(){
 
+	if (m_pStarData->m_bUse)
+		return;
+
 	// 生成イベントの開始
 	if (!m_pStarData->m_bCreateEnd){
 
@@ -279,6 +288,9 @@ void cRyusei::Create(){
 //=======================================================================================
 void cRyusei::Destroy(){
 
+	if (!m_pStarData->m_bUse)
+		return;
+
 	// 生成イベントの開始
 	if (!m_pStarData->m_bDestroyEnd){
 
@@ -296,7 +308,7 @@ void cRyusei::Destroy(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
 
-		// 終了したら即リスポーン準備
+		// 終了し
 		m_pStarData->m_bRespawnEvent = true;
 
 		//	リセット
@@ -315,6 +327,8 @@ void cRyusei::Destroy(){
 ////=======================================================================================
 void cRyusei::Respawn(){
 
+	if (m_pStarData->m_bUse)
+		return;
 
 	if (!m_pStarData->m_bRespawnEnd){
 
@@ -346,7 +360,8 @@ void cRyusei::Respawn(){
 	if (m_pStarData->m_bRespawnEnd){
 
 		// 生成イベント開始
-		m_pStarData->m_bCreateEvent = true;
+		if (m_bFever)
+			m_pStarData->m_bCreateEvent = true;
 
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;

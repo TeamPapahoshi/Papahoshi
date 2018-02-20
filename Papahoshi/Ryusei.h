@@ -53,13 +53,30 @@ public:
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
 
+	void SetCreateEvent(){
+		m_pStarData = m_pRoot;
+		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+			if (m_pStarData->m_bUse)
+				continue;
+
+			m_pStarData->m_bRespawnEvent = true;
+		}
+		
+	}
+
+	void SetRespawnFlag(bool flag){
+		m_bFever = flag;
+	}
+
+
 private:
 	cRyuseiData*	m_pStarData;		// 必要データ
 	cRyuseiData*	m_pRoot;			// 先頭アドレス格納用
 	cRyuseiLine*	m_pLine;
 	cNet*			m_pNetData;			// 網のデータ格納
 
-
+	bool			m_bFever;
 
 
 	//Set&Get
@@ -69,6 +86,9 @@ public:
 	cRyuseiData* GetStarData(){
 		return m_pRoot;
 	}
+
+
+	
 
 
 	// 生成とかでフラグを操作するときはこの関数を使って
