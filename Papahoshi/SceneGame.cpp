@@ -256,6 +256,7 @@ void cSceneGame::MainUpdate(){
 	//	m_eGameState = GAME_STATE_END;
 	//}
 
+
 	// 
 	if (m_pGage->GetGagemax()){
 
