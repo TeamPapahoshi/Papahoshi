@@ -42,7 +42,7 @@ private:
 	D3DXVECTOR2 m_scale;		// 拡大率
 	D3DXVECTOR2 m_move;			// 移動量(追加)
 	float		m_rad;			// 角度
-	D3DXCOLOR	m_vtxColor;		// 頂点カラー
+	D3DXCOLOR	m_vtxColor[4];	// 頂点カラー
 	bool		m_texUV;		// テクスチャUV使用フラグ
 
 	// テクスチャUV
@@ -136,19 +136,28 @@ public:
 		m_rad = data;
 	}
 	void SetVtxColor(D3DXCOLOR data){
-		m_vtxColor = data;
+		for (int i = 0; i < 4; i++)
+			m_vtxColor[i] = data;
 	}
+	void SetVtxColorOne(D3DXCOLOR data,int number){
+		m_vtxColor[number] = data;
+	}
+
 	void SetVtxColorR(float data){
-		m_vtxColor.r = data;
+		for (int i = 0; i < 4; i++)
+			m_vtxColor[i].r = data;
 	}
 	void SetVtxColorG(float data){
-		m_vtxColor.g = data;
+		for (int i = 0; i < 4; i++)
+			m_vtxColor[i].g = data;
 	}
 	void SetVtxColorB(float data){
-		m_vtxColor.b = data;
+		for (int i = 0; i < 4; i++)
+			m_vtxColor[i].b = data;
 	}
 	void SetVtxColorA(float data){
-		m_vtxColor.a = data;
+		for (int i = 0; i < 4; i++)
+			m_vtxColor[i].a = data;
 	}
 
 	void SetTexUVFlag(void)
@@ -232,19 +241,19 @@ public:
 		return m_rad;
 	}
 	D3DXCOLOR GetVtxColor(){	// vexcolor
-		return m_vtxColor;
+		return m_vtxColor[0];
 	}
 	float GetVtxColorR(){
-		return m_vtxColor.r;
+		return m_vtxColor[0].r;
 	}
 	float GetVtxColorG(){
-		return m_vtxColor.g;
+		return m_vtxColor[0].g;
 	}
 	float GetVtxColorB(){
-		return m_vtxColor.b;
+		return m_vtxColor[0].b;
 	}
 	float GetVtxColorA(){
-		return m_vtxColor.a;
+		return m_vtxColor[0].a;
 	}
 
 	D3DXVECTOR2 GetTexUVRatio()
