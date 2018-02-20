@@ -18,7 +18,7 @@
 #include "BlackHole.h"
 #include "Input.h"
 #include "GameUI.h"
-
+#include "MathEX.h"
 
 //-----------------------------
 // マクロ定義
@@ -27,8 +27,7 @@
 #define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
 #define VACUUM_RANGE		(200)	// 吸い込み範囲
-#define DELETE_RANGE		(20)	// 削除範囲
-
+#define DELETE_RANGE		(10)	// 削除範囲
 
 //===================================================================================
 //
@@ -63,16 +62,15 @@ cBlackHole::cBlackHole(){
 		m_pStarData->m_sprite.SetIntervalChangePattern(4);
 		m_pStarData->m_sprite.SetAnimationFlag(true);
 	
-
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
 		CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
-		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f-30);
 
 		// 吸い込み範囲
 		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
@@ -81,6 +79,7 @@ cBlackHole::cBlackHole(){
 		// 削除範囲
 		m_pStarData->m_DeleteRange.SetType(cCollider::CIRCLE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
+
 	}
 }
 
@@ -94,6 +93,7 @@ cBlackHole::~cBlackHole(){
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 	delete[] m_pStarData;
+
 }
 //=======================================================================================
 //
@@ -109,13 +109,22 @@ void cBlackHole::Update(){
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		// 当たり判定
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 30);
 		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 		m_pStarData->m_sprite.AnimationLoop();
 
-	}
+		// 移動の目的位置決定
+		m_pStarData->m_Destination = m_pNetData->GetNetStart();
+		// 星から目的地方向の単位ベクトルを求める
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
+		// 目的位置についたら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+		{
+			m_pStarData->m_bDestroyEvent = true;
+		}
+	}
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -127,14 +136,13 @@ void cBlackHole::Update(){
 		if (m_pStarData->m_bCreateEvent){
 			Create();
 		}
-
 		if (m_pStarData->m_bDestroyEvent){
 			Destroy();
 		}
-
 		if (m_pStarData->m_bRespawnEvent){
 			Respawn();
 		}
+
 	}
 
 	// イベントの起動
@@ -192,11 +200,11 @@ void cBlackHole::Draw(){
 		m_pStarData->m_sprite.Draw();
 
 		// ゲーム内で有効ならあたり判定を描画
-	/*	if (m_pStarData->m_bUse){
+		if (m_pStarData->m_bUse){
 			m_pStarData->m_Collision.Draw();
-			m_pStarData->m_VacumeRange.Draw();
-			m_pStarData->m_DeleteRange.Draw();
-		}*/
+			//m_pStarData->m_VacumeRange.Draw();
+			//m_pStarData->m_DeleteRange.Draw();
+		}
 	}
 
 	// 先頭に戻す
@@ -226,9 +234,6 @@ void cBlackHole::Create(){
 		//****** ここに演出とか生成処理を書いていく **********
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
 		m_pStarData->m_bDraw = true;
-
-
-
 		//****************************************************
 
 
@@ -266,9 +271,8 @@ void cBlackHole::Destroy(){
 		SetCountAndUse(false);
 
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
-		//****** ここに演出とか処理を書いていく *************
-		//****************************************************
-
+		//********** ここに演出とか処理を書いていく *************
+		//*******************************************************
 
 		// 演出がおわったら終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 		m_pStarData->m_bDestroyEnd = true;
@@ -280,6 +284,7 @@ void cBlackHole::Destroy(){
 
 		// 終了したら即リスポーン準備
 		m_pStarData->m_bRespawnEvent = true;
+
 
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;
@@ -307,16 +312,9 @@ void cBlackHole::Respawn(){
 
 			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-			CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-			m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
-
-
-			//// 移動の目的位置決定
-			//m_pStarData->m_PurposPos = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-			//// 目的地までの距離を測定
-			//m_pStarData->m_PurPosDist.x = fabs(m_pStarData->m_PurposPos.x - m_pStarData->m_sprite.GetPos().x);
-			//m_pStarData->m_PurPosDist.y = fabs(m_pStarData->m_PurposPos.y - m_pStarData->m_sprite.GetPos().y);
+			CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
+			CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
+			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			m_pStarData->m_bRespawnEnd = true;
 		}
@@ -354,6 +352,7 @@ void cBlackHole::OnCollidToNet(int num){
 	m_pStarData = m_pRoot;
 	m_pStarData += num;
 
-
+	// Vector確認用
+	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
 
 }

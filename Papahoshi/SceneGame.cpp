@@ -19,6 +19,7 @@
 #include "BaseStar.h"
 #include "Transition.h"
 #include "SceneManeger.h"
+#include "sound.h"
 
 //=======================================================================================
 //
@@ -36,6 +37,7 @@ cSceneGame::cSceneGame(){
 
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
+	m_pSpaceRock->SetNetData(m_pNet);
 
 	// サンプル
 	m_pSampleStar = new cSampleStar();
@@ -65,11 +67,16 @@ cSceneGame::cSceneGame(){
 
 
 	// ゲームの状態
-	m_eGameState = GAME_STATE_SET;
+	m_eGameState = GAME_STATE_MAIN;
 	m_bFever = false;
 
+	//---- BGMの再生 ----
+	PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+	SetVolume(GAME_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+	SetVolume(FEVER_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
+
 	//アナウンスのセット
-	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
+	//m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
 }
 
 //=======================================================================================
@@ -90,6 +97,10 @@ cSceneGame::~cSceneGame(){
 	delete m_pNet;
 	delete m_pGameUI;
 	delete m_pTimer;
+
+	//----- BGMの停止 -----
+	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
 }
 
 //=======================================================================================
@@ -165,7 +176,7 @@ void cSceneGame::Draw(){
 	m_pBG->Draw();				// 背景
 	m_pBlackHole->Draw();
 	m_pSampleStar->Draw();
-	//m_pSpaceRock->Draw();
+	m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
 	m_pRyusei->Draw();
 	m_pNet->Draw();
@@ -227,19 +238,19 @@ void cSceneGame::MainUpdate(){
 	}
 
 	//アナウンスの更新
-	if (m_pAnnounce){
-		m_pAnnounce->Update();
-		if (m_pAnnounce->CallFin()){
-			delete m_pAnnounce;
-			m_pAnnounce = NULL;
-		}
-	}
+	//if (m_pAnnounce){
+	//	m_pAnnounce->Update();
+	//	if (m_pAnnounce->CallFin()){
+	//		delete m_pAnnounce;
+	//		m_pAnnounce = NULL;
+	//	}
+	//}
 
-	//ゲーム終了でアナウンスを呼ぶ
-	if(!(m_pTimer->GetTime())){
-		m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
-		m_eGameState = GAME_STATE_END;
-	}
+	////ゲーム終了でアナウンスを呼ぶ
+	//if(!(m_pTimer->GetTime())){
+	//	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
+	//	m_eGameState = GAME_STATE_END;
+	//}
 
 	if (GetKeyboardTrigger(DIK_F)){
 		m_bFever ? m_bFever = false : m_bFever = true;
@@ -282,6 +293,10 @@ void cSceneGame::EndUpdate(){
 //============================================
 void cSceneGame::CheckCollision(){
 
+
+	// 後できれいにまとめる
+	//************************************************************************************************************************************
+
 	  //---網とモブ星の判定type2---
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
@@ -292,16 +307,79 @@ void cSceneGame::CheckCollision(){
 
 			  if (m_pNet->GetPullFlug()){
 				  if (CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos, 
-					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetRight())){
+					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter())||
+					  CheckCollisionCircleToLine(m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pNomalStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
 
 					  m_pNomalStar->OnCollidToNet(nCountStar);
-					  //m_pNomalStar->GetStarData()[nCountStar].m_bUse = false;
 				  }
 			  }
 		  }
 	  }
 
-	  //モブ星とブラックホールの吸い込みの判定
+	  //---網と流星の判定type2---
+	  for (int nCountStar = 0; nCountStar < m_pRyusei->GetMaxNum(); nCountStar++){
+
+		  if (!m_pRyusei->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
+					  CheckCollisionCircleToLine(m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pRyusei->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
+
+					  m_pRyusei->OnCollidToNet(nCountStar);
+				  }
+			  }
+		  }
+	  }
+
+	  //---網と隕石の判定type2---
+	  for (int nCountStar = 0; nCountStar < m_pSpaceRock->GetMaxNum(); nCountStar++){
+
+		  if (!m_pSpaceRock->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
+					  CheckCollisionCircleToLine(m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pSpaceRock->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
+
+					  m_pSpaceRock->OnCollidToNet(nCountStar);
+				  }
+			  }
+		  }
+	  }
+
+	  //---網とブラックホールのの判定type2---
+	  for (int nCountStar = 0; nCountStar < m_pBlackHole->GetMaxNum(); nCountStar++){
+
+		  if (!m_pBlackHole->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
+					  CheckCollisionCircleToLine(m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
+
+					  m_pBlackHole->OnCollidToNet(nCountStar);
+				  }
+			  }
+		  }
+	  }
+
+	  //************************************************************************************************************************************
+
+	  //モブ星とブラックホール
 	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
 
 		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
@@ -312,10 +390,34 @@ void cSceneGame::CheckCollision(){
 			  if (!m_pBlackHole->GetStarData()[nCountBlackHole].m_bUse)
 				  continue;
 
+			  // 吸い込み範囲
 			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_VacumeRange)){
-				  m_pNomalStar->OnCollidToBlackHole(nCountStar, nCountBlackHole);
-
-				  }
+				  m_pNomalStar->OnCollidToBlackHoleVacumeRange(nCountStar, nCountBlackHole);
 			  }
+			  // 削除範囲
+			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_DeleteRange)){
+				  m_pNomalStar->OnCollidToBlackHoleDeleteRange(nCountStar);
+
+			  }
+		  }
+	  }
+
+	  //モブ星と流星
+	  for (int nCountStar = 0; nCountStar < m_pNomalStar->GetMaxNum(); nCountStar++){
+
+		  if (!m_pNomalStar->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountSpaceRock = 0; nCountSpaceRock < m_pSpaceRock->GetMaxNum(); nCountSpaceRock++){
+
+			  if (!m_pSpaceRock->GetStarData()[nCountSpaceRock].m_bUse)
+				  continue;
+
+			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pSpaceRock->GetStarData()[nCountSpaceRock].m_Collision)){
+				  m_pNomalStar->OnCollidToSpaceRock(nCountStar);
+				  m_pSpaceRock->OnCollidToNormalStar(nCountSpaceRock);
+			  }
+			
+		  }
 	  }
 }

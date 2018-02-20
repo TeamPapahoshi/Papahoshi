@@ -146,6 +146,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\04リザルト\リザルト画面の女の子">
       <UniqueIdentifier>{9d6e12b0-d3ae-4ad8-8982-7d3b3eae8fcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\UI">
+      <UniqueIdentifier>{e6a123bd-2096-4fe2-a946-350ce695e803}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -289,9 +292,6 @@
     <ClCompile Include="RyuseiLine.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\流星</Filter>
     </ClCompile>
-    <ClCompile Include="GameUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EffectSparkle.cpp">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClCompile>
@@ -312,6 +312,9 @@
     </ClCompile>
     <ClCompile Include="ResultGirl.cpp">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト画面の女の子</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

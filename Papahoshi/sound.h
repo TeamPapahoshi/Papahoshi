@@ -17,21 +17,21 @@
 //*****************************************************************************
 typedef enum
 {
-	SOUND_LABEL_BGM000 = 0,		// BGM0
-	SOUND_LABEL_BGM001,			// BGM1
-	SOUND_LABEL_BGM002,			// BGM2
-	SOUND_LABEL_SE_DECIDE,		// 決定音
-	SOUND_LABEL_SE_CANCEL,		// キャンセル音
-	SOUND_LABEL_SE_SELECT,		// 選択音
-	SOUND_LABEL_SE_SHOT,		// 弾発射音
-	SOUND_LABEL_SE_LASER,		// レーザー発射音
-	SOUND_LABEL_SE_LOCKON,		// ロックオン音
-	SOUND_LABEL_SE_HIT,			// ヒット音
-	SOUND_LABEL_SE_GUARD,		// ガード音
-	SOUND_LABEL_SE_EXPLOSION,	// 爆発音
-	SOUND_LABEL_SE_JUMP,		// ジャンプ音
+	SOUND_LABEL_BGM_TITLE = 0,		// タイトル
+	SOUND_LABEL_BGM_GAME,			//ゲーム中
+	SOUND_LABEL_BGM_GAME_FEVER,		//フィーバータイム
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
+
+
+//----------------------------------------------------------
+// 音量調節
+// 1.0最大
+// 0.0ミュート
+//----------------------------------------------------------
+#define TITLE_BGM_VOLUME	(1.0f)
+#define GAME_BGM_VOLUME	(1.0f)
+#define FEVER_BGM_VOLUME	(1.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言

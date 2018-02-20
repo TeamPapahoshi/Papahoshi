@@ -16,6 +16,7 @@
 #include "BaseStar.h"
 #include "Sprite.h"
 #include "RyuseiLine.h"
+#include "Net_Type2.h"
 
 #define MAX_LINE_EFFECT	(1)
 
@@ -43,6 +44,11 @@ public:
 	~cRyusei();
 	cRyusei();
 
+
+	//--- 網との処理 ---
+	void SetNetData(cNet* data);
+	void OnCollidToNet(int num);
+
 	void Create();		// 生成
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
@@ -51,7 +57,7 @@ private:
 	cRyuseiData*	m_pStarData;		// 必要データ
 	cRyuseiData*	m_pRoot;			// 先頭アドレス格納用
 	cRyuseiLine*	m_pLine;
-
+	cNet*			m_pNetData;			// 網のデータ格納
 
 
 

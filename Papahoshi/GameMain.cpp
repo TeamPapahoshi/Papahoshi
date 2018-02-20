@@ -71,7 +71,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 		return E_FAIL;
 
 	//最初のシーンの設定
-	cSceneManeger::ChangeScene(cSceneManeger::TITLE);	//デバッグ用にステージセレクト画面から開始
+	cSceneManeger::ChangeScene(cSceneManeger::GAME);	//デバッグ用にステージセレクト画面から開始
 	
 
 	//初期化完了

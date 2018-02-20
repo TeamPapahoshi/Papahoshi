@@ -33,21 +33,13 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 #endif
 
 // 各音素材のパラメータ
+//-1ループ　0非ループ
 SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 {
-	{"data/BGM/bgm000.wav", -1},		// BGM0
-	{"data/BGM/bgm001.wav", -1},		// BGM1
-	{"data/BGM/bgm002.wav", -1},		// BGM2
-	{"data/SE/decide000.wav", 0},		// 決定音
-	{"data/SE/cancel000.wav", 0},		// キャンセル音
-	{"data/SE/select000.wav", 0},		// 選択音
-	{"data/SE/shot000.wav", 0},			// 弾発射音
-	{"data/SE/laser000.wav", 0},		// レーザー発射音
-	{"data/SE/lockon000.wav", 0},		// ロックオン音
-	{"data/SE/hit000.wav", 0},			// ヒット音
-	{"data/SE/guard000.wav", 0},		// ガード音
-	{"data/SE/explosion000.wav", 0},	// 爆発音
-	{"data/SE/jump000.wav", 0},			// ジャンプ音
+	{ "Sound/BGM/amenohino.wav", -1 },		// Title
+	{ "Sound/BGM/nomal.wav", -1 },		// Game
+	{ "Sound/BGM/fever.wav", -1 },		// fever
+
 };
 
 //=============================================================================

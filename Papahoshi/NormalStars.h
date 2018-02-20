@@ -18,9 +18,9 @@
 #include "Net_Type2.h"
 #include "BlackHole.h"
 #include "Gage.h"
-
 #include <vector>
 #include <fstream>
+#include "Score.h"
 
 //-----------------------------
 // クラス定義
@@ -31,6 +31,9 @@ public:
 	int		m_nVibrationFrame = 0;
 	int		m_nEffectFrame = 0;
 	int		m_nStarColorNum = 0;
+	bool	m_bAddScore = false;
+	int		m_nLifeTime = 0;
+
 };
 
 class cNormalStar :public cBaseStar{
@@ -47,8 +50,12 @@ public:
 	
 	//--- ブラックホールとの処理 ---
 	void SetBlackHoleData(cBlackHole* data);
-	void OnCollidToBlackHole(int Normal,int Black);
-	void OnCollidToDelete(int Normal);
+	void OnCollidToBlackHoleVacumeRange(int Normal,int Black);
+	void OnCollidToBlackHoleDeleteRange(int Normal);
+
+	//--- 隕石との処理との処理 ---
+	void SetSpaceRockData(cBlackHole* data);
+	void OnCollidToSpaceRock(int num);
 	
 	//--- ゲージとの処理 ---
 	void SetGageData(cGage* data);
@@ -64,6 +71,8 @@ private:
 	cNet*				m_pNetData;			// 網のデータ格納
 	cGage*				m_pGageData;		// ゲージのデータ格納
 
+	// リスポーンするときに初期化するもの
+	void Init();
 	//Set&Get
 public:
 

@@ -14,6 +14,7 @@
 #include "SceneManeger.h"
 #include <stdlib.h>
 #include <time.h>
+#include "Direct3D.h"
 
 //-----------------------------
 // 定数・マクロ定義
@@ -128,11 +129,15 @@ void cTransitonFade::Draw(){
 cTransitonDiceScaleChange::cTransitonDiceScaleChange() : cTransition(){
 
 	D3DXVECTOR2 work;
+	LPDIRECT3DTEXTURE9 pTex;
+
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();	// Direct3Dデバイス
+	D3DXCreateTextureFromFile(pDevice, TEX_FILENAME_STAR, &pTex);
 
 	//画像情報の初期化
 	for (int y = 0; y < DICE_Y_NUM; y++){
 		for (int x = 0; x < DICE_X_NUM; x++){
-			spriteParam[y][x].LoadTexture(TEX_FILENAME_STAR);
+			spriteParam[y][x].SetTexture(&pTex);
 			work.x = (SCREEN_WIDTH / (DICE_X_NUM * 2)) + (SCREEN_WIDTH / DICE_X_NUM * x);
 			work.y = (SCREEN_HEIGHT / (DICE_Y_NUM * 2)) + (SCREEN_HEIGHT / DICE_Y_NUM * y);
 			spriteParam[y][x].SetPos(work);
