@@ -255,6 +255,9 @@ public:
 	float GetVtxColorA(){
 		return m_vtxColor[0].a;
 	}
+	float GetVtxColorOne(int number){
+		return m_vtxColor[number];
+	}
 
 	D3DXVECTOR2 GetTexUVRatio()
 	{

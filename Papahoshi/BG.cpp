@@ -102,23 +102,26 @@ cBG::~cBG(){
 //=======================================================================================
 void cBG::Update(){
 
-	if (!a)
-		i += 1.0f;
+	if (type = GAME_SKY){
 
-	else 
-		i -= 1.0f;
+		if (!a)
+			i += 1.0f;
 
-	if (i >= 200){
-		a = true;
+		else
+			i -= 1.0f;
+
+		if (i >= 200){
+			a = true;
+		}
+		if (i <= 0){
+			a = false;
+		}
+
+		sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 0);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 1);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, i, 0, 255), 2);
+		//sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, i), 3);
 	}
-	if (i <= 0){
-		a = false;
-	}
-
-	sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 0);
-	sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 1);
-	sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 2);
-	sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 3);
 }
 
 //=======================================================================================
