@@ -86,8 +86,8 @@ public:
 
 	void SetMotion(eGirlMotion motion){
 		m_motionType = motion;
-		m_nMotionNum = 0;
-		m_nMotionFrame = 0;
+		m_nMotionNum = -1;
+		m_nMotionFrame = 999;
 	}
 
 
@@ -95,6 +95,8 @@ private:
 	eGirlMotion		m_motionType;	//モーション
 	int				m_nMotionNum;	//現在のモーション番号
 	int				m_nMotionFrame;	//フレーム数
+
+	cSpriteParam	m_sprite;
 };
 
 //----- UIクラス ------
@@ -122,6 +124,8 @@ private:
 	cSpriteParam m_scoreString;
 	cSpriteParam m_timeString;
 
+	//------ チアガール -----
+	cTheerGirl*	m_pTheerGirl;
 
 };
 
