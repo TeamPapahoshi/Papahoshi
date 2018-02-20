@@ -167,8 +167,8 @@ void cEffectBezierCurve::SetEffectBezierCurve(LPDIRECT3DTEXTURE9* ptex, D3DXVECT
 		m_CPoint[MAX_POINT - 1] = endpoint;
 
 		//始点と終点から中間の制御点の座標を設定
-		m_CPoint[1].x = (4 * CRandam::RandamRenge(m_CPoint[0].x + POINT_SET_X, m_CPoint[MAX_POINT - 1].x - POINT_SET_X) - m_CPoint[0].x - m_CPoint[MAX_POINT - 1].x) / 2.0f;
-		m_CPoint[1].y = (4 * CRandam::RandamRenge(m_CPoint[0].y - POINT_SET_Y, m_CPoint[MAX_POINT - 1].y + POINT_SET_Y) - m_CPoint[0].y - m_CPoint[MAX_POINT - 1].y) / 2.0f;
+		m_CPoint[1].x = (4 * CRandam::RandamRenge(m_CPoint[2].x + POINT_SET_X, m_CPoint[0].x - POINT_SET_X) - m_CPoint[0].x - m_CPoint[2].x) / 2.0f;
+		m_CPoint[1].y = (4 * CRandam::RandamRenge(m_CPoint[0].y - POINT_SET_Y, m_CPoint[2].y + POINT_SET_Y) - m_CPoint[0].y - m_CPoint[2].y) / 2.0f;
 
 		//エフェクトの生存時間設定
 		m_nLifeFleam = life;

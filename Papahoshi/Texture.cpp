@@ -109,6 +109,14 @@
 #define TEXTURE_FILENAME_ANU_FIEVER		("Image/GameUI/fever!.png")
 #define TEXTURE_FILENAME_ANU_FINISH		("Image/GameUI/finish!.png")
 
+//リザルト
+#define TEXTURE_FILENAME_GIRL_MAX_1     ("Image/Result/Max/5.png")
+#define TEXTURE_FILENAME_GIRL_MAX_2     ("Image/Result/Max/6.png")
+
+#define TEXTURE_FILENAME_GIRL_MIN_1     ("Image/Result/Min/1.png")
+#define TEXTURE_FILENAME_GIRL_MIN_2     ("Image/Result/Min/2.png")
+#define TEXTURE_FILENAME_GIRL_MIN_3     ("Image/Result/Min/3.png")
+#define TEXTURE_FILENAME_GIRL_MIN_4     ("Image/Result/Min/4.png")
 
 //-----------------------------
 // グローバル
@@ -197,6 +205,13 @@ vector<char*> texResult = {
 	TEXTURE_FILENAME_8,
 	TEXTURE_FILENAME_9,
 
+	TEXTURE_FILENAME_GIRL_MAX_1,
+	TEXTURE_FILENAME_GIRL_MAX_2,
+
+	TEXTURE_FILENAME_GIRL_MIN_1,
+	TEXTURE_FILENAME_GIRL_MIN_2,
+	TEXTURE_FILENAME_GIRL_MIN_3,
+	TEXTURE_FILENAME_GIRL_MIN_4,
 };
 
 /*

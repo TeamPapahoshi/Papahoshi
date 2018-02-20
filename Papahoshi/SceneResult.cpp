@@ -47,7 +47,10 @@ cSceneResult::cSceneResult()
 	m_pBG = new cBG();
 	m_pBG->SetBG(m_pBG->RESULT);
 
-	
+	m_pResultgirl = new cResultgirl();
+
+	//----- スコアの初期化 -----
+	SetScore(0);
 }
 
 //=======================================================================================
@@ -60,7 +63,7 @@ cSceneResult::~cSceneResult(){
 	// 動的インスタンスするならdeleteをUnitとは別にここに
 	delete m_pRanking;
 	delete m_pBG;
-	
+	delete m_pResultgirl;
 }
 
 //=======================================================================================
@@ -73,6 +76,8 @@ void cSceneResult::Update(){
 	m_pRanking->Update();
 
 	m_pBG->Update();
+
+	m_pResultgirl->Update();
 
 	UpdateScore();
 
@@ -91,6 +96,7 @@ void cSceneResult::Draw(){
 	//描画処理
 	m_pBG->Draw();
 	m_pRanking->Draw();
+	m_pResultgirl->Draw();
 	DrawScore(D3DXVECTOR2(SCORE_POS_X, SCORE_POS_Y), D3DXVECTOR2(SCORE_SIZE_X, SCORE_SIZE_Y));
 }
 

@@ -28,6 +28,7 @@
 class cResultgirl
 {
 private:	//外部から参照不可能
+	cSpriteParam m_cGirlsprite;
 
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
@@ -38,8 +39,6 @@ public:		//外部から参照可能
 	cResultgirl();	//コンストラクタ
 	~cResultgirl();	//デストラクタ
 
-	void Init(void);
-	void UnInit(void);
 	void Update(void);
 	void Draw(void);
 };

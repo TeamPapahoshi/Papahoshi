@@ -18,6 +18,7 @@
 //------ 使用するオブジェクト -------
 #include "Ranking.h"
 #include "BG.h"
+#include "ResultGirl.h"
 
 //------------------------------
 // マクロ定義
@@ -36,8 +37,9 @@ public:
 	~cSceneResult();	//デストラクタ
 
 private:
-	cRanking* m_pRanking;
-	cBG*	  m_pBG;
+	cRanking*	 m_pRanking;
+	cBG*		 m_pBG;
+	cResultgirl* m_pResultgirl;
 
 };
 #endif //!___SCENE_RESULT_H___
