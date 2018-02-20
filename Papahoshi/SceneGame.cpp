@@ -266,6 +266,7 @@ void cSceneGame::MainUpdate(){
 	}
 #endif
 
+
 	// 
 	if (m_pGage->GetGagemax()){
 

@@ -65,11 +65,12 @@ cSpriteParam::cSpriteParam(){
 	m_size		= D3DXVECTOR2(100.0f, 100.0f);
 	m_scale		= D3DXVECTOR2(1.0f, 1.0f);
 	m_texUVRatio = D3DXVECTOR2(1.0f, 1.0f);
-	m_vtxColor	= D3DXCOLOR(255, 255, 255, 255);
+
 	m_rad		= 0.0f;
 	m_texUV		= false;
 	m_pTex		= NULL;
-	
+	for (int i = 0; i < 4; i++)
+		m_vtxColor[i] = D3DXCOLOR(255, 255, 255, 255);
 
 	// 初期値(使わない場合はこのままで)
 	m_texPatternDivideX=1;		
@@ -93,8 +94,8 @@ void cSpriteParam::Draw(){
 	//----------------------------
 	// 透明度0のとき、skip
 	//----------------------------
-	if (m_vtxColor.a <= 0)
-		return;
+	//if (m_vtxColor.a <= 0)
+	//	return;
 
 	//----------------------------
 	// ローカル変数宣言
@@ -168,9 +169,10 @@ void cSpriteParam::Draw(){
 	pVtx[0].rhw = pVtx[1].rhw = pVtx[2].rhw = pVtx[3].rhw = 1.0f;
 
 	//----- 頂点カラー 更新 ------------
-	pVtx[0].col = pVtx[1].col = pVtx[2].col = pVtx[3].col = 
-		D3DCOLOR_RGBA((unsigned char)m_vtxColor.r, (unsigned char)m_vtxColor.g,
-		(unsigned char)m_vtxColor.b, (unsigned char)m_vtxColor.a);
+	pVtx[0].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[0].r, (unsigned char)m_vtxColor[0].g, (unsigned char)m_vtxColor[0].b, (unsigned char)m_vtxColor[0].a);
+	pVtx[1].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[1].r, (unsigned char)m_vtxColor[1].g, (unsigned char)m_vtxColor[1].b, (unsigned char)m_vtxColor[1].a);
+	pVtx[2].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[2].r, (unsigned char)m_vtxColor[2].g, (unsigned char)m_vtxColor[2].b, (unsigned char)m_vtxColor[2].a);
+	pVtx[3].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[3].r, (unsigned char)m_vtxColor[3].g, (unsigned char)m_vtxColor[3].b, (unsigned char)m_vtxColor[3].a);
 
 	//----- 頂点バッファ　アンロック ------------
 	g_pVtxBuffSprite->Unlock();
@@ -211,8 +213,8 @@ void cSpriteParam::DrawFreePos(){
 	//----------------------------
 	// 透明度0のとき、skip
 	//----------------------------
-	if (m_vtxColor.a <= 0)
-		return;
+	//if (m_vtxColor[0.a <= 0)
+	//	return;
 
 	//----------------------------
 	// ローカル変数宣言
@@ -271,9 +273,11 @@ void cSpriteParam::DrawFreePos(){
 	pVtx[0].rhw = pVtx[1].rhw = pVtx[2].rhw = pVtx[3].rhw = 1.0f;
 
 	//----- 頂点カラー 更新 ------------
-	pVtx[0].col = pVtx[1].col = pVtx[2].col = pVtx[3].col =
-		D3DCOLOR_RGBA((unsigned char)m_vtxColor.r, (unsigned char)m_vtxColor.g,
-		(unsigned char)m_vtxColor.b, (unsigned char)m_vtxColor.a);
+	  
+		 pVtx[0].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[0].r, (unsigned char)m_vtxColor[0].g,(unsigned char)m_vtxColor[0].b, (unsigned char)m_vtxColor[0].a);
+		 pVtx[1].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[1].r, (unsigned char)m_vtxColor[1].g, (unsigned char)m_vtxColor[1].b, (unsigned char)m_vtxColor[1].a);
+		 pVtx[2].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[2].r, (unsigned char)m_vtxColor[2].g, (unsigned char)m_vtxColor[2].b, (unsigned char)m_vtxColor[2].a);
+		 pVtx[3].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[3].r, (unsigned char)m_vtxColor[3].g, (unsigned char)m_vtxColor[3].b, (unsigned char)m_vtxColor[3].a);
 
 	//----- 頂点バッファ　アンロック ------------
 	g_pVtxBuffSprite->Unlock();
