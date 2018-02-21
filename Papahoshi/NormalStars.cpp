@@ -142,6 +142,19 @@ void cNormalStar::Update(){
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+		//エフェクト表示中
+		if (m_pStarData->m_bEffectSetFlag)
+		{
+			//エフェクト表示フレームの加算
+			m_pStarData->m_nEffectFrame++;
+			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame == EFFECT_BEZIERCURVE_FRAME)
+			{
+				m_pGageData->GageAdd();
+
+				m_pStarData->m_bEffectSetFlag = false;
+				m_pStarData->m_nEffectFrame = 0;
+			}
+		}
 
 		// 使用されていないのは飛ばす
 		if (!m_pStarData->m_bUse)
@@ -172,7 +185,7 @@ void cNormalStar::Update(){
 			if (!m_pStarData->m_bEffectSetFlag)
 			{
 				// エフェクトの設定
-				GetEffectManeger()->SetEffectBezierCurve(cTextureManeger::GetTextureGame(TEX_GAME_UKI),
+				GetEffectManeger()->SetEffectBezierCurve(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT),
 					m_pStarData->m_sprite.GetPos(),
 					D3DXVECTOR2(EFFECT_BEZIERCURVE_SIZE, EFFECT_BEZIERCURVE_SIZE),
 					D3DXCOLOR(255, 255, 255, 255),
@@ -182,25 +195,12 @@ void cNormalStar::Update(){
 
 				//エフェクト使用フラグをOnに
 				m_pStarData->m_bEffectSetFlag = true;
-
 			}
 
 		}
 
 		// アニメーション
 		m_pStarData->m_sprite.AnimationLoop();
-	
-
-		//エフェクト表示中
-		if (m_pStarData->m_bEffectSetFlag)
-		{
-			//エフェクト表示フレームの加算
-			m_pStarData->m_nEffectFrame++;
-			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame == EFFECT_BEZIERCURVE_FRAME)
-			{
-				m_pGageData->GageAdd();
-			}
-		}
 
 	}
 
@@ -449,10 +449,6 @@ void cNormalStar::Respawn(){
 
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;
-
-
-		m_pStarData->m_bEffectSetFlag = false;
-		m_pStarData->m_nEffectFrame = 0;
 
 		m_pStarData->m_bRespawnEnd = false;
 		m_pStarData->m_bRespawnEvent = false;

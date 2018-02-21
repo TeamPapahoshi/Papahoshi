@@ -42,6 +42,10 @@
 #define GAGE_EFFECT_CIRCLE_SIZE (12.5f)
 #define GAGE_EFFECT_NUM_MAX (10)
 
+//ゲージ制御用
+#define GAGE_ADD (0.5f)	//ゲージに加算される値(暫定)
+#define GAGE_SUB (0.1f) //ゲージが減算される値(暫定)
+
 //-----------------------------
 //列挙型定義
 //-----------------------------
@@ -98,7 +102,7 @@ void cGage::Update(){
 
 	if (m_bGageMax)
 	{//ゲージマックス状態からゲージを徐々に減らす
-		m_fGageNum -= 0.8f;
+		m_fGageNum -= GAGE_SUB;
 		if (m_fGageNum <= 0.0f)
 		{
 			m_bGageMax = false;
@@ -157,7 +161,7 @@ void cGage::GageAdd()
 {
 	//ゲージがマックスでなければ
 		//暫定で固定値でゲージが増えるように
-	m_fGageNum += 0.5f;
+	m_fGageNum += GAGE_ADD;
 
 	//加算時にエフェクト設定
 	GetEffectManeger()->SetEffectCircle(cTextureManeger::GetTextureGame(TEX_GAME_STAR),

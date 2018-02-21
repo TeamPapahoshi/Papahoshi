@@ -97,11 +97,11 @@ void UnInit(void){
 	// スプライト管理の終了処理
 	ReleaseBufferSprite();
 
-	//エフェクトの初期化
+	//エフェクトの終了処理
 	g_CEffectManeger.Uninit();
 
-	//乱数の初期化
-	CRandam::InitRand();
+	//現在シーンの終了処理
+	cSceneManeger::Uninit();
 
 	// 入力装置管理の終了処理
 	UnInitInput();

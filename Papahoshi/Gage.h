@@ -32,7 +32,7 @@ private:	//外部から参照不可能
 	cSpriteParam m_FlameSprite;
 
 	float		 m_fGageNum;
-	bool		 m_bGageMax;
+	bool		 m_bGageMax;	//ゲージ状態フラグ(ゲージが最大値になったらtrue,0になったらfalse)
 	int			 m_nGageEffectNum;
 
 	//-----------------------------

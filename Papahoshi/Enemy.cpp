@@ -33,7 +33,7 @@ void cEnemy::Init(){
 	sprite.SetPos(ENEMY_DEFAULT_POS);
 	sprite.SetTexPatternDevide(4, 4);
 	sprite.SetCurrentAnimPattern(0);
-	sprite.SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_JELLY));
+	//sprite.SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_JELLY));
 
 	collider.SetCircleCollider(sprite.GetPos(), sprite.GetSizeX() / 2.0f);
 	collider.SetType(cCollider::CollisionType::CIRCLE);

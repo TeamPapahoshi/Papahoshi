@@ -16,7 +16,7 @@
 //-----------------------------
 //É}ÉNÉçíËã`
 //-----------------------------
-#define MAX_BEZIERCURVEFFECT_SPRITE (1)
+#define MAX_BEZIERCURVEFFECT_SPRITE (3)
 #define MAX_POINT (3)
 
 //-----------------------------

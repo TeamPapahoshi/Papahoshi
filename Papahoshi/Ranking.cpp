@@ -11,11 +11,12 @@
 #include "Ranking.h"
 #include "debugproc.h"		//printdebug
 #include "Texture.h"
+#include "Score.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define DEFAULT_SCORE (1000)			//デフォルトのスコアの値
+#define DEFAULT_SCORE (1000)			//デフォルトのスコアの値(閾値)
 
 #define	RANKING_SIZE_X		(40.0f)		// 順位表示の数字の幅
 #define	RANKING_SIZE_Y		(40.0f)		// 順位表示の数字の高さ
@@ -42,7 +43,7 @@
 //-----------------------------
 //グローバル
 //-----------------------------
-
+bool g_bDefaultScore = false;	//スコアのリセット用フラグ(trueにするとデフォルトの値がランキングに入る)
 
 //=======================================================================================
 //
@@ -52,7 +53,7 @@
 cRanking::cRanking(){
 
 	//ファイルの読み込み(失敗したらデフォルトデータの設定)
-	if (!ReadRanking())
+	if (!ReadRanking() || g_bDefaultScore)
 	{
 		int defaultdata = DEFAULT_SCORE;
 
@@ -63,6 +64,9 @@ cRanking::cRanking(){
 			defaultdata += DEFAULT_SCORE;
 		}
 	}
+
+	//ランキングの入れ替え
+	SortRanking();
 
 	//値の初期化
 	for (int Initloop = 0; Initloop < MAX_RANKING; Initloop++)
@@ -111,6 +115,7 @@ cRanking::~cRanking(){
 //
 //=======================================================================================
 void cRanking::Update(){
+
 }
 
 //=======================================================================================
@@ -167,7 +172,49 @@ void cRanking::SetNumber(cSpriteParam* data,int num, int digit){
 //
 //=======================================================================================
 void cRanking::SortRanking(){
+	//現在スコア情報の受け取り
+	int nScore = GetScore();
 
+	//ランキングの変更される地点の確認処理
+	for (int Checkloop = MAX_RANKING - 1; Checkloop >= 0; Checkloop--)
+	{
+		if (m_nScoreData[Checkloop] > nScore)
+		{
+			//保存されているスコアが現在スコアを上回るまでループし、上回ったらループの一つ前に現在スコアを保存
+			//スコアの保存された場所を記録
+			m_nChangeScorePoint = Checkloop + 1;
+			m_bChangeScoreFlag = true;
+
+			//処理の終了
+			break;
+
+		}
+		else if (m_nScoreData[0] < nScore)
+		{
+			//保存されているスコアが現在スコアを上回らなかったら、配列の一番上に保存
+			//スコアの保存される場所を記録
+			m_nChangeScorePoint = 0;
+			m_bChangeScoreFlag = true;
+
+			//処理の終了
+			break;
+		}
+
+	}
+
+	//ランキングが変更されていた場合
+	if (m_bChangeScoreFlag)
+	{
+		//ランキングの入れ替え処理
+		for (int Changeloop = MAX_RANKING - 1; Changeloop >= m_nChangeScorePoint; Changeloop--)
+		{
+			//スコアの移動
+			m_nScoreData[Changeloop] = m_nScoreData[Changeloop - 1];
+		}
+		//現在スコアの保存
+		m_nScoreData[m_nChangeScorePoint] = nScore;
+
+	}
 }
 
 //=======================================================================================

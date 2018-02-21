@@ -29,6 +29,9 @@ class cResultgirl
 {
 private:	//外部から参照不可能
 	cSpriteParam m_cGirlsprite;
+	int			 m_nAnimPattern;
+	int			 m_nCurrentPattern;
+	int			 m_nAnimFlame;
 
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
