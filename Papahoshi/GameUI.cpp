@@ -97,6 +97,12 @@ cGameUI::cGameUI(){
 //====================================
 cGameUI::~cGameUI(){
 
+	delete m_pTheerGirl;
+
+	for (int i = 0; i < MAX_BASEUI_ITEM; i++){
+		if (m_aItem[i])
+			delete m_aItem[i];
+	}
 
 }
 
