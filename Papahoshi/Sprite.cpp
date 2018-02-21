@@ -66,11 +66,22 @@ cSpriteParam::cSpriteParam(){
 	m_scale		= D3DXVECTOR2(1.0f, 1.0f);
 	m_texUVRatio = D3DXVECTOR2(1.0f, 1.0f);
 
+	m_bUseHSVColor = false;
+
 	m_rad		= 0.0f;
 	m_texUV		= false;
 	m_pTex		= NULL;
 	for (int i = 0; i < 4; i++)
 		m_vtxColor[i] = D3DXCOLOR(255, 255, 255, 255);
+
+
+	for (int i = 0; i < 4; i++){
+		m_HSVColor[i].h = 360;
+		m_HSVColor[i].s = 255;
+		m_HSVColor[i].v = 255;
+
+	}
+	m_bUseHSVColor = false;
 
 	// 初期値(使わない場合はこのままで)
 	m_texPatternDivideX=1;		
@@ -168,11 +179,79 @@ void cSpriteParam::Draw(){
 	//----- rhw 更新 ------------
 	pVtx[0].rhw = pVtx[1].rhw = pVtx[2].rhw = pVtx[3].rhw = 1.0f;
 
+
+	if (m_bUseHSVColor){
+
+		for (int i = 0; i < 4; i++){
+
+			unsigned int hi;
+			float M, N, K, F;
+
+			hi = (unsigned int)m_HSVColor[i].h / (unsigned int)60;
+
+			F = m_HSVColor[i].h/60.0f - hi;
+			M = m_HSVColor[i].v*(1 - m_HSVColor[i].s / 255.0f);
+			N = m_HSVColor[i].v*(1 - m_HSVColor[i].s / 255.0f * F);
+			K = m_HSVColor[i].v*(1 - m_HSVColor[i].s / 255.0f * (1 - F));
+
+			switch (hi)
+			{
+			case 0:
+				m_vtxColor[i].r = m_HSVColor[i].v;
+				m_vtxColor[i].g = K;
+				m_vtxColor[i].b = M;
+				break;
+			case 1:
+				m_vtxColor[i].r = N;
+				m_vtxColor[i].g = m_HSVColor[i].v;
+				m_vtxColor[i].b = M;
+				break;
+			case 2:
+				m_vtxColor[i].r = M;
+				m_vtxColor[i].g = m_HSVColor[i].v;
+				m_vtxColor[i].b = K;
+				break;
+			case 3:
+				m_vtxColor[i].r = M;
+				m_vtxColor[i].g = N;
+				m_vtxColor[i].b = m_HSVColor[i].v;
+				break;
+			case 4:
+				m_vtxColor[i].r = K;
+				m_vtxColor[i].g = M;
+				m_vtxColor[i].b = m_HSVColor[i].v;
+				break;
+			case 5:
+				m_vtxColor[i].r = m_HSVColor[i].v;
+				m_vtxColor[i].g = M;
+				m_vtxColor[i].b = N;
+				break;
+			default:
+				break;
+			}
+
+
+			if (m_HSVColor[i].s == 0){
+				m_vtxColor[i].r = m_vtxColor[i].g = m_vtxColor[i].b = m_HSVColor[i].v;
+
+			}
+		}
+	}
+
 	//----- 頂点カラー 更新 ------------
 	pVtx[0].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[0].r, (unsigned char)m_vtxColor[0].g, (unsigned char)m_vtxColor[0].b, (unsigned char)m_vtxColor[0].a);
 	pVtx[1].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[1].r, (unsigned char)m_vtxColor[1].g, (unsigned char)m_vtxColor[1].b, (unsigned char)m_vtxColor[1].a);
 	pVtx[2].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[2].r, (unsigned char)m_vtxColor[2].g, (unsigned char)m_vtxColor[2].b, (unsigned char)m_vtxColor[2].a);
 	pVtx[3].col = D3DCOLOR_RGBA((unsigned char)m_vtxColor[3].r, (unsigned char)m_vtxColor[3].g, (unsigned char)m_vtxColor[3].b, (unsigned char)m_vtxColor[3].a);
+
+	
+
+
+	/*pVtx[0].col = ((unsigned char)m_vtxColor[0].r, (unsigned char)m_vtxColor[0].g, (unsigned char)m_vtxColor[0].b, (unsigned char)m_vtxColor[0].a);
+	pVtx[1].col = ((unsigned char)m_vtxColor[1].r, (unsigned char)m_vtxColor[1].g, (unsigned char)m_vtxColor[1].b, (unsigned char)m_vtxColor[1].a);
+	pVtx[2].col = ((unsigned char)m_vtxColor[2].r, (unsigned char)m_vtxColor[2].g, (unsigned char)m_vtxColor[2].b, (unsigned char)m_vtxColor[2].a);
+	pVtx[3].col = ((unsigned char)m_vtxColor[3].r, (unsigned char)m_vtxColor[3].g, (unsigned char)m_vtxColor[3].b, (unsigned char)m_vtxColor[3].a);*/
+
 
 	//----- 頂点バッファ　アンロック ------------
 	g_pVtxBuffSprite->Unlock();
@@ -415,3 +494,5 @@ D3DXVECTOR2 cSpriteParam:: AffinTranceform(float x, float y){
 
 	return affin;
 }
+
+
