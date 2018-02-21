@@ -17,6 +17,7 @@
 #include "SceneManeger.h"
 #include "sound.h"
 #include "Timer.h"
+#include "Common.h"
 
 //デバッグ
 #ifdef _DEBUG
@@ -71,8 +72,11 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 		return E_FAIL;
 
 	//最初のシーンの設定
+#ifndef _DEBUG_DKIP_
+	cSceneManeger::ChangeScene(cSceneManeger::TITLE);	//デバッグ用にステージセレクト画面から開始
+#else
 	cSceneManeger::ChangeScene(cSceneManeger::GAME);	//デバッグ用にステージセレクト画面から開始
-	
+#endif
 
 	//初期化完了
 	return S_OK;

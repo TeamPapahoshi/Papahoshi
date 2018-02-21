@@ -15,6 +15,11 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
+//ゲージ増減量
+#define GAGE_ADD_VALUE		(4.0f)
+#define GAGE_MINUS_VALUE	(0.2f)
+#define MAX_GAGE_NUM (100.0f)
+
 //フレーム用
 #define FLAME_SIZE_X (220.0f)
 #define FLAME_SIZE_Y (60.0f)
@@ -29,8 +34,6 @@
 #define GAGE_POS_X (FLAME_POS_X)
 #define GAGE_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y / 1.35f)
 
-#define MAX_GAGE_NUM (100.0f)
-
 #define GAGE_SET(GageNum) ((1.0f - (MAX_GAGE_NUM - GageNum) / MAX_GAGE_NUM))
 
 //エフェクト用
@@ -41,10 +44,6 @@
 #define GAGE_EFFECT_CIRCLE_SET_FRAME (20)
 #define GAGE_EFFECT_CIRCLE_SIZE (12.5f)
 #define GAGE_EFFECT_NUM_MAX (10)
-
-//ゲージ制御用
-#define GAGE_ADD (0.5f)	//ゲージに加算される値(暫定)
-#define GAGE_SUB (0.1f) //ゲージが減算される値(暫定)
 
 //-----------------------------
 //列挙型定義
@@ -102,7 +101,7 @@ void cGage::Update(){
 
 	if (m_bGageMax)
 	{//ゲージマックス状態からゲージを徐々に減らす
-		m_fGageNum -= GAGE_SUB;
+		m_fGageNum -= GAGE_MINUS_VALUE;
 		if (m_fGageNum <= 0.0f)
 		{
 			m_bGageMax = false;
@@ -161,7 +160,7 @@ void cGage::GageAdd()
 {
 	//ゲージがマックスでなければ
 		//暫定で固定値でゲージが増えるように
-	m_fGageNum += GAGE_ADD;
+	m_fGageNum += GAGE_ADD_VALUE;
 
 	//加算時にエフェクト設定
 	GetEffectManeger()->SetEffectCircle(cTextureManeger::GetTextureGame(TEX_GAME_STAR),

@@ -201,7 +201,7 @@ void cNormalStar::Update(){
 
 		// アニメーション
 		m_pStarData->m_sprite.AnimationLoop();
-
+	
 	}
 
 

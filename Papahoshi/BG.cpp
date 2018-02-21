@@ -24,7 +24,8 @@
 #define BG_STAR        ("Image/BG/bgstar.jpg")
 #define BG_RESULT	   ("Image/BG/bgresult.jpg")
 
-
+float i=0;
+bool	a=false;
 //=======================================================================================
 //
 //
@@ -47,7 +48,11 @@ void cBG::SetBG(BG bg){
 	case GAME_MAIN:
 		break;
 	case GAME_SKY:
-		sprite.LoadTexture(BG_FILNAME_SKY);
+		//sprite.LoadTexture(BG_FILNAME_SKY);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 0);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 1);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 2);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 3);
 		break;
 	case RESULT:
 		sprite.LoadTexture(BG_RESULT);
@@ -97,6 +102,26 @@ cBG::~cBG(){
 //=======================================================================================
 void cBG::Update(){
 
+	if (type = GAME_SKY){
+
+		if (!a)
+			i += 1.0f;
+
+		else
+			i -= 1.0f;
+
+		if (i >= 200){
+			a = true;
+		}
+		if (i <= 0){
+			a = false;
+		}
+
+		sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 0);
+		sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 1);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 2);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 3);
+	}
 }
 
 //=======================================================================================

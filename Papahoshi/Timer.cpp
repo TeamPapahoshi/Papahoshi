@@ -30,7 +30,7 @@ cTimer::cTimer(){
 	m_nCountFrame = 0;
 	m_nFrameTime = 0;
 	m_fCountDownFrame = 0;
-	m_fCountDownTime = 0;
+	m_fCountDownTime = LIMIT_TIME;
 	m_bCountDown = false;
 
 	//---- テクスチャ初期化 ----
@@ -92,7 +92,7 @@ void cTimer::Update(){
 	PrintDebugProc("Time(timeGetTime) %f\n", m_CurrentTime / 1000.0f);
 	PrintDebugProc("Time(frame) %f\n", m_nFrameTime);
 	PrintDebugProc("CountDown %f\n", m_fCountDownTime);
-	PrintDebugProc("Sキーでカウントダウン\n", m_fCountDownTime);
+	//PrintDebugProc("Sキーでカウントダウン\n", m_fCountDownTime);
 }
 
 //===================================================

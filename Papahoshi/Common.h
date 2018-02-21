@@ -10,6 +10,10 @@
 #ifndef ___COMMON_H___
 #define ___COMMON_H___
 
+// デバッグ用　イベントスキップ・タイムストップ
+//#define _DEBUG_DKIP_
+
+
 //------------------------------
 // インクルードファイル
 //------------------------------
@@ -66,6 +70,9 @@ enum eDirection {
 	DIRECTION_RIGHT,
 	DIRECTION_DOWN
 };
+
+
+
 
 
 #endif //!___COMMON_H___

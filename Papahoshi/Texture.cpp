@@ -110,6 +110,14 @@
 #define TEXTURE_FILENAME_ANU_FIEVER		("Image/GameUI/fever!.png")
 #define TEXTURE_FILENAME_ANU_FINISH		("Image/GameUI/finish!.png")
 
+//チアガール
+#define TEXTURE_FILENAME_THEER_1		("Image/GameUI/girl/yell_01.png")
+#define TEXTURE_FILENAME_THEER_2		("Image/GameUI/girl/yell_02.png")
+#define TEXTURE_FILENAME_THEER_3		("Image/GameUI/girl/yell_03.png")
+#define TEXTURE_FILENAME_THEER_4		("Image/GameUI/girl/yell_04.png")
+#define TEXTURE_FILENAME_THEER_5		("Image/GameUI/girl/yell_05.png")
+
+
 //リザルト
 #define TEXTURE_FILENAME_GIRL_MAX_1     ("Image/Result/Max/5.png")
 #define TEXTURE_FILENAME_GIRL_MAX_2     ("Image/Result/Max/6.png")
@@ -192,6 +200,11 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_ANU_START,
 	TEXTURE_FILENAME_ANU_FIEVER,
 	TEXTURE_FILENAME_ANU_FINISH,
+	TEXTURE_FILENAME_THEER_1,
+	TEXTURE_FILENAME_THEER_2,
+	TEXTURE_FILENAME_THEER_3,
+	TEXTURE_FILENAME_THEER_4,
+	TEXTURE_FILENAME_THEER_5,
 	TEXTURE_FILENAME_EXPLOSION_ANIM,
 };
 
@@ -244,6 +257,11 @@ void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 	vector<char*> filename;						// ファイル名格納
 
 	// 初期化処理
+
+	// リリース
+	for (int i = 0; i < (int)filename.size(); i++){
+		p_texture[i]->Release();
+	}
 	p_texture.clear();
 	p_texture.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
 	filename.clear();

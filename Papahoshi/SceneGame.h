@@ -46,7 +46,6 @@
 #define STAR_NUM		(5)	//仮
 #define FIXED_STAR_NUM	(1)	//仮
 
-
 //------------------------------
 // 列挙体定義
 //------------------------------
@@ -56,6 +55,7 @@ enum eGameState{
 	GAME_STATE_MAIN,	// メイン
 	GAME_STATE_END,		// TimeUp
 };
+
 
 //------------------------------
 // クラス定義

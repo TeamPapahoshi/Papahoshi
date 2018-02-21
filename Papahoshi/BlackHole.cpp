@@ -201,7 +201,7 @@ void cBlackHole::Draw(){
 
 		// ƒQ[ƒ€“à‚Å—LŒø‚È‚ç‚ ‚½‚è”»’è‚ð•`‰æ
 		if (m_pStarData->m_bUse){
-			m_pStarData->m_Collision.Draw();
+		//	m_pStarData->m_Collision.Draw();
 			//m_pStarData->m_VacumeRange.Draw();
 			//m_pStarData->m_DeleteRange.Draw();
 		}
