@@ -246,7 +246,7 @@ void cSceneGame::MainUpdate(){
 		//このフラグOnにしたらアナウンスを呼ぶ
 		m_pRyusei->SetCreateEvent();
 		m_pRyusei->SetRespawnFlag(true);
-	
+		
 	}
 
 #ifndef _DEBUG_DKIP_
@@ -267,14 +267,32 @@ void cSceneGame::MainUpdate(){
 #endif
 
 
-	// 
-	if (m_pGage->GetGagemax()){
+	//---- FEVERスタート ------
+	if (m_pGage->GetFeverStart()){
 
 		m_bFever = true;
+		m_pGage->SetFeverStart(false);
 
+		//--- アナウンス呼び出し -----
 		if (m_bFever)
 			m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Fever);
 
+		//--- BGM変更 ---
+		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+		PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
+		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::FEVER);
+	}
+
+	//---- Fever終了 ------
+	if (m_pGage->GetFeverFin()){
+
+		m_bFever = false;
+		m_pGage->SetFeverFin(false);
+
+		//--- BGM変更 ---
+		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
+		PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::NOMAL);
 	}
 
 	

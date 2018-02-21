@@ -17,7 +17,7 @@
 //-----------------------------
 //ゲージ増減量
 #define GAGE_ADD_VALUE		(4.0f)
-#define GAGE_MINUS_VALUE	(0.8f)
+#define GAGE_MINUS_VALUE	(0.2f)
 #define MAX_GAGE_NUM (100.0f)
 
 //フレーム用
@@ -81,6 +81,9 @@ void cGage::Init(){
 	m_fGageNum = 0.0f;
 	m_bGageMax = false;
 	m_nGageEffectNum = CRandam::RandamRenge(0, GAGE_EFFECT_SET_FRAME);
+
+	m_bFeverStart = false;
+	m_bFeverFin = false;
 }
 
 //=======================================================================================
@@ -105,6 +108,7 @@ void cGage::Update(){
 		if (m_fGageNum <= 0.0f)
 		{
 			m_bGageMax = false;
+			m_bFeverFin = true;
 			m_GageSprite.SetVtxColor(D3DXCOLOR(0, 0, 128, 255));
 		}
 	}
@@ -174,6 +178,7 @@ void cGage::GageAdd()
 	if (m_fGageNum >= MAX_GAGE_NUM)
 	{
 		m_bGageMax = true;
+		m_bFeverStart = true;
 		m_GageSprite.SetVtxColor(D3DXCOLOR(0, 255, 128, 255));
 	}
 }

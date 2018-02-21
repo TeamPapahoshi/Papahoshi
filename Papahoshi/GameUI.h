@@ -108,6 +108,10 @@ public:
 	void Update();
 	void Draw();
 
+	void SetTheerMotion(cTheerGirl::eGirlMotion motion){
+		m_pTheerGirl->SetMotion(motion);
+	}
+
 private:
 
 	//----- ÉxÅ[ÉXUI ------
