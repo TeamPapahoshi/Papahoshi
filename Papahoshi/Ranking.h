@@ -35,6 +35,9 @@ private:	//外部から参照不可能
 	cSpriteParam m_ScoreSprite[MAX_RANKING][MAX_SCORE];
 	cSpriteParam m_RankSprite[MAX_RANKING][MAX_RANK];
 
+	int  m_nChangeScorePoint;
+	bool m_bChangeScoreFlag;
+
 	void SetNumber(cSpriteParam* sprite, int num, int digit);	//番号テクスチャの設定
 	void SortRanking(void); //ランキングの入れ替え
 	bool ReadRanking(void);	//ファイルデータからスコアの読み込み

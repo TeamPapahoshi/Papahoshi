@@ -42,7 +42,8 @@ cRyuseiLine::cRyuseiLine(){
 	m_pRoot = m_pRyuseiLine;	// æ“ª‚ğŠi”[
 
 
-	for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLine++){
+	for (int nCunt = 0; nCunt < MAX_RYUSEI_LINE; nCunt++, m_pRyuseiLine++)
+	{
 		// ‰Šú’l
 		m_pRyuseiLine->t_bUse = false;
 		m_pRyuseiLine->t_LifeTime = LIFE_TIME;

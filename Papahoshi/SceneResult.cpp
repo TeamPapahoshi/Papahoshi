@@ -49,8 +49,8 @@ cSceneResult::cSceneResult()
 
 	m_pResultgirl = new cResultgirl();
 
-	//----- スコアの初期化 -----
-	SetScore(0);
+	//----- 表示スコアの初期化 -----
+	ResetPrintScore();
 }
 
 //=======================================================================================

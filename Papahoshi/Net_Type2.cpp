@@ -48,7 +48,7 @@
 #define DECRE_SPEED (0.1f)	//１フレームごとに初速減らす量
 #define DECRE_THROW_SPEED	(0.1f)	//まさつ
 //待ち時間
-#define INTERVAL_THOROW_PULL	(50)	//投げから引き上げまでの待ち時間
+#define INTERVAL_THOROW_PULL	(20)	//投げから引き上げまでの待ち時間
 //引くとき
 #define PULL_WAIT	(15)	//待ち時間？
 //半円
@@ -232,6 +232,7 @@ void cNet::SetNet(){
 	D3DXVECTOR2	underXleft, underXright;	//下の
 	D3DXVECTOR2	leftYtop, leftYunder;		//左の
 	D3DXVECTOR2	rightYtop, rightYunder;		//右の
+	float regula;	//引き状態に合わせて調整
 
 	//---- ウキの位置を設定 ----
 	for (int i = 0; i < 3; i++){
@@ -239,7 +240,7 @@ void cNet::SetNet(){
 	}
 	m_center.SetPos(m_centerPos);
 
-	//---- 曲線状に座標を設定 ----- **成功したら上のやつ消す
+	//---- 曲線状に座標を設定 -----
 	for (int z = 0; z < NET_PARTS_MAX; z++){
 		for (int y = 0; y < NET_Y_NUM; y++){
 			for (int x = 0; x < NET_X_NUM; x++){
@@ -283,11 +284,38 @@ void cNet::SetNet(){
 							//線分AOと、分割点eを交点とした垂線EGを求める
 							egSlop = VerticalLineSlope(aoSlop);
 							egInter = VerticalLineIntercept(e, aoSlop);
+							//引き状態に合わせて調整値を求める
+							if (gamePhase == GAME_PHASE::PHASE_PULL){
+								switch (m_nPullNum)
+								{
+								case 1:
+									regula = 1.0f - (0.4f * ((float)m_nPullFrame / (float)PULL_FRAME));
+									if (m_nFrameCnt)
+										regula = 0.6f;
+									break;
+								case 2:
+									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.4f;
+									if (m_nFrameCnt)
+										regula = 0.3f;
+									break;
+								case 3:
+									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.7f;
+									if (m_nFrameCnt)
+										regula = 0.0f; 
+									break;
+								default:
+									regula = 1.0f;
+									break;
+								}
+							}
+							else{
+								regula = 1.0f;
+							}
 							//制御点F
-							cp1.x = d.x - (m_aPos[0].y - CP_DISTANCE);
+							cp1.x = d.x - ((m_aPos[0].y - CP_DISTANCE) * regula);
 							cp1.y = LineY(cp1.x, dfSlop, dfInter);
 							//制御点G
-							cp2.x = e.x - (m_aPos[0].y - CP_DISTANCE);
+							cp2.x = e.x - ((m_aPos[0].y - CP_DISTANCE) * regula);
 							cp2.y = LineY(cp2.x, egSlop, egInter);
 
 							//********* 線分ABの制御点を計算 *******
@@ -376,11 +404,38 @@ void cNet::SetNet(){
 							//線分COと、分割点eを交点とした垂線EGを求める
 							egSlop = VerticalLineSlope(aoSlop);
 							egInter = VerticalLineIntercept(e, aoSlop);
+							//引き状態に合わせて調整値を求める
+							if (gamePhase == GAME_PHASE::PHASE_PULL){
+								switch (m_nPullNum)
+								{
+								case 1:
+									regula = 1.0f - (0.4f * ((float)m_nPullFrame / (float)PULL_FRAME));
+									if (m_nFrameCnt)
+										regula = 0.6f;
+									break;
+								case 2:
+									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.4f;
+									if (m_nFrameCnt)
+										regula = 0.3f; 
+									break;
+								case 3:
+									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.7f;
+									if (m_nFrameCnt)
+										regula = 0.0f; 
+									break;
+								default:
+									regula = 1.0f;
+									break;
+								}
+							}
+							else{
+								regula = 1.0f;
+							}
 							//制御点F
-							cp1.x = d.x + (m_aPos[2].y - CP_DISTANCE);
+							cp1.x = d.x + ((m_aPos[2].y - CP_DISTANCE) * regula);
 							cp1.y = LineY(cp1.x, dfSlop, dfInter);
 							//制御点G
-							cp2.x = e.x + (m_aPos[2].y - CP_DISTANCE);
+							cp2.x = e.x + ((m_aPos[2].y - CP_DISTANCE) * regula);
 							cp2.y = LineY(cp2.x, egSlop, egInter);
 
 							//********* 線分BCの制御点を計算 *******
@@ -629,6 +684,14 @@ void cNet::PostPhaseUpdate(){
 //====================================================
 void cNet::ShoutPhaseUpdate(){
 
+	bool xFin[3];
+	bool yFin[3];
+
+	for (int i = 0; i < 3; i++){
+		xFin[i] = false;
+		yFin[i] = false;
+	}
+
 	//------ ボタン離したかチェック ------
 	for (int i = 0; i < 3; i++){
 		if (!m_bPressButton[i] && !m_bThrow[i]){
@@ -664,24 +727,30 @@ void cNet::ShoutPhaseUpdate(){
 			if (fSp < MIN_SPEED)
 				fSp = MIN_SPEED;
 			m_aPos[i].y -= fSp;
-			if (m_aPos[i].y < m_ThreePurposePos[i].y)
+			if (m_aPos[i].y < m_ThreePurposePos[i].y){
 				m_aPos[i].y = m_ThreePurposePos[i].y;
+				yFin[i] = true;
+			}
 			//X方向
 			if (m_ThreePurposePos[i].x < m_aPos[i].x){
 				fSp = (m_aPos[i].x - m_ThreePurposePos[i].x) / SPEED_HALFCIRCLE;
 				if (fSp < MIN_SPEED)
 					fSp = MIN_SPEED;
 				m_aPos[i].x -= fSp;
-				if (m_aPos[i].x < m_ThreePurposePos[i].x)
+				if (m_aPos[i].x < m_ThreePurposePos[i].x){
 					m_aPos[i].x = m_ThreePurposePos[i].x;
+					xFin[i] = true;
+				}
 			}
 			else{
 				fSp = (m_ThreePurposePos[i].x - m_aPos[i].x) / SPEED_HALFCIRCLE;
 				if (fSp < MIN_SPEED)
 					fSp = MIN_SPEED;
 				m_aPos[i].x += fSp;
-				if (m_aPos[i].x > m_ThreePurposePos[i].x)
+				if (m_aPos[i].x > m_ThreePurposePos[i].x){
 					m_aPos[i].x = m_ThreePurposePos[i].x;
+					xFin[i] = true;
+				}
 			}
 		}
 
@@ -696,6 +765,14 @@ void cNet::ShoutPhaseUpdate(){
 	m_halfCircle.SetScale(D3DXVECTOR2(m_fHalfCircleSize, m_fHalfCircleSize));
 	m_halfCircle.SetPosY(SCREEN_HEIGHT -  m_halfCircle.GetSizeY() * m_halfCircle.GetScaleY() * 0.5f);
 
+	//---- 投げ終了で引き上げ -----
+	for (int i = 0; i < 3; i++){
+		if (!xFin[i] || !yFin[i])
+			break;
+		if (i == 2){
+			m_fHalfCircleSize = 0.0f;
+		}
+	}
 
 	//------ 減速しきって数秒したら引き上げ ------
 	if (m_fHalfCircleSize <= 0.0f){
@@ -720,7 +797,8 @@ void cNet::PullPhaseUpdate(){
 	//------ 待ち時間がある場合は実行しない --------
 	if (m_nFrameCnt){
 		m_nFrameCnt--;
-		return;
+		if (m_nFrameCnt)
+			return;
 	}
 
 	//------ 目的位置をセット --------

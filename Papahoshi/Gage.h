@@ -32,8 +32,11 @@ private:	//外部から参照不可能
 	cSpriteParam m_FlameSprite;
 
 	float		 m_fGageNum;
-	bool		 m_bGageMax;
+	bool		 m_bGageMax;	//ゲージ状態フラグ(ゲージが最大値になったらtrue,0になったらfalse)
 	int			 m_nGageEffectNum;
+
+	bool	m_bFeverStart;
+	bool	m_bFeverFin;
 
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
@@ -56,6 +59,22 @@ public:		//外部から参照可能
 	cSpriteParam GetGageSprite(void)
 	{
 		return m_GageSprite;
+	}
+
+	bool GetFeverStart(){
+		return m_bFeverStart;
+	}
+
+	bool GetFeverFin(){
+		return m_bFeverFin;
+	}
+
+	void SetFeverStart(bool flug){
+		m_bFeverStart = flug;
+	}
+
+	void SetFeverFin(bool flug){
+		m_bFeverFin = flug;
 	}
 };
 
