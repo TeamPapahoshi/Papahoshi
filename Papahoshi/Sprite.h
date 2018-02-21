@@ -22,6 +22,14 @@
 HRESULT CreateBufferSprite(void);	// スプライトの頂点バッファの設定
 void	ReleaseBufferSprite(void);	// スプライトの頂点バッファの解放
 
+typedef struct _HSVCOLOR{
+
+	unsigned int h;
+	unsigned char s;
+	unsigned char v;
+
+}HSVCOLOR;
+
 
 //---------------------------------
 // クラス定義
@@ -43,6 +51,8 @@ private:
 	D3DXVECTOR2 m_move;			// 移動量(追加)
 	float		m_rad;			// 角度
 	D3DXCOLOR	m_vtxColor[4];	// 頂点カラー
+	HSVCOLOR	m_HSVColor[4];	// HSVカラー
+	bool		m_bUseHSVColor;	// HSVカラー使用フラグ
 	bool		m_texUV;		// テクスチャUV使用フラグ
 
 	// テクスチャUV
@@ -141,6 +151,14 @@ public:
 	}
 	void SetVtxColorOne(D3DXCOLOR data,int number){
 		m_vtxColor[number] = data;
+	}
+	void SetHSVColorOne(unsigned int h, unsigned char s, unsigned char v, int number){
+		m_HSVColor[number].h = h;
+		m_HSVColor[number].s = s;
+		m_HSVColor[number].v = v;
+	}
+	void SetHSVColorFlag(bool flag){
+		m_bUseHSVColor = flag;
 	}
 
 	void SetVtxColorR(float data){
@@ -243,19 +261,19 @@ public:
 	D3DXCOLOR GetVtxColor(){	// vexcolor
 		return m_vtxColor[0];
 	}
-	float GetVtxColorR(){
+	DWORD GetVtxColorR(){
 		return m_vtxColor[0].r;
 	}
-	float GetVtxColorG(){
+	DWORD GetVtxColorG(){
 		return m_vtxColor[0].g;
 	}
-	float GetVtxColorB(){
+	DWORD GetVtxColorB(){
 		return m_vtxColor[0].b;
 	}
-	float GetVtxColorA(){
+	DWORD GetVtxColorA(){
 		return m_vtxColor[0].a;
 	}
-	float GetVtxColorOne(int number){
+	DWORD GetVtxColorOne(int number){
 		return m_vtxColor[number];
 	}
 

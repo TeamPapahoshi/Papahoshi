@@ -71,8 +71,4 @@ enum eDirection {
 	DIRECTION_DOWN
 };
 
-
-
-
-
 #endif //!___COMMON_H___

@@ -46,13 +46,29 @@ void cBG::SetBG(BG bg){
 		sprite.LoadTexture(BG_STAR);
 		break;
 	case GAME_MAIN:
+		//sprite.LoadTexture(BG_FILNAME_SKY);
+		sprite.SetHSVColorFlag(true);
+		sprite.SetHSVColorOne(100, 50, 100, 0);
+		sprite.SetHSVColorOne(50, 50, 100, 1);
+		sprite.SetHSVColorOne(100, 50, 100, 2);
+		sprite.SetHSVColorOne(50, 50, 100, 3);
 		break;
 	case GAME_SKY:
 		//sprite.LoadTexture(BG_FILNAME_SKY);
-		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 0);
+		sprite.SetHSVColorFlag(true);
+		sprite.SetHSVColorOne(100, 50, 100, 0);
+		sprite.SetHSVColorOne(50, 50, 100, 1);
+		sprite.SetHSVColorOne(100, 50, 100, 2);
+		sprite.SetHSVColorOne(50, 50, 100, 3);
+		/*sprite.SetVtxColorOne(D3DXCOLOR(80, 100, 100, 255), 0);
 		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 1);
 		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 2);
 		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 3);
+		sprite.SetVtxColorOne(D3DXCOLOR(80, 100, 100, 255), 1);
+		sprite.SetVtxColorOne(D3DXCOLOR(80, 100, 100, 255), 2);
+		sprite.SetVtxColorOne(D3DXCOLOR(80, 100, 100, 255), 3);*/
+
+
 		break;
 	case RESULT:
 		sprite.LoadTexture(BG_RESULT);
@@ -102,7 +118,6 @@ cBG::~cBG(){
 //=======================================================================================
 void cBG::Update(){
 
-	if (type = GAME_SKY){
 
 		if (!a)
 			i += 1.0f;
@@ -110,19 +125,29 @@ void cBG::Update(){
 		else
 			i -= 1.0f;
 
-		if (i >= 200){
+		if (i >= 360){
 			a = true;
 		}
 		if (i <= 0){
 			a = false;
 		}
 
-		sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 0);
-		sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 1);
-		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 2);
-		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 3);
+		//	/*sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 0);
+		//	sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 1);
+		//	sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 2);
+		//	sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 3);*/
+		//sprite.SetHSVColorFlag(true);
+		//sprite.SetHSVColorOne(i, 155, 155, 0);
+		//sprite.SetHSVColorOne(i+50, 155, 155, 1);
+		//sprite.SetHSVColorOne(i+100, 155, 155, 2);
+		//sprite.SetHSVColorOne(i+150, 155, 155, 3);
 	}
-}
+
+	/*sprite.SetHSVColorOne(100, 50, 100, 0);
+	sprite.SetHSVColorOne(50, 50, 100, 1);
+	sprite.SetHSVColorOne(100, 50, 100, 2);
+	sprite.SetHSVColorOne(50, 50, 100, 3);*/
+
 
 //=======================================================================================
 //
