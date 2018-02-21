@@ -118,9 +118,9 @@ void cBG::Update(){
 		}
 
 		sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 0);
-		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 1);
-		sprite.SetVtxColorOne(D3DXCOLOR(0, i, 0, 255), 2);
-		//sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, i), 3);
+		sprite.SetVtxColorOne(D3DXCOLOR(i, 0, 0, 255), 1);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 2);
+		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, i, 255), 3);
 	}
 }
 

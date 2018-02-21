@@ -246,7 +246,7 @@ void cSceneGame::MainUpdate(){
 		//このフラグOnにしたらアナウンスを呼ぶ
 		m_pRyusei->SetCreateEvent();
 		m_pRyusei->SetRespawnFlag(true);
-		
+	
 	}
 
 #ifndef _DEBUG_DKIP_
@@ -293,6 +293,9 @@ void cSceneGame::MainUpdate(){
 		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::NOMAL);
+	}
+	if (!m_pGage->GetGagemax()){
+		m_bFever = false;
 	}
 
 	

@@ -34,6 +34,7 @@ public:
 
 	// カウントダウン開始
 	void StartCountDown(float Time){
+		m_StartTime = timeGetTime();
 		m_fCountDownTime = Time;
 		m_bCountDown = true;
 	}

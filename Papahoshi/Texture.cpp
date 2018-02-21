@@ -133,8 +133,8 @@
 //----Title-----
 vector<char*> texTitle = {
 	TEXTURE_FILNAME_KING_JELLY,
-	TEXTURE_FILNAME_JELLY,		// 同じ画像でもシーンが違うときはもう一回書いて
-	TEXTURE_FILENAME_SPHERE_LIGHT,
+	TEXTURE_FILENAME_SPHERE_LIGHT,		// 同じ画像でもシーンが違うときはもう一回書いて
+	TEXTURE_FILNAME_STAR_LIGHT,
 	TEXTURE_FILENAME_SHIP,
 	TEXTURE_FILENAME_WAVE,
 	TEXTURE_FILENAME_ROGO01,
@@ -148,6 +148,7 @@ vector<char*> texTitle = {
 	TEXTURE_FILENAME_ROGO09,
 	TEXTURE_FILENAME_ROGO10,
 	TEXTURE_FILENAME_ROGO11,
+	TEXTURE_FILNAME_RYUSEI,
 };
 
 //----StageSelect-----
@@ -256,6 +257,11 @@ void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 	vector<char*> filename;						// ファイル名格納
 
 	// 初期化処理
+
+	// リリース
+	for (int i = 0; i < (int)filename.size(); i++){
+		p_texture[i]->Release();
+	}
 	p_texture.clear();
 	p_texture.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
 	filename.clear();

@@ -27,15 +27,6 @@
 //-----------------------------
 //構造体定義
 //-----------------------------
-typedef struct
-{
-
-	//int m_nMakeTime;	//流星の生成までの時間
-	//int m_nLifeTime;	//流星の生存時間
-	//bool m_bUseFlag;	//使用フラグ
-
-	cSpriteParam m_Sprite[MAX_METEOR_SPRITE_NUM];
-}ObjMETEOR;
 
 //-----------------------------
 //クラス定義
