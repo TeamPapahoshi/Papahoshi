@@ -48,7 +48,7 @@
 #define DECRE_SPEED (0.1f)	//１フレームごとに初速減らす量
 #define DECRE_THROW_SPEED	(0.1f)	//まさつ
 //待ち時間
-#define INTERVAL_THOROW_PULL	(50)	//投げから引き上げまでの待ち時間
+#define INTERVAL_THOROW_PULL	(20)	//投げから引き上げまでの待ち時間
 //引くとき
 #define PULL_WAIT	(15)	//待ち時間？
 //半円
@@ -629,6 +629,14 @@ void cNet::PostPhaseUpdate(){
 //====================================================
 void cNet::ShoutPhaseUpdate(){
 
+	bool xFin[3];
+	bool yFin[3];
+
+	for (int i = 0; i < 3; i++){
+		xFin[i] = false;
+		yFin[i] = false;
+	}
+
 	//------ ボタン離したかチェック ------
 	for (int i = 0; i < 3; i++){
 		if (!m_bPressButton[i] && !m_bThrow[i]){
@@ -664,24 +672,30 @@ void cNet::ShoutPhaseUpdate(){
 			if (fSp < MIN_SPEED)
 				fSp = MIN_SPEED;
 			m_aPos[i].y -= fSp;
-			if (m_aPos[i].y < m_ThreePurposePos[i].y)
+			if (m_aPos[i].y < m_ThreePurposePos[i].y){
 				m_aPos[i].y = m_ThreePurposePos[i].y;
+				yFin[i] = true;
+			}
 			//X方向
 			if (m_ThreePurposePos[i].x < m_aPos[i].x){
 				fSp = (m_aPos[i].x - m_ThreePurposePos[i].x) / SPEED_HALFCIRCLE;
 				if (fSp < MIN_SPEED)
 					fSp = MIN_SPEED;
 				m_aPos[i].x -= fSp;
-				if (m_aPos[i].x < m_ThreePurposePos[i].x)
+				if (m_aPos[i].x < m_ThreePurposePos[i].x){
 					m_aPos[i].x = m_ThreePurposePos[i].x;
+					xFin[i] = true;
+				}
 			}
 			else{
 				fSp = (m_ThreePurposePos[i].x - m_aPos[i].x) / SPEED_HALFCIRCLE;
 				if (fSp < MIN_SPEED)
 					fSp = MIN_SPEED;
 				m_aPos[i].x += fSp;
-				if (m_aPos[i].x > m_ThreePurposePos[i].x)
+				if (m_aPos[i].x > m_ThreePurposePos[i].x){
 					m_aPos[i].x = m_ThreePurposePos[i].x;
+					xFin[i] = true;
+				}
 			}
 		}
 
@@ -696,6 +710,14 @@ void cNet::ShoutPhaseUpdate(){
 	m_halfCircle.SetScale(D3DXVECTOR2(m_fHalfCircleSize, m_fHalfCircleSize));
 	m_halfCircle.SetPosY(SCREEN_HEIGHT -  m_halfCircle.GetSizeY() * m_halfCircle.GetScaleY() * 0.5f);
 
+	//---- 投げ終了で引き上げ -----
+	for (int i = 0; i < 3; i++){
+		if (!xFin[i] || !yFin[i])
+			break;
+		if (i == 2){
+			m_fHalfCircleSize = 0.0f;
+		}
+	}
 
 	//------ 減速しきって数秒したら引き上げ ------
 	if (m_fHalfCircleSize <= 0.0f){
