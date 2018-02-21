@@ -274,7 +274,9 @@ void cSceneGame::MainUpdate(){
 
 		if (m_bFever)
 			m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Fever);
-
+	}
+	if (!m_pGage->GetGagemax()){
+		m_bFever = false;
 	}
 
 	

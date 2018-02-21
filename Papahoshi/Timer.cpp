@@ -92,7 +92,7 @@ void cTimer::Update(){
 	PrintDebugProc("Time(timeGetTime) %f\n", m_CurrentTime / 1000.0f);
 	PrintDebugProc("Time(frame) %f\n", m_nFrameTime);
 	PrintDebugProc("CountDown %f\n", m_fCountDownTime);
-	PrintDebugProc("Sキーでカウントダウン\n", m_fCountDownTime);
+	//PrintDebugProc("Sキーでカウントダウン\n", m_fCountDownTime);
 }
 
 //===================================================

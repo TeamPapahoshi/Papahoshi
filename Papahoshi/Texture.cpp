@@ -256,6 +256,11 @@ void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 	vector<char*> filename;						// ファイル名格納
 
 	// 初期化処理
+
+	// リリース
+	for (int i = 0; i < (int)filename.size(); i++){
+		p_texture[i]->Release();
+	}
 	p_texture.clear();
 	p_texture.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
 	filename.clear();
