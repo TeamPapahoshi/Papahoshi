@@ -20,12 +20,6 @@
 //----------------------------
 #define WHITE_TEX_NAME		"Image/GameUI/white.png"	//白テクスチャ
 
-//背景カラー
-#define START_COLOR			(D3DXCOLOR(255.0f, 199.0f, 199.0f, 255.0f))
-#define START_CHANGE_COL	(3)	//R1 G2 B3
-#define START_UNDER_COL		(199.0f)
-#define COLOR_CHANGE_SPEED	(1.0f)      
-
 //UIアイテムのランダム生成
 #define SIZE_MIN_ITEM		(100)	//1.00f
 #define SIZE_MAX_ITEM		(5000)	//50.00f
@@ -65,6 +59,7 @@ cGameUI::cGameUI(){
 	//----- 変数の初期化 ------
 	m_nChangeColorBaseUI = START_CHANGE_COL;
 	m_fDirectColorBaseUI = COLOR_CHANGE_SPEED;
+	m_type = eUItype::NOMAL;
 
 	for (int i = 0; i < MAX_BASEUI_ITEM; i++){
 		m_aItem[i] = NULL;
@@ -115,7 +110,18 @@ cGameUI::~cGameUI(){
 void cGameUI::Update(){
 
 	//----- ベースUIの色を変更 ------
-	ChangeColorBaseUI();
+	switch (m_type)
+	{
+	case cGameUI::NOMAL:
+		NomalUiUpdate();
+		break;
+	case cGameUI::FEVER:
+		FeverUiUpdate();
+		break;
+	case cGameUI::HURRY_UP:
+		HurryUpUiUpdate();
+		break;
+	}
 
 	//----- アイテムの管理 ------
 	UpdateItem();
@@ -160,10 +166,10 @@ void cGameUI::Draw(){
 
 //===========================================
 //
-// 背景色を変える
+// 背景色を変える : ノーマル
 //
 //===========================================
-void cGameUI::ChangeColorBaseUI(){
+void cGameUI::NomalUiUpdate(){
 
 	// 変数宣言
 	float work;
@@ -220,6 +226,47 @@ void cGameUI::ChangeColorBaseUI(){
 		}
 
 	}
+
+}
+
+//===========================================
+//
+// 背景色を変える : FEVER
+//
+//===========================================
+void cGameUI::FeverUiUpdate(){
+
+	//----- 色の変更 -----
+	for (int i = 0; i < 4; i++){
+		m_baseSprite[i].SetVtxColorB(m_baseSprite[i].GetVtxColorB() + FEVER_COLOR_CHANGE_SPEED * m_fDirectColorBaseUI);
+	}
+
+	//----- 方向の変更 ----
+	if (m_baseSprite[0].GetVtxColorB() >= 255.0f && m_fDirectColorBaseUI > 0){
+		m_fDirectColorBaseUI = -1.0f;
+		for (int i = 0; i < 4; i++){
+			if (m_baseSprite[i].GetVtxColorB() > 255.0f)
+				m_baseSprite[i].SetVtxColorB(255.0f);
+		}
+	}
+	else if (m_baseSprite[0].GetVtxColorB() <= 61.0f && m_fDirectColorBaseUI < 0){
+		m_fDirectColorBaseUI = 1.0f;
+		for (int i = 0; i < 4; i++){
+			if (m_baseSprite[i].GetVtxColorB() < 61.0f)
+				m_baseSprite[i].SetVtxColorB(61.0f);
+		}
+	}
+
+}
+
+//===========================================
+//
+// 背景色を変える : HurryUp
+//
+//===========================================
+void cGameUI::HurryUpUiUpdate(){
+
+
 
 }
 

@@ -280,7 +280,10 @@ void cSceneGame::MainUpdate(){
 		//--- BGM変更 ---
 		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
+
+		//---- UI変更 ----
 		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::FEVER);
+		m_pGameUI->SetUiType(cGameUI::eUItype::FEVER);
 	}
 
 	//---- Fever終了 ------
@@ -292,7 +295,10 @@ void cSceneGame::MainUpdate(){
 		//--- BGM変更 ---
 		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
+
+		//---- UI変更 ----
 		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::NOMAL);
+		m_pGameUI->SetUiType(cGameUI::eUItype::NOMAL);
 	}
 	if (!m_pGage->GetGagemax()){
 		m_bFever = false;

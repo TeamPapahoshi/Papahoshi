@@ -5,10 +5,6 @@
 //  Mei Goto.
 //
 //=====================================================
-//
-// 次チアガールから
-//
-//=====================================================
 
 #ifndef __GAME_UI_H__
 #define __GAME_UI_H__
@@ -17,8 +13,6 @@
 // インクルード部
 //-----------------------
 #include "Sprite.h"
-
-
 
 //-----------------------
 // 定数定義
@@ -32,6 +26,16 @@
 #define GAME_SCREEN_RIGHT	(SCREEN_WIDTH - (SCREEN_HEIGHT / UI_HEIGHT_DIVIDE))
 #define GAME_SCREEN_TOP		(SCREEN_HEIGHT / UI_HEIGHT_DIVIDE)
 #define GAME_SCREEN_UNDER	(SCREEN_HEIGHT - (SCREEN_HEIGHT / UI_HEIGHT_DIVIDE))	
+
+//背景カラー
+#define START_COLOR			(D3DXCOLOR(255.0f, 199.0f, 199.0f, 255.0f))
+#define START_CHANGE_COL	(3)	//R1 G2 B3
+#define START_UNDER_COL		(199.0f)
+#define COLOR_CHANGE_SPEED	(1.0f)    
+
+//FEVER背景カラー
+#define FEVER_START_COLOR	(D3DXCOLOR(255.0f, 255.0f, 61.0f, 255.0f))
+#define FEVER_COLOR_CHANGE_SPEED		(8.0f)
 
 //------------------------
 // クラス定義
@@ -103,6 +107,13 @@ private:
 class cGameUI{
 
 public:
+
+	enum eUItype{
+		NOMAL,
+		FEVER,
+		HURRY_UP,
+	};
+
 	cGameUI();
 	~cGameUI();
 	void Update();
@@ -112,13 +123,36 @@ public:
 		m_pTheerGirl->SetMotion(motion);
 	}
 
+	void SetUiType(eUItype type){
+		m_type = type;
+
+		switch (type)
+		{
+		case cGameUI::NOMAL:
+			for (int i = 0; i < 4; i++){
+				m_baseSprite[i].SetVtxColor(START_COLOR);
+				m_nChangeColorBaseUI = START_CHANGE_COL;
+				m_fDirectColorBaseUI = COLOR_CHANGE_SPEED;
+			}
+			break;
+		case cGameUI::FEVER:
+			for (int i = 0; i < 4; i++){
+				m_baseSprite[i].SetVtxColor(FEVER_START_COLOR);
+				m_fDirectColorBaseUI = -COLOR_CHANGE_SPEED;
+			}
+			break;
+		case cGameUI::HURRY_UP:
+			break;
+		}
+	}
+
 private:
 
 	//----- ベースUI ------
 	cSpriteParam m_baseSprite[4];
-	void ChangeColorBaseUI();
 	int		m_nChangeColorBaseUI;
 	float	m_fDirectColorBaseUI;
+
 	//----- ベースUIのキラキラ部分 ------
 	cUIItem*	m_aItem[MAX_BASEUI_ITEM];
 	void		UpdateItem();
@@ -130,6 +164,14 @@ private:
 
 	//------ チアガール -----
 	cTheerGirl*	m_pTheerGirl;
+
+	//---- UI情報 ----
+	eUItype		m_type;
+
+	//---- BaseUIの更新関数 -----
+	void NomalUiUpdate();
+	void FeverUiUpdate();
+	void HurryUpUiUpdate();
 
 };
 
