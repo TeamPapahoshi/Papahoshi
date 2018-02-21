@@ -37,6 +37,11 @@
 #define FEVER_START_COLOR	(D3DXCOLOR(255.0f, 255.0f, 61.0f, 255.0f))
 #define FEVER_COLOR_CHANGE_SPEED		(8.0f)
 
+//HurryUo背景カラー
+#define HURRY_UP_MAX_COLOR	(D3DXCOLOR(255.0f, 20.0f, 20.0f, 255.0f))
+#define HURRY_UP_MIN_COLOR	(D3DXCOLOR(255.0f, 120.0f, 120.0f, 255.0f))
+#define HURRY_UP_CHANGE_SPEED	(4.0f)
+
 //------------------------
 // クラス定義
 //------------------------
@@ -142,6 +147,10 @@ public:
 			}
 			break;
 		case cGameUI::HURRY_UP:
+			for (int i = 0; i < 4; i++){
+				m_baseSprite[i].SetVtxColor(HURRY_UP_MIN_COLOR);
+				m_fDirectColorBaseUI = -COLOR_CHANGE_SPEED;
+			}
 			break;
 		}
 	}

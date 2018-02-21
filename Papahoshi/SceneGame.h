@@ -94,7 +94,7 @@ private:
 
 	// ゲームメイン用
 	bool m_bFever;				// フィーバタイムかどうか
-
+	bool m_bHurryUp;			//制限時間が迫ってる
 
 
 

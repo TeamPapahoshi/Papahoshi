@@ -27,7 +27,9 @@
 //		‰Šú‰»
 //
 //=======================================================================================
-cSceneGame::cSceneGame(){
+cSceneGame::cSceneGame() : 
+m_bHurryUp(false)
+{
 
 	// –Ô
 	m_pNet = new cNet();
@@ -298,10 +300,22 @@ void cSceneGame::MainUpdate(){
 
 		//---- UI•ÏX ----
 		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::NOMAL);
-		m_pGameUI->SetUiType(cGameUI::eUItype::NOMAL);
+		if (m_bHurryUp)
+			m_pGameUI->SetUiType(cGameUI::eUItype::HURRY_UP);
+		else
+			m_pGameUI->SetUiType(cGameUI::eUItype::NOMAL);
 	}
+
+	//---- FEVERƒtƒ‰ƒO ----
 	if (!m_pGage->GetGagemax()){
 		m_bFever = false;
+	}
+
+	//---- Hurry Up! -----
+	if (m_pTimer->GetTime() <= 5 && !m_bHurryUp){
+		m_bHurryUp = true;
+		if (!m_bFever)
+			m_pGameUI->SetUiType(cGameUI::eUItype::HURRY_UP);
 	}
 
 	

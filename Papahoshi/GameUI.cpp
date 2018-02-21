@@ -266,7 +266,27 @@ void cGameUI::FeverUiUpdate(){
 //===========================================
 void cGameUI::HurryUpUiUpdate(){
 
+	//----- êFÇÃïœçX -----
+	for (int i = 0; i < 4; i++){
+		m_baseSprite[i].SetVtxColorG(m_baseSprite[i].GetVtxColorG() + HURRY_UP_CHANGE_SPEED * m_fDirectColorBaseUI);
+		m_baseSprite[i].SetVtxColorB(m_baseSprite[i].GetVtxColorB() + HURRY_UP_CHANGE_SPEED * m_fDirectColorBaseUI);
+	}
 
+	//----- ï˚å¸ÇÃïœçX ----
+	if (m_baseSprite[0].GetVtxColorB() >= 120.0f && m_fDirectColorBaseUI > 0){
+		m_fDirectColorBaseUI = -1.0f;
+		for (int i = 0; i < 4; i++){
+			if (m_baseSprite[i].GetVtxColorB() > 120.0f)
+				m_baseSprite[i].SetVtxColorB(120.0f);
+		}
+	}
+	else if (m_baseSprite[0].GetVtxColorB() <= 20.0f && m_fDirectColorBaseUI < 0){
+		m_fDirectColorBaseUI = 1.0f;
+		for (int i = 0; i < 4; i++){
+			if (m_baseSprite[i].GetVtxColorB() < 20.0f)
+				m_baseSprite[i].SetVtxColorB(20.0f);
+		}
+	}
 
 }
 
