@@ -45,6 +45,7 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Net/shine1.wav", 0 },		// ƒQ[ƒW
 
 	{ "Sound/SE/Star/StarGetSound.wav", 0},		// ¯‚ÌŠl“¾
+	{ "Sound/SE/Star/StreamMeteor.wav", -1},		// ¯‚ÌŠl“¾
 };
 
 //=============================================================================
