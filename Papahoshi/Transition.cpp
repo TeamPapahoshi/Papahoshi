@@ -24,7 +24,7 @@
 #define TEX_FILENAME_WHITE "Image/Transition/White.png"
 
 //É_ÉCÉXån
-#define MAX_SIZE_DICE (300.0f)
+#define MAX_SIZE_DICE (400.0f)
 #define NEXT_MOVE_SIZE_DICE (80.0f)
 #define INCREMENT_SIZE_DICE (5.0f)
 
