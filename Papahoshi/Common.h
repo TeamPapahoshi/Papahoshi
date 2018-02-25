@@ -34,12 +34,12 @@ using namespace std;
 //------------------------------
 
 //----- スクリーンの大きさ ------------
-#define SCREEN_WIDTH (950)	//横幅
-#define SCREEN_HEIGHT (650) //高さ
+#define SCREEN_WIDTH (1366)	//横幅
+#define SCREEN_HEIGHT (768) //高さ
 
 // 画面比率合わせたい
 //#define SCREEN_WIDTH (950)	//横幅
-//#define SCREEN_HEIGHT (550) //高さ
+//#define SCREEN_HEIGHT (550)	//高さ
 
 //横：1366  ×  縦 : 768
 
