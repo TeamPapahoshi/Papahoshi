@@ -169,6 +169,7 @@ void cNormalStar::Update(){
 		m_pStarData->m_nLifeTime--;
 		if (m_pStarData->m_nLifeTime<=0){
 			m_pStarData->m_bDestroyEvent = true;
+			m_pStarData->m_DeleteToLifeTime = true;
 		}
 
 		// “–‚½‚è”»’è
@@ -404,11 +405,12 @@ void cNormalStar::Destroy(){
 		}
 
 		// –Ô‚Å‚ÌŠl“¾‚É‚æ‚Á‚ÄÁ–Å‚µ‚½‚È‚çÁ–Å‰¹
-		if (m_pStarData->m_bCaptured && !m_pStarData->m_bHitBlackHoleDelete && !m_pStarData->m_bHitSpaceRock){
+		if (m_pStarData->m_bCaptured && !m_pStarData->m_bHitBlackHoleDelete && !m_pStarData->m_bHitSpaceRock && !m_pStarData->m_DeleteToLifeTime){
 			PlaySound(SOUND_LABEL_SE_STAR_GET);
 			m_pStarData->m_bCaptured = false;
 			m_pStarData->m_bHitBlackHoleDelete = false;
 			m_pStarData->m_bHitSpaceRock = false;
+			m_pStarData->m_DeleteToLifeTime = false;
 		}
 
 		//	ƒŠƒZƒbƒg

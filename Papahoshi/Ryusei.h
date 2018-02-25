@@ -60,7 +60,7 @@ public:
 			if (m_pStarData->m_bUse)
 				continue;
 
-			m_pStarData->m_bRespawnEvent = true;
+			m_pStarData->m_bCreateEvent = true;
 		}
 		
 	}
@@ -77,6 +77,7 @@ private:
 	cNet*			m_pNetData;			// –Ô‚Ìƒf[ƒ^Ši”[
 
 	bool			m_bFever;
+	bool			m_bAllNoUse;
 
 
 	//Set&Get

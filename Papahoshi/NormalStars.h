@@ -37,7 +37,8 @@ public:
 	// ブラックホール
 	bool	m_bHitBlackHoleDelete=false;
 
-
+	// 正存時間で消滅
+	bool	m_DeleteToLifeTime=false;
 
 	// 隕石
 	bool	m_bHitSpaceRock = false;
