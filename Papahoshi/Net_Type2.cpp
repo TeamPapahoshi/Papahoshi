@@ -145,6 +145,11 @@ m_fThrowSpeed(0.0f)
 		}
 	}
 
+	//波紋
+	for (int i = 0; i < MAX_RIPPLE; i++){
+		m_aRipple[i] = NULL;
+	}
+
 }
 
 
@@ -190,6 +195,17 @@ void cNet::Update(){
 	//テクスチャカラーの更新
 	NetColorUpdate();
 
+	//波紋の更新
+	for (int i = 0; i < MAX_RIPPLE; i++){
+		if (m_aRipple[i]){
+			m_aRipple[i]->Update();
+			if (m_aRipple[i]->GetFinFlug()){
+				delete m_aRipple[i];
+				m_aRipple[i] = NULL;
+			}
+		}
+	}
+
 	//当たり判定情報の更新
 	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
 	m_aCollider[1].SetTriangleCollider(m_aPos[2], m_centerPos, m_aPos[1]);
@@ -202,6 +218,12 @@ void cNet::Update(){
 //
 //=====================================================
 void cNet::Draw(){
+
+	//はもん
+	for (int i = 0; i < MAX_RIPPLE; i++){
+		if (m_aRipple[i])
+			m_aRipple[i]->Draw();
+	}
 
 	//あみ
 	//******
@@ -737,8 +759,10 @@ void cNet::PostPhaseUpdate(){
 		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
 		m_bDrawArrow = false;
 		m_nFrameCnt = 0;		//フレームカウントの初期化
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; i++){
 			m_bThrow[i] = false;
+			m_bRipple[i] = false;
+		}
 		break;
 	}
 
@@ -860,6 +884,10 @@ void cNet::ShoutPhaseUpdate(){
 	for (int i = 0; i < 3; i++){
 		if (!xFin[i] || !yFin[i])
 			break;
+		if (!m_bRipple[i]){ //波紋生成
+			SetRipple(m_aPos[i]);
+			m_bRipple[i] = true;
+		}
 		if (i == 2){
 			m_fHalfCircleSize = 0.0f;
 			StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
@@ -963,6 +991,25 @@ cCollider* cNet::GetCollider(){
 	return m_aCollider;
 }
 
+//===========================================
+//
+// 波紋生成
+//
+//===========================================
+void cNet::SetRipple(D3DXVECTOR2 pos){
+
+	for (int i = 0; i < MAX_RIPPLE; i++){
+
+		if (m_aRipple[i])
+			continue;
+
+		m_aRipple[i] = new cRipple(pos);
+
+		return;
+
+	}
+
+}
 
 
 #endif

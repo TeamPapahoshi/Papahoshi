@@ -325,6 +325,9 @@
     <ClCompile Include="SpaceRock.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\隕石</Filter>
     </ClCompile>
+    <ClCompile Include="NetRipple.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="SpaceRock.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\隕石</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRipple.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
