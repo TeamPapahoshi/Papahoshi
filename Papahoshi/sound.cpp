@@ -47,6 +47,7 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Star/StarGetSound.wav", 0},		// ¯‚ÌŠl“¾
 	{ "Sound/SE/Star/StreamMeteor.wav", -1},	// ¯‚ÌŠl“¾
 	{ "Sound/SE/Star/SpaceRockBomb.wav", 0 },	// è¦Î‚Ì”š”­
+	{ "Sound/SE/Star/VacumeBlackHole.wav", 0 },	// è¦Î‚Ì”š”­
 };
 
 //=============================================================================
