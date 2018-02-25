@@ -29,6 +29,12 @@
 #define VACUUM_RANGE		(200)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
 
+//	生成位置
+#define CREATE_PATTERN		(2)
+#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,100))
+#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,100))
+
+
 //===================================================================================
 //
 //		コンストラクタ
@@ -64,8 +70,18 @@ cBlackHole::cBlackHole(){
 	
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
+		int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN+1);
+		switch (RamdomNum)
+		{
+		case 1:
+			CreateRamdomPos = CREATE_POS_01;
+			break;
+		case CREATE_PATTERN:
+			CreateRamdomPos = CREATE_POS_02;
+			break;
+		default:
+			break;
+		}
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 		// 当たり判定
@@ -310,10 +326,23 @@ void cBlackHole::Respawn(){
 
 		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
 
+
+			// 乱数の初期化
+			CRandam::InitRand();
 			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
-			CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
-			CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
+			int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
+			switch (RamdomNum)
+			{
+			case 1:
+				CreateRamdomPos = CREATE_POS_01;
+				break;
+			case CREATE_PATTERN:
+				CreateRamdomPos = CREATE_POS_02;
+				break;
+			default:
+				break;
+			}
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			m_pStarData->m_bRespawnEnd = true;

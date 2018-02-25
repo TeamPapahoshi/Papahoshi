@@ -58,6 +58,10 @@ m_bHurryUp(false)
 	m_pNomalStar->SetNetData(m_pNet);
 	m_pNomalStar->SetGageData(m_pGage);
 
+	// ¯ŒQ‚ê
+	m_pConsellation = new cConstellation();
+
+
 	// UI
 	m_pGameUI = new cGameUI();
 
@@ -107,6 +111,7 @@ cSceneGame::~cSceneGame(){
 	delete m_pNet;
 	delete m_pGameUI;
 	delete m_pTimer;
+	delete m_pConsellation;
 
 	//----- BGM‚Ì’âŽ~ -----
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
@@ -194,6 +199,7 @@ void cSceneGame::Draw(){
 	m_pGameUI->Draw();
 	m_pGage->Draw();
 	m_pTimer->Draw();
+	m_pConsellation->Draw();
 	if (m_pAnnounce)
 		m_pAnnounce->Draw();
 }
@@ -239,6 +245,7 @@ void cSceneGame::MainUpdate(){
 	m_pSampleStar->Update();
 	m_pGameUI->Update();
 	m_pTimer->Update();
+	m_pConsellation->Update();
 	CheckCollision();			//“–‚½‚è”»’è
 	m_pRyusei->Update();
 	m_pRyusei->SetRespawnFlag(false);

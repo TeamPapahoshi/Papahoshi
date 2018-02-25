@@ -149,6 +149,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\UI">
       <UniqueIdentifier>{e6a123bd-2096-4fe2-a946-350ce695e803}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星群">
+      <UniqueIdentifier>{74618284-b300-474c-8670-7ddb40902424}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -316,6 +319,9 @@
     <ClCompile Include="GameUI.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Constellation.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星群</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -478,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="GameUI.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Constellation.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星群</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

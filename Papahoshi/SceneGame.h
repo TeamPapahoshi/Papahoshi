@@ -31,6 +31,7 @@
 #include "NormalStars.h"
 #include "FixedStars.h"
 #include "Ryusei.h"
+#include "Constellation.h"
 #include "Gage.h"
 
 #include "BlackHole.h"
@@ -79,6 +80,7 @@ private:
 	cSpaceRock*					m_pSpaceRock;		// 隕石
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	cRyusei*					m_pRyusei;			// 流星
+	cConstellation*				m_pConsellation;	// 星群
 	cGage*						m_pGage;			// ゲージ
 	cGameUI*					m_pGameUI;
 	cTimer*						m_pTimer;			// タイマー
