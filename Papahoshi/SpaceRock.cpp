@@ -26,8 +26,15 @@
 #define STAR_SIZE			(100)
 #define RESPAWN_FREAM		(200)
 #define MAX_SPACE_ROCK_NUM	(1)
-#define DESTROY_STAR		(5)
+#define DESTROY_STAR		(20)
 #define EXPLOSION_FRAME		(100)		// 爆発時間
+
+//	生成位置
+#define CREATE_PATTERN		(2)
+#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_RIGHT-GAME_SCREEN_LEFT-100,150))
+#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-GAME_SCREEN_LEFT-100,150))
+
+
 
 
 //=======================================================================================
@@ -58,9 +65,20 @@ cSpaceRock::cSpaceRock(){
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_SPACE_ROCK));
 
 		// 座標の決定
+		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + m_pStarData->m_sprite.GetSizeX(), GAME_SCREEN_RIGHT - m_pStarData->m_sprite.GetSizeX());
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0 + m_pStarData->m_sprite.GetSizeY(), SCREEN_HEIGHT - m_pStarData->m_sprite.GetSizeY());
+		int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
+		switch (RamdomNum)
+		{
+		case 1:
+			CreateRamdomPos = CREATE_POS_01;
+			break;
+		case CREATE_PATTERN:
+			CreateRamdomPos = CREATE_POS_02;
+			break;
+		default:
+			break;
+		}
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 		// サイズの変更
@@ -115,24 +133,12 @@ void cSpaceRock::Update(){
 		// 当たり判定
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
 	
-		// 破壊数によって色を変える
-		switch (m_pStarData->m_nDestroyStarNum){
-
-		case 5:
-			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
-			break;
-		case 4:
-			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 200, 200, 255));
-			break;
-		case 3:
-			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 155, 155, 255));
-			break;
-		case 2:
-			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 55, 55, 255));
-			break;
-		case 1:
+		//---- 爆発カウントによって色を変える -----
+		float ratio = (float)m_pStarData->m_nDestroyStarNum / (float)DESTROY_STAR;
+		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255 * ratio, 255 * ratio, 255));
+		// 残り1で真っ赤に
+		if (m_pStarData->m_nDestroyStarNum == 1){
 			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 0, 0, 255));
-			break;
 		}
 
 		// 破壊カウントがゼロになると爆発
@@ -371,13 +377,23 @@ void cSpaceRock::Respawn(){
 
 		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
 
-			
-			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));// サイズの変更
-
-			m_pStarData->m_Collision.SetType(cCollider::CIRCLE);// 当たり判定
-			m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+			// 座標の決定
+			D3DXVECTOR2 CreateRamdomPos;
+			int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
+			switch (RamdomNum)
+			{
+			case 1:
+				CreateRamdomPos = CREATE_POS_01;
+				break;
+			case CREATE_PATTERN:
+				CreateRamdomPos = CREATE_POS_02;
+				break;
+			default:
+				break;
+			}
+			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 		
-			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;						// 破壊数を設定
+			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;					// 破壊数を設定
 
 			m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
 			m_pStarData->m_bExplosion = false;								// 開始用フラグ
