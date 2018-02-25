@@ -31,7 +31,7 @@
 #define STAR_SIZE			(25)		// 最小サイズ
 #define STAR_SIZE_MARGIN	(20)		// サイズの幅
 #define RESPAWN_FREAM		(200)
-#define MAX_NORMAL_STAR_NUM	(100)
+#define MAX_NORMAL_STAR_NUM	(150)
 
 // 正存時間(ずっと画面に残ってたら消える)
 #define LIFE_TIME			(2000)
@@ -404,9 +404,19 @@ void cNormalStar::Destroy(){
 			m_pStarData->m_bAddScore = false;
 		}
 
-		// 網での獲得によって消滅したなら消滅音
+		// 網での獲得によって消滅した音
 		if (m_pStarData->m_bCaptured && !m_pStarData->m_bHitBlackHoleDelete && !m_pStarData->m_bHitSpaceRock && !m_pStarData->m_DeleteToLifeTime){
 			PlaySound(SOUND_LABEL_SE_STAR_GET);
+			m_pStarData->m_bCaptured = false;
+			m_pStarData->m_bHitBlackHoleDelete = false;
+			m_pStarData->m_bHitSpaceRock = false;
+			m_pStarData->m_DeleteToLifeTime = false;
+		}
+
+
+		// ブラックホールでの獲得によって消滅した音
+		if (!m_pStarData->m_bCaptured && m_pStarData->m_bHitBlackHoleDelete && !m_pStarData->m_bHitSpaceRock && !m_pStarData->m_DeleteToLifeTime){
+			PlaySound(SOUND_LABEL_SE_VACUME_BLACK_HOLE);
 			m_pStarData->m_bCaptured = false;
 			m_pStarData->m_bHitBlackHoleDelete = false;
 			m_pStarData->m_bHitSpaceRock = false;

@@ -278,10 +278,15 @@ void cSpaceRock::Create(){
 
 
 
+
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
 		//****** ここに演出とか生成処理を書いていく **********
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
 		m_pStarData->m_bDraw = true;
+
+		if (m_pStarData->m_sprite.GetVtxColorA() <= 255){
+			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+		}
 
 
 
@@ -290,9 +295,9 @@ void cSpaceRock::Create(){
 
 
 		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
-		//m_pStarData->m_bCreateEnd = true;
 
-		m_pStarData->m_bCreateEnd = true;
+		if (m_pStarData->m_sprite.GetVtxColorA() >= 255)
+			m_pStarData->m_bCreateEnd = true;
 
 
 
@@ -384,6 +389,9 @@ void cSpaceRock::Respawn(){
 		m_pStarData->m_nRespawnFrame++;
 
 		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
+
+			// αの設定
+			m_pStarData->m_sprite.SetVtxColorA(0);
 
 			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
