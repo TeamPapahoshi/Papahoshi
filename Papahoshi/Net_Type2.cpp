@@ -28,6 +28,7 @@
 #include "Input.h"
 #include "debugproc.h"
 #include "MathEX.h"
+#include "sound.h"
 
 #ifdef  _TYPE_2_
 
@@ -301,7 +302,7 @@ void cNet::SetNet(){
 								case 3:
 									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.7f;
 									if (m_nFrameCnt)
-										regula = 0.0f; 
+										regula = 0.0f;
 									break;
 								default:
 									regula = 1.0f;
@@ -361,7 +362,7 @@ void cNet::SetNet(){
 					//***** 右のYラインの両端を求める *****
 					rightYtop = BezierCurve(((float)x + 1.0f) / (float)NET_X_NUM, m_aPos[0], cp3, cp4, m_aPos[1]);
 					rightYunder = m_centerPos;
-					
+
 					//***** 最終ポジション決定 *****
 					workPos[0].x = LineSplitPoint(topXleft, topXright, x, NET_X_NUM - x).x;
 					workPos[1].x = LineSplitPoint(topXleft, topXright, x + 1, NET_X_NUM - (x + 1)).x;
@@ -416,12 +417,12 @@ void cNet::SetNet(){
 								case 2:
 									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.4f;
 									if (m_nFrameCnt)
-										regula = 0.3f; 
+										regula = 0.3f;
 									break;
 								case 3:
 									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.7f;
 									if (m_nFrameCnt)
-										regula = 0.0f; 
+										regula = 0.0f;
 									break;
 								default:
 									regula = 1.0f;
@@ -667,6 +668,7 @@ void cNet::PostPhaseUpdate(){
 
 		//----- 構え状態終了 -----
 		gamePhase = PHASE_SHOUT;
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
 		m_bDrawArrow = false;
 		m_nFrameCnt = 0;		//フレームカウントの初期化
 		for (int i = 0; i < 3; i++)
@@ -710,9 +712,9 @@ void cNet::ShoutPhaseUpdate(){
 				m_ThreePurposePos[i].x += ANG_NUM;
 			else if (m_nPostAngle == ANG_RIGHT)
 				m_ThreePurposePos[i].x -= ANG_NUM;
-			//****** デバック *******
-			//m_aPos[i] = m_ThreePurposePos[i];
-			//gamePhase = GAME_PHASE::PHASE_MAX;
+
+			//------ SEの再生 ------
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_SHOOT);
 		}
 	}
 
@@ -763,7 +765,7 @@ void cNet::ShoutPhaseUpdate(){
 	if (m_fHalfCircleSize <= 0.0f)
 		m_fDirectHalfCircle = 0.0f;
 	m_halfCircle.SetScale(D3DXVECTOR2(m_fHalfCircleSize, m_fHalfCircleSize));
-	m_halfCircle.SetPosY(SCREEN_HEIGHT -  m_halfCircle.GetSizeY() * m_halfCircle.GetScaleY() * 0.5f);
+	m_halfCircle.SetPosY(SCREEN_HEIGHT - m_halfCircle.GetSizeY() * m_halfCircle.GetScaleY() * 0.5f);
 
 	//---- 投げ終了で引き上げ -----
 	for (int i = 0; i < 3; i++){
@@ -771,6 +773,7 @@ void cNet::ShoutPhaseUpdate(){
 			break;
 		if (i == 2){
 			m_fHalfCircleSize = 0.0f;
+			StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
 		}
 	}
 
@@ -781,6 +784,7 @@ void cNet::ShoutPhaseUpdate(){
 			m_nFrameCnt = 0;	//初期化
 			m_bPurpose = false;
 			gamePhase = PHASE_PULL;
+			StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
 		}
 	}
 
@@ -836,6 +840,10 @@ void cNet::PullPhaseUpdate(){
 			m_purposePos[i].x = m_aPos[i].x + m_oncePullPos[i].x;
 			m_purposePos[i].y = m_aPos[i].y + m_oncePullPos[i].y;
 		}
+
+		//SEの再生
+		if (m_nPullNum)
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_PULL);
 
 	}
 
