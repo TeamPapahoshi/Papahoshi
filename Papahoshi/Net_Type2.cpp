@@ -64,6 +64,12 @@
 #define CP_DIVIDE	(4)			//線分の分割数
 #define CP_DISTANCE	((float)SCREEN_HEIGHT / 4.0f)	//線分との距離
 
+//テクスチャカラー
+#define NET_TEX_SATURATION		(68.0f)
+#define NET_TEX_VALUE			(100.0f)
+#define NET_TEX_MAX_HUE			(360.0f)
+#define NET_TEX_MIN_HUE			(0.0f)
+#define NET_TEX_INCREMENT_HUE	(10.0f)
 
 //=====================================================
 //
@@ -129,6 +135,16 @@ m_fThrowSpeed(0.0f)
 	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
 	m_aCollider[1].SetTriangleCollider(m_aPos[2], m_centerPos, m_aPos[1]);
 
+	//--- テクスチャカラー ---
+	m_fNetHue = NET_TEX_MIN_HUE;
+	for (int z = 0; z < NET_PARTS_MAX; z++){
+		for (int y = 0; y < NET_Y_NUM; y++){
+			for (int x = 0; x < NET_X_NUM; x++){
+				m_aNet[z][y][x].SetHSVColorFlag(true);
+			}
+		}
+	}
+
 }
 
 
@@ -170,6 +186,9 @@ void cNet::Update(){
 
 	//頂点情報に合わせてあみをはる
 	SetNet();
+
+	//テクスチャカラーの更新
+	NetColorUpdate();
 
 	//当たり判定情報の更新
 	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
@@ -505,6 +524,50 @@ void cNet::SetNet(){
 			}
 		}
 	} //曲線終了
+
+}
+
+
+//====================================================
+//
+// 網のテクスチャカラーの更新
+//
+//====================================================
+void cNet::NetColorUpdate(){
+
+	float hue;
+
+	m_fNetHue += NET_TEX_INCREMENT_HUE;
+	if (m_fNetHue > NET_TEX_MAX_HUE){
+		m_fNetHue = NET_TEX_MIN_HUE;
+	}
+
+	for (int z = 0; z < NET_PARTS_MAX; z++){
+		for (int y = 0; y < NET_Y_NUM; y++){
+			for (int x = 0; x < NET_X_NUM; x++){
+
+				m_aNet[z][y][x].SetHSVColorFlag(true);
+
+				hue = m_fNetHue + (NET_TEX_INCREMENT_HUE * y);
+				while (hue > NET_TEX_MAX_HUE){
+					hue -= NET_TEX_MAX_HUE;
+				}
+
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 0);
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 1);
+				//m_aNet[z][y][x].SetVtxColor(D3DXCOLOR(100.0f, 00.0f, 100.0f, 155.0f));
+
+				hue += NET_TEX_INCREMENT_HUE;
+				while (hue > NET_TEX_MAX_HUE){
+					hue -= NET_TEX_MAX_HUE;
+				}
+
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 2);
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 3);
+
+			}
+		}
+	}
 
 }
 

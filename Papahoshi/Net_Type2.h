@@ -140,8 +140,12 @@ private:
 	float		m_fMaxHalfCircle;	//半円のマックスサイズ
 	float		m_fDirectHalfCircle;	//方向
 
+	//網のテクスチャカラー
+	float		m_fNetHue;
+
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る
+	void NetColorUpdate();	//あみのテクスチャカラー
 	void Input();	//コントローラー入力を取得
 	void PostPhaseUpdate();
 	void ShoutPhaseUpdate();

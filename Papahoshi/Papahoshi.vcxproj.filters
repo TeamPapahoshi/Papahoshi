@@ -23,9 +23,6 @@
     <Filter Include="ソース ファイル\共通処理">
       <UniqueIdentifier>{9dc7eefd-f3d0-40b3-94ca-80f88dce9b6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\共通処理\Direct3Dデバイス">
-      <UniqueIdentifier>{0429e864-723e-4c35-a1c3-e363e46ac046}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\共通処理\タイマー">
       <UniqueIdentifier>{d8bf9c5f-8aff-42ec-976c-58fc7cf29c55}</UniqueIdentifier>
     </Filter>
@@ -154,6 +151,9 @@
     </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\隕石">
       <UniqueIdentifier>{fcf4ee0b-348d-4dfc-b791-316b45727e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\Direct3Dデバイス">
+      <UniqueIdentifier>{0429e864-723e-4c35-a1c3-e363e46ac046}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
