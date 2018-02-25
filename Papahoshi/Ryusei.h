@@ -26,13 +26,13 @@
 class cRyuseiData :public cBaseStarData{
 public:
 
-	D3DXVECTOR2		cp1, cp2, cp3, cp4;	// ベジェ曲線計算用
-	float			time=0;
-	cSpriteParam	m_Core;				//　核
-	cRyuseiLine		m_Line;
-
-
-	D3DXVECTOR2		m_VecMove;			// 移動方向のベクトル
+	// 流れる処理用
+	D3DXVECTOR2		m_StreamStartPos;	// 流れるスタート位置
+	D3DXVECTOR2		m_StreamGoalPos;	// 流れるゴール位置
+	D3DXVECTOR2		m_VecStreamMove;	// 流れる方向のベクトル
+	float			m_StremCos;
+	float			m_StreamRad;
+	D3DXVECTOR2		m_MoveSpped;		// 流れるスピードベクトル
 
 };
 

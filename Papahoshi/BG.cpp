@@ -46,20 +46,12 @@ void cBG::SetBG(BG bg){
 		sprite.LoadTexture(BG_STAR);
 		break;
 	case GAME_MAIN:
-		//sprite.LoadTexture(BG_FILNAME_SKY);
-		sprite.SetHSVColorFlag(true);
-		sprite.SetHSVColorOne(100, 50, 100, 0);
-		sprite.SetHSVColorOne(50, 50, 100, 1);
-		sprite.SetHSVColorOne(100, 50, 100, 2);
-		sprite.SetHSVColorOne(50, 50, 100, 3);
+		sprite.LoadTexture(BG_FILNAME_SKY);
+
 		break;
 	case GAME_SKY:
-		//sprite.LoadTexture(BG_FILNAME_SKY);
-		sprite.SetHSVColorFlag(true);
-		sprite.SetHSVColorOne(100, 50, 100, 0);
-		sprite.SetHSVColorOne(50, 50, 100, 1);
-		sprite.SetHSVColorOne(100, 50, 100, 2);
-		sprite.SetHSVColorOne(50, 50, 100, 3);
+		sprite.LoadTexture(BG_FILNAME_SKY);
+	
 		/*sprite.SetVtxColorOne(D3DXCOLOR(80, 100, 100, 255), 0);
 		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 1);
 		sprite.SetVtxColorOne(D3DXCOLOR(0, 0, 0, 255), 2);

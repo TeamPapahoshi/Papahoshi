@@ -37,6 +37,12 @@ using namespace std;
 #define SCREEN_WIDTH (950)	//â°ïù
 #define SCREEN_HEIGHT (650) //çÇÇ≥
 
+// âÊñ î‰ó¶çáÇÌÇπÇΩÇ¢
+//#define SCREEN_WIDTH (950)	//â°ïù
+//#define SCREEN_HEIGHT (550) //çÇÇ≥
+
+//â°ÅF1366  Å~  èc : 768
+
 //----- íÜêSç¿ïW -------
 #define SCREEN_CENTER (D3DXVECTOR2(SCREEN_WIDTH/2.0f,SCREEN_HEIGHT/2.0f))
 

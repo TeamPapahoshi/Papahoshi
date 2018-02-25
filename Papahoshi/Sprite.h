@@ -258,23 +258,23 @@ public:
 	float GetRad(){	// rad
 		return m_rad;
 	}
-	D3DXCOLOR GetVtxColor(){	// vexcolor
-		return m_vtxColor[0];
+	float GetVtxColor(){	// vexcolor
+		return (float)m_vtxColor[0];
 	}
-	DWORD GetVtxColorR(){
-		return m_vtxColor[0].r;
+	float GetVtxColorR(){
+		return  (float)m_vtxColor[0].r;
 	}
-	DWORD GetVtxColorG(){
-		return m_vtxColor[0].g;
+	float GetVtxColorG(){
+		return  (float)m_vtxColor[0].g;
 	}
-	DWORD GetVtxColorB(){
-		return m_vtxColor[0].b;
+	float GetVtxColorB(){
+		return  (float)m_vtxColor[0].b;
 	}
-	DWORD GetVtxColorA(){
-		return m_vtxColor[0].a;
+	float GetVtxColorA(){
+		return  (float)m_vtxColor[0].a;
 	}
-	DWORD GetVtxColorOne(int number){
-		return m_vtxColor[number];
+	float GetVtxColorOne(int number){
+		return  (float)m_vtxColor[number];
 	}
 
 	D3DXVECTOR2 GetTexUVRatio()
