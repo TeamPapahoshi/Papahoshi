@@ -194,12 +194,13 @@ void cSceneGame::Draw(){
 	m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
 	m_pRyusei->Draw();
+	m_pConsellation->Draw();
 	m_pNet->Draw();
 
 	m_pGameUI->Draw();
 	m_pGage->Draw();
 	m_pTimer->Draw();
-	m_pConsellation->Draw();
+
 	if (m_pAnnounce)
 		m_pAnnounce->Draw();
 }

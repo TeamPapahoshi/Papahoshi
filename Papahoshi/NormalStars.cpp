@@ -27,13 +27,17 @@
 
 //-----------------------------
 //マクロ定義
-//-----------------------------
-#define STAR_SIZE			(25)
-#define STAR_SIZE_MARGIN	(20)
+//----------------------------
+#define STAR_SIZE			(25)		// 最小サイズ
+#define STAR_SIZE_MARGIN	(20)		// サイズの幅
 #define RESPAWN_FREAM		(200)
 #define MAX_NORMAL_STAR_NUM	(100)
+
+// 正存時間(ずっと画面に残ってたら消える)
 #define LIFE_TIME			(2000)
 #define LIFE_TIME_MARGIN	(500)
+
+#define NORMAL_STAR_SCORE	(100)		
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
@@ -395,7 +399,7 @@ void cNormalStar::Destroy(){
 
 		// スコア加算
 		if (m_pStarData->m_bAddScore){
-			AddScore(100);
+			AddScore(NORMAL_STAR_SCORE);
 			m_pStarData->m_bAddScore = false;
 		}
 

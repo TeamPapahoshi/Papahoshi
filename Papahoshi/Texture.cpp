@@ -105,6 +105,7 @@
 #define TEXTURE_FILENAME_PINK_STAR_ANIM			("Image/Star/pinkStarAnim.png")
 #define TEXTURE_FILENAME_CYAN_METEOR_ANIM		("Image/Star/CyanMeteor.png")
 #define TEXTURE_FILENAME_PINK_METEOR_ANIM		("Image/Star/pinkMeteor.png")
+#define TEXTURE_FILENAME_PLANET03_ANIM			("Image/Star/planet03.png")
 #define TEXTURE_FILENAME_EXPLOSION_ANIM			("Image/Star/explosion000.png")
 
 //アナウンス
@@ -210,6 +211,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_EXPLOSION_ANIM,
 	TEXTURE_FILENAME_CYAN_METEOR_ANIM,
 	TEXTURE_FILENAME_PINK_METEOR_ANIM,
+	TEXTURE_FILENAME_PLANET03_ANIM,
 };
 
 vector<char*> texResult = {
