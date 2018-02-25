@@ -65,7 +65,7 @@
 #define CP_DISTANCE	((float)SCREEN_HEIGHT / 4.0f)	//線分との距離
 
 //テクスチャカラー
-#define NET_TEX_SATURATION		(68.0f)
+#define NET_TEX_SATURATION		(90.0f)
 #define NET_TEX_VALUE			(100.0f)
 #define NET_TEX_MAX_HUE			(360.0f)
 #define NET_TEX_MIN_HUE			(0.0f)
@@ -1002,6 +1002,7 @@ void cNet::SetRipple(D3DXVECTOR2 pos){
 
 		if (m_aRipple[i])
 			continue;
+
 
 		m_aRipple[i] = new cRipple(pos);
 
