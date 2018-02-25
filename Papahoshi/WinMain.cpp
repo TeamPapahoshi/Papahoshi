@@ -21,7 +21,7 @@
 #define CLASS_NAME	"HEW SAMPLE"	// ウィンドウクラス名
 #define WINDOW_NAME	"HEW SAMPLE"	// キャプション名
 
-#define WINDOW_MODE	(FALSE)		//TRUEでフルスクリーン
+#define WINDOW_MODE	(TRUE)		//FALSEでフルスクリーン
 
 //-----------------------------
 // プロトタイプ宣言
