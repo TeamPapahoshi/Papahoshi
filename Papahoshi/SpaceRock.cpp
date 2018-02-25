@@ -19,6 +19,7 @@
 #include "Input.h"
 #include "GameUI.h"
 #include "MathEX.h"
+#include "sound.h"
 
 //-----------------------------
 // マクロ定義
@@ -330,8 +331,15 @@ void cSpaceRock::Destroy(){
 		// 爆発フレームの更新
 		m_pStarData->m_ExplosionFrame--;
 
+
+		// SE再生
+		if (!m_pStarData->m_bExplosion)
+		PlaySound(SOUND_LABEL_SE_SPACE_ROCK_BOMB);
+
 		// フラグオン
 		m_pStarData->m_bExplosion = true;
+
+	
 
 		// アニメーション
 		m_pStarData->m_ExplosionAnim.AnimationLoop();
