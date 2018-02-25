@@ -43,6 +43,8 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Net/Shoot.wav", 0 },		// –Ô“Š‚°
 	{ "Sound/SE/Net/Pull.wav", 0 },			// –Ôˆø‚«
 	{ "Sound/SE/Net/shine1.wav", 0 },		// ƒQ[ƒW
+
+	{ "Sound/SE/Star/StarGetSound.wav", 0},		// ¯‚ÌŠl“¾
 };
 
 //=============================================================================
