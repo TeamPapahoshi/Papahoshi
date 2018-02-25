@@ -28,10 +28,10 @@
 //-----------------------------
 //É}ÉNÉçíËã`
 //-----------------------------
-#define STAR_SIZE			(30)
+#define STAR_SIZE			(25)
 #define STAR_SIZE_MARGIN	(20)
 #define RESPAWN_FREAM		(200)
-#define MAX_NORMAL_STAR_NUM	(50)
+#define MAX_NORMAL_STAR_NUM	(100)
 #define LIFE_TIME			(2000)
 #define LIFE_TIME_MARGIN	(500)
 
