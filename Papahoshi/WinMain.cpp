@@ -63,7 +63,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		NULL, NULL, hInstance, NULL);
 
 	// --- ‰Šú‰»ˆ— --------------------
-	if (FAILED(Init(hInstance, hWnd, TRUE))){
+	if (FAILED(Init(hInstance, hWnd, FALSE))){
 		// --- ƒ‰Šú‰»¸”s„@I—¹ˆ— ----
 		UnregisterClass(CLASS_NAME, wcex.hInstance);
 		UnInit();

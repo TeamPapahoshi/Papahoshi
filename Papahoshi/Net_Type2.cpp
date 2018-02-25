@@ -57,6 +57,9 @@
 #define SPEED_HALFCIRCLE	(5)	//10/1進む
 //斜め投げ補正
 #define ANG_NUM		(200.0f)
+//縦補正値
+#define ANG_Y_FIRST		(100.0f)
+#define ANG_Y_SECOND	(ANG_Y_FIRST * 2.0f)
 //制御点を求める
 #define CP_DIVIDE	(4)			//線分の分割数
 #define CP_DISTANCE	((float)SCREEN_HEIGHT / 4.0f)	//線分との距離
@@ -712,6 +715,29 @@ void cNet::ShoutPhaseUpdate(){
 				m_ThreePurposePos[i].x += ANG_NUM;
 			else if (m_nPostAngle == ANG_RIGHT)
 				m_ThreePurposePos[i].x -= ANG_NUM;
+
+			//------- Yの補正値 ------
+			if (m_nPostAngle == ANG_STRAIGHT){
+				if (i != 1){
+					m_ThreePurposePos[i].y += ANG_Y_FIRST;
+				}
+			}
+			else if (m_nPostAngle == ANG_RIGHT){
+				if (i == 0){
+					m_ThreePurposePos[i].y += ANG_Y_SECOND;
+				}
+				else if (i == 1){
+					m_ThreePurposePos[i].y += ANG_Y_FIRST;
+				}
+			}
+			else if (m_nPostAngle == ANG_LEFT){
+				if (i == 2){
+					m_ThreePurposePos[i].y += ANG_Y_SECOND;
+				}
+				else if (i == 1){
+					m_ThreePurposePos[i].y += ANG_Y_FIRST;
+				}
+			}
 
 			//------ SEの再生 ------
 			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_SHOOT);
