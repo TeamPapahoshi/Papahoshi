@@ -76,6 +76,7 @@ cRyusei::cRyusei(){
 
 
 		//--- 流れる処理のための準備 ---
+		m_pStarData->m_bStream = true;
 		m_pStarData->m_StreamStartPos = CreateRamdomPos;																// 初期生成位置をスタート位置に指定
 		m_pStarData->m_StreamGoalPos  = D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT);		// 画面左下をゴールに指定
 		m_pStarData->m_VecStreamMove  = m_pStarData->m_StreamGoalPos - m_pStarData->m_StreamStartPos;					// スタートとゴールから流れる方向のベクトルを求める
@@ -85,23 +86,6 @@ cRyusei::cRyusei(){
 		m_pStarData->m_sprite.SetRad(D3DX_PI/2.0f - m_pStarData->m_StreamRad);										// 計算結果より回転角度をセット
 		m_pStarData->m_MoveSpped      = MOVE_SPEED * UnitVector(m_pStarData->m_VecStreamMove);							// 流れる方向の単位ベクトルを求めて速さをセット
 
-	
-
-
-		// 移動の目的位置決定
-		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 100);
-		// 星から目的地方向の単位ベクトルを求める
-		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
-
-
-		// CORE
-		//m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
-		//m_pStarData->m_Core.SetAddBlend(true);
-		//m_pStarData->m_Core.SetSize(D3DXVECTOR2(STAR_SIZE + 50, STAR_SIZE + 50));// サイズの変更
-		//m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));// テクスチャの設定
-		//m_pStarData->m_Core.SetVtxColor(D3DXCOLOR((float)CRandam::RandamRenge(0, 255), (float)CRandam::RandamRenge(0, 255),
-		//											(float)CRandam::RandamRenge(0, 255), 155));		// 色
-		//m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(255,255,0,155));		// 色
 	}
 	m_bFever = false;
 }
@@ -137,13 +121,20 @@ void cRyusei::Update(){
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_Collision.SetCircleCollider(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y+30), STAR_SIZE / 4.0f);
+
+		// 移動の目的位置決定
+		m_pStarData->m_Destination = m_pNetData->GetNetStart();
+		// 星から目的地方向の単位ベクトルを求める
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
 		// アニメーション
 		m_pStarData->m_sprite.AnimationLoop();
 
-		m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_MoveSpped);
-		//m_pStarData->m_sprite.SetRad(m_pStarData->m_sprite.GetRad() - 0.01f);
+		// 流れる処理
+		if (m_pStarData->m_bStream){
+			m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_MoveSpped);
+		}
 
 
 		// 画面外に出たらフラグオフ
@@ -232,6 +223,7 @@ void cRyusei::Draw(){
 
 
 		m_pStarData->m_sprite.Draw();
+		//m_pStarData->m_Collision.Draw();
 
 	}
 
@@ -335,6 +327,7 @@ void cRyusei::Destroy(){
 		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 		//--- 流れる処理のための準備 ---
+		m_pStarData->m_bStream = true;
 		m_pStarData->m_StreamStartPos = CreateRamdomPos;																// 初期生成位置をスタート位置に指定
 		m_pStarData->m_StreamGoalPos = D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT);		// 画面左下をゴールに指定
 		m_pStarData->m_VecStreamMove = m_pStarData->m_StreamGoalPos - m_pStarData->m_StreamStartPos;					// スタートとゴールから流れる方向のベクトルを求める
@@ -393,6 +386,7 @@ void cRyusei::Respawn(){
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			//--- 流れる処理のための準備 ---
+			m_pStarData->m_bStream = true;
 			m_pStarData->m_StreamStartPos = CreateRamdomPos;																// 初期生成位置をスタート位置に指定
 			m_pStarData->m_StreamGoalPos = D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT);		// 画面左下をゴールに指定
 			m_pStarData->m_VecStreamMove = m_pStarData->m_StreamGoalPos - m_pStarData->m_StreamStartPos;					// スタートとゴールから流れる方向のベクトルを求める
@@ -449,4 +443,18 @@ void cRyusei::OnCollidToNet(int num){
 
 	// Vector確認用
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
+}
+
+//--- 網の中に流星があるとき ---
+void cRyusei::OnCollidToNetArea(int num){
+
+	// 先頭から何番目か
+	m_pStarData = m_pRoot;
+	m_pStarData += num;
+
+	if (!m_pStarData->m_bUse)
+		return;
+
+	m_pStarData->m_bStream = false;
+	
 }

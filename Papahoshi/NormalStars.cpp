@@ -37,7 +37,9 @@
 #define LIFE_TIME			(2000)
 #define LIFE_TIME_MARGIN	(500)
 
-#define NORMAL_STAR_SCORE	(100)		
+#define NORMAL_STAR_SCORE	(100)	
+
+#define VACUMED_SPEED		(0.2f)
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
@@ -557,7 +559,7 @@ void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 
 	// 星からブラックホール方向への単位ベクトルを求める
 	D3DXVECTOR2 VecStarToBlack;
-	VecStarToBlack = UnitVector(Center - m_pStarData->m_sprite.GetPos())*0.1f;
+	VecStarToBlack = UnitVector(Center - m_pStarData->m_sprite.GetPos())*VACUMED_SPEED;
 
 	// 移動反映
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + VecStarToBlack);
