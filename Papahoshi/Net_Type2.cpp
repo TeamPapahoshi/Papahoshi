@@ -896,12 +896,19 @@ void cNet::ShoutPhaseUpdate(){
 
 	//------ Œ¸‘¬‚µ‚«‚Á‚Ä”•b‚µ‚½‚çˆø‚«ã‚° ------
 	if (m_fHalfCircleSize <= 0.0f){
-		m_nFrameCnt++;
-		if (m_nFrameCnt >= INTERVAL_THOROW_PULL){
-			m_nFrameCnt = 0;	//‰Šú‰»
-			m_bPurpose = false;
-			gamePhase = PHASE_PULL;
-			StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
+
+		//“Š‚°‚«‚Á‚Ä‚¢‚È‚¢ê‡‚ÍƒQ[ƒW‚ª‚à‚¤ˆê“xŠg‘å
+		if (!m_bThrow[0] || !m_bThrow[1] || !m_bThrow[2]){
+			m_fDirectHalfCircle = 1.0f;
+		}
+		else{
+			m_nFrameCnt++;
+			if (m_nFrameCnt >= INTERVAL_THOROW_PULL){
+				m_nFrameCnt = 0;	//‰Šú‰»
+				m_bPurpose = false;
+				gamePhase = PHASE_PULL;
+				StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
+			}
 		}
 	}
 
