@@ -110,20 +110,25 @@ cConstellation::cConstellation(){
 			{
 			case 0:
 				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+					m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
+			m_pStarData->m_sprite.SetIntervalChangePattern(7);
 				break;
 			case 1:
 				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+				m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
 				break;
 			case 2:
 				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+				m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
 				break;
 			default:
 				break;
 			}
 			// アニメーションの設定
 			m_pStarData->m_sprite.SetAnimationFlag(true);
-			m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
-			m_pStarData->m_sprite.SetIntervalChangePattern(7);
+		
 
 
 			// サイズの設定
