@@ -34,6 +34,16 @@ public:
 	bool	m_bAddScore = false;
 	int		m_nLifeTime = 0;
 
+	// ブラックホール
+	bool	m_bHitBlackHoleDelete=false;
+
+	// 正存時間で消滅
+	bool	m_DeleteToLifeTime=false;
+
+	// 隕石
+	bool	m_bHitSpaceRock = false;
+
+
 };
 
 class cNormalStar :public cBaseStar{

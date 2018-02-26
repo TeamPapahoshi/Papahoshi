@@ -38,6 +38,7 @@ cBaseStarData::cBaseStarData(){
 	m_nRespawnFrame = 0;
 	m_Move = D3DXVECTOR2(0.0f, 0.0f);
 	m_Destination = D3DXVECTOR2(0, 0);
+	m_bCaptured = false;
 
 	m_bEffectSetFlag = false;
 }

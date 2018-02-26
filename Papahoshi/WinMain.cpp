@@ -21,6 +21,8 @@
 #define CLASS_NAME	"HEW SAMPLE"	// ウィンドウクラス名
 #define WINDOW_NAME	"HEW SAMPLE"	// キャプション名
 
+#define WINDOW_MODE	(TRUE)		//FALSEでフルスクリーン
+
 //-----------------------------
 // プロトタイプ宣言
 //-----------------------------
@@ -63,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		NULL, NULL, hInstance, NULL);
 
 	// --- 初期化処理 --------------------
-	if (FAILED(Init(hInstance, hWnd, TRUE))){
+	if (FAILED(Init(hInstance, hWnd, WINDOW_MODE))){
 		// --- ＜初期化失敗時＞　終了処理 ----
 		UnregisterClass(CLASS_NAME, wcex.hInstance);
 		UnInit();

@@ -23,9 +23,6 @@
     <Filter Include="ソース ファイル\共通処理">
       <UniqueIdentifier>{9dc7eefd-f3d0-40b3-94ca-80f88dce9b6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\共通処理\Direct3Dデバイス">
-      <UniqueIdentifier>{0429e864-723e-4c35-a1c3-e363e46ac046}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\共通処理\タイマー">
       <UniqueIdentifier>{d8bf9c5f-8aff-42ec-976c-58fc7cf29c55}</UniqueIdentifier>
     </Filter>
@@ -157,6 +154,9 @@
     </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\04リザルト\リザルト星表示">
       <UniqueIdentifier>{bd3bdcbb-9d68-459e-96e2-8425f740ef35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\共通処理\Direct3Dデバイス">
+      <UniqueIdentifier>{0429e864-723e-4c35-a1c3-e363e46ac046}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +334,9 @@
     <ClCompile Include="ResultStar.cpp">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト星表示</Filter>
     </ClCompile>
+    <ClCompile Include="NetRipple.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="ResultStar.h">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト星表示</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRipple.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

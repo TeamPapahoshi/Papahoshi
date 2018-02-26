@@ -28,6 +28,7 @@
 #include "Input.h"
 #include "debugproc.h"
 #include "MathEX.h"
+#include "sound.h"
 
 #ifdef  _TYPE_2_
 
@@ -56,10 +57,19 @@
 #define SPEED_HALFCIRCLE	(5)	//10/1進む
 //斜め投げ補正
 #define ANG_NUM		(200.0f)
+//縦補正値
+#define ANG_Y_FIRST		(100.0f)
+#define ANG_Y_SECOND	(ANG_Y_FIRST * 2.0f)
 //制御点を求める
 #define CP_DIVIDE	(4)			//線分の分割数
 #define CP_DISTANCE	((float)SCREEN_HEIGHT / 4.0f)	//線分との距離
 
+//テクスチャカラー
+#define NET_TEX_SATURATION		(90.0f)
+#define NET_TEX_VALUE			(100.0f)
+#define NET_TEX_MAX_HUE			(360.0f)
+#define NET_TEX_MIN_HUE			(0.0f)
+#define NET_TEX_INCREMENT_HUE	(10.0f)
 
 //=====================================================
 //
@@ -125,6 +135,21 @@ m_fThrowSpeed(0.0f)
 	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
 	m_aCollider[1].SetTriangleCollider(m_aPos[2], m_centerPos, m_aPos[1]);
 
+	//--- テクスチャカラー ---
+	m_fNetHue = NET_TEX_MIN_HUE;
+	for (int z = 0; z < NET_PARTS_MAX; z++){
+		for (int y = 0; y < NET_Y_NUM; y++){
+			for (int x = 0; x < NET_X_NUM; x++){
+				m_aNet[z][y][x].SetHSVColorFlag(true);
+			}
+		}
+	}
+
+	//波紋
+	for (int i = 0; i < MAX_RIPPLE; i++){
+		m_aRipple[i] = NULL;
+	}
+
 }
 
 
@@ -167,6 +192,20 @@ void cNet::Update(){
 	//頂点情報に合わせてあみをはる
 	SetNet();
 
+	//テクスチャカラーの更新
+	NetColorUpdate();
+
+	//波紋の更新
+	for (int i = 0; i < MAX_RIPPLE; i++){
+		if (m_aRipple[i]){
+			m_aRipple[i]->Update();
+			if (m_aRipple[i]->GetFinFlug()){
+				delete m_aRipple[i];
+				m_aRipple[i] = NULL;
+			}
+		}
+	}
+
 	//当たり判定情報の更新
 	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
 	m_aCollider[1].SetTriangleCollider(m_aPos[2], m_centerPos, m_aPos[1]);
@@ -179,6 +218,12 @@ void cNet::Update(){
 //
 //=====================================================
 void cNet::Draw(){
+
+	//はもん
+	for (int i = 0; i < MAX_RIPPLE; i++){
+		if (m_aRipple[i])
+			m_aRipple[i]->Draw();
+	}
 
 	//あみ
 	//******
@@ -301,7 +346,7 @@ void cNet::SetNet(){
 								case 3:
 									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.7f;
 									if (m_nFrameCnt)
-										regula = 0.0f; 
+										regula = 0.0f;
 									break;
 								default:
 									regula = 1.0f;
@@ -361,7 +406,7 @@ void cNet::SetNet(){
 					//***** 右のYラインの両端を求める *****
 					rightYtop = BezierCurve(((float)x + 1.0f) / (float)NET_X_NUM, m_aPos[0], cp3, cp4, m_aPos[1]);
 					rightYunder = m_centerPos;
-					
+
 					//***** 最終ポジション決定 *****
 					workPos[0].x = LineSplitPoint(topXleft, topXright, x, NET_X_NUM - x).x;
 					workPos[1].x = LineSplitPoint(topXleft, topXright, x + 1, NET_X_NUM - (x + 1)).x;
@@ -416,12 +461,12 @@ void cNet::SetNet(){
 								case 2:
 									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.4f;
 									if (m_nFrameCnt)
-										regula = 0.3f; 
+										regula = 0.3f;
 									break;
 								case 3:
 									regula = 1.0f - (0.3f * ((float)m_nPullFrame / (float)PULL_FRAME)) - 0.7f;
 									if (m_nFrameCnt)
-										regula = 0.0f; 
+										regula = 0.0f;
 									break;
 								default:
 									regula = 1.0f;
@@ -501,6 +546,50 @@ void cNet::SetNet(){
 			}
 		}
 	} //曲線終了
+
+}
+
+
+//====================================================
+//
+// 網のテクスチャカラーの更新
+//
+//====================================================
+void cNet::NetColorUpdate(){
+
+	float hue;
+
+	m_fNetHue += NET_TEX_INCREMENT_HUE;
+	if (m_fNetHue > NET_TEX_MAX_HUE){
+		m_fNetHue = NET_TEX_MIN_HUE;
+	}
+
+	for (int z = 0; z < NET_PARTS_MAX; z++){
+		for (int y = 0; y < NET_Y_NUM; y++){
+			for (int x = 0; x < NET_X_NUM; x++){
+
+				m_aNet[z][y][x].SetHSVColorFlag(true);
+
+				hue = m_fNetHue + (NET_TEX_INCREMENT_HUE * y);
+				while (hue > NET_TEX_MAX_HUE){
+					hue -= NET_TEX_MAX_HUE;
+				}
+
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 0);
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 1);
+				//m_aNet[z][y][x].SetVtxColor(D3DXCOLOR(100.0f, 00.0f, 100.0f, 155.0f));
+
+				hue += NET_TEX_INCREMENT_HUE;
+				while (hue > NET_TEX_MAX_HUE){
+					hue -= NET_TEX_MAX_HUE;
+				}
+
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 2);
+				m_aNet[z][y][x].SetHSVColorOne(hue, NET_TEX_SATURATION, NET_TEX_VALUE, 3);
+
+			}
+		}
+	}
 
 }
 
@@ -667,10 +756,13 @@ void cNet::PostPhaseUpdate(){
 
 		//----- 構え状態終了 -----
 		gamePhase = PHASE_SHOUT;
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
 		m_bDrawArrow = false;
 		m_nFrameCnt = 0;		//フレームカウントの初期化
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; i++){
 			m_bThrow[i] = false;
+			m_bRipple[i] = false;
+		}
 		break;
 	}
 
@@ -710,9 +802,32 @@ void cNet::ShoutPhaseUpdate(){
 				m_ThreePurposePos[i].x += ANG_NUM;
 			else if (m_nPostAngle == ANG_RIGHT)
 				m_ThreePurposePos[i].x -= ANG_NUM;
-			//****** デバック *******
-			//m_aPos[i] = m_ThreePurposePos[i];
-			//gamePhase = GAME_PHASE::PHASE_MAX;
+
+			//------- Yの補正値 ------
+			if (m_nPostAngle == ANG_STRAIGHT){
+				if (i != 1){
+					m_ThreePurposePos[i].y += ANG_Y_FIRST;
+				}
+			}
+			else if (m_nPostAngle == ANG_RIGHT){
+				if (i == 0){
+					m_ThreePurposePos[i].y += ANG_Y_SECOND;
+				}
+				else if (i == 1){
+					m_ThreePurposePos[i].y += ANG_Y_FIRST;
+				}
+			}
+			else if (m_nPostAngle == ANG_LEFT){
+				if (i == 2){
+					m_ThreePurposePos[i].y += ANG_Y_SECOND;
+				}
+				else if (i == 1){
+					m_ThreePurposePos[i].y += ANG_Y_FIRST;
+				}
+			}
+
+			//------ SEの再生 ------
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_SHOOT);
 		}
 	}
 
@@ -763,14 +878,19 @@ void cNet::ShoutPhaseUpdate(){
 	if (m_fHalfCircleSize <= 0.0f)
 		m_fDirectHalfCircle = 0.0f;
 	m_halfCircle.SetScale(D3DXVECTOR2(m_fHalfCircleSize, m_fHalfCircleSize));
-	m_halfCircle.SetPosY(SCREEN_HEIGHT -  m_halfCircle.GetSizeY() * m_halfCircle.GetScaleY() * 0.5f);
+	m_halfCircle.SetPosY(SCREEN_HEIGHT - m_halfCircle.GetSizeY() * m_halfCircle.GetScaleY() * 0.5f);
 
 	//---- 投げ終了で引き上げ -----
 	for (int i = 0; i < 3; i++){
 		if (!xFin[i] || !yFin[i])
 			break;
+		if (!m_bRipple[i]){ //波紋生成
+			SetRipple(m_aPos[i]);
+			m_bRipple[i] = true;
+		}
 		if (i == 2){
 			m_fHalfCircleSize = 0.0f;
+			StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
 		}
 	}
 
@@ -781,6 +901,7 @@ void cNet::ShoutPhaseUpdate(){
 			m_nFrameCnt = 0;	//初期化
 			m_bPurpose = false;
 			gamePhase = PHASE_PULL;
+			StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
 		}
 	}
 
@@ -837,6 +958,10 @@ void cNet::PullPhaseUpdate(){
 			m_purposePos[i].y = m_aPos[i].y + m_oncePullPos[i].y;
 		}
 
+		//SEの再生
+		if (m_nPullNum)
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_PULL);
+
 	}
 
 	//------ 目的位置に近づける --------
@@ -866,6 +991,26 @@ cCollider* cNet::GetCollider(){
 	return m_aCollider;
 }
 
+//===========================================
+//
+// 波紋生成
+//
+//===========================================
+void cNet::SetRipple(D3DXVECTOR2 pos){
+
+	for (int i = 0; i < MAX_RIPPLE; i++){
+
+		if (m_aRipple[i])
+			continue;
+
+
+		m_aRipple[i] = new cRipple(pos);
+
+		return;
+
+	}
+
+}
 
 
 #endif

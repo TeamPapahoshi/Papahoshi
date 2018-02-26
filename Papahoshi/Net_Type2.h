@@ -16,6 +16,8 @@
 #include "Common.h"
 #include "Sprite.h"
 #include "Collision.h"
+#include "NetRipple.h"
+
 //----------------------------------------
 // 列挙型宣言
 //----------------------------------------
@@ -34,6 +36,8 @@ enum{	//ネットの部品
 
 #define PULL_NUM	(3)		//ズッズッてなる回数
 #define PULL_FRAME	(30)	//引く1回分のフレーム
+
+#define MAX_RIPPLE	(9)
 
 //----------------------------------------
 // クラス定義
@@ -111,6 +115,11 @@ private:
 	cCollider m_aCollider[2];	//当たり判定
 								//２つの三角で構成される網
 
+	//--- 波紋 ---
+	cRipple* m_aRipple[MAX_RIPPLE];
+	void SetRipple(D3DXVECTOR2 pos);
+	bool	m_bRipple[3];
+
 	//----- 変数宣言 -----
 	GAME_PHASE gamePhase;	//ゲームフェイズ
 	//キー入力系
@@ -140,8 +149,12 @@ private:
 	float		m_fMaxHalfCircle;	//半円のマックスサイズ
 	float		m_fDirectHalfCircle;	//方向
 
+	//網のテクスチャカラー
+	float		m_fNetHue;
+
 	//---- プロトタイプ宣言 ----
 	void SetNet();	//各頂点に合わせてあみを貼る
+	void NetColorUpdate();	//あみのテクスチャカラー
 	void Input();	//コントローラー入力を取得
 	void PostPhaseUpdate();
 	void ShoutPhaseUpdate();

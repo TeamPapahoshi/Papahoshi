@@ -23,9 +23,18 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define DEFAULT_STAR_SIZE			(100)
-#define MAX_CONSTELLATION_NUM		(5)
+#define CENTER_STAR_SIZE			(D3DXVECTOR2(150,150))
+#define OTHER_STAR_SIZE				(D3DXVECTOR2(30,30))
+#define MAX_CONSTELLATION_NUM		(10)
 #define RESPAWN_FREAM				(10)
+
+//	生成位置
+#define CREATE_PATTERN		(2)
+//#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+DEFAULT_STAR_SIZE/2.0f,100))
+//#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-DEFAULT_STAR_SIZE/2.0f,100))
+
+#define CREATE_POS_01		(D3DXVECTOR2(SCREEN_CENTER))
+#define CREATE_POS_02		(D3DXVECTOR2(SCREEN_CENTER))
 
 //=======================================================================================
 //
@@ -44,8 +53,6 @@ cConstellation::cConstellation(){
 	m_pStarData = new cConstellationData[m_nMaxNum]();//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
-
-
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
@@ -54,18 +61,86 @@ cConstellation::cConstellation(){
 		SetCountAndUse(true);
 		m_pStarData->m_bCreateEvent = true;
 
-		// 星群れのちゅうしん
+	
+		D3DXVECTOR2 CreateCenterPos;
+
+		//--- 星群の中心の設定 ----
+		if (nCountStarNum == 0){
+	
+			// 座標の決定
+			int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
+			switch (RamdomNum)
+			{
+			case 1:
+				CreateCenterPos = CREATE_POS_01;
+				break;
+			case CREATE_PATTERN:
+				CreateCenterPos = CREATE_POS_02;
+				break;
+			default:
+				break;
+			}
+			m_pStarData->m_sprite.SetPos(CreateCenterPos);
+
+			// サイズの設定
+			m_pStarData->m_sprite.SetSize(CENTER_STAR_SIZE);
+
+			// テクスチャの設定
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PLANET03));
+
+			// アニメーションの設定
+			m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
+			m_pStarData->m_sprite.SetIntervalChangePattern(7);
+			m_pStarData->m_sprite.SetAnimationFlag(true);
+
+		}
 
 
-		// 座標の決定
-		D3DXVECTOR2 CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(0, SCREEN_WIDTH);
-		CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT);
-		CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
-		m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
+		//--- 星群の周りの星の設定 ----
+		else{
+
+			// 星群の周りに星を生成
+			D3DXVECTOR2 CreateRamdomPos;
+			CreateRamdomPos.x = (float)CRandam::RandamRenge(CreateCenterPos.x - 200, CreateCenterPos.x + 200);
+			CreateRamdomPos.y = (float)CRandam::RandamRenge(CreateCenterPos.y - 200, CreateCenterPos.y + 200);
+			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
+			// 星の色の決定
+			m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+			switch (m_pStarData->m_nStarColorNum)
+			{
+			case 0:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+				break;
+			case 1:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+				break;
+			case 2:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+				break;
+			default:
+				break;
+			}
+			// アニメーションの設定
+			m_pStarData->m_sprite.SetAnimationFlag(true);
+			m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+			m_pStarData->m_sprite.SetIntervalChangePattern(7);
 
 
+			// サイズの設定
+			m_pStarData->m_sprite.SetSize(OTHER_STAR_SIZE);
+
+			// 円軌道の設定
+			m_pStarData->m_CircleMoveData.SetCenter(CreateCenterPos);	// 円軌道の中心を星群れの中心にセット
+		//	m_pStarData->m_CircleMoveData.SetRadius(D3DXVECTOR2((float)CRandam::RandamRenge(100, 200), (float)CRandam::RandamRenge(100,200)));
+			m_pStarData->m_CircleMoveData.SetRadius(D3DXVECTOR2(100, 100));
+			m_pStarData->m_CircleMoveData.SetSpped(0.01f);
+			m_pStarData->m_CircleMoveData.SetRad((float)CRandam::RandamRenge(0, 2*D3DX_PI ));
+
+		}
 	}
+
+
+
 
 
 
@@ -103,6 +178,18 @@ void cConstellation::Update(){
 		// 使ってないのは飛ばす
 		if (!m_pStarData->m_bUse)
 			continue;
+
+
+		// アニメーションの更新
+		m_pStarData->m_sprite.AnimationLoop();
+
+
+		// 円軌道の設定
+		if (nCountStarNum != 0){
+			m_pStarData->m_sprite.SetPos(m_pStarData->m_CircleMoveData.GetMove());
+		}
+
+
 	}
 
 
@@ -166,18 +253,27 @@ void cConstellation::Update(){
 //=======================================================================================
 void cConstellation::Draw(){
 
-	// 先頭に戻す
-	m_pStarData = m_pRoot;
+
+	//---- 0番目(星群の中心を一番前に描画するための処理) --------------------------------------------
+	// 先頭+1
+	m_pStarData = m_pRoot+1;
 
 	// 描画
-	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	for (int nCountStarNum = 1; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		if (!m_pStarData->m_bDraw)
 			continue;
 
-		//m_pStarData->m_sprite.Draw();
+		m_pStarData->m_sprite.Draw();
 	}
 
+	// 先頭に戻す
+	m_pStarData = m_pRoot;
+
+	if (m_pStarData->m_bDraw)
+		m_pStarData->m_sprite.Draw();
+	
+	//----------------------------------------------------------------------------------------------
 
 	// デバッグプリント
 	/*PrintDebugProc("━━━━サンプル━━━\n");

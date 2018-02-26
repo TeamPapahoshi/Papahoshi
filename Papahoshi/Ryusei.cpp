@@ -20,11 +20,12 @@
 #include "MathEX.h"
 #include <cmath>
 #include "GameUI.h"
+#include "sound.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define STAR_SIZE				(120)
+#define STAR_SIZE				(160)
 #define RESPAWN_FREAM			(200)
 #define MAX_NORMAL_RYUSEI_NUM	(50)
 #define MOVE_SPEED				(2.5f)
@@ -112,6 +113,8 @@ cRyusei::cRyusei(){
 //=======================================================================================
 cRyusei::~cRyusei(){
 
+
+	StopSound(SOUND_LABEL_SE_STREAM_METEOR);
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 	delete[] m_pStarData;
@@ -170,6 +173,16 @@ void cRyusei::Update(){
 		}
 
 	}
+
+
+	
+
+	// すべての流星が使用されなくなったら効果音を止める
+	if (m_nCurrentNum==0 && !m_bFever){
+		StopSound(SOUND_LABEL_SE_STREAM_METEOR);
+	}
+
+
 
 	// イベントの起動
 	// デバッグキー
@@ -341,6 +354,9 @@ void cRyusei::Destroy(){
 
 
 		// 終了し
+
+		// 生成イベント開始
+		if (m_bFever)
 		m_pStarData->m_bRespawnEvent = true;
 
 		//	リセット

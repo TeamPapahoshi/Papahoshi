@@ -25,11 +25,6 @@ enum eConsellationType
 	TYPE_MAX,
 };
 
-class cConstellationStars: public cBaseStar{		//星群の一つ一つ
-public:
-
-};
-
 
 //-----------------------------
 //クラス定義
@@ -37,7 +32,8 @@ public:
 //------- 構造体みたいに使う ---------
 class cConstellationData :public cBaseStarData{		// 星群れ全体
 public:
-	D3DXVECTOR2 m_CoreStar;			// 星群れ
+	int m_nStarColorNum;
+	cCircleOrbitMovement m_CircleMoveData;			// 円軌道に必要なデータ
 	
 };
 

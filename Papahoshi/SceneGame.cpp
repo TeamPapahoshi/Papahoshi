@@ -194,12 +194,13 @@ void cSceneGame::Draw(){
 	m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
 	m_pRyusei->Draw();
+	m_pConsellation->Draw();
 	m_pNet->Draw();
 
 	m_pGameUI->Draw();
 	m_pGage->Draw();
 	m_pTimer->Draw();
-	m_pConsellation->Draw();
+
 	if (m_pAnnounce)
 		m_pAnnounce->Draw();
 }
@@ -236,6 +237,17 @@ void cSceneGame::SetUpdate(){
 //============================================
 void cSceneGame::MainUpdate(){
 
+
+
+	// フィーバタイムの時
+	if (m_bFever){
+		//このフラグOnにしたらアナウンスを呼ぶ
+		m_pRyusei->SetCreateEvent();
+		m_pRyusei->SetRespawnFlag(true);
+
+	}
+
+
 	m_pNet->Update();			//あみ
 	m_pBG->Update();			// 背景
 	m_pGage->Update();			// ゲージ
@@ -249,14 +261,6 @@ void cSceneGame::MainUpdate(){
 	CheckCollision();			//当たり判定
 	m_pRyusei->Update();
 	m_pRyusei->SetRespawnFlag(false);
-
-	// フィーバタイムの時
-	if (m_bFever){
-		//このフラグOnにしたらアナウンスを呼ぶ
-		m_pRyusei->SetCreateEvent();
-		m_pRyusei->SetRespawnFlag(true);
-	
-	}
 
 #ifndef _DEBUG_DKIP_
 	//アナウンスの更新
@@ -290,6 +294,9 @@ void cSceneGame::MainUpdate(){
 		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
 
+		// 
+		PlaySound(SOUND_LABEL_SE_STREAM_METEOR);
+
 		//---- UI変更 ----
 		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::FEVER);
 		m_pGameUI->SetUiType(cGameUI::eUItype::FEVER);
@@ -311,11 +318,6 @@ void cSceneGame::MainUpdate(){
 			m_pGameUI->SetUiType(cGameUI::eUItype::HURRY_UP);
 		else
 			m_pGameUI->SetUiType(cGameUI::eUItype::NOMAL);
-	}
-
-	//---- FEVERフラグ ----
-	if (!m_pGage->GetGagemax()){
-		m_bFever = false;
 	}
 
 	//---- Hurry Up! -----
