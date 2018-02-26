@@ -17,10 +17,10 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define TITLESHIP_POS_X (700)
-#define TITLESHIP_POS_Y (540)
-#define TITLESHIP_SIZE_X (200)
-#define TITLESHIP_SIZE_Y (100)
+#define TITLESHIP_POS_X ((float)SCREEN_WIDTH  - 250.0f)
+#define TITLESHIP_POS_Y ((float)SCREEN_HEIGHT - 110.0f)
+#define TITLESHIP_SIZE_X (200.0f)
+#define TITLESHIP_SIZE_Y (100.0f)
 
 #define TITLESHIP_MOVE_X (0.01f)			//船のX軸方向移動量
 #define TITLESHIP_MOVE_Y (0.15f)		//船のY軸方向移動量
@@ -114,7 +114,7 @@ void cTitleShip::Update(bool bSceneChangeFlag){
 												 m_sprite.GetPos() + D3DXVECTOR2(65.0f, -40.0f),
 												 D3DXVECTOR2(25.0f, 25.0f),
 												 D3DXVECTOR2(0.3f, -1.0f),
-												 m_sprite.GetVtxColor(),
+												 D3DXCOLOR(255,255,255,255),
 												 90);
 		//生成時間の再設定
 		m_nMakeSmokeTime = MAKE_SMOKE_TIME;

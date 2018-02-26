@@ -23,10 +23,10 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define SCORE_POS_X  (550)
-#define SCORE_POS_Y	 (60)
-#define SCORE_SIZE_X (80)
-#define SCORE_SIZE_Y (100)
+#define SCORE_POS_X  (SCREEN_WIDTH - 430.0f)
+#define SCORE_POS_Y	 (SCREEN_HEIGHT - 470.0f)
+#define SCORE_SIZE_X (80.0f)
+#define SCORE_SIZE_Y (100.0f)
 
 //-----------------------------
 // グローバル
@@ -49,6 +49,13 @@ cSceneResult::cSceneResult()
 
 	m_pResultgirl = new cResultgirl();
 
+	m_pResultFont = new cResultFont();
+	m_pResultFont->GetRankingData(m_pRanking);
+
+	m_pResultStar = new cResultStar();
+	m_pResultStar->GetResultGirlData(m_pResultgirl);
+	m_pResultStar->Init();
+
 	//----- 表示スコアの初期化 -----
 	ResetPrintScore();
 }
@@ -64,6 +71,8 @@ cSceneResult::~cSceneResult(){
 	delete m_pRanking;
 	delete m_pBG;
 	delete m_pResultgirl;
+	delete m_pResultFont;
+	delete m_pResultStar;
 }
 
 //=======================================================================================
@@ -78,6 +87,10 @@ void cSceneResult::Update(){
 	m_pBG->Update();
 
 	m_pResultgirl->Update();
+
+	m_pResultFont->Update();
+
+	m_pResultStar->Update();
 
 	UpdateScore();
 
@@ -97,6 +110,8 @@ void cSceneResult::Draw(){
 	m_pBG->Draw();
 	m_pRanking->Draw();
 	m_pResultgirl->Draw();
+	m_pResultFont->Draw();
+	m_pResultStar->Draw();
 	DrawScore(D3DXVECTOR2(SCORE_POS_X, SCORE_POS_Y), D3DXVECTOR2(SCORE_SIZE_X, SCORE_SIZE_Y));
 }
 

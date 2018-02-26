@@ -18,6 +18,9 @@
 //-----------------------------
 #define DEFAULT_SCORE (1000)			//デフォルトのスコアの値(閾値)
 
+#define RANKING_EFFECT_FLAME (30)		//エフェクト生成のフレーム閾値
+#define EFFECT_SIZE          (50.0f)
+
 #define	RANKING_SIZE_X		(40.0f)		// 順位表示の数字の幅
 #define	RANKING_SIZE_Y		(40.0f)		// 順位表示の数字の高さ
 #define	RANKING_INTERVAL_X	(0.0f)		// 順位表示の数字の横方向表示間隔
@@ -31,6 +34,8 @@
 
 #define NUMBER_TEX_DIVIDE_X (10)
 #define NUMBER_TEX_DIVIDE_Y (1)
+
+#define RANKING_ALPHA_CHANGE_NUM (8)	//加減算されるアルファ値
 
 //-----------------------------
 //列挙型定義
@@ -64,6 +69,12 @@ cRanking::cRanking(){
 			defaultdata += DEFAULT_SCORE;
 		}
 	}
+	//初期化処理
+	m_nScoreAlpha = 255;
+	m_nScoreEffectFlame = 0;
+	m_nChangeScorePoint = 0;
+	m_bChangeScoreFlag = false;
+	m_bScoreAlphaChange = false;
 
 	//ランキングの入れ替え
 	SortRanking();
@@ -75,7 +86,7 @@ cRanking::cRanking(){
 		for (int Rankloop = 0; Rankloop < MAX_RANK; Rankloop++)
 		{
 			m_RankSprite[Initloop][Rankloop].SetPos(D3DXVECTOR2(RANKING_POS_X + ((RANKING_SIZE_X + RANKING_INTERVAL_X) * Rankloop),
-																RANKING_POS_Y + ((RANKING_SIZE_Y + RANKING_INTERVAL_Y) * Initloop)));
+				RANKING_POS_Y + ((RANKING_SIZE_Y + RANKING_INTERVAL_Y) * Initloop)));
 			m_RankSprite[Initloop][Rankloop].SetSize(D3DXVECTOR2(RANKING_SIZE_X, RANKING_SIZE_Y));
 			m_RankSprite[Initloop][Rankloop].SetTexture(cTextureManeger::GetTextureResult(TEX_NUMBER));
 			m_RankSprite[Initloop][Rankloop].SetTexPatternDevide(NUMBER_TEX_DIVIDE_X, NUMBER_TEX_DIVIDE_Y);
@@ -85,7 +96,7 @@ cRanking::cRanking(){
 		for (int Scoreloop = 0; Scoreloop < MAX_SCORE; Scoreloop++)
 		{
 			m_ScoreSprite[Initloop][Scoreloop].SetPos(D3DXVECTOR2(RANKING_SCORE_POS_X + ((RANKING_SIZE_X + RANKING_INTERVAL_X) * Scoreloop),
-																   RANKING_SCORE_POS_Y + ((RANKING_SIZE_Y + RANKING_INTERVAL_Y) * Initloop)));
+				RANKING_SCORE_POS_Y + ((RANKING_SIZE_Y + RANKING_INTERVAL_Y) * Initloop)));
 			m_ScoreSprite[Initloop][Scoreloop].SetSize(D3DXVECTOR2(RANKING_SIZE_X, RANKING_SIZE_Y));
 			m_ScoreSprite[Initloop][Scoreloop].SetTexture(cTextureManeger::GetTextureResult(TEX_NUMBER));
 			m_ScoreSprite[Initloop][Scoreloop].SetTexPatternDevide(NUMBER_TEX_DIVIDE_X, NUMBER_TEX_DIVIDE_Y);
@@ -96,6 +107,7 @@ cRanking::cRanking(){
 		SetNumber(&m_ScoreSprite[Initloop][MAX_SCORE - 1], m_nScoreData[Initloop], MAX_SCORE);
 
 	}
+
 }
 
 //=======================================================================================
@@ -115,7 +127,60 @@ cRanking::~cRanking(){
 //
 //=======================================================================================
 void cRanking::Update(){
+	//ランキング変更フラグが立っていれば処理
+	if (m_bChangeScoreFlag)
+	{
+		//エフェクト生成フレームの加算
+		m_nScoreEffectFlame++;
 
+		//エフェクト生成フレームが一定値に達したらエフェクト設定
+		if (m_nScoreEffectFlame > RANKING_EFFECT_FLAME)
+		{
+			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureResult(TEX_RESULT_EFFECT_SPARKLE),
+				m_ScoreSprite[m_nChangeScorePoint][MAX_SCORE / 2].GetPos(),
+				D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
+				D3DXCOLOR(255, 255, 255, 255),
+				RANKING_EFFECT_FLAME,
+				D3DXVECTOR2(RANKING_SIZE_X * (MAX_SCORE - 1), RANKING_SIZE_Y / 2),
+				EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
+
+			m_nScoreEffectFlame = CRandam::RandamRenge(0, RANKING_EFFECT_FLAME);
+		}
+
+		//アルファ値が0ならα値の減算開始
+		if (m_bScoreAlphaChange)
+		{
+			m_nScoreAlpha += RANKING_ALPHA_CHANGE_NUM;
+		}
+		else//アルファ値が最大値ならα値の減算開始
+		{
+			m_nScoreAlpha -= RANKING_ALPHA_CHANGE_NUM;
+		}
+
+		if (m_nScoreAlpha <= 0)
+		{
+			m_nScoreAlpha = 0;
+			m_bScoreAlphaChange = true;
+		}
+		else if (m_nScoreAlpha >= 255)
+		{
+			m_nScoreAlpha = 255;
+			m_bScoreAlphaChange = false;
+		}
+
+
+		//ランキング表示のα値の切り替え
+
+		for (int Rankloop = 0; Rankloop < MAX_RANK; Rankloop++)
+		{
+			m_RankSprite[m_nChangeScorePoint][Rankloop].SetVtxColorA(m_nScoreAlpha);
+		}
+
+		for (int Scoreloop = 0; Scoreloop < MAX_SCORE; Scoreloop++)
+		{
+			m_ScoreSprite[m_nChangeScorePoint][Scoreloop].SetVtxColorA(m_nScoreAlpha);
+		}
+	}
 }
 
 //=======================================================================================
@@ -148,12 +213,12 @@ void cRanking::Draw(){
 //		番号テクスチャの設定
 //
 //=======================================================================================
-void cRanking::SetNumber(cSpriteParam* data,int num, int digit){
+void cRanking::SetNumber(cSpriteParam* data, int num, int digit){
 
 	int nTempNumber;	//表示する桁
 
 
-	for (int loop = digit ; 0 < digit; digit--, data--)
+	for (int loop = digit; 0 < digit; digit--, data--)
 	{
 		//一番下の桁数を抽出
 		nTempNumber = num % 10;
@@ -175,6 +240,12 @@ void cRanking::SortRanking(){
 	//現在スコア情報の受け取り
 	int nScore = GetScore();
 
+	//デバッグ用
+	//nScore = 10000;
+
+	//ランキングの最低スコアに満たない場合は処理をしない
+	if (m_nScoreData[MAX_RANKING - 1] > nScore) return;
+
 	//ランキングの変更される地点の確認処理
 	for (int Checkloop = MAX_RANKING - 1; Checkloop >= 0; Checkloop--)
 	{
@@ -183,18 +254,16 @@ void cRanking::SortRanking(){
 			//保存されているスコアが現在スコアを上回るまでループし、上回ったらループの一つ前に現在スコアを保存
 			//スコアの保存された場所を記録
 			m_nChangeScorePoint = Checkloop + 1;
-			m_bChangeScoreFlag = true;
 
 			//処理の終了
 			break;
 
 		}
-		else if (m_nScoreData[0] < nScore)
+		else if (m_nScoreData[0] <= nScore)
 		{
 			//保存されているスコアが現在スコアを上回らなかったら、配列の一番上に保存
 			//スコアの保存される場所を記録
 			m_nChangeScorePoint = 0;
-			m_bChangeScoreFlag = true;
 
 			//処理の終了
 			break;
@@ -202,19 +271,16 @@ void cRanking::SortRanking(){
 
 	}
 
-	//ランキングが変更されていた場合
-	if (m_bChangeScoreFlag)
+	//ランキングの入れ替え処理
+	for (int Changeloop = MAX_RANKING - 1; Changeloop >= m_nChangeScorePoint; Changeloop--)
 	{
-		//ランキングの入れ替え処理
-		for (int Changeloop = MAX_RANKING - 1; Changeloop >= m_nChangeScorePoint; Changeloop--)
-		{
-			//スコアの移動
-			m_nScoreData[Changeloop] = m_nScoreData[Changeloop - 1];
-		}
-		//現在スコアの保存
-		m_nScoreData[m_nChangeScorePoint] = nScore;
-
+		//スコアの移動
+		m_nScoreData[Changeloop] = m_nScoreData[Changeloop - 1];
 	}
+	//現在スコアの保存
+	m_nScoreData[m_nChangeScorePoint] = nScore;
+
+	m_bChangeScoreFlag = true;
 }
 
 //=======================================================================================
@@ -251,10 +317,10 @@ bool cRanking::ReadRanking(){
 void cRanking::WriteRanking(){
 
 	ofstream ofs;	//ファイル書き込み用
-	
+
 	//ファイルを新規作成して書き込み開始
-  	ofs.open("data/Ranking/Ranking.bin", ios_base::out | ios_base::trunc | ios_base::binary);
-	
+	ofs.open("data/Ranking/Ranking.bin", ios_base::out | ios_base::trunc | ios_base::binary);
+
 	//char*型に変換してスコア情報の書き込み
 	ofs.write((char*)m_nScoreData, sizeof(int) * MAX_RANKING);
 

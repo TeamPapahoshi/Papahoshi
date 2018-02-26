@@ -18,7 +18,7 @@
 //É}ÉNÉçíËã`
 //-----------------------------
 #define METEOR_LIFETIME (60)
-#define METEOR_SIZE (20.0f)
+#define METEOR_SIZE (25.0f)
 #define METEOR_MOVE (5.5f)
 
 #define METEOR_ALPHA_SUB    (50.0f)

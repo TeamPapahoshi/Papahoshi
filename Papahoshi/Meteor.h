@@ -17,7 +17,7 @@
 //É}ÉNÉçíËã`
 //-----------------------------
 #define MAX_METEOR (10)
-#define MAX_METEOR_SPRITE_NUM (3)
+#define MAX_METEOR_SPRITE_NUM (5)
 #define METEOR_LIFETIME (60)
 
 //-----------------------------
