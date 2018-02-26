@@ -73,7 +73,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 
 	//最初のシーンの設定
 #ifndef _DEBUG_DKIP_
-	cSceneManeger::ChangeScene(cSceneManeger::TITLE);	//デバッグ用にステージセレクト画面から開始
+	cSceneManeger::ChangeScene(cSceneManeger::RESULT);	//デバッグ用にステージセレクト画面から開始
 #else
 	cSceneManeger::ChangeScene(cSceneManeger::GAME);	//デバッグ用にステージセレクト画面から開始
 #endif

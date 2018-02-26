@@ -15,10 +15,6 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define   RESULTGIRL_POS_X (650)
-#define   RESULTGIRL_POS_Y (330)
-#define   RESULTGIRL_SIZE_X (300)
-#define   RESULTGIRL_SIZE_Y (400)
 
 #define   TEXTURE_CHANGE_LINE (4000)	//テクスチャ切り替えのスコア閾値(暫定)
 
@@ -52,16 +48,21 @@ cResultgirl::cResultgirl(){
 	m_nCurrentPattern = 0;
 	m_nAnimFlame = 0;
 	//スコアが一定以上だった場合
-	if (GetScore() >= TEXTURE_CHANGE_LINE)
+	//if (GetScore() >= TEXTURE_CHANGE_LINE)
+	//デバッグ用
+	if (1)
 	{
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MAX_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MAX;
+		m_nAnimFlag = true;
 	}
 	else
 	{
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MIN_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MIN;
+		m_nAnimFlag = false;
 	}
+
 }
 
 //=======================================================================================
@@ -88,7 +89,7 @@ void cResultgirl::Update(){
 		//テクスチャの切り替え
 		m_nCurrentPattern = (m_nCurrentPattern + 1 + m_nAnimPattern) % m_nAnimPattern;
 
-		if (GetScore() >= TEXTURE_CHANGE_LINE)
+		if (m_nAnimFlag)
 		{
 			m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult((TEX_RESULT)(TEX_RESULT_GIRL_MAX_1 + m_nCurrentPattern)));
 		}

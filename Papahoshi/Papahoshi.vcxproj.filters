@@ -152,8 +152,11 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星群">
       <UniqueIdentifier>{74618284-b300-474c-8670-7ddb40902424}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\隕石">
-      <UniqueIdentifier>{fcf4ee0b-348d-4dfc-b791-316b45727e6d}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\シーン\各シーン\04リザルト\リザルト文字表示">
+      <UniqueIdentifier>{1bf74509-f76d-4997-bb7d-b26d04c20cb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\04リザルト\リザルト星表示">
+      <UniqueIdentifier>{bd3bdcbb-9d68-459e-96e2-8425f740ef35}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +283,9 @@
     <ClCompile Include="Transition.cpp">
       <Filter>ソース ファイル\共通処理\トランジション</Filter>
     </ClCompile>
+    <ClCompile Include="SpaceRock.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Score.cpp">
       <Filter>ソース ファイル\共通処理\スコア</Filter>
     </ClCompile>
@@ -322,8 +328,11 @@
     <ClCompile Include="Constellation.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星群</Filter>
     </ClCompile>
-    <ClCompile Include="SpaceRock.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\隕石</Filter>
+    <ClCompile Include="ResultFont.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト文字表示</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultStar.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト星表示</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -450,6 +459,9 @@
     <ClInclude Include="SampleStar.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星</Filter>
     </ClInclude>
+    <ClInclude Include="SpaceRock.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="MathEX.h">
       <Filter>ソース ファイル\共通処理\数学的な関数</Filter>
     </ClInclude>
@@ -488,8 +500,11 @@
     <ClInclude Include="Constellation.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星群</Filter>
     </ClInclude>
-    <ClInclude Include="SpaceRock.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\隕石</Filter>
+    <ClInclude Include="ResultFont.h">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト文字表示</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultStar.h">
+      <Filter>ソース ファイル\シーン\各シーン\04リザルト\リザルト星表示</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -82,7 +82,7 @@ void cNormalStar::Init(){
 
 	
 	// サイズの変更
-	float size = (CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
+	float size = (float)(CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
 	m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
 
 	// 星の色の決定

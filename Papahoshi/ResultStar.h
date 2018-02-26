@@ -1,25 +1,23 @@
 //======================================================================
-//	ResultGirl.h
+//	ResultStar.h
 //	
-//	概要＿：リザルト画面の女の子表示
+//	概要＿：リザルト画面星表示
 //	制作者：安藤 光樹
 //	
 //======================================================================
-#ifndef ___RESULTGIRL_H___
-#define ___RESULTGIRL_H___
+#ifndef ___RESULTSTAR_H___
+#define ___RESULTSTAR_H___
 
 //-----------------------------
 //インクルードファイル
 //-----------------------------
 #include "Common.h"
+#include "BaseStar.h"
+#include "ResultGirl.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define   RESULTGIRL_POS_X (SCREEN_WIDTH - 270.0f)
-#define   RESULTGIRL_POS_Y (SCREEN_HEIGHT - 150.0f)
-#define   RESULTGIRL_SIZE_X (300.0f)
-#define   RESULTGIRL_SIZE_Y (400.0f)
 
 //-----------------------------
 //列挙型定義
@@ -28,15 +26,23 @@
 //-----------------------------
 //クラス定義
 //-----------------------------
+class cResultStarData :public cBaseStarData{
+public:
+	int		m_nEffectFrame = 0;
+	int		m_nStarColorNum = 0;
+	int		m_nLifeTime = 0;
+
+};
+
 // 基底クラス:クラスサンプル
-class cResultgirl
+class cResultStar
 {
 private:	//外部から参照不可能
-	cSpriteParam m_cGirlsprite;
-	int			 m_nAnimPattern;
-	int			 m_nCurrentPattern;
-	int			 m_nAnimFlame;
-	bool		 m_nAnimFlag;	//trueでmaxの、falseでminのテクスチャ表示
+	cResultStarData* m_pStarData;	//星のデータ
+	cResultStarData* m_pRoot;		//星のデータ先頭位置
+
+	cResultgirl*   m_pResultGirl;
+	int			   m_nStarNum;	//星の数
 
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
@@ -44,15 +50,17 @@ protected:	//クラス内でのみ参照可能
 	//-----------------------------
 public:		//外部から参照可能
 
-	cResultgirl();	//コンストラクタ
-	~cResultgirl();	//デストラクタ
+	cResultStar();	//コンストラクタ
+	~cResultStar();	//デストラクタ
 
+	void Init(void);
+	void Uninit(void);
 	void Update(void);
 	void Draw(void);
 
-	bool GetResultGirlAnim(void)
+	void GetResultGirlData(cResultgirl* data)
 	{
-		return m_nAnimFlag;
+		m_pResultGirl = data;
 	}
 };
 

@@ -19,6 +19,8 @@
 #include "Ranking.h"
 #include "BG.h"
 #include "ResultGirl.h"
+#include "ResultFont.h"
+#include "ResultStar.h"
 
 //------------------------------
 // É}ÉNÉçíËã`
@@ -40,6 +42,8 @@ private:
 	cRanking*	 m_pRanking;
 	cBG*		 m_pBG;
 	cResultgirl* m_pResultgirl;
+	cResultFont* m_pResultFont;
+	cResultStar* m_pResultStar;
 
 };
 #endif //!___SCENE_RESULT_H___

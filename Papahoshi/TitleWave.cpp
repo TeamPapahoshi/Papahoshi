@@ -19,7 +19,7 @@
 //É}ÉNÉçíËã`
 //-----------------------------
 #define WAVE_POS_X (-WAVE_SIZE_X / 2 - 10)
-#define WAVE_POS_Y (SCREEN_HEIGHT - WAVE_SIZE_Y / 2)
+#define WAVE_POS_Y ((float)SCREEN_HEIGHT - WAVE_SIZE_Y / 2)
 
 #define WAVE_MOVE_X (1.0f)
 

@@ -20,6 +20,9 @@
 //-------------------------------
 #define DIGIT_SCORE		(6)		//スコア桁数
 #define	DRAW_STAGING_SKIP_NUM	(7)		//スコア加算演出の1フレーム最大加算量
+#define DRAW_STAGING_HISPEED_SKIP_NUM (77) //スコア加算演出の1フレーム加算量(高速)
+
+#define HISPEED_CHANGE_LINE      (800) //スコア加算減算高速化の閾値
 
 //-------------------------------
 // グローバル変数
@@ -114,15 +117,23 @@ void UpdateScore(){
 	//---------- 加算・減算演出 ------------
 	//加算
 	if (g_nScore > g_nPrintScore){
-		g_nPrintScore += DRAW_STAGING_SKIP_NUM;
+		//差が一定値以上なら加算処理を高速化
+		if (g_nScore - g_nPrintScore >= HISPEED_CHANGE_LINE)
+			g_nPrintScore += DRAW_STAGING_HISPEED_SKIP_NUM;
+		else
+			g_nPrintScore += DRAW_STAGING_SKIP_NUM;
 		if (g_nPrintScore > g_nScore)
-			g_nPrintScore = g_nScore;
+			g_nPrintScore = g_nScore;	//値を同じに調整
 	}
 	//減算
 	else if (g_nScore < g_nPrintScore){
-		g_nPrintScore -= DRAW_STAGING_SKIP_NUM;
+		//差が一定値以上なら減算処理を高速化
+		if (g_nPrintScore - g_nScore <= HISPEED_CHANGE_LINE)
+			g_nPrintScore -= DRAW_STAGING_HISPEED_SKIP_NUM;
+		else
+			g_nPrintScore -= DRAW_STAGING_SKIP_NUM;
 		if (g_nPrintScore < g_nScore)
-			g_nPrintScore = g_nScore;
+			g_nPrintScore = g_nScore;	//値を同じに調整
 	}
 
 }
