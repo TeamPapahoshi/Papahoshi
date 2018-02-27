@@ -40,6 +40,15 @@ public:
 	void SetNetData(cNet* data);
 	void OnCollidToNet(int num);
 
+	//---- 生成スタート ----
+	void SetCreateStart(){
+		m_pStarData = m_pRoot;
+		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+			m_pStarData->m_bCreateEvent = true;
+		}
+	}
+
+
 	void Create();		// 生成
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
