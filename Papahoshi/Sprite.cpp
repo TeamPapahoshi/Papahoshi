@@ -79,7 +79,6 @@ cSpriteParam::cSpriteParam(){
 		m_HSVColor[i].h = 360;
 		m_HSVColor[i].s = 255;
 		m_HSVColor[i].v = 255;
-
 	}
 	m_bUseHSVColor = false;
 
