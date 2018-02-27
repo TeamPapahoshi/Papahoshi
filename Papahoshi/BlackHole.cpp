@@ -25,7 +25,7 @@
 // マクロ定義
 //-----------------------------
 #define STAR_SIZE			(200)	// サイズ
-#define RESPAWN_FREAM		(500)	// リスポーンのインターバルフレーム
+#define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
 #define VACUUM_RANGE		(300)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
@@ -55,13 +55,6 @@ cBlackHole::cBlackHole(){
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
-		// 初期生成
-		//m_pStarData->m_bDraw = true;
-		//SetCountAndUse(true);
-
-		// サイズの変更
-		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
@@ -98,7 +91,10 @@ cBlackHole::cBlackHole(){
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 
 		// αの設定
-		m_pStarData->m_sprite.SetVtxColorA(0);
+		//m_pStarData->m_sprite.SetVtxColorA(0);
+
+		// サイズの変更
+		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(0, 0));
 
 	}
 }
@@ -246,12 +242,23 @@ void cBlackHole::Create(){
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
 		m_pStarData->m_bDraw = true;
 
-	
-		if (m_pStarData->m_sprite.GetVtxColorA()+5.0f <= 255){
-			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+		//// αを上げていく
+		//if (m_pStarData->m_sprite.GetVtxColorA()+5.0f <= 255){
+		//	m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+		//}
+		//else{
+		//	m_pStarData->m_sprite.SetVtxColorA(255);
+		//}
+
+
+		// サイズを段々大きく
+		if (m_pStarData->m_sprite.GetSize().x + 3.0f <= STAR_SIZE){
+			m_pStarData->m_sprite.SetSizeX(m_pStarData->m_sprite.GetSize().x + 3.0f);
+			m_pStarData->m_sprite.SetSizeY(m_pStarData->m_sprite.GetSize().y + 3.0f);
 		}
 		else{
-			m_pStarData->m_sprite.SetVtxColorA(255);
+			m_pStarData->m_sprite.SetSizeX(STAR_SIZE);
+			m_pStarData->m_sprite.SetSizeY(STAR_SIZE);
 		}
 
 
@@ -262,7 +269,11 @@ void cBlackHole::Create(){
 
 		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 
-		if (m_pStarData->m_sprite.GetVtxColorA() >= 255)
+		//if (m_pStarData->m_sprite.GetVtxColorA() >= 255)
+		//	m_pStarData->m_bCreateEnd = true;
+
+
+		if (m_pStarData->m_sprite.GetSize().x >= STAR_SIZE)
 			m_pStarData->m_bCreateEnd = true;
 	
 
@@ -336,10 +347,15 @@ void cBlackHole::Respawn(){
 		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
 
 			// αの設定
-			m_pStarData->m_sprite.SetVtxColorA(0);
+			//m_pStarData->m_sprite.SetVtxColorA(0);
+
+
+			// サイズの変更
+			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(0, 0));
 			
 			// 乱数の初期化
 			CRandam::InitRand();
+
 			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
 			int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);

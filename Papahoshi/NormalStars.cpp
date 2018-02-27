@@ -193,8 +193,8 @@ void cNormalStar::Update(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
-		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y )
+		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
 		{
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;
@@ -265,12 +265,12 @@ void cNormalStar::Update(){
 
 	// イベントの起動
 	// デバッグキー
-	if (GetKeyboardTrigger(DIK_R)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-			m_pStarData->m_bDestroyEvent = true;
-		}
-	}
+	//if (GetKeyboardTrigger(DIK_R)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		m_pStarData->m_bDestroyEvent = true;
+	//	}
+	//}
 	//if (GetKeyboardTrigger(DIK_K)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -584,7 +584,6 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
 	m_pStarData += Normal;
 
 	m_pStarData->m_bHitBlackHoleDelete = true;
-
 	m_pStarData->m_bDestroyEvent = true;
 	m_pStarData->m_bAddScore = false;
 	

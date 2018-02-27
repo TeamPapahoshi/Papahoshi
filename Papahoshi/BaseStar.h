@@ -14,6 +14,23 @@
 #include "Sprite.h"
 #include "Collision.h"
 #include "Common.h"
+
+
+//-----------------------------
+// 列挙体定義
+//-----------------------------
+// 削除原因
+enum eDESTOROY_TYPE{
+
+	NONE,				// 破壊されていない
+	SCREEN_OUT,			// 画面外に出た時
+	VACUMED_BLACKHOLE,	// ブラックホールに吸い込まれた
+	HIT_SPCEROCK,		// 隕石にぶつかった
+	CAPTURED_NET,		// 網に捕まった
+
+};
+
+
 //-----------------------------
 //クラス定義
 //-----------------------------
@@ -66,6 +83,8 @@ public:
 
 	// 生成中フラグ
 	bool			m_bCreateOK;
+
+	eDESTOROY_TYPE	m_eDestroyType;		// 破壊の種類
 
 
 

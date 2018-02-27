@@ -21,6 +21,7 @@
 #include <cmath>
 #include "GameUI.h"
 #include "sound.h"
+#include "Score.h"
 
 //-----------------------------
 //マクロ定義
@@ -29,9 +30,10 @@
 #define RESPAWN_FREAM			(200)
 #define MAX_NORMAL_RYUSEI_NUM	(50)
 #define MOVE_SPEED				(4.5f)
+#define SCORE_RYUSEI			(200)
 
 
-#define LIMIT_METEOR_NOT_FEVER	(2)
+#define LIMIT_METEOR_NOT_FEVER	(1)
 
 
 //=======================================================================================
@@ -147,7 +149,16 @@ void cRyusei::Update(){
 
 		// 画面外に出たらフラグオフ
 		if (m_pStarData->m_sprite.GetPosY() >= GAME_SCREEN_UNDER-80 || m_pStarData->m_sprite.GetPosX() <= GAME_SCREEN_LEFT){
+
 			m_pStarData->m_bDestroyEvent = true;
+			m_pStarData->m_eDestroyType = SCREEN_OUT;
+			
+
+			// 画面外にでてなおかつ網に獲得されてたら
+			if (m_pStarData->m_bCaptured){
+				m_pStarData->m_eDestroyType = CAPTURED_NET;
+			}
+
 		}
 	}
 
@@ -333,9 +344,21 @@ void cRyusei::Destroy(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
 
+		// 削除の種類によって処理を変更
+		switch (m_pStarData->m_eDestroyType)
+		{
+		case SCREEN_OUT:
+			break;
+		case CAPTURED_NET:
+			AddScore(SCORE_RYUSEI);
+			break;
+		default:
+			break;
+		}
 
+
+		m_pStarData->m_eDestroyType = NONE;
 		m_pStarData->m_bRespawnEvent = true;
-
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;
 		m_pStarData->m_bDraw = false;
@@ -383,7 +406,6 @@ void cRyusei::Respawn(){
 			// 移動方向の単位ベクトルを求める
 			m_pStarData->m_MoveSpped = MOVE_SPEED * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0f, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
 
-			
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
@@ -426,6 +448,8 @@ void cRyusei::OnCollidToNet(int num){
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
 
 	m_pStarData->m_bStream = false;
+	m_pStarData->m_bCaptured = true;
+
 
 }
 

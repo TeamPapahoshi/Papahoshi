@@ -21,6 +21,10 @@
 
 #define MAX_LINE_EFFECT	(1)
 
+
+
+
+
 //-----------------------------
 // クラス定義
 //-----------------------------
@@ -28,13 +32,17 @@ class cRyuseiData :public cBaseStarData{
 public:
 
 	// 流れる処理用
-	bool			m_bStream=true;			// 流れるどうか
+	bool			m_bStream=true;		// 流れるどうか
 	D3DXVECTOR2		m_StreamStartPos;	// 流れるスタート位置
 	D3DXVECTOR2		m_StreamGoalPos;	// 流れるゴール位置
 	D3DXVECTOR2		m_VecStreamMove;	// 流れる方向のベクトル
-	float			m_StremCos;
-	float			m_StreamRad;
+	float			m_StremCos;			// 計算用
+	float			m_StreamRad;		// 計算用
 	D3DXVECTOR2		m_MoveSpped;		// 流れるスピードベクトル
+
+
+
+	//
 
 
 };
