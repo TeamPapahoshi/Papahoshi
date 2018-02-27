@@ -17,6 +17,7 @@
 #include "Sprite.h"
 #include "Collision.h"
 #include "NetRipple.h"
+#include "NetPirticle.h"
 
 //----------------------------------------
 // 列挙型宣言
@@ -119,6 +120,10 @@ private:
 	cRipple* m_aRipple[MAX_RIPPLE];
 	void SetRipple(D3DXVECTOR2 pos);
 	bool	m_bRipple[3];
+
+	//--- パーティクル ---
+	cNetPirticleManage*	m_aPirticle[MAX_PIRTICLE_NUM];
+	void SetPirticle(D3DXVECTOR2 pos);
 
 	//----- 変数宣言 -----
 	GAME_PHASE gamePhase;	//ゲームフェイズ

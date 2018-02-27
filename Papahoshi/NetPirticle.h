@@ -29,7 +29,7 @@
 class cNetPirticle{		//パーティクルの粒子
 
 public:
-	cNetPirticle();
+	cNetPirticle(D3DXVECTOR2 pos, D3DXVECTOR2 move, D3DXCOLOR color, D3DXVECTOR2 size);
 	~cNetPirticle();
 	void Update();
 	void Draw();
