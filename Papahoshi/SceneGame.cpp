@@ -238,30 +238,23 @@ void cSceneGame::SetUpdate(){
 //============================================
 void cSceneGame::MainUpdate(){
 
-
-
-	// フィーバタイムの時
-	if (m_bFever){
-		//このフラグOnにしたらアナウンスを呼ぶ
-		m_pRyusei->SetCreateEvent();
-		m_pRyusei->SetRespawnFlag(true);
-
-	}
-
-
-	m_pNet->Update();			//あみ
+	m_pNet->Update();			// あみ
 	m_pBG->Update();			// 背景
 	m_pGage->Update();			// ゲージ
+	m_pGameUI->Update();		// UI
+	m_pTimer->Update();			// タイマー
+
+	//--- 星 -----後でまとめる
 	m_pNomalStar->Update();
 	m_pBlackHole->Update();
 	m_pSpaceRock->Update();
 	m_pSampleStar->Update();
-	m_pGameUI->Update();
-	m_pTimer->Update();
-	m_pConsellation->Update();
-	CheckCollision();			//当たり判定
 	m_pRyusei->Update();
-	m_pRyusei->SetRespawnFlag(false);
+	m_pConsellation->Update();
+
+
+	CheckCollision();			//当たり判定
+	
 
 #ifndef _DEBUG_DKIP_
 	//アナウンスの更新
@@ -272,7 +265,6 @@ void cSceneGame::MainUpdate(){
 			m_pAnnounce = NULL;
 		}
 	}
-
 	//ゲーム終了でアナウンスを呼ぶ
 	if(!(m_pTimer->GetTime())){
 		m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Finish);
@@ -286,7 +278,8 @@ void cSceneGame::MainUpdate(){
 
 		m_bFever = true;
 		m_pGage->SetFeverStart(false);
-
+		m_pRyusei->SetFeverStar();
+		
 		//--- アナウンス呼び出し -----
 		if (m_bFever)
 			m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Fever);
@@ -294,9 +287,6 @@ void cSceneGame::MainUpdate(){
 		//--- BGM変更 ---
 		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
-
-		// 
-		PlaySound(SOUND_LABEL_SE_STREAM_METEOR);
 
 		//---- UI変更 ----
 		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::FEVER);
@@ -308,6 +298,7 @@ void cSceneGame::MainUpdate(){
 
 		m_bFever = false;
 		m_pGage->SetFeverFin(false);
+		m_pRyusei->SetFeverEnd();
 
 		//--- BGM変更 ---
 		StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
@@ -418,7 +409,7 @@ void cSceneGame::CheckCollision(){
 					  m_pRyusei->OnCollidToNetArea(nCountStar);
 				  }
 			  }
-			  else{
+			  if (!cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, *m_pNet->GetCollider())){
 				  m_pRyusei->SetStream(true);
 			  }
 

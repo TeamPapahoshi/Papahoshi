@@ -17,6 +17,7 @@
 #include "Sprite.h"
 #include "RyuseiLine.h"
 #include "Net_Type2.h"
+#include "sound.h"
 
 #define MAX_LINE_EFFECT	(1)
 
@@ -59,8 +60,15 @@ public:
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
 
-	void SetCreateEvent(){
+	void SetFeverStar(){
+
+		// 流星音
+		PlaySound(SOUND_LABEL_SE_STREAM_METEOR);
+
+		m_bFever = true;
+
 		m_pStarData = m_pRoot;
+
 		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 			if (m_pStarData->m_bUse)
@@ -71,8 +79,8 @@ public:
 		
 	}
 
-	void SetRespawnFlag(bool flag){
-		m_bFever = flag;
+	void SetFeverEnd(){
+		m_bFever = false;
 	}
 
 
@@ -83,7 +91,7 @@ private:
 	cNet*			m_pNetData;			// 網のデータ格納
 
 	bool			m_bFever;
-	bool			m_bAllNoUse;
+
 
 
 	//Set&Get
