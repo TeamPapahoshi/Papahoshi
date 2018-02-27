@@ -35,8 +35,8 @@ cTimer::cTimer(){
 
 	//---- テクスチャ初期化 ----
 	D3DXVECTOR2 pos, size;
-	pos = D3DXVECTOR2(150.0f, 230.0f);
-	size = D3DXVECTOR2(55.0f, 55.0f);
+	pos = D3DXVECTOR2(245.0f, 250.0f);
+	size = D3DXVECTOR2(60.0f, 60.0f);
 	for (int i = TIME_SEC_PLACE - 1; i >= 0; i--){
 		m_aSecSprite[i].SetPos(D3DXVECTOR2(pos.x + (size.x * 0.8f) * i, pos.y));
 		m_aSecSprite[i].SetSize(size);
