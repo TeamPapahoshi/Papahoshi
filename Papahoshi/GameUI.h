@@ -13,6 +13,7 @@
 // インクルード部
 //-----------------------
 #include "Sprite.h"
+#include "PlaySupport.h"
 
 //-----------------------
 // 定数定義
@@ -173,6 +174,9 @@ private:
 
 	//------ チアガール -----
 	cTheerGirl*	m_pTheerGirl;
+
+	//---- サポート ---
+	cPlaySupport	m_playSupport;
 
 	//---- UI情報 ----
 	eUItype		m_type;

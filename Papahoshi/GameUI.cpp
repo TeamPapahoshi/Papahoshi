@@ -132,6 +132,9 @@ void cGameUI::Update(){
 	//----- チアガールの更新 -----
 	m_pTheerGirl->Update();
 
+	//---- プレイサポートの更新 ----
+	m_playSupport.Update();
+
 }
 
 //====================================
@@ -161,6 +164,9 @@ void cGameUI::Draw(){
 
 	//----- チアガール ------
 	m_pTheerGirl->Draw();
+
+	//----- プレサポートの描画 -----
+	m_playSupport.Draw();
 
 }
 
@@ -442,7 +448,7 @@ m_nMotionFrame(999)
 {
 	//----- スプライト情報の初期化 -----
 	m_sprite.SetSize(D3DXVECTOR2(280.0f, 420.0f));
-	m_sprite.SetPos(D3DXVECTOR2(125.0f, 500.0f));
+	m_sprite.SetPos(D3DXVECTOR2(110.0f, 520.0f));
 	m_sprite.SetScale(D3DXVECTOR2(0.75f, 0.75f));
 	
 }

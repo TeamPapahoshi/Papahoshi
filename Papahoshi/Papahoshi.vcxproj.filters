@@ -158,6 +158,12 @@
     <Filter Include="ソース ファイル\共通処理\Direct3Dデバイス">
       <UniqueIdentifier>{0429e864-723e-4c35-a1c3-e363e46ac046}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\アナウンス">
+      <UniqueIdentifier>{0591b9fc-eca5-4145-9bff-370ee63f2728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\操作サポート">
+      <UniqueIdentifier>{aea7813e-0721-45af-9fe9-3713da6bf69b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -313,9 +319,6 @@
     <ClCompile Include="Ranking.cpp">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\ランキング</Filter>
     </ClCompile>
-    <ClCompile Include="Announce.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EffectSparkle.cpp">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClCompile>
@@ -339,6 +342,12 @@
     </ClCompile>
     <ClCompile Include="NetPirticle.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClCompile>
+    <ClCompile Include="Announce.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\アナウンス</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySupport.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\操作サポート</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,7 +502,6 @@
     <ClInclude Include="Ranking.h">
       <Filter>ソース ファイル\シーン\各シーン\04リザルト\ランキング</Filter>
     </ClInclude>
-    <ClInclude Include="Announce.h" />
     <ClInclude Include="EffectSparkle.h">
       <Filter>ソース ファイル\共通処理\エフェクト\エフェクトの種類</Filter>
     </ClInclude>
@@ -517,6 +525,12 @@
     </ClInclude>
     <ClInclude Include="NetPirticle.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
+    </ClInclude>
+    <ClInclude Include="Announce.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\アナウンス</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySupport.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\操作サポート</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

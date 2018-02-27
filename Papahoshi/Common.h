@@ -11,7 +11,7 @@
 #define ___COMMON_H___
 
 // デバッグ用　イベントスキップ・タイムストップ
-//#define _DEBUG_DKIP_
+#define _DEBUG_DKIP_
 
 
 //------------------------------

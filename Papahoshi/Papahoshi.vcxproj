@@ -40,6 +40,7 @@
     <ClCompile Include="Net_Type2.cpp" />
     <ClCompile Include="NormalStars.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlaySupport.cpp" />
     <ClCompile Include="rand.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="ResultFont.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="Net_Type2.h" />
     <ClInclude Include="NormalStars.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlaySupport.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="ResultFont.h" />
