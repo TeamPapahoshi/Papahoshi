@@ -88,6 +88,7 @@ void DrawScore(D3DXVECTOR2 pos, D3DXVECTOR2 size){
 		switch (cSceneManeger::GetSceneNum())
 		{
 		case cSceneManeger::GAME:
+		case cSceneManeger::TRANING:
 			g_aScoreSprite[i].SetTexture(cTextureManeger::GetTextureGame((TEX_GAME)(TEX_GAME_0 + work1)));
 			break;
 		case cSceneManeger::RESULT:

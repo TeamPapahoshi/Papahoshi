@@ -60,6 +60,11 @@ private:
 	bool m_bFever;				// フィーバタイムかどうか
 
 	void CheckCollision();	//当たり判定を取る
+
+	bool CheckCommand();
+	int m_nLeverDirection[180];
+
+	bool m_bSceneChange;
 };
 
 #endif

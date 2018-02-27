@@ -10,7 +10,8 @@
 // インクルード部
 //-----------------------------
 #include "SceneTraning.h"
-
+#include "Input.h"
+#include "Transition.h"
 
 //=======================================================================================
 //
@@ -69,10 +70,11 @@ cSceneTraning::cSceneTraning(){
 	SetVolume(GAME_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 	SetVolume(FEVER_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);
 
-#ifndef _DEBUG_DKIP_
-	//アナウンスのセット
-	m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Start);
-#endif
+	for (int i = 0; i < 180; i++){
+		m_nLeverDirection[i] = 5;
+	}
+	m_bSceneChange = false;
+
 }
 
 //=======================================================================================
@@ -178,6 +180,12 @@ void cSceneTraning::Update(){
 		//---- UI変更 ----
 		m_pGameUI->SetTheerMotion(cTheerGirl::eGirlMotion::NOMAL);
 		m_pGameUI->SetUiType(cGameUI::eUItype::NOMAL);
+	}
+
+	//---- トレも終了 ----
+	if (CheckCommand() && !m_bSceneChange){
+		m_bSceneChange = true;
+		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::TITLE, cTransition::TRANSITION_TYPE::TRANSITION_DICE_SCALE_CHANGE);
 	}
 
 }
@@ -358,4 +366,77 @@ void cSceneTraning::CheckCollision(){
 
 		}
 	}
+}
+
+//================================================
+// 
+// チェックコマンド
+//
+//================================================
+bool cSceneTraning::CheckCommand(){
+
+	//---- 過去情報の退避 ----
+	for (int i = 178; i >= 0; i--){
+		m_nLeverDirection[i + 1] = m_nLeverDirection[i];
+	}
+
+	//---------------------------
+	// レバー入力
+	//---------------------------
+	if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP) && GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection[0] = 7;
+	else if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP) && GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection[0] = 9;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN) && GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection[0] = 3;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN) && GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection[0] = 1;
+	else if (GetInputArrowPress(DIK_W, 0, PAD_ARROW_UP))
+		m_nLeverDirection[0] = 8;
+	else if (GetInputArrowPress(DIK_A, 0, PAD_ARROW_LEFT))
+		m_nLeverDirection[0] = 4;
+	else if (GetInputArrowPress(DIK_D, 0, PAD_ARROW_RIGHT))
+		m_nLeverDirection[0] = 6;
+	else if (GetInputArrowPress(DIK_S, 0, PAD_ARROW_DOWN))
+		m_nLeverDirection[0] = 2;
+	else
+		m_nLeverDirection[0] = 5;
+
+	// 24862486でクリア。
+	int work = 0;
+	for (int i = 0; i < 180; i++){
+		switch (work)
+		{
+		case 0:
+		case 4:
+		case 8:
+			if (m_nLeverDirection[i] == 6)
+				work++;
+			break;
+		case 1:
+		case 5:
+		case 9:
+			if (m_nLeverDirection[i] == 8)
+				work++;
+			break;
+		case 2:
+		case 6:
+		case 10:
+			if (m_nLeverDirection[i] == 4)
+				work++;
+			break;
+		case 3:
+		case 7:
+		case 11:
+			if (m_nLeverDirection[i] == 2)
+				work++;
+			break;
+		}
+
+		if (work >= 12)
+			return true;
+	}
+
+	return false;
+
 }

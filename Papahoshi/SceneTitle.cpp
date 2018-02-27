@@ -202,27 +202,31 @@ bool cSceneTitle::CheckCommand(){
 		{
 		case 0:
 		case 4:
+		case 8:
 			if (m_nLeverDirection[i] == 6)
 				work++;
 			break;
 		case 1:
 		case 5:
+		case 9:
 			if (m_nLeverDirection[i] == 8)
 				work++;
 			break;
 		case 2:
 		case 6:
+		case 10:
 			if (m_nLeverDirection[i] == 4)
 				work++;
 			break;
 		case 3:
 		case 7:
+		case 11:
 			if (m_nLeverDirection[i] == 2)
 				work++;
 			break;
 		}
 
-		if (work >= 8)
+		if (work >= 12)
 			return true;
 	}
 
