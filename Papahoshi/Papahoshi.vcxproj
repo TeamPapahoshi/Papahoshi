@@ -56,6 +56,7 @@
     <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="SceneTraning.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="SpaceRock.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="SceneResult.h" />
     <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="SceneTraning.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="SpaceRock.h" />
