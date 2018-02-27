@@ -28,7 +28,7 @@ cRipple::cRipple(D3DXVECTOR2 pos){
 	m_sprite.SetAddBlend(true);
 
 	m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_KIRA_CIRCLE2));
-	m_sprite.SetSize(D3DXVECTOR2(100.0f, 100.0f));
+	m_sprite.SetSize(D3DXVECTOR2(150.0f, 150.0f));
 }
 
 cRipple::~cRipple(){
