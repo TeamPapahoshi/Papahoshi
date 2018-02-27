@@ -81,6 +81,9 @@ public:
 	int				m_nEffectSetTime;	// エフェクト設定間隔
 	bool			m_bEffectSetFlag;	//暫定:エフェクト使用フラグ
 
+
+	cSpriteParam	m_Light;			// 光の表現用
+
 	// 生成中フラグ
 	bool			m_bCreateOK;
 
