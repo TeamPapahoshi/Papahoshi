@@ -38,6 +38,7 @@ public:
 private:
 	cSpriteParam	m_stringSprite;
 	bool			m_finFlug;
+	bool			m_bVoice;
 
 	eAnnounceType	m_anuType;
 	int				m_faseNum;

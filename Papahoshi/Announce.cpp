@@ -12,7 +12,7 @@
 #include "Announce.h"
 #include "Texture.h"
 #include "GameUI.h"
-
+#include "sound.h"
 
 //-------------------------
 // íËêîíËã`
@@ -60,7 +60,7 @@ cAnnounce::cAnnounce(eAnnounceType type){
 	m_faseNum = 1;
 	m_stringSprite.SetPos(D3DXVECTOR2(GAME_SCREEN_LEFT + (GAME_SCREEN_RIGHT - GAME_SCREEN_LEFT) / 2.0f, SCREEN_HEIGHT / 2.0f));
 	m_stringSprite.SetScale(D3DXVECTOR2(1.5f, 1.5f));
-
+	m_bVoice = false;
 }
 
 
@@ -84,6 +84,11 @@ void cAnnounce::Update(){
 
 	m_flameCnt--;
 
+	if (m_anuType == eAnnounceType::Start && !m_bVoice){
+		m_bVoice = true;
+		PlaySound(SOUND_LABEL::SOUND_LABEL_VOICE_3);
+	}
+
 	if (m_flameCnt)
 		return;
 
@@ -100,15 +105,18 @@ void cAnnounce::Update(){
 		case 2:
 			m_stringSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_GAME_2));
 			m_flameCnt = NUMBER_FRAME_CNT;
+			PlaySound(SOUND_LABEL::SOUND_LABEL_VOICE_2);
 			break;
 		case 3:
 			m_stringSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_GAME_1));
 			m_flameCnt = NUMBER_FRAME_CNT;
+			PlaySound(SOUND_LABEL::SOUND_LABEL_VOICE_1);
 			break;
 		case 4:
 			m_stringSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_ANU_START));
 			m_stringSprite.SetSize(D3DXVECTOR2(361.0f, 94.0f));
 			m_flameCnt = START_FRAME_CNT;
+			PlaySound(SOUND_LABEL::SOUND_LABEL_VOICE_START);
 			break;
 		}
 	}
