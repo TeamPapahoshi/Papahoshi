@@ -37,7 +37,9 @@
 #define LIFE_TIME			(2000)
 #define LIFE_TIME_MARGIN	(500)
 
-#define NORMAL_STAR_SCORE	(100)		
+#define NORMAL_STAR_SCORE	(100)	
+
+#define VACUMED_SPEED		(0.2f)
 
 //光沢のエフェクト用
 #define EFFECT_FRAME   (90)
@@ -75,8 +77,7 @@ cNormalStar::cNormalStar(){
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetAnimationFlag(true);
-		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
-		m_pStarData->m_sprite.SetIntervalChangePattern(7);
+	
 
 		Init();
 
@@ -90,17 +91,28 @@ void cNormalStar::Init(){
 	m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
 
 	// 星の色の決定
-	m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+	m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 4);
 	switch (m_pStarData->m_nStarColorNum)
 	{
 	case 0:
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+		m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
+		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 		break;
 	case 1:
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 		break;
 	case 2:
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+		m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+		m_pStarData->m_sprite.SetIntervalChangePattern(7);
+		break;
+	case 3:
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
+		m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
+		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 		break;
 	case 3:
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
@@ -184,8 +196,13 @@ void cNormalStar::Update(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
+<<<<<<< HEAD
 		// 目的位置についたら消去イベント開始Ｙ軸で決める
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+=======
+		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
+>>>>>>> 7a9ea22c4f90d34146a4c10304b79b62350a4bd3
 		{
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;
@@ -279,12 +296,12 @@ void cNormalStar::Update(){
 
 	// イベントの起動
 	// デバッグキー
-	if (GetKeyboardTrigger(DIK_R)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-			m_pStarData->m_bDestroyEvent = true;
-		}
-	}
+	//if (GetKeyboardTrigger(DIK_R)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		m_pStarData->m_bDestroyEvent = true;
+	//	}
+	//}
 	//if (GetKeyboardTrigger(DIK_K)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -583,7 +600,7 @@ void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 
 	// 星からブラックホール方向への単位ベクトルを求める
 	D3DXVECTOR2 VecStarToBlack;
-	VecStarToBlack = UnitVector(Center - m_pStarData->m_sprite.GetPos())*0.1f;
+	VecStarToBlack = UnitVector(Center - m_pStarData->m_sprite.GetPos())*VACUMED_SPEED;
 
 	// 移動反映
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + VecStarToBlack);
@@ -598,7 +615,6 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
 	m_pStarData += Normal;
 
 	m_pStarData->m_bHitBlackHoleDelete = true;
-
 	m_pStarData->m_bDestroyEvent = true;
 	m_pStarData->m_bAddScore = false;
 	

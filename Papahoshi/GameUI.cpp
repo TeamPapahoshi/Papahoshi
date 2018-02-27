@@ -27,8 +27,8 @@
 #define SPEED_MAX_ITME		(20)
 
 //スコア表示位置
-#define SCORE_POS		(D3DXVECTOR2(40.0f, 100.0f))
-#define SCORE_SIZE		(D3DXVECTOR2(43.0f, 43.0f))
+#define SCORE_POS		(D3DXVECTOR2(80.0f, 110.0f))
+#define SCORE_SIZE		(D3DXVECTOR2(55.0f, 55.0f))
 
 //チアガール
 #define THEER_ANIM_NOMAL_SPEED	(40)
@@ -71,14 +71,14 @@ cGameUI::cGameUI(){
 	//----- 文字・スコア -------
 	m_scoreString.LoadTexture("Image/GameUI/scorepng.png");
 	m_scoreString.SetSize(D3DXVECTOR2(326.0f, 93.0f));
-	m_scoreString.SetScale(D3DXVECTOR2(0.6f, 0.6f));
-	m_scoreString.SetPos(D3DXVECTOR2(100.0f, 50.0f));
+	m_scoreString.SetScale(D3DXVECTOR2(0.8f, 0.8f));
+	m_scoreString.SetPos(D3DXVECTOR2(140.0f, 45.0f));
 
 	//------ 文字・タイム --------
 	m_timeString.LoadTexture("Image/GameUI/time.png");
 	m_timeString.SetSize(D3DXVECTOR2(248.0f, 91.0f));
-	m_timeString.SetScale(D3DXVECTOR2(0.6f, 0.6f));
-	m_timeString.SetPos(D3DXVECTOR2(80.0f, 170.0f));
+	m_timeString.SetScale(D3DXVECTOR2(0.8f, 0.8f));
+	m_timeString.SetPos(D3DXVECTOR2(110.0f, 190.0f));
 
 	//---- チアガール ----
 	m_pTheerGirl = new cTheerGirl();
@@ -442,7 +442,7 @@ m_nMotionFrame(999)
 {
 	//----- スプライト情報の初期化 -----
 	m_sprite.SetSize(D3DXVECTOR2(280.0f, 420.0f));
-	m_sprite.SetPos(D3DXVECTOR2(120.0f, 400.0f));
+	m_sprite.SetPos(D3DXVECTOR2(125.0f, 500.0f));
 	m_sprite.SetScale(D3DXVECTOR2(0.75f, 0.75f));
 	
 }

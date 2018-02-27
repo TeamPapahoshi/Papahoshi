@@ -14,6 +14,23 @@
 #include "Sprite.h"
 #include "Collision.h"
 #include "Common.h"
+
+
+//-----------------------------
+// 列挙体定義
+//-----------------------------
+// 削除原因
+enum eDESTOROY_TYPE{
+
+	NONE,				// 破壊されていない
+	SCREEN_OUT,			// 画面外に出た時
+	VACUMED_BLACKHOLE,	// ブラックホールに吸い込まれた
+	HIT_SPCEROCK,		// 隕石にぶつかった
+	CAPTURED_NET,		// 網に捕まった
+
+};
+
+
 //-----------------------------
 //クラス定義
 //-----------------------------
@@ -64,10 +81,16 @@ public:
 	int				m_nEffectSetTime;	// エフェクト設定間隔
 	bool			m_bEffectSetFlag;	//暫定:エフェクト使用フラグ
 
+	// 生成中フラグ
+	bool			m_bCreateOK;
+
+	eDESTOROY_TYPE	m_eDestroyType;		// 破壊の種類
+
+
+
+
 	// --- 網との判定用 ---
 	bool			m_bCaptured;		// 網に獲得されたか
-
-
 	D3DXVECTOR2		m_Move;				// 移動量
 	D3DXVECTOR2		m_Destination;		// 目的位置記憶
 	D3DXVECTOR2		m_VecStarToDest;	// 星から目的地方向のベクトル

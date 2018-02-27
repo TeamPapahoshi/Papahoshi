@@ -20,19 +20,23 @@
 #include "GameUI.h"
 #include "MathEX.h"
 
+
 //-----------------------------
 // マクロ定義
 //-----------------------------
 #define STAR_SIZE			(200)	// サイズ
 #define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
-#define VACUUM_RANGE		(200)	// 吸い込み範囲
+#define VACUUM_RANGE		(300)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
 
 //	生成位置
-#define CREATE_PATTERN		(2)
+#define CREATE_PATTERN		(4)
 #define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,100))
 #define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,100))
+#define CREATE_POS_03		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+#define CREATE_POS_04		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+
 
 
 //===================================================================================
@@ -55,13 +59,6 @@ cBlackHole::cBlackHole(){
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		// 初期生成
-		m_pStarData->m_bDraw = true;
-		SetCountAndUse(true);
-
-		// サイズの変更
-		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
-
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
 		m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
@@ -76,8 +73,14 @@ cBlackHole::cBlackHole(){
 		case 1:
 			CreateRamdomPos = CREATE_POS_01;
 			break;
-		case CREATE_PATTERN:
+		case 2:
 			CreateRamdomPos = CREATE_POS_02;
+			break;
+		case 3:
+			CreateRamdomPos = CREATE_POS_03;
+			break;
+		case 4:
+			CreateRamdomPos = CREATE_POS_04;
 			break;
 		default:
 			break;
@@ -95,6 +98,12 @@ cBlackHole::cBlackHole(){
 		// 削除範囲
 		m_pStarData->m_DeleteRange.SetType(cCollider::CIRCLE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
+
+		// αの設定
+		//m_pStarData->m_sprite.SetVtxColorA(0);
+
+		// サイズの変更
+		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(0, 0));
 
 	}
 }
@@ -163,30 +172,27 @@ void cBlackHole::Update(){
 
 	// イベントの起動
 	// デバッグキー
-	if (GetKeyboardTrigger(DIK_B)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
-			if (m_pStarData->m_bDraw)	// ここ注意
-				continue;
-
-			m_pStarData->m_bCreateEvent = true;
-			m_pStarData = m_pRoot;	// 先頭に戻す
-			break;
-		}
-	}
-	// デバッグキー
-	if (GetKeyboardTrigger(DIK_M)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
-			if (!m_pStarData->m_bUse)	// ここ注意
-				continue;
-			m_pStarData->m_bDestroyEvent = true;
-			m_pStarData = m_pRoot;	// 先頭に戻す
-			break;
-		}
-	}
+	//if (GetKeyboardTrigger(DIK_B)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		if (m_pStarData->m_bDraw)	// ここ注意
+	//			continue;
+	//		m_pStarData->m_bCreateEvent = true;
+	//		m_pStarData = m_pRoot;	// 先頭に戻す
+	//		break;
+	//	}
+	//}
+	//// デバッグキー
+	//if (GetKeyboardTrigger(DIK_M)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		if (!m_pStarData->m_bUse)	// ここ注意
+	//			continue;
+	//		m_pStarData->m_bDestroyEvent = true;
+	//		m_pStarData = m_pRoot;	// 先頭に戻す
+	//		break;
+	//	}
+	//}
 	//if (GetKeyboardTrigger(DIK_R)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -215,12 +221,6 @@ void cBlackHole::Draw(){
 		// 星
 		m_pStarData->m_sprite.Draw();
 
-		// ゲーム内で有効ならあたり判定を描画
-		if (m_pStarData->m_bUse){
-		//	m_pStarData->m_Collision.Draw();
-			//m_pStarData->m_VacumeRange.Draw();
-			//m_pStarData->m_DeleteRange.Draw();
-		}
 	}
 
 	// 先頭に戻す
@@ -229,9 +229,8 @@ void cBlackHole::Draw(){
 	// デバッグプリント
 	PrintDebugProc("━━━━ブラックホール━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
-	PrintDebugProc("Bキーで生成\n");
-	PrintDebugProc("Mキーで削除\n");
-	PrintDebugProc("削除後自動リスポーン\n");
+	//PrintDebugProc("Bキーで生成\n");
+	//PrintDebugProc("Mキーで削除\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("%d\n", m_pStarData->m_sprite.GetCurrentAnimPattern());
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
@@ -252,9 +251,23 @@ void cBlackHole::Create(){
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
 		m_pStarData->m_bDraw = true;
 
-	
-		if (m_pStarData->m_sprite.GetVtxColorA() <= 255){
-			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+		//// αを上げていく
+		//if (m_pStarData->m_sprite.GetVtxColorA()+5.0f <= 255){
+		//	m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+		//}
+		//else{
+		//	m_pStarData->m_sprite.SetVtxColorA(255);
+		//}
+
+
+		// サイズを段々大きく
+		if (m_pStarData->m_sprite.GetSize().x + 3.0f <= STAR_SIZE){
+			m_pStarData->m_sprite.SetSizeX(m_pStarData->m_sprite.GetSize().x + 3.0f);
+			m_pStarData->m_sprite.SetSizeY(m_pStarData->m_sprite.GetSize().y + 3.0f);
+		}
+		else{
+			m_pStarData->m_sprite.SetSizeX(STAR_SIZE);
+			m_pStarData->m_sprite.SetSizeY(STAR_SIZE);
 		}
 
 
@@ -265,7 +278,11 @@ void cBlackHole::Create(){
 
 		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 
-		if (m_pStarData->m_sprite.GetVtxColorA() >= 255)
+		//if (m_pStarData->m_sprite.GetVtxColorA() >= 255)
+		//	m_pStarData->m_bCreateEnd = true;
+
+
+		if (m_pStarData->m_sprite.GetSize().x >= STAR_SIZE)
 			m_pStarData->m_bCreateEnd = true;
 	
 
@@ -339,10 +356,14 @@ void cBlackHole::Respawn(){
 		if (m_pStarData->m_nRespawnFrame > RESPAWN_FREAM){
 
 			// αの設定
-			m_pStarData->m_sprite.SetVtxColorA(0);
+			//m_pStarData->m_sprite.SetVtxColorA(0);
+
+			// サイズの変更
+			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(0, 0));
 			
 			// 乱数の初期化
 			CRandam::InitRand();
+
 			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
 			int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
@@ -351,12 +372,19 @@ void cBlackHole::Respawn(){
 			case 1:
 				CreateRamdomPos = CREATE_POS_01;
 				break;
-			case CREATE_PATTERN:
+			case 2:
 				CreateRamdomPos = CREATE_POS_02;
+				break;
+			case 3:
+				CreateRamdomPos = CREATE_POS_03;
+				break;
+			case 4:
+				CreateRamdomPos = CREATE_POS_04;
 				break;
 			default:
 				break;
 			}
+			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			m_pStarData->m_bRespawnEnd = true;

@@ -134,6 +134,8 @@
 #define TEXTURE_FILENAME_FONT_RANK      ("Image/GameUI/rank.png")
 #define TEXTURE_FILENAME_FONT_NEWRECORD ("Image/GameUI/newrecode.png")
 
+#define TEXTURE_FILENAME_NET_PIRTICLE	 ("Image/Pirticle/Star.png")
+
 //-----------------------------
 // ÉOÉçÅ[ÉoÉã
 //-----------------------------
@@ -216,6 +218,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_CYAN_METEOR_ANIM,
 	TEXTURE_FILENAME_PINK_METEOR_ANIM,
 	TEXTURE_FILENAME_PLANET03_ANIM,
+	TEXTURE_FILENAME_NET_PIRTICLE,
 };
 
 vector<char*> texResult = {

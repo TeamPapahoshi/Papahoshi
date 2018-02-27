@@ -17,8 +17,13 @@
 #include "Sprite.h"
 #include "RyuseiLine.h"
 #include "Net_Type2.h"
+#include "sound.h"
 
 #define MAX_LINE_EFFECT	(1)
+
+
+
+
 
 //-----------------------------
 // クラス定義
@@ -27,12 +32,20 @@ class cRyuseiData :public cBaseStarData{
 public:
 
 	// 流れる処理用
+	bool			m_bStream=true;		// 流れるどうか
 	D3DXVECTOR2		m_StreamStartPos;	// 流れるスタート位置
 	D3DXVECTOR2		m_StreamGoalPos;	// 流れるゴール位置
 	D3DXVECTOR2		m_VecStreamMove;	// 流れる方向のベクトル
-	float			m_StremCos;
-	float			m_StreamRad;
+	float			m_StremCos;			// 計算用
+	float			m_StreamRad;		// 計算用
 	D3DXVECTOR2		m_MoveSpped;		// 流れるスピードベクトル
+
+	cSpriteParam	m_MeteorLight;		// 光の表現
+
+
+
+	//
+
 
 };
 
@@ -48,13 +61,27 @@ public:
 	//--- 網との処理 ---
 	void SetNetData(cNet* data);
 	void OnCollidToNet(int num);
+	void OnCollidToNetArea(int num);
+	void SetStream(bool a ,int num){
+		m_pStarData = m_pRoot;
+		m_pStarData += num;
+
+		m_pStarData->m_bStream = a;
+	}
 
 	void Create();		// 生成
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
 
-	void SetCreateEvent(){
+	void SetFeverStar(){
+
+		// 流星音
+		PlaySound(SOUND_LABEL_SE_STREAM_METEOR);
+
+		m_bFever = true;
+
 		m_pStarData = m_pRoot;
+
 		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 			if (m_pStarData->m_bUse)
@@ -65,8 +92,8 @@ public:
 		
 	}
 
-	void SetRespawnFlag(bool flag){
-		m_bFever = flag;
+	void SetFeverEnd(){
+		m_bFever = false;
 	}
 
 
@@ -77,7 +104,7 @@ private:
 	cNet*			m_pNetData;			// 網のデータ格納
 
 	bool			m_bFever;
-	bool			m_bAllNoUse;
+
 
 
 	//Set&Get

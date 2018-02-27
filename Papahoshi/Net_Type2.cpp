@@ -150,6 +150,10 @@ m_fThrowSpeed(0.0f)
 		m_aRipple[i] = NULL;
 	}
 
+	//パーティクル
+	for (int i = 0; i < MAX_PIRTICLE_NUM; i++){
+		m_aPirticle[i] = NULL;
+	}
 }
 
 
@@ -206,6 +210,17 @@ void cNet::Update(){
 		}
 	}
 
+	//パーティクルの更新
+	for (int i = 0; i < MAX_PIRTICLE_NUM; i++){
+		if (m_aPirticle[i]){
+			m_aPirticle[i]->Update();
+			if (m_aPirticle[i]->GetFinFlug()){
+				delete m_aPirticle[i];
+				m_aPirticle[i] = NULL;
+			}
+		}
+	}
+
 	//当たり判定情報の更新
 	m_aCollider[0].SetTriangleCollider(m_aPos[1], m_centerPos, m_aPos[0]);
 	m_aCollider[1].SetTriangleCollider(m_aPos[2], m_centerPos, m_aPos[1]);
@@ -223,6 +238,12 @@ void cNet::Draw(){
 	for (int i = 0; i < MAX_RIPPLE; i++){
 		if (m_aRipple[i])
 			m_aRipple[i]->Draw();
+	}
+
+	//パーティクル
+	for (int i = 0; i < MAX_PIRTICLE_NUM; i++){
+		if (m_aPirticle[i])
+			m_aPirticle[i]->Draw();
 	}
 
 	//あみ
@@ -828,6 +849,9 @@ void cNet::ShoutPhaseUpdate(){
 
 			//------ SEの再生 ------
 			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_NET_SHOOT);
+
+			//--- パーティクルの生成 ---
+			SetPirticle(D3DXVECTOR2(m_centerPos.x, m_centerPos.y - 100.0f));
 		}
 	}
 
@@ -896,12 +920,19 @@ void cNet::ShoutPhaseUpdate(){
 
 	//------ 減速しきって数秒したら引き上げ ------
 	if (m_fHalfCircleSize <= 0.0f){
-		m_nFrameCnt++;
-		if (m_nFrameCnt >= INTERVAL_THOROW_PULL){
-			m_nFrameCnt = 0;	//初期化
-			m_bPurpose = false;
-			gamePhase = PHASE_PULL;
-			StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
+
+		//投げきっていない場合はゲージがもう一度拡大
+		if (!m_bThrow[0] || !m_bThrow[1] || !m_bThrow[2]){
+			m_fDirectHalfCircle = 1.0f;
+		}
+		else{
+			m_nFrameCnt++;
+			if (m_nFrameCnt >= INTERVAL_THOROW_PULL){
+				m_nFrameCnt = 0;	//初期化
+				m_bPurpose = false;
+				gamePhase = PHASE_PULL;
+				StopSound(SOUND_LABEL::SOUND_LABEL_SE_NET_GAGE);
+			}
 		}
 	}
 
@@ -1010,6 +1041,24 @@ void cNet::SetRipple(D3DXVECTOR2 pos){
 
 	}
 
+}
+
+//===========================================
+//
+// パーティクル生成
+//
+//===========================================
+void cNet::SetPirticle(D3DXVECTOR2 pos){
+
+	for (int i = 0; i < MAX_PIRTICLE_NUM; i++){
+
+		if (m_aPirticle[i])
+			continue;
+
+		m_aPirticle[i] = new cNetPirticleManage(pos);
+
+		return;
+	}
 }
 
 

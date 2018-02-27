@@ -35,6 +35,7 @@
     <ClCompile Include="MathEX.cpp" />
     <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="Net.cpp" />
+    <ClCompile Include="NetPirticle.cpp" />
     <ClCompile Include="NetRipple.cpp" />
     <ClCompile Include="Net_Type2.cpp" />
     <ClCompile Include="NormalStars.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="MathEX.h" />
     <ClInclude Include="Meteor.h" />
     <ClInclude Include="Net.h" />
+    <ClInclude Include="NetPirticle.h" />
     <ClInclude Include="NetRipple.h" />
     <ClInclude Include="Net_Type2.h" />
     <ClInclude Include="NormalStars.h" />
