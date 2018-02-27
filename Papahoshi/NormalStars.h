@@ -64,7 +64,7 @@ public:
 	//--- ブラックホールとの処理 ---
 	void SetBlackHoleData(cBlackHole* data);
 	void OnCollidToBlackHoleVacumeRange(int Normal,int Black);
-	void OnCollidToBlackHoleDeleteRange(int Normal);
+	void OnCollidToBlackHoleDeleteRange(int Normal,int Black);
 
 	//--- 隕石との処理との処理 ---
 	void SetSpaceRockData(cBlackHole* data);

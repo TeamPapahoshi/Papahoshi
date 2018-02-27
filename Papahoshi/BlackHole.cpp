@@ -26,7 +26,7 @@
 //-----------------------------
 #define STAR_SIZE			(200)	// サイズ
 #define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
-#define MAX_BLACK_HOLE_NUM	(1)		// 最大数
+#define MAX_BLACK_HOLE_NUM	(2)		// 最大数
 #define VACUUM_RANGE		(300)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
 
@@ -99,6 +99,8 @@ cBlackHole::cBlackHole(){
 		m_pStarData->m_DeleteRange.SetType(cCollider::CIRCLE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 
+
+		m_pStarData->m_bCaptured = false;
 		// αの設定
 		//m_pStarData->m_sprite.SetVtxColorA(0);
 
@@ -160,7 +162,18 @@ void cBlackHole::Update(){
 		// イベントが呼び出される感じ
 		if (m_pStarData->m_bCreateEvent){
 			Create();
+
+			//---- フィーバ中でないときは個数制限をして生成 -----
+			//if (!m_bFever && m_nCurrentNum < LIMIT_METEOR_NOT_FEVER){
+			//	Create();
+			//}
+			//if (!m_bFever && m_nCurrentNum >= LIMIT_METEOR_NOT_FEVER){
+			//	m_pStarData->m_bCreateEvent = false;
+			//}
+
 		}
+
+
 		if (m_pStarData->m_bDestroyEvent){
 			Destroy();
 		}
@@ -386,6 +399,8 @@ void cBlackHole::Respawn(){
 			}
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
+			m_pStarData->m_bCaptured = false;
+
 
 			m_pStarData->m_bRespawnEnd = true;
 		}
@@ -425,5 +440,7 @@ void cBlackHole::OnCollidToNet(int num){
 
 	// Vector確認用
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
+
+	m_pStarData->m_bCaptured = true;
 
 }

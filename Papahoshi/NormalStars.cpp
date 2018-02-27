@@ -554,6 +554,7 @@ void cNormalStar::OnCollidToNet(int num){
 	m_pStarData = m_pRoot;
 	m_pStarData += num;
 
+
 	// 獲得フラグをture
 	if (!m_pStarData->m_bCaptured)
 		m_pStarData->m_bCaptured = true;
@@ -620,10 +621,16 @@ void cNormalStar::OnCollidToBlackHoleVacumeRange(int Normal, int Black){
 }
 
 //---- ブラックホールの削除範囲に当たった時の処理 -----
-void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal){
+void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal,int black){
 
 	m_pStarData = m_pRoot;
 	m_pStarData += Normal;
+
+	
+		if (m_pBlackHoleData->GetStarData()[black].m_bCaptured)
+			return;
+
+	
 
 	m_pStarData->m_bHitBlackHoleDelete = true;
 	m_pStarData->m_bDestroyEvent = true;
