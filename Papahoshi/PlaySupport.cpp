@@ -53,9 +53,37 @@ cPlaySupport::~cPlaySupport(){
 // çXêVä÷êî
 //
 //=========================================================
-void cPlaySupport::Update(){
+void cPlaySupport::Update(cNet::GAME_PHASE phase, bool allPress, int rever){
 
-
+	switch (phase)
+	{
+	case cNet::PHASE_POST:
+		if (!allPress){
+			m_messageSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_SUPPORT_1));
+			m_messageSprite.SetScale(D3DXVECTOR2(0.7f, 0.7f));
+			m_messageSprite.SetPos(D3DXVECTOR2(295.0f, 410.0f));
+		}
+		else{
+			if (rever == 5){
+				m_messageSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_SUPPORT_2));
+				m_messageSprite.SetScale(D3DXVECTOR2(0.6f, 0.6f));
+				m_messageSprite.SetPos(D3DXVECTOR2(270.0f, 410.0f));
+			}
+			else if (rever <= 3){
+				m_messageSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_SUPPORT_3));
+				m_messageSprite.SetScale(D3DXVECTOR2(0.53f, 0.53f));
+				m_messageSprite.SetPos(D3DXVECTOR2(253.0f, 390.0f));
+			}
+		}
+		break;
+	case cNet::PHASE_SHOUT:
+		m_messageSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME::TEX_SUPPORT_4));
+		m_messageSprite.SetScale(D3DXVECTOR2(0.57f, 0.57f));
+		m_messageSprite.SetPos(D3DXVECTOR2(266.0f, 405.0f));
+		break;
+	case cNet::PHASE_PULL:
+		break;
+	}
 
 }
 

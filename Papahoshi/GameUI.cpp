@@ -132,9 +132,6 @@ void cGameUI::Update(){
 	//----- チアガールの更新 -----
 	m_pTheerGirl->Update();
 
-	//---- プレイサポートの更新 ----
-	m_playSupport.Update();
-
 }
 
 //====================================
@@ -164,9 +161,6 @@ void cGameUI::Draw(){
 
 	//----- チアガール ------
 	m_pTheerGirl->Draw();
-
-	//----- プレサポートの描画 -----
-	m_playSupport.Draw();
 
 }
 

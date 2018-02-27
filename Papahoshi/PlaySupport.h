@@ -13,6 +13,7 @@
 // インクルード部
 //--------------------------
 #include "Sprite.h"
+#include "Net_Type2.h"
 
 //--------------------------
 // クラス定義
@@ -22,7 +23,7 @@ class cPlaySupport{
 public:
 	cPlaySupport();
 	~cPlaySupport();
-	void Update();
+	void Update(cNet::GAME_PHASE phase, bool allPress, int rever);
 	void Draw();
 
 private:

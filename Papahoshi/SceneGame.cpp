@@ -73,6 +73,9 @@ m_bHurryUp(false)
 	m_pBG = new cBG();
 	m_pBG->SetBG(cBG::GAME_SKY);
 
+	//プレイサポート
+	m_pPlaySupport = new cPlaySupport();
+
 
 	// ゲームの状態
 #ifndef _DEBUG_DKIP_
@@ -113,6 +116,7 @@ cSceneGame::~cSceneGame(){
 	delete m_pGameUI;
 	delete m_pTimer;
 	delete m_pConsellation;
+	delete m_pPlaySupport;
 
 	//----- BGMの停止 -----
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
@@ -201,6 +205,7 @@ void cSceneGame::Draw(){
 	m_pGameUI->Draw();
 	m_pGage->Draw();
 	m_pTimer->Draw();
+	m_pPlaySupport->Draw();
 
 	if (m_pAnnounce)
 		m_pAnnounce->Draw();
@@ -251,6 +256,8 @@ void cSceneGame::MainUpdate(){
 	m_pSampleStar->Update();
 	m_pRyusei->Update();
 	m_pConsellation->Update();
+
+	m_pPlaySupport->Update(m_pNet->GetGamePhase(), m_pNet->GetAllPress(), m_pNet->GetRevor());
 
 
 	//----- 残り時間で生成する星を指定 --------
