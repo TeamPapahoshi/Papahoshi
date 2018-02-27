@@ -14,6 +14,7 @@
 #include "Common.h"
 #include "BaseStar.h"
 #include "ResultGirl.h"
+#include "GameMain.h"	// エフェクトクラス取得用
 
 //-----------------------------
 //マクロ定義
@@ -43,6 +44,7 @@ private:	//外部から参照不可能
 
 	cResultgirl*   m_pResultGirl;
 	int			   m_nStarNum;	//星の数
+	bool		   m_bStarFlag;	//星の出現切り替えフラグ
 
 	//-----------------------------
 protected:	//クラス内でのみ参照可能

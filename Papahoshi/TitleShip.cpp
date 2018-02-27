@@ -13,6 +13,7 @@
 #include "debugproc.h"		//printdebug
 #include "TitleShip.h"
 #include "Texture.h"
+#include "GameMain.h"	// エフェクトクラス取得用
 
 //-----------------------------
 //マクロ定義

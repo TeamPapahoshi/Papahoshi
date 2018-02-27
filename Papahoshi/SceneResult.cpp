@@ -23,10 +23,10 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define SCORE_POS_X  (SCREEN_WIDTH - 430.0f)
-#define SCORE_POS_Y	 (SCREEN_HEIGHT - 470.0f)
-#define SCORE_SIZE_X (80.0f)
-#define SCORE_SIZE_Y (100.0f)
+#define SCORE_POS_X  (SCREEN_WIDTH - 527.0f)
+#define SCORE_POS_Y	 (SCREEN_HEIGHT - 520.0f)
+#define SCORE_SIZE_X (100.0f)
+#define SCORE_SIZE_Y (140.0f)
 
 //-----------------------------
 // グローバル
@@ -95,7 +95,7 @@ void cSceneResult::Update(){
 	UpdateScore();
 
 	// シーン更新
-	if (GetKeyboardTrigger(DIK_SPACE)){
+	if (GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)){
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
 	}
 }

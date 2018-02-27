@@ -18,15 +18,17 @@
 //-----------------------------
 #define DEFAULT_SCORE (1000)			//デフォルトのスコアの値(閾値)
 
-#define RANKING_EFFECT_FLAME (30)		//エフェクト生成のフレーム閾値
+#define RANKING_EFFECT_FLAME (10)		//エフェクト生成のフレーム閾値
+#define EFFECT_LIFE_TIME     (40)		//エフェクトの生存フレーム
 #define EFFECT_SIZE          (50.0f)
+#define EFFECTCOLOR_CHANGE_POINT (3)	//エフェクトの色切り替え閾値
 
-#define	RANKING_SIZE_X		(40.0f)		// 順位表示の数字の幅
-#define	RANKING_SIZE_Y		(40.0f)		// 順位表示の数字の高さ
+#define	RANKING_SIZE_X		(55.0f)		// 順位表示の数字の幅
+#define	RANKING_SIZE_Y		(55.0f)		// 順位表示の数字の高さ
 #define	RANKING_INTERVAL_X	(0.0f)		// 順位表示の数字の横方向表示間隔
-#define	RANKING_INTERVAL_Y	(5.0f)		// 順位表示の数字の縦方向表示間隔
+#define	RANKING_INTERVAL_Y	(3.0f)		// 順位表示の数字の縦方向表示間隔
 
-#define RANKING_POS_X       (50.0f)		// 順位の表示横座標
+#define RANKING_POS_X       (120.0f)		// 順位の表示横座標
 #define RANKING_POS_Y       (180.0f)		// 順位の表示縦座標
 
 #define RANKING_SCORE_POS_X (RANKING_POS_X + RANKING_SIZE_X * 4)	// スコアの表示横座標
@@ -73,11 +75,23 @@ cRanking::cRanking(){
 	m_nScoreAlpha = 255;
 	m_nScoreEffectFlame = 0;
 	m_nChangeScorePoint = 0;
+	m_nHSVColor         = 0;
 	m_bChangeScoreFlag = false;
 	m_bScoreAlphaChange = false;
+	m_bHSVChange = false;
 
 	//ランキングの入れ替え
 	SortRanking();
+
+	//ランキングの入れ替えに応じてエフェクトの色設定
+	if (m_nChangeScorePoint < EFFECTCOLOR_CHANGE_POINT)
+	{
+		m_aEffectColorData = {0, 255, 255};
+	}
+	else
+	{
+		m_aEffectColorData = {0, 0, 255};
+	}
 
 	//値の初期化
 	for (int Initloop = 0; Initloop < MAX_RANKING; Initloop++)
@@ -127,24 +141,60 @@ cRanking::~cRanking(){
 //
 //=======================================================================================
 void cRanking::Update(){
+
 	//ランキング変更フラグが立っていれば処理
 	if (m_bChangeScoreFlag)
 	{
-		//エフェクト生成フレームの加算
-		m_nScoreEffectFlame++;
+		//エフェクト生成フレームの減算
+		m_nScoreEffectFlame--;
+
+		//ランキングの入れ替えが3位以上で行われていたら
+		if (m_nChangeScorePoint < EFFECTCOLOR_CHANGE_POINT)
+		{
+			if (m_bHSVChange)
+			{
+				m_nHSVColor++;
+			}
+			else
+			{
+				m_nHSVColor--;
+			}
+
+			if (m_nHSVColor <= 0)
+			{
+				m_nHSVColor = 0;
+				m_bHSVChange = true;
+			}
+			else if (m_nHSVColor >= 360)
+			{
+				m_nHSVColor = 360;
+				m_bHSVChange = false;
+			}
+
+
+			//HSVの色情報に反映
+			m_aEffectColorData.h = m_nHSVColor;
+		}
 
 		//エフェクト生成フレームが一定値に達したらエフェクト設定
-		if (m_nScoreEffectFlame > RANKING_EFFECT_FLAME)
+		if (m_nScoreEffectFlame < 0)
 		{
 			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureResult(TEX_RESULT_EFFECT_SPARKLE),
 				m_ScoreSprite[m_nChangeScorePoint][MAX_SCORE / 2].GetPos(),
 				D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
-				D3DXCOLOR(255, 255, 255, 255),
-				RANKING_EFFECT_FLAME,
+				m_aEffectColorData,
+				EFFECT_LIFE_TIME,
 				D3DXVECTOR2(RANKING_SIZE_X * (MAX_SCORE - 1), RANKING_SIZE_Y / 2),
 				EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
 
-			m_nScoreEffectFlame = CRandam::RandamRenge(0, RANKING_EFFECT_FLAME);
+			if (m_nChangeScorePoint < EFFECTCOLOR_CHANGE_POINT)
+			{
+				m_nScoreEffectFlame = CRandam::RandamRenge(0, RANKING_EFFECT_FLAME);
+			}
+			else
+			{
+				m_nScoreEffectFlame = CRandam::RandamRenge(0, RANKING_EFFECT_FLAME * 3);
+			}
 		}
 
 		//アルファ値が0ならα値の減算開始

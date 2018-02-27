@@ -12,6 +12,7 @@
 //インクルードファイル
 //-----------------------------
 #include "Common.h"
+#include "GameMain.h"	// エフェクトクラス取得用
 
 //-----------------------------
 //マクロ定義
@@ -30,6 +31,8 @@ class cGage
 private:	//外部から参照不可能
 	cSpriteParam m_GageSprite;
 	cSpriteParam m_FlameSprite;
+	HSVCOLOR     m_aHSVColor[4];		//HSVの値
+	bool		 m_bHSVColorChange[4];	//HSVの色切り替えフラグ
 
 	float		 m_fGageNum;
 	bool		 m_bGageMax;	//ゲージ状態フラグ(ゲージが最大値になったらtrue,0になったらfalse)

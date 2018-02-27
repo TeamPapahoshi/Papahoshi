@@ -12,6 +12,7 @@
 //インクルードファイル
 //-----------------------------
 #include "Common.h"
+#include "GameMain.h"	// エフェクトクラス取得用
 
 //-----------------------------
 //マクロ定義
@@ -36,6 +37,9 @@ private:	//外部から参照不可能
 	cSpriteParam m_RankSprite[MAX_RANKING][MAX_RANK];
 
 	int m_nScoreEffectFlame;	//エフェクト生成フレーム
+	HSVCOLOR m_aEffectColorData;//エフェクトの色情報(HSV形式)
+	int m_nHSVColor;			//HSVの色相
+	bool m_bHSVChange;			//HSVの色相切り替えフラグ
 
 	int  m_nScoreAlpha;			//スコアのアルファ値
 	bool m_bScoreAlphaChange;	//スコアのアルファ値切り替えフラグ

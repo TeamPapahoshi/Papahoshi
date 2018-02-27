@@ -21,6 +21,7 @@
 #include <vector>
 #include <fstream>
 #include "Score.h"
+#include "GameMain.h"	// エフェクトクラス取得用
 
 //-----------------------------
 // クラス定義

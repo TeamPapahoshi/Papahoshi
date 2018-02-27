@@ -26,8 +26,8 @@
 #define MAX_RAD (2.0f * 3.14f)
 #define ToRADIAN(a)	(((a) % 360) / 180.0f * 3.1415f)	// D→R変換
 
-#define POINT_SET_X (50)		//制御点の位置制御用Ｘ
-#define POINT_SET_Y (50)		//制御点の位置制御用Ｙ
+#define POINT_SET_X (40)		//制御点の位置制御用Ｘ
+#define POINT_SET_Y (10)		//制御点の位置制御用Ｙ
 //-----------------------------
 //列挙型定義
 //-----------------------------
@@ -83,10 +83,17 @@ void cEffectBezierCurve::Update(void)
 	m_fPointTime += m_fPointInterval;
 
 	//スプライトの更新処理
-	for (int UpdateSpriteloop = 0; UpdateSpriteloop < MAX_BEZIERCURVEFFECT_SPRITE; UpdateSpriteloop++)
+	for (int UpdateSpriteloop = MAX_BEZIERCURVEFFECT_SPRITE - 1; UpdateSpriteloop >= 0; UpdateSpriteloop--)
 	{
 		//曲線上の移動の反映
-		m_Sprite[UpdateSpriteloop]->SetPos(BezierCurve(m_fPointTime, m_CPoint[0], m_CPoint[1], m_CPoint[1], m_CPoint[MAX_POINT - 1]));
+		if (UpdateSpriteloop != 0)
+		{
+			m_Sprite[UpdateSpriteloop]->SetPos(m_Sprite[UpdateSpriteloop - 1]->GetPos());
+		}
+		else
+		{
+			m_Sprite[UpdateSpriteloop]->SetPos(BezierCurve(m_fPointTime, m_CPoint[0], m_CPoint[1], m_CPoint[1], m_CPoint[MAX_POINT - 1]));
+		}
 	}
 
 	//生存時間の減少
@@ -95,7 +102,6 @@ void cEffectBezierCurve::Update(void)
 	{
 		m_bEffectUseFlag = false;
 	}
-
 }
 
 //=======================================================================================
@@ -154,13 +160,14 @@ void cEffectBezierCurve::SetEffectBezierCurve(LPDIRECT3DTEXTURE9* ptex, D3DXVECT
 			//色の設定
 			m_Sprite[SetEffectloop]->SetVtxColor(color);
 
-			//ループ回数に応じて色の調整
+			//ループ回数に応じてアルファ値の調整
+			m_Sprite[SetEffectloop]->SetVtxColorA(color.a / (SetEffectloop + 1));
 
 			//生成する座標の設定
 			m_Sprite[SetEffectloop]->SetPos(pos);
 
 			//生成するサイズの設定
-			m_Sprite[SetEffectloop]->SetSize(size);
+			m_Sprite[SetEffectloop]->SetSize(size / (SetEffectloop + 1));
 
 			//加算合成をオンに
 			m_Sprite[SetEffectloop]->SetAddBlend(true);
@@ -178,9 +185,9 @@ void cEffectBezierCurve::SetEffectBezierCurve(LPDIRECT3DTEXTURE9* ptex, D3DXVECT
 			m_CPoint[1].x = (4 * CRandam::RandamRenge(m_CPoint[2].x + POINT_SET_X, m_CPoint[0].x - POINT_SET_X) - m_CPoint[0].x - m_CPoint[2].x) / 2.0f;
 
 		if (m_CPoint[0].x < m_CPoint[2].x)
-			m_CPoint[1].y = (4 * CRandam::RandamRenge(m_CPoint[0].y - POINT_SET_Y, m_CPoint[2].y + POINT_SET_Y) - m_CPoint[0].y - m_CPoint[2].y) / 2.0f;
+			m_CPoint[1].y = (4 * CRandam::RandamRenge(m_CPoint[0].y - POINT_SET_Y, m_CPoint[2].y - POINT_SET_Y) - m_CPoint[0].y - m_CPoint[2].y) / 2.0f;
 		else
-			m_CPoint[1].y = (4 * CRandam::RandamRenge(m_CPoint[2].y - POINT_SET_Y, m_CPoint[0].y + POINT_SET_Y) - m_CPoint[0].y - m_CPoint[2].y) / 2.0f;
+			m_CPoint[1].y = (4 * CRandam::RandamRenge(m_CPoint[2].y - POINT_SET_Y, m_CPoint[0].y - POINT_SET_Y) - m_CPoint[0].y - m_CPoint[2].y) / 2.0f;
 
 		//エフェクトの生存時間設定
 		m_nLifeFleam = life;

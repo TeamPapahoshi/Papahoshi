@@ -85,6 +85,12 @@ void cEffectSparkle::Update(void)
 		m_Sprite->SetScale(D3DXVECTOR2(m_Sprite->GetScale().x - 1.0f / m_nHalfLife, m_Sprite->GetScale().y - 1.0f / m_nHalfLife));
 	}
 
+	//頂点にHSV情報の反映
+	for (int loop = 0; loop < 4; loop++)
+	{
+		m_Sprite->SetHSVColorOne(m_aHSVColor.h, m_aHSVColor.s, m_aHSVColor.v, loop);
+	}
+
 	//生存時間の減少
 	if (m_nLifeFleam > 0)
 	{
@@ -129,21 +135,18 @@ void cEffectSparkle::Uninit(void)
 //		引数		:LPCSTR型			  ptex		[エフェクトに使用するテクスチャポインタ]
 //					 D3DXVECTOR2型		  pos		[エフェクトの生成座標]
 //					 D3DXVECTOR2型		  size		[エフェクトのサイズ]
-//					 D3DXCOLOR型		  color		[エフェクトの色情報]
+//					 HSVCOLOR型			  color		[エフェクトの色情報]
 //					 int型				  life		[エフェクトの生存時間]
 //					 int型				  division	[エフェクトの分割個数]
 //
 //=======================================================================================
-void cEffectSparkle::SetEffectSparkle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, D3DXVECTOR2 radius, int texdividex, int texdividey)
+void cEffectSparkle::SetEffectSparkle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, HSVCOLOR color, int life, D3DXVECTOR2 radius, int texdividex, int texdividey)
 {
 	//スプライトの動的確保
 	m_Sprite = new cSpriteParam;
 
 	//テクスチャの設定
 	m_Sprite->SetTexture(ptex);
-
-	//色の設定
-	m_Sprite->SetVtxColor(color);
 
 	//生成するサイズの設定
 	m_Sprite->SetSize(size);
@@ -166,9 +169,14 @@ void cEffectSparkle::SetEffectSparkle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos,
 
 	m_Sprite->SetCurrentAnimPattern(CRandam::RandamRenge(0, texdividex * texdividey));
 
+	//HSV仕様フラグをオンに
+	m_Sprite->SetHSVColorFlag(true);
+
+	//HSV情報の反映
+	m_aHSVColor = color;
+
 	//エフェクト使用フラグをオンに
 	m_bEffectUseFlag = true;
-
 
 	return;
 }

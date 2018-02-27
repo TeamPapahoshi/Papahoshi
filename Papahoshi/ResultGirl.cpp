@@ -48,9 +48,9 @@ cResultgirl::cResultgirl(){
 	m_nCurrentPattern = 0;
 	m_nAnimFlame = 0;
 	//スコアが一定以上だった場合
-	//if (GetScore() >= TEXTURE_CHANGE_LINE)
+	if (GetScore() >= TEXTURE_CHANGE_LINE)
 	//デバッグ用
-	if (1)
+	//if (1)
 	{
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MAX_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MAX;

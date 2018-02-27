@@ -1,0 +1,10 @@
+diff a/Papahoshi/GameMain.cpp b/Papahoshi/GameMain.cpp	(rejected hunks)
+@@ -73,7 +73,7 @@
+ 
+ 	//�ŏ��̃V�[���̐ݒ�
+ #ifndef _DEBUG_DKIP_
+-	cSceneManeger::ChangeScene(cSceneManeger::TITLE);	//�f�o�b�O�p�ɃX�e�[�W�Z���N�g��ʂ���J�n
++	cSceneManeger::ChangeScene(cSceneManeger::RESULT);	//�f�o�b�O�p�ɃX�e�[�W�Z���N�g��ʂ���J�n
+ #else
+ 	cSceneManeger::ChangeScene(cSceneManeger::GAME);	//�f�o�b�O�p�ɃX�e�[�W�Z���N�g��ʂ���J�n
+ #endif

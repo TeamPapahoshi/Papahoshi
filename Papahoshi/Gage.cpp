@@ -42,8 +42,19 @@
 
 //円形エフェクト用
 #define GAGE_EFFECT_CIRCLE_SET_FRAME (20)
-#define GAGE_EFFECT_CIRCLE_SIZE (12.5f)
+#define GAGE_EFFECT_CIRCLE_SIZE (22.5f)
 #define GAGE_EFFECT_NUM_MAX (10)
+
+//ゲージHSV設定用
+#define HSV_H_POINT1 (0)	//頂点1のHの値
+#define HSV_H_POINT2 (100)	//頂点2のHの値
+#define HSV_H_POINT3 (200)	//頂点3のHの値
+#define HSV_H_POINT4 (300)	//頂点4のHの値
+
+#define HSV_S_DEFAULT (0)
+#define HSV_S_GAGEMAX (255)
+
+#define HSV_V_DEFAULT (255)
 
 //-----------------------------
 //列挙型定義
@@ -68,8 +79,33 @@ void cGage::Init(){
 	m_GageSprite.SetPos(D3DXVECTOR2(GAGE_POS_X, GAGE_POS_Y));
 	m_GageSprite.SetSize(D3DXVECTOR2(GAGE_SIZE_X, GAGE_SIZE_Y));
 	m_GageSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GAGE));
-	m_GageSprite.SetVtxColor(D3DXCOLOR(0, 0, 128, 255));
 	m_GageSprite.SetTexUVFlag();
+	m_GageSprite.SetHSVColorFlag(true);
+	//HSVの色設定
+	for (int HSVLoop = 0; HSVLoop < 4; HSVLoop++)
+	{
+		//ループ回数に応じて色設定
+		switch (HSVLoop)
+		{
+		case 0:
+			m_aHSVColor[HSVLoop] = { HSV_H_POINT1, HSV_S_DEFAULT, HSV_V_DEFAULT };
+			break;
+		case 1:
+			m_aHSVColor[HSVLoop] = { HSV_H_POINT2, HSV_S_DEFAULT, HSV_V_DEFAULT };
+			break;
+		case 2:
+			m_aHSVColor[HSVLoop] = { HSV_H_POINT3, HSV_S_DEFAULT, HSV_V_DEFAULT };
+			break;
+		case 3:
+			m_aHSVColor[HSVLoop] = { HSV_H_POINT4, HSV_S_DEFAULT, HSV_V_DEFAULT };
+			break;
+		}
+
+		m_bHSVColorChange[HSVLoop] = false;
+
+		//頂点に色情報を設定
+		m_GageSprite.SetHSVColorOne(m_aHSVColor[HSVLoop].h, m_aHSVColor[HSVLoop].s, m_aHSVColor[HSVLoop].v, HSVLoop);
+	}
 
 	//フレームスプライトの初期化
 	m_FlameSprite.SetPos(D3DXVECTOR2(FLAME_POS_X, FLAME_POS_Y));
@@ -109,7 +145,29 @@ void cGage::Update(){
 		{
 			m_bGageMax = false;
 			m_bFeverFin = true;
-			m_GageSprite.SetVtxColor(D3DXCOLOR(0, 0, 128, 255));
+
+			//HSVの色設定
+			for (int HSVLoop = 0; HSVLoop < 4; HSVLoop++)
+			{
+				//ループ回数に応じて色設定
+				switch (HSVLoop)
+				{
+				case 0:
+					m_aHSVColor[HSVLoop] = { HSV_H_POINT1, HSV_S_DEFAULT, HSV_V_DEFAULT };
+					break;
+				case 1:
+					m_aHSVColor[HSVLoop] = { HSV_H_POINT2, HSV_S_DEFAULT, HSV_V_DEFAULT };
+					break;
+				case 2:
+					m_aHSVColor[HSVLoop] = { HSV_H_POINT3, HSV_S_DEFAULT, HSV_V_DEFAULT };
+					break;
+				case 3:
+					m_aHSVColor[HSVLoop] = { HSV_H_POINT4, HSV_S_DEFAULT, HSV_V_DEFAULT };
+					break;
+				}
+
+				m_bHSVColorChange[HSVLoop] = false;
+			}
 		}
 	}
 	//上限・下限をオーバーしないように
@@ -123,6 +181,63 @@ void cGage::Update(){
 	m_GageSprite.SetPosX(GAGE_POS_X + m_GageSprite.GetSizeX() / 2 - GAGE_SIZE_X / 2);
 	m_GageSprite.SetTexUVRatioX(1.0f * GAGE_SET(m_fGageNum));
 
+	//HSVの色設定
+	for (int HSVLoop = 0; HSVLoop < 4; HSVLoop++)
+	{
+		//ゲージの状態で色を切り替える
+		if (m_bGageMax)
+		{
+			if (m_bHSVColorChange[HSVLoop])
+			{
+				m_aHSVColor[HSVLoop].h++;
+			}
+			else
+			{
+				m_aHSVColor[HSVLoop].h--;
+			}
+
+			//hの値が0以下なら加算、360以上なら減算に切り替える
+			if (m_aHSVColor[HSVLoop].h <= 0)
+			{
+				m_aHSVColor[HSVLoop].h = 0;
+				m_bHSVColorChange[HSVLoop] = true;
+			}
+			else if (m_aHSVColor[HSVLoop].h >= 360)
+			{
+				m_aHSVColor[HSVLoop].h = 360;
+				m_bHSVColorChange[HSVLoop] = false;
+			}
+		}
+		else
+		{
+			if (m_bHSVColorChange[HSVLoop])
+			{
+				//m_aHSVColor[HSVLoop].s += (HSVLoop + 1);
+				m_aHSVColor[HSVLoop].s++;
+			}
+			else
+			{
+				//m_aHSVColor[HSVLoop].s -= (HSVLoop + 1);
+				m_aHSVColor[HSVLoop].s--;
+			}
+
+			//sの値が0以下なら加算、255以上なら減算に切り替える
+			if (m_aHSVColor[HSVLoop].s <= 0)
+			{
+				m_aHSVColor[HSVLoop].s = 0;
+				m_bHSVColorChange[HSVLoop] = true;
+			}
+			else if (m_aHSVColor[HSVLoop].s >= 255)
+			{
+				m_aHSVColor[HSVLoop].s = 255;
+				m_bHSVColorChange[HSVLoop] = false;
+			}
+		}
+
+		//頂点に色情報を設定
+		m_GageSprite.SetHSVColorOne(m_aHSVColor[HSVLoop].h, m_aHSVColor[HSVLoop].s, m_aHSVColor[HSVLoop].v, HSVLoop);
+	}
+
 	//----- エフェクト設定 ------
 	//ゲージが伸びている場合のみエフェクト出現
 	if (m_GageSprite.GetSizeX() > 0)
@@ -135,7 +250,7 @@ void cGage::Update(){
 			GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
 				m_GageSprite.GetPos(),
 				D3DXVECTOR2(GAGE_EFFECT_SIZE, GAGE_EFFECT_SIZE),
-				D3DXCOLOR(255, 255, 255, 255),
+				HSVCOLOR{0, 0, 255},
 				GAGE_EFFECT_SET_FRAME / 2,
 				m_GageSprite.GetSize(),
 				EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
@@ -170,7 +285,7 @@ void cGage::GageAdd()
 	GetEffectManeger()->SetEffectCircle(cTextureManeger::GetTextureGame(TEX_GAME_STAR),
 										D3DXVECTOR2(m_GageSprite.GetPos().x + m_GageSprite.GetSize().x / 2, m_GageSprite.GetPos().y),
 										D3DXVECTOR2(GAGE_EFFECT_CIRCLE_SIZE, GAGE_EFFECT_CIRCLE_SIZE),
-										m_GageSprite.GetVtxColor(),
+										D3DXCOLOR(255, 255, 255, 255),
 										GAGE_EFFECT_CIRCLE_SET_FRAME,
 										GAGE_EFFECT_NUM_MAX);
 
@@ -179,6 +294,31 @@ void cGage::GageAdd()
 	{
 		m_bGageMax = true;
 		m_bFeverStart = true;
-		m_GageSprite.SetVtxColor(D3DXCOLOR(0, 255, 128, 255));
+		//HSVの色設定
+		for (int HSVLoop = 0; HSVLoop < 4; HSVLoop++)
+		{
+			//ループ回数に応じて色設定
+			switch (HSVLoop)
+			{
+			case 0:
+				m_aHSVColor[HSVLoop] = { HSV_H_POINT1, HSV_S_GAGEMAX, HSV_V_DEFAULT };
+				break;
+			case 1:
+				m_aHSVColor[HSVLoop] = { HSV_H_POINT2, HSV_S_GAGEMAX, HSV_V_DEFAULT };
+				break;
+			case 2:
+				m_aHSVColor[HSVLoop] = { HSV_H_POINT3, HSV_S_GAGEMAX, HSV_V_DEFAULT };
+				break;
+			case 3:
+				m_aHSVColor[HSVLoop] = { HSV_H_POINT4, HSV_S_GAGEMAX, HSV_V_DEFAULT };
+				break;
+			}
+
+			m_bHSVColorChange[HSVLoop] = true;
+
+			//頂点に色情報を設定
+			m_GageSprite.SetHSVColorOne(m_aHSVColor[HSVLoop].h, m_aHSVColor[HSVLoop].s, m_aHSVColor[HSVLoop].v, HSVLoop);
+		}
+
 	}
 }

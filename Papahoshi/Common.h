@@ -19,7 +19,7 @@
 //------------------------------
 #include "d3dx9.h"		// D3DXVECTOR2他
 #include "rand.h"		// 乱数生成用クラス
-#include "GameMain.h"	// エフェクトクラス取得用
+#include "Sprite.h"		//CSpriteクラスの導入
 #include <iostream>		// cout
 #include <fstream>		// fstream
 #include <vector>		// vector

@@ -70,17 +70,17 @@
 #define TEXTURE_FILENAME_CRYSTAL2	("Image/Pirticle/S__109092872.jpg")
 
 // タイトルロゴ
-#define TEXTURE_FILENAME_ROGO01 ("Image/ROGO/logo_01.png")
-#define TEXTURE_FILENAME_ROGO02 ("Image/ROGO/logo_02.png")
-#define TEXTURE_FILENAME_ROGO03 ("Image/ROGO/logo_03.png")
-#define TEXTURE_FILENAME_ROGO04 ("Image/ROGO/logo_04.png")
-#define TEXTURE_FILENAME_ROGO05 ("Image/ROGO/logo_05.png")
-#define TEXTURE_FILENAME_ROGO06 ("Image/ROGO/logo_06.png")
-#define TEXTURE_FILENAME_ROGO07 ("Image/ROGO/logo_07.png")
-#define TEXTURE_FILENAME_ROGO08 ("Image/ROGO/logo_08.png")
-#define TEXTURE_FILENAME_ROGO09 ("Image/ROGO/logo_09.png")
-#define TEXTURE_FILENAME_ROGO10 ("Image/ROGO/logo_10.png")
-#define TEXTURE_FILENAME_ROGO11 ("Image/ROGO/logo_11+12.png")
+#define TEXTURE_FILENAME_ROGO01 ("Image/ROGO/logo2_01.png")
+#define TEXTURE_FILENAME_ROGO02 ("Image/ROGO/logo2_02.png")
+#define TEXTURE_FILENAME_ROGO03 ("Image/ROGO/logo2_03.png")
+#define TEXTURE_FILENAME_ROGO04 ("Image/ROGO/logo2_04.png")
+#define TEXTURE_FILENAME_ROGO05 ("Image/ROGO/logo2_05.png")
+#define TEXTURE_FILENAME_ROGO06 ("Image/ROGO/logo2_06.png")
+#define TEXTURE_FILENAME_ROGO07 ("Image/ROGO/logo2_07.png")
+#define TEXTURE_FILENAME_ROGO08 ("Image/ROGO/logo2_08.png")
+#define TEXTURE_FILENAME_ROGO09 ("Image/ROGO/logo2_09.png")
+#define TEXTURE_FILENAME_ROGO10 ("Image/ROGO/logo2_10.png")
+#define TEXTURE_FILENAME_ROGO11 ("Image/ROGO/logo2_11+12.png")
 
 #define TEXTURE_FILENAME_STAGECLEAR		("data/texture/akira000.png")	//仮のテクスチャ
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")

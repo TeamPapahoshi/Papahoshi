@@ -123,7 +123,7 @@ void cSceneTitle::Update(){
 	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->Update();
 
 	// スペースでシーンチェンジフラグを立てる
-	if (GetKeyboardTrigger(DIK_SPACE)){
+	if (GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)){
 		bSceneChangeFlag = true;
 	}
 

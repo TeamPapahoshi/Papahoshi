@@ -46,7 +46,7 @@
 
 //ゲージに移動するときのエフェクト用
 #define EFFECT_BEZIERCURVE_FRAME (60)
-#define EFFECT_BEZIERCURVE_SIZE (22.0f)
+#define EFFECT_BEZIERCURVE_SIZE (40.0f)
 
 //=======================================================================================
 //
@@ -101,6 +101,9 @@ void cNormalStar::Init(){
 		break;
 	case 2:
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+		break;
+	case 3:
+		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
 		break;
 	default:
 		break;
@@ -182,18 +185,40 @@ void cNormalStar::Update(){
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
 		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y )
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
 		{
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;
 
-			if (!m_pStarData->m_bEffectSetFlag)
+			if (!m_pStarData->m_bEffectSetFlag && !m_pGageData->GetGagemax())
 			{
+				D3DXCOLOR EffectColor;
+
+				// 星の色に応じてエフェクト色の決定
+				m_pStarData->m_nStarColorNum = CRandam::RandamRenge(0, 3);
+				switch (m_pStarData->m_nStarColorNum)
+				{
+				case 0:
+					EffectColor = D3DXCOLOR(255, 255, 64, 255);
+					break;
+				case 1:
+					EffectColor = D3DXCOLOR(64, 255, 64, 255);
+					break;
+				case 2:
+					EffectColor = D3DXCOLOR(255, 64, 64, 255);
+					break;
+				case 3:
+					EffectColor = D3DXCOLOR(64, 64, 255, 255);
+					break;
+				default:
+					break;
+				}
+
 				// エフェクトの設定
 				GetEffectManeger()->SetEffectBezierCurve(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT),
 					m_pStarData->m_sprite.GetPos(),
 					D3DXVECTOR2(EFFECT_BEZIERCURVE_SIZE, EFFECT_BEZIERCURVE_SIZE),
-					D3DXCOLOR(255, 255, 255, 255),
+					EffectColor,
 					EFFECT_BEZIERCURVE_FRAME,
 					m_pStarData->m_sprite.GetPos(),
 					m_pGageData->GetGageSprite().GetPos() + m_pGageData->GetGageSprite().GetSize() / 2);
@@ -203,6 +228,7 @@ void cNormalStar::Update(){
 			}
 
 		}
+
 
 		// アニメーション
 		m_pStarData->m_sprite.AnimationLoop();
@@ -240,7 +266,7 @@ void cNormalStar::Update(){
 				GetEffectManeger()->SetEffectSparkle(cTextureManeger::GetTextureGame(TEX_GAME_EFFECT_SPARKLE),
 					m_pStarData->m_sprite.GetPos(),
 					D3DXVECTOR2(EFFECT_SIZE, EFFECT_SIZE),
-					m_pStarData->m_sprite.GetVtxColor(),
+					HSVCOLOR{0, 0, 255},
 					EFFECT_FRAME / 2,
 					D3DXVECTOR2(EFFECT_RADIUS, EFFECT_RADIUS),
 					EFFECT_SPARKLE_TEX_DIVIDE_X, EFFECT_SPARKLE_TEX_DIVIDE_Y);
