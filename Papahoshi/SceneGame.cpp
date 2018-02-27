@@ -385,6 +385,7 @@ void cSceneGame::CheckCollision(){
 		  }
 	  }
 
+
 	  //---–Ô‚Æ—¬¯‚Ì”»’ètype2---
 	  for (int nCountStar = 0; nCountStar < m_pRyusei->GetMaxNum(); nCountStar++){
 
