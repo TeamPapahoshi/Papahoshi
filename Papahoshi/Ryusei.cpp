@@ -70,7 +70,7 @@ cRyusei::cRyusei(){
 		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
 
 		// 加算合成ON
-		m_pStarData->m_sprite.SetAddBlend(true);
+		//m_pStarData->m_sprite.SetAddBlend(true);
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
@@ -90,6 +90,12 @@ cRyusei::cRyusei(){
 		m_pStarData->m_StreamRad	  = acosf(m_pStarData->m_StremCos);													// Cosから計算用の角度を求める
 		m_pStarData->m_sprite.SetRad(D3DX_PI/2.0f - m_pStarData->m_StreamRad);											// 計算結果より回転角度をセット
 		m_pStarData->m_MoveSpped      = MOVE_SPEED * UnitVector(m_pStarData->m_VecStreamMove);							// 流れる方向の単位ベクトルを求めて速さをセット
+
+
+		//--- 流星の光 ------
+		m_pStarData->m_MeteorLight.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));
+		m_pStarData->m_MeteorLight.SetAddBlend(true);
+		m_pStarData->m_MeteorLight.SetSize(D3DXVECTOR2(60, 60));
 
 
 		// 初期生成でいくつか
@@ -133,6 +139,8 @@ void cRyusei::Update(){
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y+30), STAR_SIZE / 4.0f);
+
+		m_pStarData->m_MeteorLight.SetPos(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x-17, m_pStarData->m_sprite.GetPos().y + 50));
 
 		// 網の方向に移動するための処理
 		m_pStarData->m_Destination   = m_pNetData->GetNetStart();
@@ -250,6 +258,7 @@ void cRyusei::Draw(){
 
 
 		m_pStarData->m_sprite.Draw();
+		m_pStarData->m_MeteorLight.Draw();
 		//m_pStarData->m_Collision.Draw();
 
 	}

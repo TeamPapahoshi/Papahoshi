@@ -421,8 +421,8 @@ void cSceneGame::CheckCollision(){
 				  m_pRyusei->OnCollidToNetArea(nCountStar);
 			  }
 
-			  if (cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, m_pNet->GetCollider()[0])
-				  && cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, m_pNet->GetCollider()[1])){
+			  if (!cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, m_pNet->GetCollider()[0])
+				  && !cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, m_pNet->GetCollider()[1])){
 
 				  m_pRyusei->SetStream(true, nCountStar);
 			  }

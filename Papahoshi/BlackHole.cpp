@@ -31,9 +31,12 @@
 #define DELETE_RANGE		(10)	// 削除範囲
 
 //	生成位置
-#define CREATE_PATTERN		(2)
+#define CREATE_PATTERN		(4)
 #define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,100))
 #define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,100))
+#define CREATE_POS_03		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+#define CREATE_POS_04		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+
 
 
 //===================================================================================
@@ -70,8 +73,14 @@ cBlackHole::cBlackHole(){
 		case 1:
 			CreateRamdomPos = CREATE_POS_01;
 			break;
-		case CREATE_PATTERN:
+		case 2:
 			CreateRamdomPos = CREATE_POS_02;
+			break;
+		case 3:
+			CreateRamdomPos = CREATE_POS_03;
+			break;
+		case 4:
+			CreateRamdomPos = CREATE_POS_04;
 			break;
 		default:
 			break;
@@ -349,7 +358,6 @@ void cBlackHole::Respawn(){
 			// αの設定
 			//m_pStarData->m_sprite.SetVtxColorA(0);
 
-
 			// サイズの変更
 			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(0, 0));
 			
@@ -364,12 +372,19 @@ void cBlackHole::Respawn(){
 			case 1:
 				CreateRamdomPos = CREATE_POS_01;
 				break;
-			case CREATE_PATTERN:
+			case 2:
 				CreateRamdomPos = CREATE_POS_02;
+				break;
+			case 3:
+				CreateRamdomPos = CREATE_POS_03;
+				break;
+			case 4:
+				CreateRamdomPos = CREATE_POS_04;
 				break;
 			default:
 				break;
 			}
+			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			m_pStarData->m_bRespawnEnd = true;

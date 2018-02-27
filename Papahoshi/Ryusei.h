@@ -40,6 +40,8 @@ public:
 	float			m_StreamRad;		// 計算用
 	D3DXVECTOR2		m_MoveSpped;		// 流れるスピードベクトル
 
+	cSpriteParam	m_MeteorLight;		// 光の表現
+
 
 
 	//
