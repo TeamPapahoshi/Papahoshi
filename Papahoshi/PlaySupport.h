@@ -30,6 +30,8 @@ private:
 	cSpriteParam	m_fukidashiSprite;
 	cSpriteParam	m_messageSprite;
 
+	bool	m_bPullFlug;
+
 };
 
 
