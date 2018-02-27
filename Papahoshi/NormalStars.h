@@ -34,6 +34,8 @@ public:
 	bool	m_bAddScore = false;
 	int		m_nLifeTime = 0;
 
+	
+
 	// ブラックホール
 	bool	m_bHitBlackHoleDelete=false;
 

@@ -131,6 +131,14 @@ void cNormalStar::Init(){
 
 	// ³‘¶ŽžŠÔ‚ÌÝ’è
 	m_pStarData->m_nLifeTime = CRandam::RandamRenge(LIFE_TIME, LIFE_TIME + LIFE_TIME_MARGIN);
+
+
+	//--- —¬¯‚ÌŒõ ------
+	m_pStarData->m_Light.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));
+	m_pStarData->m_Light.SetAddBlend(true);
+	m_pStarData->m_Light.SetSize(D3DXVECTOR2(m_pStarData->m_sprite.GetSize().x + 30, m_pStarData->m_sprite.GetSize().x +30));
+	m_pStarData->m_Light.SetPos(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y));
+	m_pStarData->m_Light.SetVtxColorA(255);
 }
 
 
@@ -176,6 +184,7 @@ void cNormalStar::Update(){
 		if (!m_pStarData->m_bUse)
 			continue;
 
+		m_pStarData->m_Light.SetPos(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y));
 
 		// ³‘¶ŽžŠÔŒ¸‚ç‚·
 		m_pStarData->m_nLifeTime--;
@@ -309,7 +318,9 @@ void cNormalStar::Draw(){
 		if (!m_pStarData->m_bDraw)
 			continue;
 
+		m_pStarData->m_Light.Draw();
 		m_pStarData->m_sprite.Draw();
+	
 
 		//if (m_pStarData->m_bUse)
 		//	m_pStarData->m_Collision.Draw();
@@ -348,6 +359,7 @@ void cNormalStar::Create(){
 
 		if (m_pStarData->m_sprite.GetVtxColorA() <= 255){
 			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+			m_pStarData->m_Light.SetVtxColorA(m_pStarData->m_Light.GetVtxColorA() + 5.0f);
 		}
 
 
