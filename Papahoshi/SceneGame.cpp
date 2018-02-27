@@ -253,6 +253,16 @@ void cSceneGame::MainUpdate(){
 	m_pConsellation->Update();
 
 
+	//----- Žc‚èŽžŠÔ‚Å¶¬‚·‚é¯‚ðŽw’è --------
+	if (m_pTimer->GetTime() == 50){
+		m_pBlackHole->SetCreateStart();
+
+	}
+
+
+
+
+
 	CheckCollision();			//“–‚½‚è”»’è
 	
 
@@ -406,7 +416,6 @@ void cSceneGame::CheckCollision(){
 
 			
 			  // –Ô‚Ì”ÍˆÍ“à‚É‚¢‚é‚Æ‚«‚Ìˆ—
-			  
 			  if (cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, *m_pNet->GetCollider())){
 
 				  m_pRyusei->OnCollidToNetArea(nCountStar);

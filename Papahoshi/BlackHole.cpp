@@ -24,7 +24,7 @@
 // マクロ定義
 //-----------------------------
 #define STAR_SIZE			(200)	// サイズ
-#define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
+#define RESPAWN_FREAM		(500)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
 #define VACUUM_RANGE		(300)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
@@ -56,8 +56,8 @@ cBlackHole::cBlackHole(){
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		// 初期生成
-		m_pStarData->m_bDraw = true;
-		SetCountAndUse(true);
+		//m_pStarData->m_bDraw = true;
+		//SetCountAndUse(true);
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(STAR_SIZE, STAR_SIZE));
@@ -95,6 +95,9 @@ cBlackHole::cBlackHole(){
 		// 削除範囲
 		m_pStarData->m_DeleteRange.SetType(cCollider::CIRCLE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
+
+		// αの設定
+		m_pStarData->m_sprite.SetVtxColorA(0);
 
 	}
 }
@@ -163,30 +166,27 @@ void cBlackHole::Update(){
 
 	// イベントの起動
 	// デバッグキー
-	if (GetKeyboardTrigger(DIK_B)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
-			if (m_pStarData->m_bDraw)	// ここ注意
-				continue;
-
-			m_pStarData->m_bCreateEvent = true;
-			m_pStarData = m_pRoot;	// 先頭に戻す
-			break;
-		}
-	}
-	// デバッグキー
-	if (GetKeyboardTrigger(DIK_M)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
-			if (!m_pStarData->m_bUse)	// ここ注意
-				continue;
-			m_pStarData->m_bDestroyEvent = true;
-			m_pStarData = m_pRoot;	// 先頭に戻す
-			break;
-		}
-	}
+	//if (GetKeyboardTrigger(DIK_B)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		if (m_pStarData->m_bDraw)	// ここ注意
+	//			continue;
+	//		m_pStarData->m_bCreateEvent = true;
+	//		m_pStarData = m_pRoot;	// 先頭に戻す
+	//		break;
+	//	}
+	//}
+	//// デバッグキー
+	//if (GetKeyboardTrigger(DIK_M)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		if (!m_pStarData->m_bUse)	// ここ注意
+	//			continue;
+	//		m_pStarData->m_bDestroyEvent = true;
+	//		m_pStarData = m_pRoot;	// 先頭に戻す
+	//		break;
+	//	}
+	//}
 	//if (GetKeyboardTrigger(DIK_R)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -215,12 +215,6 @@ void cBlackHole::Draw(){
 		// 星
 		m_pStarData->m_sprite.Draw();
 
-		// ゲーム内で有効ならあたり判定を描画
-		if (m_pStarData->m_bUse){
-		//	m_pStarData->m_Collision.Draw();
-			//m_pStarData->m_VacumeRange.Draw();
-			//m_pStarData->m_DeleteRange.Draw();
-		}
 	}
 
 	// 先頭に戻す
@@ -229,9 +223,8 @@ void cBlackHole::Draw(){
 	// デバッグプリント
 	PrintDebugProc("━━━━ブラックホール━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
-	PrintDebugProc("Bキーで生成\n");
-	PrintDebugProc("Mキーで削除\n");
-	PrintDebugProc("削除後自動リスポーン\n");
+	//PrintDebugProc("Bキーで生成\n");
+	//PrintDebugProc("Mキーで削除\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("%d\n", m_pStarData->m_sprite.GetCurrentAnimPattern());
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
@@ -253,8 +246,11 @@ void cBlackHole::Create(){
 		m_pStarData->m_bDraw = true;
 
 	
-		if (m_pStarData->m_sprite.GetVtxColorA() <= 255){
+		if (m_pStarData->m_sprite.GetVtxColorA()+5.0f <= 255){
 			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
+		}
+		else{
+			m_pStarData->m_sprite.SetVtxColorA(255);
 		}
 
 

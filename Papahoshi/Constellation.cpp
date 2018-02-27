@@ -93,6 +93,11 @@ cConstellation::cConstellation(){
 			m_pStarData->m_sprite.SetIntervalChangePattern(7);
 			m_pStarData->m_sprite.SetAnimationFlag(true);
 
+			// 当たり判定
+			m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+			// 当たり判定
+			m_pStarData->m_Collision.SetCircleCollider(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y), CENTER_STAR_SIZE.x / 2.0f);
+
 		}
 
 
@@ -141,15 +146,13 @@ cConstellation::cConstellation(){
 			m_pStarData->m_CircleMoveData.SetSpped(0.01f);
 			m_pStarData->m_CircleMoveData.SetRad((float)CRandam::RandamRenge(0, 2*D3DX_PI ));
 
+			// 当たり判定
+			m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
+			// 当たり判定
+			m_pStarData->m_Collision.SetCircleCollider(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y), OTHER_STAR_SIZE.x / 2.0f);
+
 		}
 	}
-
-
-
-
-
-
-
 }
 
 //=======================================================================================
@@ -185,14 +188,28 @@ void cConstellation::Update(){
 			continue;
 
 
+		//----- 中心のみ ---------
+		if (nCountStarNum == 0){
+
+			// 当たり判定
+			m_pStarData->m_Collision.SetCircleCollider(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y), CENTER_STAR_SIZE.x / 2.0f);
+		}
+
+
+		//---- 中心以外 ----------
+		if (nCountStarNum != 0){
+
+			// 円軌道の設定
+			m_pStarData->m_sprite.SetPos(m_pStarData->m_CircleMoveData.GetMove());
+
+			// 当たり判定
+			m_pStarData->m_Collision.SetCircleCollider(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y) , OTHER_STAR_SIZE.x / 2.0f);
+		}
+
+
+		//-----  共通 ------------
 		// アニメーションの更新
 		m_pStarData->m_sprite.AnimationLoop();
-
-
-		// 円軌道の設定
-		if (nCountStarNum != 0){
-			m_pStarData->m_sprite.SetPos(m_pStarData->m_CircleMoveData.GetMove());
-		}
 
 
 	}
@@ -226,10 +243,8 @@ void cConstellation::Update(){
 	//if (GetKeyboardTrigger(DIK_K)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
 	//		if (m_pStarData->m_bDraw)	// ここ注意
 	//			continue;
-
 	//		m_pStarData->m_bCreateEvent = true;
 	//		break;
 	//	}
@@ -238,16 +253,12 @@ void cConstellation::Update(){
 	//if (GetKeyboardTrigger(DIK_D)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
 	//		if (!m_pStarData->m_bUse)	// ここ注意
 	//			continue;
-
 	//		m_pStarData->m_bDestroyEvent = true;
 	//		break;
 	//	}
 	//}
-
-
 
 }
 
@@ -270,13 +281,16 @@ void cConstellation::Draw(){
 			continue;
 
 		m_pStarData->m_sprite.Draw();
+		m_pStarData->m_Collision.Draw();
 	}
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
-	if (m_pStarData->m_bDraw)
+	if (m_pStarData->m_bDraw){
 		m_pStarData->m_sprite.Draw();
+		m_pStarData->m_Collision.Draw();
+	}
 	
 	//----------------------------------------------------------------------------------------------
 

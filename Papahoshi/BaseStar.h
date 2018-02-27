@@ -64,10 +64,14 @@ public:
 	int				m_nEffectSetTime;	// エフェクト設定間隔
 	bool			m_bEffectSetFlag;	//暫定:エフェクト使用フラグ
 
+	// 生成中フラグ
+	bool			m_bCreateOK;
+
+
+
+
 	// --- 網との判定用 ---
 	bool			m_bCaptured;		// 網に獲得されたか
-
-
 	D3DXVECTOR2		m_Move;				// 移動量
 	D3DXVECTOR2		m_Destination;		// 目的位置記憶
 	D3DXVECTOR2		m_VecStarToDest;	// 星から目的地方向のベクトル
