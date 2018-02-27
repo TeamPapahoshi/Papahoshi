@@ -52,7 +52,10 @@ public:
 	void SetNetData(cNet* data);
 	void OnCollidToNet(int num);
 	void OnCollidToNetArea(int num);
-	void SetStream(bool a){
+	void SetStream(bool a ,int num){
+		m_pStarData = m_pRoot;
+		m_pStarData += num;
+
 		m_pStarData->m_bStream = a;
 	}
 

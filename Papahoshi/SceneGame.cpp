@@ -403,17 +403,22 @@ void cSceneGame::CheckCollision(){
 					  m_pRyusei->OnCollidToNet(nCountStar);
 				  }
 			  }
-			  if (m_pNet->GetPullFlug()){
-				  // –Ô‚Ì”ÍˆÍ“à‚É‚¢‚é‚Æ‚«‚Ìˆ—
-				  if (cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, *m_pNet->GetCollider())){
 
-					  m_pRyusei->OnCollidToNetArea(nCountStar);
-				  }
+			
+			  // –Ô‚Ì”ÍˆÍ“à‚É‚¢‚é‚Æ‚«‚Ìˆ—
+			  
+			  if (cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, *m_pNet->GetCollider())){
+
+				  m_pRyusei->OnCollidToNetArea(nCountStar);
 			  }
+	
 			  if (!cCollider::CheckCollisionCircleToTriangle(m_pRyusei->GetStarData()[nCountStar].m_Collision, *m_pNet->GetCollider())){
-				  m_pRyusei->SetStream(true);
-			  }
 
+				  m_pRyusei->SetStream(true, nCountStar);
+			  }
+				  
+
+			 
 		  }
 	  }
 

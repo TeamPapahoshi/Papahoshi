@@ -146,7 +146,7 @@ void cRyusei::Update(){
 
 
 		// 画面外に出たらフラグオフ
-		if (m_pStarData->m_sprite.GetPosY() > GAME_SCREEN_UNDER || m_pStarData->m_sprite.GetPosX() < GAME_SCREEN_LEFT){
+		if (m_pStarData->m_sprite.GetPosY() >= GAME_SCREEN_UNDER-80 || m_pStarData->m_sprite.GetPosX() <= GAME_SCREEN_LEFT){
 			m_pStarData->m_bDestroyEvent = true;
 		}
 	}
@@ -423,9 +423,10 @@ void cRyusei::OnCollidToNet(int num){
 	m_pStarData = m_pRoot;
 	m_pStarData += num;
 
-
-	// Vector確認用
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
+
+	m_pStarData->m_bStream = false;
+
 }
 
 //--- 網の中に流星があるとき ---
