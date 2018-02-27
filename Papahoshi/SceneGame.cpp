@@ -491,7 +491,7 @@ void cSceneGame::CheckCollision(){
 			  }
 			  // íœ”ÍˆÍ
 			  if (cCollider::CheckCollisionCircleToCircle(m_pNomalStar->GetStarData()[nCountStar].m_Collision, m_pBlackHole->GetStarData()[nCountBlackHole].m_DeleteRange)){
-				  m_pNomalStar->OnCollidToBlackHoleDeleteRange(nCountStar);
+				  m_pNomalStar->OnCollidToBlackHoleDeleteRange(nCountStar, nCountBlackHole);
 
 			  }
 		  }
