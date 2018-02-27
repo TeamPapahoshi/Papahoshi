@@ -28,7 +28,10 @@
 #define STAR_SIZE				(160)
 #define RESPAWN_FREAM			(200)
 #define MAX_NORMAL_RYUSEI_NUM	(50)
-#define MOVE_SPEED				(2.5f)
+#define MOVE_SPEED				(4.5f)
+
+
+#define LIMIT_METEOR_NOT_FEVER	(2)
 
 
 //=======================================================================================
@@ -65,7 +68,7 @@ cRyusei::cRyusei(){
 		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
 
 		// 加算合成ON
-		//m_pStarData->m_sprite.SetAddBlend(true);
+		m_pStarData->m_sprite.SetAddBlend(true);
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
@@ -76,32 +79,21 @@ cRyusei::cRyusei(){
 
 
 		//--- 流れる処理のための準備 ---
+		m_pStarData->m_bStream = true;
 		m_pStarData->m_StreamStartPos = CreateRamdomPos;																// 初期生成位置をスタート位置に指定
 		m_pStarData->m_StreamGoalPos  = D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT);		// 画面左下をゴールに指定
 		m_pStarData->m_VecStreamMove  = m_pStarData->m_StreamGoalPos - m_pStarData->m_StreamStartPos;					// スタートとゴールから流れる方向のベクトルを求める
 		m_pStarData->m_StremCos		  = (fabs(m_pStarData->m_StreamStartPos.x - m_pStarData->m_StreamGoalPos.x)			// 計算用のcosを求める
 										/ VectorSize(m_pStarData->m_VecStreamMove));
 		m_pStarData->m_StreamRad	  = acosf(m_pStarData->m_StremCos);													// Cosから計算用の角度を求める
-		m_pStarData->m_sprite.SetRad(D3DX_PI/2.0f - m_pStarData->m_StreamRad);										// 計算結果より回転角度をセット
+		m_pStarData->m_sprite.SetRad(D3DX_PI/2.0f - m_pStarData->m_StreamRad);											// 計算結果より回転角度をセット
 		m_pStarData->m_MoveSpped      = MOVE_SPEED * UnitVector(m_pStarData->m_VecStreamMove);							// 流れる方向の単位ベクトルを求めて速さをセット
 
-	
 
+		// 初期生成でいくつか
+		if (m_nCurrentNum < LIMIT_METEOR_NOT_FEVER)
+			m_pStarData->m_bCreateEvent = true;
 
-		// 移動の目的位置決定
-		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT - 100);
-		// 星から目的地方向の単位ベクトルを求める
-		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
-
-
-		// CORE
-		//m_pStarData->m_Core.SetPos(m_pStarData->m_sprite.GetPos());
-		//m_pStarData->m_Core.SetAddBlend(true);
-		//m_pStarData->m_Core.SetSize(D3DXVECTOR2(STAR_SIZE + 50, STAR_SIZE + 50));// サイズの変更
-		//m_pStarData->m_Core.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));// テクスチャの設定
-		//m_pStarData->m_Core.SetVtxColor(D3DXCOLOR((float)CRandam::RandamRenge(0, 255), (float)CRandam::RandamRenge(0, 255),
-		//											(float)CRandam::RandamRenge(0, 255), 155));		// 色
-		//m_pStarData->m_Core.SetVtxColor(D3DXCOLOR(255,255,0,155));		// 色
 	}
 	m_bFever = false;
 }
@@ -135,19 +127,26 @@ void cRyusei::Update(){
 		if (!m_pStarData->m_bUse)
 			continue;
 
+	
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_Collision.SetCircleCollider(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y+30), STAR_SIZE / 4.0f);
+
+		// 網の方向に移動するための処理
+		m_pStarData->m_Destination   = m_pNetData->GetNetStart();
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());// 星から目的地方向の単位ベクトルを求める
 
 		// アニメーション
 		m_pStarData->m_sprite.AnimationLoop();
 
-		m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_MoveSpped);
-		//m_pStarData->m_sprite.SetRad(m_pStarData->m_sprite.GetRad() - 0.01f);
+		// 流れる処理
+		if (m_pStarData->m_bStream){
+			m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_MoveSpped);
+		}
 
 
 		// 画面外に出たらフラグオフ
-		if (m_pStarData->m_sprite.GetPosY() >= SCREEN_HEIGHT || m_pStarData->m_sprite.GetPosX() <= GAME_SCREEN_LEFT){
+		if (m_pStarData->m_sprite.GetPosY() >= GAME_SCREEN_UNDER-80 || m_pStarData->m_sprite.GetPosX() <= GAME_SCREEN_LEFT){
 			m_pStarData->m_bDestroyEvent = true;
 		}
 	}
@@ -159,9 +158,20 @@ void cRyusei::Update(){
 	// イベント格納
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		// イベントが呼び出される感じ
 		if (m_pStarData->m_bCreateEvent){
-			Create();
+
+			//---- フィーバ中は常に生成 -------
+			if (m_bFever){
+				Create();
+			}
+
+			//---- フィーバ中でないときは個数制限をして生成 -----
+			if (!m_bFever && m_nCurrentNum < LIMIT_METEOR_NOT_FEVER){
+				Create();
+			}
+			if (!m_bFever && m_nCurrentNum >= LIMIT_METEOR_NOT_FEVER){
+				m_pStarData->m_bCreateEvent = false;
+			}
 		}
 
 		if (m_pStarData->m_bDestroyEvent){
@@ -174,11 +184,8 @@ void cRyusei::Update(){
 
 	}
 
-
-	
-
 	// すべての流星が使用されなくなったら効果音を止める
-	if (m_nCurrentNum==0 && !m_bFever){
+	if (m_nCurrentNum <= LIMIT_METEOR_NOT_FEVER && !m_bFever){
 		StopSound(SOUND_LABEL_SE_STREAM_METEOR);
 	}
 
@@ -186,12 +193,12 @@ void cRyusei::Update(){
 
 	// イベントの起動
 	// デバッグキー
-	if (GetKeyboardTrigger(DIK_R)){
-		m_pStarData = m_pRoot;	// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-			m_pStarData->m_bDestroyEvent = true;
-		}
-	}
+	//if (GetKeyboardTrigger(DIK_R)){
+	//	m_pStarData = m_pRoot;	// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		m_pStarData->m_bDestroyEvent = true;
+	//	}
+	//}
 	//if (GetKeyboardTrigger(DIK_K)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -232,6 +239,7 @@ void cRyusei::Draw(){
 
 
 		m_pStarData->m_sprite.Draw();
+		//m_pStarData->m_Collision.Draw();
 
 	}
 
@@ -243,7 +251,6 @@ void cRyusei::Draw(){
 	// デバッグプリント
 	PrintDebugProc("━━━━━━流星━━━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
-	PrintDebugProc("Rキーでリセット\n");
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 
@@ -327,36 +334,6 @@ void cRyusei::Destroy(){
 	if (m_pStarData->m_bDestroyEnd){
 
 
-		// 座標の決定
-		D3DXVECTOR2 CreateRamdomPos;
-		CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + STAR_SIZE, GAME_SCREEN_RIGHT + 200);
-		CreateRamdomPos.y = -(float)CRandam::RandamRenge(0, 800);
-		//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
-		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
-
-		//--- 流れる処理のための準備 ---
-		m_pStarData->m_StreamStartPos = CreateRamdomPos;																// 初期生成位置をスタート位置に指定
-		m_pStarData->m_StreamGoalPos = D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT);		// 画面左下をゴールに指定
-		m_pStarData->m_VecStreamMove = m_pStarData->m_StreamGoalPos - m_pStarData->m_StreamStartPos;					// スタートとゴールから流れる方向のベクトルを求める
-		m_pStarData->m_StremCos = (fabs(m_pStarData->m_StreamStartPos.x - m_pStarData->m_StreamGoalPos.x)			// 計算用のcosを求める
-			/ VectorSize(m_pStarData->m_VecStreamMove));
-		m_pStarData->m_StreamRad = acosf(m_pStarData->m_StremCos);													// Cosから計算用の角度を求める
-		m_pStarData->m_sprite.SetRad(D3DX_PI / 2.0f - m_pStarData->m_StreamRad);										// 計算結果より回転角度をセット
-		m_pStarData->m_MoveSpped = MOVE_SPEED * UnitVector(m_pStarData->m_VecStreamMove);							// 流れる方向の単位ベクトルを求めて速さをセット
-
-		// 移動方向の単位ベクトルを求める
-		m_pStarData->m_MoveSpped = MOVE_SPEED * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0f, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
-
-
-		// 星から目的地方向の単位ベクトルを求める
-		m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
-		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
-
-
-		// 終了し
-
-		// 生成イベント開始
-		if (m_bFever)
 		m_pStarData->m_bRespawnEvent = true;
 
 		//	リセット
@@ -393,6 +370,7 @@ void cRyusei::Respawn(){
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 
 			//--- 流れる処理のための準備 ---
+			m_pStarData->m_bStream = true;
 			m_pStarData->m_StreamStartPos = CreateRamdomPos;																// 初期生成位置をスタート位置に指定
 			m_pStarData->m_StreamGoalPos = D3DXVECTOR2(CreateRamdomPos.x - 250.0, CreateRamdomPos.y + SCREEN_HEIGHT);		// 画面左下をゴールに指定
 			m_pStarData->m_VecStreamMove = m_pStarData->m_StreamGoalPos - m_pStarData->m_StreamStartPos;					// スタートとゴールから流れる方向のベクトルを求める
@@ -418,8 +396,7 @@ void cRyusei::Respawn(){
 	if (m_pStarData->m_bRespawnEnd){
 
 		// 生成イベント開始
-		if (m_bFever)
-			m_pStarData->m_bCreateEvent = true;
+		m_pStarData->m_bCreateEvent = true;
 
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;
@@ -446,7 +423,22 @@ void cRyusei::OnCollidToNet(int num){
 	m_pStarData = m_pRoot;
 	m_pStarData += num;
 
-
-	// Vector確認用
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
+
+	m_pStarData->m_bStream = false;
+
+}
+
+//--- 網の中に流星があるとき ---
+void cRyusei::OnCollidToNetArea(int num){
+
+	// 先頭から何番目か
+	m_pStarData = m_pRoot;
+	m_pStarData += num;
+
+	if (!m_pStarData->m_bUse)
+		return;
+
+	m_pStarData->m_bStream = false;
+	
 }

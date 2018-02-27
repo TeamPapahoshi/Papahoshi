@@ -110,20 +110,25 @@ cConstellation::cConstellation(){
 			{
 			case 0:
 				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_YELLOW_STAR_ANIM));
+				m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
 				break;
 			case 1:
 				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GREEN_STAR_ANIM));
+				m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
 				break;
 			case 2:
 				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PINK_STAR_ANIM));
+				m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
 				break;
 			default:
 				break;
 			}
 			// アニメーションの設定
 			m_pStarData->m_sprite.SetAnimationFlag(true);
-			m_pStarData->m_sprite.SetTexPatternDevide(11, 2);
-			m_pStarData->m_sprite.SetIntervalChangePattern(7);
+		
 
 
 			// サイズの設定
@@ -131,7 +136,7 @@ cConstellation::cConstellation(){
 
 			// 円軌道の設定
 			m_pStarData->m_CircleMoveData.SetCenter(CreateCenterPos);	// 円軌道の中心を星群れの中心にセット
-		//	m_pStarData->m_CircleMoveData.SetRadius(D3DXVECTOR2((float)CRandam::RandamRenge(100, 200), (float)CRandam::RandamRenge(100,200)));
+			//m_pStarData->m_CircleMoveData.SetRadius(D3DXVECTOR2((float)CRandam::RandamRenge(100, 200), (float)CRandam::RandamRenge(100,200)));
 			m_pStarData->m_CircleMoveData.SetRadius(D3DXVECTOR2(100, 100));
 			m_pStarData->m_CircleMoveData.SetSpped(0.01f);
 			m_pStarData->m_CircleMoveData.SetRad((float)CRandam::RandamRenge(0, 2*D3DX_PI ));

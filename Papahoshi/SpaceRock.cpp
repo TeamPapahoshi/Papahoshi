@@ -66,7 +66,6 @@ cSpaceRock::cSpaceRock(){
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_SPACE_ROCK));
 
 		// 座標の決定
-		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
 		int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
 		switch (RamdomNum)
@@ -148,6 +147,7 @@ void cSpaceRock::Update(){
 			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;
 			m_pStarData->m_bDestroyEvent = true;
 		}
+
 
 		// 移動の目的位置決定
 		m_pStarData->m_Destination = m_pNetData->GetNetStart();

@@ -1,25 +1,24 @@
 //======================================================================
-//	ResultGirl.h
+//	ResultFont
 //	
-//	概要＿：リザルト画面の女の子表示
+//	概要＿：リザルト画面文字表示
 //	制作者：安藤 光樹
 //	
 //======================================================================
-#ifndef ___RESULTGIRL_H___
-#define ___RESULTGIRL_H___
+#ifndef ___RESULTFONT_H___
+#define ___RESULTFONT_H___
 
 //-----------------------------
 //インクルードファイル
 //-----------------------------
 #include "Common.h"
 
+//----- 他クラスからのインクルード -----
+#include "Ranking.h"
+
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define   RESULTGIRL_POS_X (SCREEN_WIDTH - 270.0f)
-#define   RESULTGIRL_POS_Y (SCREEN_HEIGHT - 150.0f)
-#define   RESULTGIRL_SIZE_X (300.0f)
-#define   RESULTGIRL_SIZE_Y (400.0f)
 
 //-----------------------------
 //列挙型定義
@@ -29,14 +28,17 @@
 //クラス定義
 //-----------------------------
 // 基底クラス:クラスサンプル
-class cResultgirl
+class cResultFont
 {
 private:	//外部から参照不可能
-	cSpriteParam m_cGirlsprite;
-	int			 m_nAnimPattern;
-	int			 m_nCurrentPattern;
-	int			 m_nAnimFlame;
-	bool		 m_nAnimFlag;	//trueでmaxの、falseでminのテクスチャ表示
+	cSpriteParam m_cScoreFont;
+	cSpriteParam m_cRankFont;
+	cSpriteParam m_cNewRecordFont;
+
+	cRanking*    m_pRanking;
+
+	int			 m_nNewRecordAlpha;
+	bool		 m_bNewRecordAlphaChangeFlag;
 
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
@@ -44,15 +46,15 @@ protected:	//クラス内でのみ参照可能
 	//-----------------------------
 public:		//外部から参照可能
 
-	cResultgirl();	//コンストラクタ
-	~cResultgirl();	//デストラクタ
+	cResultFont();	//コンストラクタ
+	~cResultFont();	//デストラクタ
 
 	void Update(void);
 	void Draw(void);
 
-	bool GetResultGirlAnim(void)
+	void GetRankingData(cRanking* data)
 	{
-		return m_nAnimFlag;
+		m_pRanking = data;
 	}
 };
 
