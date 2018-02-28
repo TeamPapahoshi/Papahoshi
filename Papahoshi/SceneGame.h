@@ -15,6 +15,7 @@
 #include <d3d9.h>
 #include "SceneManeger.h"
 #include "Common.h"
+#include "PlaySupport.h"
 
 // ステージ
 #include "StageManager.h"
@@ -86,6 +87,7 @@ private:
 	cTimer*						m_pTimer;			// タイマー
 	cSampleStar*				m_pSampleStar;
 	cAnnounce*					m_pAnnounce;
+	cPlaySupport*				m_pPlaySupport;
 
 
 	// ゲームの状態

@@ -36,6 +36,7 @@ public:
 		STAGE_SELECT,	//ステージ選択
 		GAME,	//ゲームメイン
 		RESULT,	//リザルト
+		TRANING,	//トレモ
 	};
 
 	static void ChangeScene(SCENE scene);	// 現在のシーンを引数のシーンへ更新

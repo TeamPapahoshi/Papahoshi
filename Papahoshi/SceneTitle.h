@@ -49,5 +49,8 @@ private:
 
 	bool		bSceneChangeFlag;
 	bool		m_bChange;	//シーンチェンジを呼んだらfalse
+
+	bool CheckCommand();
+	int m_nLeverDirection[180];
 };
 #endif //!___SCENE_TITLE_H___

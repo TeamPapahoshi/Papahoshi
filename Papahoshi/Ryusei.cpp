@@ -96,7 +96,7 @@ cRyusei::cRyusei(){
 		m_pStarData->m_MeteorLight.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT));
 		m_pStarData->m_MeteorLight.SetAddBlend(true);
 		m_pStarData->m_MeteorLight.SetSize(D3DXVECTOR2(60, 60));
-
+		m_pStarData->m_MeteorLight.SetPos(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x - 17, m_pStarData->m_sprite.GetPos().y + 50));
 
 		// 初期生成でいくつか
 		if (m_nCurrentNum < LIMIT_METEOR_NOT_FEVER)
@@ -412,6 +412,8 @@ void cRyusei::Respawn(){
 			m_pStarData->m_sprite.SetRad(D3DX_PI / 2.0f - m_pStarData->m_StreamRad);										// 計算結果より回転角度をセット
 			m_pStarData->m_MoveSpped = MOVE_SPEED * UnitVector(m_pStarData->m_VecStreamMove);							// 流れる方向の単位ベクトルを求めて速さをセット
 
+
+			m_pStarData->m_MeteorLight.SetPos(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x - 17, m_pStarData->m_sprite.GetPos().y + 50));
 			// 移動方向の単位ベクトルを求める
 			m_pStarData->m_MoveSpped = MOVE_SPEED * UnitVector(D3DXVECTOR2(CreateRamdomPos.x - 250.0f, CreateRamdomPos.y + SCREEN_HEIGHT) - CreateRamdomPos);
 

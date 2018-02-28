@@ -46,6 +46,15 @@ enum{	//ネットの部品
 class cNet{
 
 public:
+	//---- 列挙型宣言 -----
+	enum GAME_PHASE{	//網のゲームフェイズ
+		PHASE_POST,	//構え
+		PHASE_SHOUT,	//飛ばし
+		PHASE_PULL,		//引く
+
+		PHASE_MAX,
+	};
+
 	cNet();
 	~cNet();
 
@@ -80,15 +89,22 @@ public:
 		return m_aPos[2];
 	}
 
-private:
-	//---- 列挙型宣言 -----
-	enum GAME_PHASE{	//網のゲームフェイズ
-		PHASE_POST,	//構え
-		PHASE_SHOUT,	//飛ばし
-		PHASE_PULL,		//引く
+	//網のフェイズを返す
+	GAME_PHASE GetGamePhase(){
+		return gamePhase;
+	}
 
-		PHASE_MAX,
-	};
+	//全プレス
+	bool GetAllPress(){
+		return m_bAllPress;
+	}
+
+	//レバー入力
+	int GetRevor(){
+		return m_nLeverDirection;
+	}
+
+private:
 
 	enum POST_ANGLE{	//構え角度
 		ANG_LEFT = 1,

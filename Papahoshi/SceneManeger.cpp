@@ -20,6 +20,7 @@
 #include"SceneStageSelect.h"
 #include"SceneGame.h"
 #include"SceneResult.h"
+#include "SceneTraning.h"
 
 //-----------------------------
 //グローバル
@@ -68,6 +69,9 @@ void cSceneManeger::ChangeScene(SCENE scene){
 		tex->LoadTexture(RESULT);
 		m_pScene = new cSceneResult();		// 動的インスタンス&初期化
 		break;
+	case TRANING:
+		tex->LoadTexture(GAME);				// テクスチャのロード
+		m_pScene = new cSceneTraning();
 	default:
 		break;
 	}

@@ -49,6 +49,10 @@ public:
 	}
 
 
+	bool GetCapturedFlag(){
+		return m_pStarData->m_bCaptured;
+	}
+
 	void Create();		// ¶¬
 	void Destroy();		// íœ
 	void Respawn();		// ƒŠƒXƒ|[ƒ“

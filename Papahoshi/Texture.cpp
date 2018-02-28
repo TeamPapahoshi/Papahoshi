@@ -137,6 +137,19 @@
 
 #define TEXTURE_FILENAME_NET_PIRTICLE	 ("Image/Pirticle/Star.png")
 
+//サポート
+#define TEXTURE_FILENAME_SUPPORT_1	 ("Image/GameUI/fukidashi/1.png")
+#define TEXTURE_FILENAME_SUPPORT_2	 ("Image/GameUI/fukidashi/2.png")
+#define TEXTURE_FILENAME_SUPPORT_3	 ("Image/GameUI/fukidashi/3.png")
+#define TEXTURE_FILENAME_SUPPORT_4	 ("Image/GameUI/fukidashi/4.png")
+#define TEXTURE_FILENAME_SUPPORT_BLACK	 ("Image/GameUI/fukidashi/black.png")
+#define TEXTURE_FILENAME_SUPPORT_FEVER	 ("Image/GameUI/fukidashi/fever.png")
+#define TEXTURE_FILENAME_SUPPORT_HURRY	 ("Image/GameUI/fukidashi/hurry.png")
+#define TEXTURE_FILENAME_SUPPORT_INSEKI	 ("Image/GameUI/fukidashi/inseki.png")
+#define TEXTURE_FILENAME_SUPPORT_MAX	 ("Image/GameUI/fukidashi/max.png")
+#define TEXTURE_FILENAME_SUPPORT_MIN	 ("Image/GameUI/fukidashi/min.png")
+
+
 //-----------------------------
 // グローバル
 //-----------------------------
@@ -220,7 +233,20 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_PINK_METEOR_ANIM,
 	TEXTURE_FILENAME_PLANET03_ANIM,
 	TEXTURE_FILENAME_NET_PIRTICLE,
+<<<<<<< HEAD
 	TEXTURE_FILENAME_GAGEFIVER,
+=======
+	TEXTURE_FILENAME_SUPPORT_1,
+	TEXTURE_FILENAME_SUPPORT_2,
+	TEXTURE_FILENAME_SUPPORT_3,
+	TEXTURE_FILENAME_SUPPORT_4,
+	TEXTURE_FILENAME_SUPPORT_BLACK,
+	TEXTURE_FILENAME_SUPPORT_FEVER,
+	TEXTURE_FILENAME_SUPPORT_HURRY,
+	TEXTURE_FILENAME_SUPPORT_INSEKI,
+	TEXTURE_FILENAME_SUPPORT_MAX,
+	TEXTURE_FILENAME_SUPPORT_MIN,
+>>>>>>> d5f5bc2307e2f71c7d36d018e1548fbe8a70b286
 };
 
 vector<char*> texResult = {
