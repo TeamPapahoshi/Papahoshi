@@ -196,8 +196,8 @@ void cSceneGame::Draw(){
 	m_pBG->Draw();				// ”wŒi
 	m_pBlackHole->Draw();
 	m_pSampleStar->Draw();
-	m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
+	m_pSpaceRock->Draw();
 	m_pRyusei->Draw();
 	//m_pConsellation->Draw();
 	m_pNet->Draw();

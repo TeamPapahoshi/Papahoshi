@@ -24,18 +24,21 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
+//---- 隕石 ----
+#define CREATE_PATTERN		(2)
+#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+150,350))
+#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-150,350))
 #define STAR_SIZE			(150)
 #define RESPAWN_FREAM		(200)
 #define MAX_SPACE_ROCK_NUM	(1)
 #define DESTROY_STAR		(20)
-#define EXPLOSION_FRAME		(100)		// 爆発時間
 
-//	生成位置
-#define CREATE_PATTERN		(2)
-#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_RIGHT-GAME_SCREEN_LEFT-100,150))
-#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-GAME_SCREEN_LEFT-100,150))
+//---- 爆発関連 -----
+#define EXPLOSION_FRAME		(40)		// 爆発時間
+#define EXPLOSION_SIZE		(250)
 
-
+//---- 正存時間 -------
+#define LIFE_TIME			(600)
 
 
 //=======================================================================================
@@ -76,7 +79,7 @@ cSpaceRock::cSpaceRock(){
 		case 1:
 			CreateRamdomPos = CREATE_POS_01;
 			break;
-		case CREATE_PATTERN:
+		case 2:
 			CreateRamdomPos = CREATE_POS_02;
 			break;
 		default:
@@ -89,21 +92,27 @@ cSpaceRock::cSpaceRock(){
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f-20.0f);
 
 		// 破壊数を設定
 		m_pStarData->m_nDestroyStarNum = DESTROY_STAR;
 
 		// 爆発用
 		m_pStarData->m_ExplosionAnim.SetPos(m_pStarData->m_sprite.GetPos());	// 
+		m_pStarData->m_ExplosionAnim.SetSize(D3DXVECTOR2(EXPLOSION_SIZE, EXPLOSION_SIZE));
 		m_pStarData->m_ExplosionAnim.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_EXPLOSION));
+		m_pStarData->m_ExplosionAnim.SetAddBlend(true);
 		m_pStarData->m_ExplosionAnim.SetAnimationFlag(true);
-		m_pStarData->m_ExplosionAnim.SetTexPatternDevide(8, 1);
-		m_pStarData->m_ExplosionAnim.SetIntervalChangePattern(5);
+		m_pStarData->m_ExplosionAnim.SetCurrentAnimPattern(0);
+		m_pStarData->m_ExplosionAnim.SetTexPatternDevide(8, 2);
+		m_pStarData->m_ExplosionAnim.SetIntervalChangePattern(3);
 		m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
 		m_pStarData->m_bExplosion = false;								// 開始用フラグ
-	}
 
+		// 正存時間の指定
+		m_pStarData->m_nLifeTime = LIFE_TIME;
+
+	}
 }
 
 //=======================================================================================
@@ -132,38 +141,63 @@ void cSpaceRock::Update(){
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-
 		// 当たり判定
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
-
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 20.0f);
 
 		// アニメーション更新
 		m_pStarData->m_sprite.AnimationLoop();
 
-
-		//---- 爆発カウントによって色を変える -----
-		float ratio = (float)m_pStarData->m_nDestroyStarNum / (float)DESTROY_STAR;
-		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255 * ratio, 255 * ratio, 255));
-		// 残り1で真っ赤に
-		if (m_pStarData->m_nDestroyStarNum == 1){
-			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 0, 0, 255));
-		}
-
-		// 破壊カウントがゼロになると爆発
-		if (m_pStarData->m_nDestroyStarNum <= 0){
-
-			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;
-			m_pStarData->m_bDestroyEvent = true;
-		}
-
-
-		// 移動の目的位置決定
-		m_pStarData->m_Destination = m_pNetData->GetNetStart();
-		// 星から目的地方向の単位ベクトルを求める
-		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
+		// 網との処理用
+		m_pStarData->m_Destination = m_pNetData->GetNetStart();	// 移動の目的位置決定
+		m_pStarData->m_Destination.y = m_pNetData->GetNetStart().y - 100.0f;	// 移動の目的位置決定
+		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());// 星から目的地方向の単位ベクトルを求める
 
 		// 爆発の位置
 		m_pStarData->m_ExplosionAnim.SetPos(m_pStarData->m_sprite.GetPos());
+
+
+		//---- 爆発カウントによって色を変える -----
+		float ratio = (float)m_pStarData->m_nLifeTime / (float)LIFE_TIME;
+		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255 * ratio, 255 * ratio, 255));
+		// 残り1で真っ赤に
+		if (m_pStarData->m_nLifeTime <= 200){
+			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 0, 0, 255));
+
+			// 振動する
+			if (m_pStarData->m_bVibration){
+
+				m_pStarData->m_nVibrationFrame++;
+				m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() + 0.4f);
+
+				if (m_pStarData->m_nVibrationFrame > 3){
+					m_pStarData->m_bVibration = false;
+					m_pStarData->m_nVibrationFrame = 0;
+				}
+			}
+
+			else if (!m_pStarData->m_bVibration){
+
+				m_pStarData->m_nVibrationFrame++;
+				m_pStarData->m_sprite.SetPosX(m_pStarData->m_sprite.GetPosX() - 0.4f);
+
+				if (m_pStarData->m_nVibrationFrame > 3){
+					m_pStarData->m_bVibration = true;
+					m_pStarData->m_nVibrationFrame = 0;
+				}
+			}
+		}
+
+		// 目的位置についたら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+		{
+			m_pStarData->m_bDestroyEvent = true;
+		}
+
+		//--- 正存時間を減らす ---
+		m_pStarData->m_nLifeTime--;
+		if (m_pStarData->m_nLifeTime <= 0){
+			m_pStarData->m_bDestroyEvent = true;
+		}
 
 	}
 
@@ -188,16 +222,16 @@ void cSpaceRock::Update(){
 	}
 
 
-	if (GetKeyboardTrigger(DIK_2)){
-		m_pStarData = m_pRoot;			// 先頭に戻す
-		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-			if (!m_pStarData->m_bUse)	// ここ注意
-			continue;
-			m_pStarData->m_nDestroyStarNum--;
-			m_pStarData = m_pRoot;		// 先頭に戻す
-			break;
-		}
-	}
+	//if (GetKeyboardTrigger(DIK_2)){
+	//	m_pStarData = m_pRoot;			// 先頭に戻す
+	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+	//		if (!m_pStarData->m_bUse)	// ここ注意
+	//		continue;
+	//		m_pStarData->m_nDestroyStarNum--;
+	//		m_pStarData = m_pRoot;		// 先頭に戻す
+	//		break;
+	//	}
+	//}
 	// イベントの起動
 	// デバッグキー
 	//if (GetKeyboardTrigger(DIK_B)){
@@ -256,7 +290,7 @@ void cSpaceRock::Draw(){
 
 		// ゲーム内で有効ならあたり判定を描画
 		if (m_pStarData->m_bUse){
-			//	m_pStarData->m_Collision.Draw();
+			//m_pStarData->m_Collision.Draw();
 		}
 	}
 
@@ -266,9 +300,9 @@ void cSpaceRock::Draw(){
 	// デバッグプリント
 	PrintDebugProc("━━━━隕石━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
-	PrintDebugProc("2キーで破壊数更新");
-	PrintDebugProc("破壊数 %d/%d\n", m_pStarData->m_nDestroyStarNum, DESTROY_STAR);
-	PrintDebugProc("爆発時間 %d/%d\n", m_pStarData->m_ExplosionFrame, EXPLOSION_FRAME);
+	//PrintDebugProc("2キーで破壊数更新");
+	//PrintDebugProc("破壊数 %d/%d\n", m_pStarData->m_nDestroyStarNum, DESTROY_STAR);
+	//PrintDebugProc("爆発時間 %d/%d\n", m_pStarData->m_ExplosionFrame, EXPLOSION_FRAME);
 	PrintDebugProc("リスポーンインターバル %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
 
@@ -284,9 +318,6 @@ void cSpaceRock::Create(){
 	// 生成イベントの開始
 	if (!m_pStarData->m_bCreateEnd){
 
-
-
-
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
 		//****** ここに演出とか生成処理を書いていく **********
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
@@ -296,8 +327,6 @@ void cSpaceRock::Create(){
 			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
 		}
 
-
-
 		//****************************************************
 
 
@@ -306,8 +335,6 @@ void cSpaceRock::Create(){
 
 		if (m_pStarData->m_sprite.GetVtxColorA() >= 255)
 			m_pStarData->m_bCreateEnd = true;
-
-
 
 	}
 
@@ -368,11 +395,11 @@ void cSpaceRock::Destroy(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
 
-		m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
-		m_pStarData->m_bExplosion = false;								// 開始用フラグ
-
 		// 終了したら即リスポーン準備
 		m_pStarData->m_bRespawnEvent = true;
+
+		// フラグオン
+		m_pStarData->m_bExplosion = false;
 
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;
@@ -418,12 +445,16 @@ void cSpaceRock::Respawn(){
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
 		
 			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;					// 破壊数を設定
-
+			m_pStarData->m_ExplosionAnim.SetCurrentAnimPattern(0);
 			m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
 			m_pStarData->m_bExplosion = false;								// 開始用フラグ
 
 			// リスポーン処理終了
 			m_pStarData->m_bRespawnEnd = true;
+
+
+			// 正存時間の指定
+			m_pStarData->m_nLifeTime = LIFE_TIME;
 
 	
 		}

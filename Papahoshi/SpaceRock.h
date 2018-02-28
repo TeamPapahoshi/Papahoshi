@@ -27,8 +27,12 @@
 class cSpaceRockData :public cBaseStarData{
 public:
 	int				m_nDestroyStarNum;	// 破壊する数
+	int				m_nLifeTime=0;
 
+	bool	m_bVibration = true;
+	int		m_nVibrationFrame = 0;
 
+	//---- 爆発エフェクト関連 ----
 	cSpriteParam	m_ExplosionAnim;	// 爆破るエフェクト用
 	int				m_ExplosionFrame;	// 爆発時間
 	bool			m_bExplosion;		// 開始用フラグ
