@@ -421,6 +421,8 @@ void cRyusei::Respawn(){
 			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
+			m_pStarData->m_bCaptured = false;
+
 			m_pStarData->m_bRespawnEnd = true;
 		}
 	}

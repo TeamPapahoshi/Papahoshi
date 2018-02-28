@@ -24,7 +24,7 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define STAR_SIZE			(100)
+#define STAR_SIZE			(150)
 #define RESPAWN_FREAM		(200)
 #define MAX_SPACE_ROCK_NUM	(1)
 #define DESTROY_STAR		(20)
@@ -64,6 +64,9 @@ cSpaceRock::cSpaceRock(){
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_SPACE_ROCK));
+		m_pStarData->m_sprite.SetAnimationFlag(true);
+		m_pStarData->m_sprite.SetTexPatternDevide(5, 4);
+		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
@@ -132,7 +135,12 @@ void cSpaceRock::Update(){
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f);
-	
+
+
+		// アニメーション更新
+		m_pStarData->m_sprite.AnimationLoop();
+
+
 		//---- 爆発カウントによって色を変える -----
 		float ratio = (float)m_pStarData->m_nDestroyStarNum / (float)DESTROY_STAR;
 		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255 * ratio, 255 * ratio, 255));
