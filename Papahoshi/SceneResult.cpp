@@ -23,7 +23,7 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define SCORE_POS_X  (SCREEN_WIDTH - 527.0f)
+#define SCORE_POS_X  (SCREEN_WIDTH - 587.0f)
 #define SCORE_POS_Y	 (SCREEN_HEIGHT - 520.0f)
 #define SCORE_SIZE_X (100.0f)
 #define SCORE_SIZE_Y (140.0f)
@@ -95,7 +95,16 @@ void cSceneResult::Update(){
 	UpdateScore();
 
 	// シーン更新
-	if (GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)){
+	if (GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_A) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_B) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_C) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_D) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_E) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_F) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_G) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)
+	)
+	{
 		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
 	}
 }
@@ -110,8 +119,8 @@ void cSceneResult::Draw(){
 	m_pBG->Draw();
 	m_pRanking->Draw();
 	m_pResultgirl->Draw();
-	m_pResultFont->Draw();
 	m_pResultStar->Draw();
+	m_pResultFont->Draw();
 	DrawScore(D3DXVECTOR2(SCORE_POS_X, SCORE_POS_Y), D3DXVECTOR2(SCORE_SIZE_X, SCORE_SIZE_Y));
 }
 

@@ -114,9 +114,6 @@ void cNormalStar::Init(){
 		m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 		break;
-	case 3:
-		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
-		break;
 	default:
 		break;
 	}
@@ -205,13 +202,8 @@ void cNormalStar::Update(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
-<<<<<<< HEAD
-		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
-=======
 		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
->>>>>>> 7a9ea22c4f90d34146a4c10304b79b62350a4bd3
 		{
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;

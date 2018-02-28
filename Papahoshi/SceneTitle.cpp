@@ -51,6 +51,10 @@ m_bChange(false)
 	m_pTitleWave->Init();
 	m_pTitleShip->Init();
 	m_pMeteor->Init();
+
+	//他オブジェクトの情報取得
+	m_pBG->GetTitleShip(m_pTitleShip);
+	m_pBG->GetTitleWave(m_pTitleWave);
 	/*
 	for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++)
 	{
@@ -123,7 +127,16 @@ void cSceneTitle::Update(){
 	//for (int i = 0; i < CIRCLE_ORBIT_STAR_NUM; i++) pCircleOrbitStar[i]->Update();
 
 	// スペースでシーンチェンジフラグを立てる
-	if (GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)){
+	if (GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_A) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_B) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_C) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_D) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_E) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_F) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_G) ||
+		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)
+		)
+	{
 		bSceneChangeFlag = true;
 	}
 

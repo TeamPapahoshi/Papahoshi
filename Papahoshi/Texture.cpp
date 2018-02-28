@@ -56,7 +56,8 @@
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
 #define TEXTURE_FILENAME_GAGE			("Image/GAGE/gage1.png")
-#define TEXTURE_FILENAME_GAGEFLAME		("Image/GAGE/gageflamecover2.png")
+#define TEXTURE_FILENAME_GAGEFLAME		("Image/GAGE/gageflame.png")
+#define TEXTURE_FILENAME_GAGEFIVER      ("Image/GameUI/fever.png")
 
 //ƒLƒ‰ƒLƒ‰
 #define TEXTURE_FILENAME_CIRCLE1	("Image/Pirticle/S__109092866.jpg")
@@ -219,6 +220,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_PINK_METEOR_ANIM,
 	TEXTURE_FILENAME_PLANET03_ANIM,
 	TEXTURE_FILENAME_NET_PIRTICLE,
+	TEXTURE_FILENAME_GAGEFIVER,
 };
 
 vector<char*> texResult = {
@@ -252,6 +254,8 @@ vector<char*> texResult = {
 	TEXTURE_FILENAME_YELLOW_STAR_ANIM,
 	TEXTURE_FILENAME_GREEN_STAR_ANIM,
 	TEXTURE_FILENAME_PINK_STAR_ANIM,
+
+	TEXTURE_FILNAME_STAR_LIGHT,
 };
 
 /*

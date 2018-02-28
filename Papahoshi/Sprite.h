@@ -54,6 +54,7 @@ private:
 	HSVCOLOR	m_HSVColor[4];	// HSVカラー
 	bool		m_bUseHSVColor;	// HSVカラー使用フラグ
 	bool		m_texUV;		// テクスチャUV使用フラグ
+	bool		m_texRoll;		// テクスチャスクロール使用フラグ
 
 	// テクスチャUV
 	bool	m_bTexAnimationLoop;		// テクスチャアニメーションを使用(Loopのみ)
@@ -63,6 +64,7 @@ private:
 	int		m_CountAnimationFrame;		// アニメーションカウント用
 	int		m_currentAnimPattern;		// アニメーションパターン番号
 	D3DXVECTOR2   m_texUVRatio;			// テクスチャUVの割合
+	D3DXVECTOR2   m_texRollNum;			// テクスチャスクロールの移動量		
 
 	//アルファブレンドスイッチ
 	bool	m_bAddBlend;		//加算合成
@@ -194,6 +196,43 @@ public:
 	{
 		m_texUVRatio.y = data;
 	}
+
+	void SetTexRollFlag(bool data)
+	{
+		m_texRoll = data;
+	}
+	void SetTexRollNum(D3DXVECTOR2 data)
+	{
+		m_texRollNum = data;
+		if (m_texRollNum.x > 1.0f)
+			m_texRollNum.x = 0.0f;
+		if (m_texRollNum.x < 0.0f)
+			m_texRollNum.x = 1.0f;
+
+		if (m_texRollNum.y > 1.0f)
+			m_texRollNum.y = 0.0f;
+		if (m_texRollNum.y < 0.0f)
+			m_texRollNum.y = 1.0f;
+
+	}
+	void SetTexRollNumX(float data)
+	{
+		m_texRollNum.x = data;
+
+		if (m_texRollNum.x > 2.0f)
+			m_texRollNum.x = 0.0f;
+		if (m_texRollNum.x < 0.0f)
+			m_texRollNum.x = 2.0f;
+	}
+	void SetTexRollNumY(float data)
+	{
+		m_texRollNum.y = data;
+
+		if (m_texRollNum.y > 2.0f)
+			m_texRollNum.y = 0.0f;
+		if (m_texRollNum.y < 0.0f)
+			m_texRollNum.y = 2.0f;
+	}
 	void SetAddBlend(bool data){
 		m_bAddBlend = data;
 	}
@@ -289,6 +328,22 @@ public:
 	{
 		return m_texUVRatio.y;
 	}
-	
+
+	bool GetTexRollFlag()
+	{
+		return m_texRoll;
+	}
+	D3DXVECTOR2 GetTexRollNum()
+	{
+		return m_texRollNum;
+	}
+	float GetTexRollNumX()
+	{
+		return m_texRollNum.x;
+	}
+	float GetTexRollNumY()
+	{
+		return m_texRollNum.y;
+	}
 };
 #endif	//!___SPRITE_H___

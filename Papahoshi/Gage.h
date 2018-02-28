@@ -31,6 +31,7 @@ class cGage
 private:	//外部から参照不可能
 	cSpriteParam m_GageSprite;
 	cSpriteParam m_FlameSprite;
+	cSpriteParam m_FontSprite;
 	HSVCOLOR     m_aHSVColor[4];		//HSVの値
 	bool		 m_bHSVColorChange[4];	//HSVの色切り替えフラグ
 

@@ -15,7 +15,7 @@
 //マクロ定義
 //-----------------------------
 //スコア表示
-#define FONT_SCORE_POS_X (SCREEN_WIDTH  - 330.0f)
+#define FONT_SCORE_POS_X (SCREEN_WIDTH  - 390.0f)
 #define FONT_SCORE_POS_Y (SCREEN_HEIGHT - 690.0f)
 
 #define FONT_SCORE_SIZE_X (360.0f)
@@ -29,7 +29,7 @@
 #define FONT_RANK_SIZE_Y (140.0f)
 
 //ニューレコード表示
-#define FONT_NEWRECORD_POS_X (SCREEN_WIDTH  - 320.0f)
+#define FONT_NEWRECORD_POS_X (SCREEN_WIDTH  - 380.0f)
 #define FONT_NEWRECORD_POS_Y (SCREEN_HEIGHT - 380.0f)
 
 #define FONT_NEWRECORD_SIZE_X (400.0f)

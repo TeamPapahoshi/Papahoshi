@@ -65,11 +65,13 @@ cSpriteParam::cSpriteParam(){
 	m_size		= D3DXVECTOR2(100.0f, 100.0f);
 	m_scale		= D3DXVECTOR2(1.0f, 1.0f);
 	m_texUVRatio = D3DXVECTOR2(1.0f, 1.0f);
+	m_texRollNum = D3DXVECTOR2(0.0f, 0.0f);
 
 	m_bUseHSVColor = false;
 
 	m_rad		= 0.0f;
-	m_texUV		= false;
+	m_texUV = false;
+	m_texRoll = false;
 	m_pTex		= NULL;
 	for (int i = 0; i < 4; i++)
 		m_vtxColor[i] = D3DXCOLOR(255, 255, 255, 255);
@@ -166,6 +168,13 @@ void cSpriteParam::Draw(){
 		pVtx[1].tex = D3DXVECTOR2(m_texUVRatio.x, 0.0f);
 		pVtx[2].tex = D3DXVECTOR2(0.0f, m_texUVRatio.y);
 		pVtx[3].tex = D3DXVECTOR2(m_texUVRatio.x, m_texUVRatio.y);
+	}
+	else if (m_texRoll)
+	{
+		pVtx[0].tex = D3DXVECTOR2(0.0f + (float)m_texRollNum.x / 1.0f / 2, 0.0f + (float)m_texRollNum.y / 1.0f / 2);
+		pVtx[1].tex = D3DXVECTOR2(1.0f + (float)m_texRollNum.x / 1.0f / 2, 0.0f + (float)m_texRollNum.y / 1.0f / 2);
+		pVtx[2].tex = D3DXVECTOR2(0.0f + (float)m_texRollNum.x / 1.0f / 2, 1.0f + (float)m_texRollNum.y / 1.0f / 2);
+		pVtx[3].tex = D3DXVECTOR2(1.0f + (float)m_texRollNum.x / 1.0f / 2, 1.0f + (float)m_texRollNum.y / 1.0f / 2);
 	}
 	else
 	{
@@ -338,6 +347,13 @@ void cSpriteParam::DrawFreePos(){
 		pVtx[1].tex = D3DXVECTOR2(m_texUVRatio.x, 0.0f);
 		pVtx[2].tex = D3DXVECTOR2(0.0f		    , m_texUVRatio.y);
 		pVtx[3].tex = D3DXVECTOR2(m_texUVRatio.x, m_texUVRatio.y);
+	}
+	else if (m_texRoll)
+	{
+		pVtx[0].tex = D3DXVECTOR2(0.0f + (float)m_texRollNum.x / 1.0f / 2, 1.0f + (float)m_texRollNum.y / 1.0f / 2);
+		pVtx[1].tex = D3DXVECTOR2(0.0f + (float)m_texRollNum.x / 1.0f / 2, 0.0f + (float)m_texRollNum.y / 1.0f / 2);
+		pVtx[2].tex = D3DXVECTOR2(1.0f + (float)m_texRollNum.x / 1.0f / 2, 1.0f + (float)m_texRollNum.y / 1.0f / 2);
+		pVtx[3].tex = D3DXVECTOR2(1.0f + (float)m_texRollNum.x / 1.0f / 2, 0.0f + (float)m_texRollNum.y / 1.0f / 2);
 	}
 	else
 	{

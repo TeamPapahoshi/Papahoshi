@@ -13,6 +13,9 @@
 //-----------------------------
 #include "Sprite.h"
 
+//----- インクルードするオブジェクト ------
+#include "TitleWave.h"
+#include "TitleShip.h"
 
 //-----------------------------
 //クラス定義
@@ -37,8 +40,21 @@ public:
 
 	void SetBG(BG bg);
 
+	void GetTitleWave(cTitleWave* data)
+	{
+		m_pTitleWave = data;
+	}
+
+	void GetTitleShip(cTitleShip* data)
+	{
+		m_pTitleShip = data;
+	}
+
 private:
 	cSpriteParam sprite;
 	BG type;
+
+	cTitleWave* m_pTitleWave;
+	cTitleShip* m_pTitleShip;
 };
 #endif	//!___BG_H___

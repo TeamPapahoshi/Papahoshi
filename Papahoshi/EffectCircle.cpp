@@ -46,6 +46,8 @@ cEffectCircle::cEffectCircle()
 	//初期値設定
 	m_nDivision = 0;
 	m_bEffectUseFlag = false;
+	m_bRandamFlag = false;
+	m_bAddRad = 0.0f;
 }
 
 //=======================================================================================
@@ -91,12 +93,15 @@ void cEffectCircle::Update(void)
 				m_nDivision = 0;
 			}
 		}
+		//回転の値を設定
+		m_Sprite[SetSpriteloop]->SetRad(m_Sprite[SetSpriteloop]->GetRad() + m_bAddRad);
 
 	}
 
 	//生存時間の減少
 	if (m_nLifeFleam > 0)
 		m_nLifeFleam--;
+
 }
 
 //=======================================================================================
@@ -144,13 +149,16 @@ void cEffectCircle::Uninit(void)
 //					 int型				  division	[エフェクトの分割個数]
 //
 //=======================================================================================
-void cEffectCircle::SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division)
+void cEffectCircle::SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division, bool flag)
 {
 	//未使用のエフェクトに設定
 	if (!m_bEffectUseFlag)
 	{
 		//使用するポリゴンの初期化
 		m_nDivision = division;
+
+		//エフェクトのランダム化フラグを反映
+		m_bRandamFlag = flag;
 
 		for (int SetSpriteloop = 0; SetSpriteloop < m_nDivision; SetSpriteloop++)
 		{
@@ -171,8 +179,18 @@ void cEffectCircle::SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D
 			//角度と移動量の設定
 			m_Sprite[SetSpriteloop]->SetRad(MAX_RAD / m_nDivision * SetSpriteloop);	//仮の引数
 
-			m_Sprite[SetSpriteloop]->SetMoveX(sinf(m_Sprite[SetSpriteloop]->GetRad()));	//横方向への移動量
-			m_Sprite[SetSpriteloop]->SetMoveY(cosf(m_Sprite[SetSpriteloop]->GetRad()));	//縦方向への移動量
+			if (m_bRandamFlag)
+			{
+				m_Sprite[SetSpriteloop]->SetMoveX((float)CRandam::RandamRenge(sinf(m_Sprite[SetSpriteloop]->GetRad()) * 5.0f,
+																			  sinf(m_Sprite[SetSpriteloop]->GetRad()) * 10.0f) / 10.0f);	//横方向への移動量
+				m_Sprite[SetSpriteloop]->SetMoveY((float)CRandam::RandamRenge(cosf(m_Sprite[SetSpriteloop]->GetRad()) * 5.0f,
+																			  cosf(m_Sprite[SetSpriteloop]->GetRad()) * 10.0f) / 10.0f);	//縦方向への移動量
+			}
+			else
+			{
+				m_Sprite[SetSpriteloop]->SetMoveX(sinf(m_Sprite[SetSpriteloop]->GetRad()));	//横方向への移動量
+				m_Sprite[SetSpriteloop]->SetMoveY(cosf(m_Sprite[SetSpriteloop]->GetRad()));	//縦方向への移動量
+			}
 		}
 
 		//エフェクトの生存時間設定
@@ -180,6 +198,9 @@ void cEffectCircle::SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D
 
 		//エフェクト使用フラグをオンに
 		m_bEffectUseFlag = true;
+
+		//回転の値を設定
+		m_bAddRad = 2.0f / ((float)m_nLifeFleam * 2.0f);
 
 		return;
 	}

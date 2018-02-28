@@ -48,6 +48,11 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Star/StreamMeteor.wav", -1},	// 星の獲得
 	{ "Sound/SE/Star/SpaceRockBomb.wav", 0 },	// 隕石の爆発
 	{ "Sound/SE/Star/VacumeBlackHole.wav", 0 },	// 隕石の爆発
+
+	{ "Sound/SE/Title/Titleship.wav", 0 },		// 船の汽笛
+
+	{ "Sound/SE/Result/ResultMIN.wav", 0 },		// リザルトジングル(閾値以下)
+	{ "Sound/SE/Result/ResultMAX.wav", 0 },		// リザルトジングル(閾値以上)
 };
 
 //=============================================================================

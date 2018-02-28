@@ -29,6 +29,8 @@ class cEffectCircle : public cBaseEffect
 {
 private:
 	cSpriteParam* m_Sprite[MAX_CIRCLEEFFECT_SPRITE];	//スプライト情報のポインタ(動的確保に使用)
+	bool          m_bRandamFlag;						//移動距離をランダムにするフラグ
+	float		  m_bAddRad;
 
 //--------------------------------------
 protected:
@@ -41,7 +43,7 @@ public:
 	void Draw(void);			//描画関数
 	void Uninit(void);			//終了関数
 
-	void SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division);	//円形エフェクトの設定関数
+	void SetEffectCircle(LPDIRECT3DTEXTURE9* ptex, D3DXVECTOR2 pos, D3DXVECTOR2 size, D3DXCOLOR color, int life, int division, bool flag);	//円形エフェクトの設定関数
 };
 
 #endif	//!___EFFECTCIECLE_H___
