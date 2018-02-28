@@ -99,7 +99,6 @@ cBlackHole::cBlackHole(){
 		m_pStarData->m_DeleteRange.SetType(cCollider::CIRCLE);
 		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 
-
 		m_pStarData->m_bCaptured = false;
 		// ƒ¿‚ÌÝ’è
 		//m_pStarData->m_sprite.SetVtxColorA(0);

@@ -54,6 +54,14 @@ public:
 	void SetNetData(cNet* data);
 	void OnCollidToNet(int num);
 
+	//---- 生成スタート ----
+	void SetCreateStart(){
+		m_pStarData = m_pRoot;
+		for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+			m_pStarData->m_bCreateEvent = true;
+		}
+	}
+
 	//--- モブ星との処理 ----
 	void SetNormalStarData(cNormalStar* data);
 	void OnCollidToNormalStar(int num);

@@ -61,10 +61,6 @@ cSpaceRock::cSpaceRock(){
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		// 初期生成
-		m_pStarData->m_bDraw = true;
-		SetCountAndUse(true);
-
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_SPACE_ROCK));
 		m_pStarData->m_sprite.SetAnimationFlag(true);
@@ -112,6 +108,9 @@ cSpaceRock::cSpaceRock(){
 		// 正存時間の指定
 		m_pStarData->m_nLifeTime = LIFE_TIME;
 
+		// αの設定
+		m_pStarData->m_sprite.SetVtxColorA(0);
+
 	}
 }
 
@@ -140,6 +139,10 @@ void cSpaceRock::Update(){
 
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+
+		if (!m_pStarData->m_bUse)
+			continue;
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 20.0f);
@@ -323,9 +326,15 @@ void cSpaceRock::Create(){
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
 		m_pStarData->m_bDraw = true;
 
-		if (m_pStarData->m_sprite.GetVtxColorA() <= 255){
+
+		// αを上げていく
+		if (m_pStarData->m_sprite.GetVtxColorA()+5.0f <= 255){
 			m_pStarData->m_sprite.SetVtxColorA(m_pStarData->m_sprite.GetVtxColorA() + 5.0f);
 		}
+		else{
+			m_pStarData->m_sprite.SetVtxColorA(255);
+		}
+
 
 		//****************************************************
 

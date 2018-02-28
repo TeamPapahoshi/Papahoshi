@@ -266,6 +266,12 @@ void cSceneGame::MainUpdate(){
 
 	}
 
+	//----- c‚èŠÔ‚Å¶¬‚·‚é¯‚ğw’è --------
+	if (m_pTimer->GetTime() == 40){
+		m_pSpaceRock->SetCreateStart();
+
+	}
+
 
 
 
