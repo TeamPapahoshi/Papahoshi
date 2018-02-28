@@ -16,7 +16,7 @@
 //-----------------------------
 //É}ÉNÉçíËã`
 //-----------------------------
-#define WAVE_SIZE_X (SCREEN_WIDTH / 5)
+#define WAVE_SIZE_X (SCREEN_WIDTH / 6)
 #define WAVE_SIZE_Y (100)
 
 #define MAX_WAVE (SCREEN_WIDTH / WAVE_SIZE_X + 2)

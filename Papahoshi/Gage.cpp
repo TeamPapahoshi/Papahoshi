@@ -21,20 +21,27 @@
 #define MAX_GAGE_NUM (100.0f)
 
 //フレーム用
-#define FLAME_SIZE_X (220.0f)
+#define FLAME_SIZE_X (250.0f)
 #define FLAME_SIZE_Y (60.0f)
 
-#define FLAME_POS_X (FLAME_SIZE_X / 2.0f + 10.0f)
+#define FLAME_POS_X (FLAME_SIZE_X / 2.0f + 20.0f)
 #define FLAME_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y)
 
 //バー用
-#define GAGE_SIZE_X (FLAME_SIZE_X - 40.0f)
+#define GAGE_SIZE_X (FLAME_SIZE_X - 60.0f)
 #define GAGE_SIZE_Y (FLAME_SIZE_Y - 40.0f)
 
-#define GAGE_POS_X (FLAME_POS_X)
+#define GAGE_POS_X (FLAME_POS_X + 20.0f)
 #define GAGE_POS_Y (SCREEN_HEIGHT - FLAME_SIZE_Y / 1.35f)
 
 #define GAGE_SET(GageNum) ((1.0f - (MAX_GAGE_NUM - GageNum) / MAX_GAGE_NUM))
+
+//ゲージ文字用
+#define GAGE_FONT_SIZE_X (150.0f)
+#define GAGE_FONT_SIZE_Y (42.0f)
+
+#define GAGE_FONT_POS_X  (FLAME_POS_X + 20.0f)
+#define GAGE_FONT_POS_Y  (FLAME_POS_Y - 20.0f)
 
 //エフェクト用
 #define GAGE_EFFECT_SET_FRAME (20)
@@ -43,7 +50,7 @@
 //円形エフェクト用
 #define GAGE_EFFECT_CIRCLE_SET_FRAME (20)
 #define GAGE_EFFECT_CIRCLE_SIZE (22.5f)
-#define GAGE_EFFECT_NUM_MAX (10)
+#define GAGE_EFFECT_NUM_MAX (5)
 
 //ゲージHSV設定用
 #define HSV_H_POINT1 (0)	//頂点1のHの値
@@ -112,6 +119,12 @@ void cGage::Init(){
 	m_FlameSprite.SetSize(D3DXVECTOR2(FLAME_SIZE_X, FLAME_SIZE_Y));
 	m_FlameSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GAGEFLAME));
 	m_FlameSprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
+
+	//フォントスプライトの初期化
+	m_FontSprite.SetPos(D3DXVECTOR2(GAGE_FONT_POS_X, GAGE_FONT_POS_Y));
+	m_FontSprite.SetSize(D3DXVECTOR2(GAGE_FONT_SIZE_X, GAGE_FONT_SIZE_Y));
+	m_FontSprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_GAGE_FIVER));
+	m_FontSprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
 
 	//ゲージのステータスの初期化
 	m_fGageNum = 0.0f;
@@ -268,6 +281,7 @@ void cGage::Update(){
 void cGage::Draw(){
 	m_FlameSprite.Draw();
 	m_GageSprite.Draw();
+	m_FontSprite.Draw();
 }
 
 //=======================================================================================
@@ -287,7 +301,8 @@ void cGage::GageAdd()
 										D3DXVECTOR2(GAGE_EFFECT_CIRCLE_SIZE, GAGE_EFFECT_CIRCLE_SIZE),
 										D3DXCOLOR(255, 255, 255, 255),
 										GAGE_EFFECT_CIRCLE_SET_FRAME,
-										GAGE_EFFECT_NUM_MAX);
+										GAGE_EFFECT_NUM_MAX,
+										false);
 
 		//最大値になったらゲージマックス状態に
 	if (m_fGageNum >= MAX_GAGE_NUM)

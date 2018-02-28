@@ -49,11 +49,18 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Star/SpaceRockBomb.wav", 0 },	// 隕石の爆発
 	{ "Sound/SE/Star/VacumeBlackHole.wav", 0 },	// 隕石の爆発
 
+<<<<<<< HEAD
+	{ "Sound/SE/Title/Titleship.wav", 0 },		// 船の汽笛
+
+	{ "Sound/SE/Result/ResultMIN.wav", 0 },		// リザルトジングル(閾値以下)
+	{ "Sound/SE/Result/ResultMAX.wav", 0 },		// リザルトジングル(閾値以上)
+=======
 	{ "Sound/Voice/3.wav", 0 },	// アナウンス
 	{ "Sound/Voice/2.wav", 0 },	// アナウンス
 	{ "Sound/Voice/1.wav", 0 },	// アナウンス
 	{ "Sound/Voice/start.wav", 0 },	// アナウンス
 
+>>>>>>> d5f5bc2307e2f71c7d36d018e1548fbe8a70b286
 };
 
 //=============================================================================

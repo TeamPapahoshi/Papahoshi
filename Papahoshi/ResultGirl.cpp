@@ -11,12 +11,13 @@
 #include "ResultGirl.h"
 #include "Texture.h"
 #include "Score.h"
+#include "sound.h"
 
 //-----------------------------
 //マクロ定義
 //-----------------------------
 
-#define   TEXTURE_CHANGE_LINE (4000)	//テクスチャ切り替えのスコア閾値(暫定)
+#define   TEXTURE_CHANGE_LINE (10000)	//テクスチャ切り替えのスコア閾値(暫定)
 
 #define   TEXTURE_PATTERN_MAX (2)
 #define   TEXTURE_PATTERN_MIN (4)
@@ -55,12 +56,14 @@ cResultgirl::cResultgirl(){
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MAX_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MAX;
 		m_nAnimFlag = true;
+		PlaySound(SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MAX);
 	}
 	else
 	{
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MIN_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MIN;
 		m_nAnimFlag = false;
+		PlaySound(SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MIN);
 	}
 
 }
@@ -84,7 +87,7 @@ void cResultgirl::Update(){
 	m_nAnimFlame++;
 
 	//切り替えフレームが一定値に達したら
-	if (m_nAnimFlame > TEXTURE_ANIMATION_FLAME)
+	if (m_nAnimFlame >= TEXTURE_ANIMATION_FLAME)
 	{
 		//テクスチャの切り替え
 		m_nCurrentPattern = (m_nCurrentPattern + 1 + m_nAnimPattern) % m_nAnimPattern;
