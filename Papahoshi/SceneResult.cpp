@@ -105,7 +105,7 @@ void cSceneResult::Update(){
 		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)
 	)
 	{
-		cSceneManeger::ChangeScene(cSceneManeger::TITLE);
+		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::TITLE, cTransition::TRANSITION_DICE_SCALE_CHANGE);
 	}
 }
 

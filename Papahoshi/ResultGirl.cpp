@@ -24,6 +24,7 @@
 
 #define   TEXTURE_ANIMATION_FLAME (60)	//ÉAÉjÉÅêÿÇËë÷Ç¶ÇÃéûä‘
 
+#define   GINGLE_VOLUME (0.7f)
 //-----------------------------
 //óÒãìå^íËã`
 //-----------------------------
@@ -56,6 +57,7 @@ cResultgirl::cResultgirl(){
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MAX_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MAX;
 		m_nAnimFlag = true;
+		SetVolume(GINGLE_VOLUME, SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MAX);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MAX);
 	}
 	else
@@ -63,6 +65,7 @@ cResultgirl::cResultgirl(){
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MIN_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MIN;
 		m_nAnimFlag = false;
+		SetVolume(GINGLE_VOLUME, SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MIN);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MIN);
 	}
 

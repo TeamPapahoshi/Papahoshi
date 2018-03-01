@@ -10,6 +10,7 @@
 //-----------------------------
 #include "ResultStar.h"
 #include "Texture.h"
+#include "sound.h"
 
 //-----------------------------
 //É}ÉNÉçíËã`
@@ -172,6 +173,9 @@ void cResultStar::Init(){
 		m_pMoveStarData->m_bUse = false;
 	}
 	m_nSetMoveStarCount = 0;
+
+	//å¯â âπÇÃâπó í≤êÆ
+	SetVolume(0.5f, SOUND_LABEL::SOUND_LABEL_SE_RESULT_MOVE_STAR);
 }
 
 //=======================================================================================
@@ -216,6 +220,9 @@ void cResultStar::Update(){
 		{
 			SetMoveStar();
 			m_nSetMoveStarCount = 0;
+
+			//å¯â âπÇÃçƒê∂
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_MOVE_STAR);
 		}
 
 		for (int loop = 0; loop < STARNUM_MOVE; loop++, m_pMoveStarData++)

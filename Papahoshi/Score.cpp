@@ -14,6 +14,7 @@
 #include "Sprite.h"
 #include "debugproc.h"
 #include "Texture.h"
+#include "sound.h"
 
 //-------------------------------
 // 定数定義
@@ -104,6 +105,9 @@ void DrawScore(D3DXVECTOR2 pos, D3DXVECTOR2 size){
 		g_aScoreSprite[i].Draw();
 	}
 
+	//----- スコア加算の音量を調整
+	SetVolume(0.5f, SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUP);
+
 	//----- デバッグ表示 -----
 	PrintDebugProc("スコア : %d\n", g_nPrintScore);
 }
@@ -137,4 +141,9 @@ void UpdateScore(){
 			g_nPrintScore = g_nScore;	//値を同じに調整
 	}
 
+	//リザルト時のみ効果音を再生
+	if (cSceneManeger::GetSceneNum())
+	{
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUP);
+	}
 }

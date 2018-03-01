@@ -52,6 +52,7 @@ public:
 
 private:
 	cSpriteParam sprite;
+	cSpriteParam back;
 	BG type;
 
 	cTitleWave* m_pTitleWave;

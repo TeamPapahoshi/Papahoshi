@@ -52,7 +52,7 @@ public:		//外部から参照可能
 	void Update(void);
 	void Draw(void);
 
-	void GageAdd(void);	//ゲージ加算
+	void GageChange(int value);	//ゲージ加減算
 
 	//----- ゲッタ ------
 	bool GetGagemax(void)

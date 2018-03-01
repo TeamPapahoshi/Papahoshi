@@ -286,14 +286,14 @@ void cGage::Draw(){
 
 //=======================================================================================
 //
-//		描画
+//		ゲージの増減
 //
 //=======================================================================================
-void cGage::GageAdd()
+void cGage::GageChange(int value)
 {
 	//ゲージがマックスでなければ
 		//暫定で固定値でゲージが増えるように
-	m_fGageNum += GAGE_ADD_VALUE;
+	m_fGageNum += value;
 
 	//加算時にエフェクト設定
 	GetEffectManeger()->SetEffectCircle(cTextureManeger::GetTextureGame(TEX_GAME_STAR),

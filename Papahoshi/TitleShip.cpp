@@ -74,6 +74,8 @@ void cTitleShip::Init(){
 	m_nMakeSmokeTime = 0;	//‰Œ¶¬ŽžŠÔ‚Ì‰Šú‰»
 	m_nPlaySEFlame = PLAY_SE_FLAME / 2;		//Œø‰Ê‰¹Ä¶ŽžŠÔ‚Ì‰Šú‰»
 	m_bShipOutFlag = false;	//‘D—£’Eƒtƒ‰ƒO‚Ì‰Šú‰»
+
+	SetVolume(0.5f, SOUND_LABEL::SOUND_LABEL_SE_TITLE_SHIP);
 }
 
 //=======================================================================================

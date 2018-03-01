@@ -48,10 +48,6 @@
 #define TEXTURE_FILENAME_BLACK_HOLE		("Image/Star/blackhole.png")
 #define TEXTURE_FILENAME_SPACE_ROCK		("Image/Star/SpaceRock.png")
 #define TEXTURE_FILENAME_SPHERE_LIGHT	("Image/Collision/Circle/Circle.png")
-#define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
-#define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
-#define TEXTURE_FILENAME_GAGE			("Image/GAGE/gage1.png")
-#define TEXTURE_FILENAME_GAGEFLAME		("Image/GAGE/gageflamecover2.png")
 #define TEXTURE_FILENAME_EFFECT_SPARKLE ("Image/Pirticle/kirakira2.png")
 #define TEXTURE_FILENAME_SHIP			("data/texture/gyosen_big.png")
 #define TEXTURE_FILENAME_WAVE			("data/texture/line_wave1.png")
@@ -133,7 +129,7 @@
 
 #define TEXTURE_FILENAME_FONT_SCORE     ("Image/GameUI/scorepng.png")
 #define TEXTURE_FILENAME_FONT_RANK      ("Image/GameUI/rank.png")
-#define TEXTURE_FILENAME_FONT_NEWRECORD ("Image/GameUI/newrecode.png")
+#define TEXTURE_FILENAME_FONT_NEWRECORD ("Image/GameUI/newrecord.png")
 
 #define TEXTURE_FILENAME_NET_PIRTICLE	 ("Image/Pirticle/Star.png")
 
@@ -233,9 +229,7 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_PINK_METEOR_ANIM,
 	TEXTURE_FILENAME_PLANET03_ANIM,
 	TEXTURE_FILENAME_NET_PIRTICLE,
-<<<<<<< HEAD
 	TEXTURE_FILENAME_GAGEFIVER,
-=======
 	TEXTURE_FILENAME_SUPPORT_1,
 	TEXTURE_FILENAME_SUPPORT_2,
 	TEXTURE_FILENAME_SUPPORT_3,
@@ -246,7 +240,6 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_SUPPORT_INSEKI,
 	TEXTURE_FILENAME_SUPPORT_MAX,
 	TEXTURE_FILENAME_SUPPORT_MIN,
->>>>>>> d5f5bc2307e2f71c7d36d018e1548fbe8a70b286
 };
 
 vector<char*> texResult = {

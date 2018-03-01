@@ -50,6 +50,9 @@
 #define EFFECT_BEZIERCURVE_FRAME (60)
 #define EFFECT_BEZIERCURVE_SIZE (40.0f)
 
+#define GAGE_ADD_VALUE		(1.3f)
+#define GAGE_MINUS_VALUE	(0.2f)
+
 //=======================================================================================
 //
 //		コンストラクタ
@@ -114,12 +117,6 @@ void cNormalStar::Init(){
 		m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 		break;
-<<<<<<< HEAD
-=======
-	case 4:
-		//m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
-		break;
->>>>>>> d5f5bc2307e2f71c7d36d018e1548fbe8a70b286
 	default:
 		break;
 	}
@@ -179,7 +176,7 @@ void cNormalStar::Update(){
 			m_pStarData->m_nEffectFrame++;
 			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame == EFFECT_BEZIERCURVE_FRAME)
 			{
-				m_pGageData->GageAdd();
+				m_pGageData->GageChange(GAGE_ADD_VALUE);
 
 				m_pStarData->m_bEffectSetFlag = false;
 				m_pStarData->m_nEffectFrame = 0;
@@ -208,17 +205,8 @@ void cNormalStar::Update(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
-<<<<<<< HEAD
 		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-=======
-		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
-
-		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-
->>>>>>> d5f5bc2307e2f71c7d36d018e1548fbe8a70b286
 		{
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;
