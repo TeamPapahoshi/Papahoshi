@@ -30,16 +30,27 @@ typedef enum
 	SOUND_LABEL_SE_SPACE_ROCK_BOMB,	// 隕石爆発
 	SOUND_LABEL_SE_VACUME_BLACK_HOLE,	// ブラックホール吸い込みおん
 
+<<<<<<< HEAD
 	SOUND_LABEL_SE_TITLE_SHIP,	// 汽笛
 	SOUND_LABEL_GINGLE_RESULT_MIN,	// リザルトジングル(閾値以下)
 	SOUND_LABEL_GINGLE_RESULT_MAX,	// リザルトジングル(閾値以上)
 	SOUND_LABEL_SE_RESULT_COUNTUP,	// リザルトカウントアップ音
 	SOUND_LABEL_SE_RESULT_MOVE_STAR,// リザルト星生成音
+=======
+
+	SOUND_LABEL_SE_TITLE_SHIP,	// 汽笛
+	SOUND_LABEL_GINGLE_RESULT_MIN,	// リザルトジングル(閾値以下)
+	SOUND_LABEL_GINGLE_RESULT_MAX,	// リザルトジングル(閾値以上)
+>>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
 
 	SOUND_LABEL_VOICE_3,	//アナウンス「3」
 	SOUND_LABEL_VOICE_2,	//アナウンス「2」
 	SOUND_LABEL_VOICE_1,	//アナウンス「1」
 	SOUND_LABEL_VOICE_START,	//アナウンス「START」
+<<<<<<< HEAD
+=======
+
+>>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 

@@ -31,7 +31,7 @@
 #define STAR_SIZE			(25)		// 最小サイズ
 #define STAR_SIZE_MARGIN	(20)		// サイズの幅
 #define RESPAWN_FREAM		(200)
-#define MAX_NORMAL_STAR_NUM	(150)
+#define MAX_NORMAL_STAR_NUM	(120)
 
 // 正存時間(ずっと画面に残ってたら消える)
 #define LIFE_TIME			(2000)
@@ -88,7 +88,6 @@ cNormalStar::cNormalStar(){
 }
 void cNormalStar::Init(){
 
-	
 	// サイズの変更
 	float size = (float)(CRandam::RandamRenge(STAR_SIZE, STAR_SIZE + STAR_SIZE_MARGIN));
 	m_pStarData->m_sprite.SetSize(D3DXVECTOR2(size, size));
@@ -117,9 +116,17 @@ void cNormalStar::Init(){
 		m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 		break;
+<<<<<<< HEAD
+=======
+
+	case 4:
+		//m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
+		break;
+
 	default:
 		break;
-	}
+	};
+
 
 	// 生成座標の決定
 	D3DXVECTOR2 CreateRamdomPos;
@@ -205,8 +212,22 @@ void cNormalStar::Update(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
+<<<<<<< HEAD
 		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
+=======
+
+		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
+
+		// 目的位置についたら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
+
+		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
+
+
+>>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
 		{
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;
@@ -249,8 +270,6 @@ void cNormalStar::Update(){
 			}
 
 		}
-
-
 		// アニメーション
 		m_pStarData->m_sprite.AnimationLoop();
 	
@@ -642,14 +661,14 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal,int black){
 //=======================================================================================
 void cNormalStar::OnCollidToSpaceRock(int num){
 
-	m_pStarData = m_pRoot;
-	m_pStarData += num;
+	//m_pStarData = m_pRoot;
+	//m_pStarData += num;
 
-	m_pStarData->m_bHitSpaceRock = true;
+	//m_pStarData->m_bHitSpaceRock = true;
 
 
-	m_pStarData->m_bDestroyEvent = true;
-	m_pStarData->m_bAddScore = false;
+	//m_pStarData->m_bDestroyEvent = true;
+	//m_pStarData->m_bAddScore = false;
 }
 
 //=======================================================================================

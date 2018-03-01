@@ -1,7 +1,7 @@
 //======================================================================
-//	BlackHole
+//	RearStar
 //	
-//	概要＿：ブラックホール
+//	概要＿：レア星
 //	制作者：加藤　遼
 //	
 //======================================================================
@@ -15,7 +15,7 @@
 #include "Common.h"
 #include "Texture.h"
 #include "rand.h"
-#include "BlackHole.h"
+#include "RearStar.h"
 #include "Input.h"
 #include "GameUI.h"
 #include "MathEX.h"
@@ -24,18 +24,18 @@
 //-----------------------------
 // マクロ定義
 //-----------------------------
-#define STAR_SIZE			(200)	// サイズ
-#define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
-#define MAX_BLACK_HOLE_NUM	(2)		// 最大数
+#define STAR_SIZE			(150)	// サイズ
+#define RESPAWN_FREAM		(500)	// リスポーンのインターバルフレーム
+#define MAX_BLACK_HOLE_NUM	(1)		// 最大数
 #define VACUUM_RANGE		(300)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
 
 //	生成位置
 #define CREATE_PATTERN		(4)
-#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,100))
-#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,100))
-#define CREATE_POS_03		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
-#define CREATE_POS_04		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+#define CREATE_POS_01		(D3DXVECTOR2(SCREEN_CENTER))
+#define CREATE_POS_02		(D3DXVECTOR2(SCREEN_CENTER))
+#define CREATE_POS_03		(D3DXVECTOR2(SCREEN_CENTER))
+#define CREATE_POS_04		(D3DXVECTOR2(SCREEN_CENTER))
 
 
 
@@ -44,7 +44,7 @@
 //		コンストラクタ
 //
 //=======================================================================================
-cBlackHole::cBlackHole(){
+cRearStar::cRearStar(){
 
 	// 乱数の初期化
 	CRandam::InitRand();
@@ -53,21 +53,49 @@ cBlackHole::cBlackHole(){
 	m_nMaxNum = MAX_BLACK_HOLE_NUM;
 
 	// 動的インスタンス
-	m_pStarData = new cBlackHoleData[m_nMaxNum]();	//ここ注意
+	m_pStarData = new cRearStarData[m_nMaxNum]();	//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		// テクスチャの設定
-		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));
-		m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
-		m_pStarData->m_sprite.SetIntervalChangePattern(7);
-		m_pStarData->m_sprite.SetAnimationFlag(true);
-	
+
+		// タイプの決定
+		int Type = CRandam::RandamRenge(0, REAR_TYPE_MAX);
+		switch (Type)
+		{
+		case PANET_01:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PLANET01));
+			m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
+			m_pStarData->m_sprite.SetIntervalChangePattern(7);
+			m_pStarData->m_sprite.SetAnimationFlag(true);
+			break;
+		case PANET_02:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PLANET02));
+			m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
+			m_pStarData->m_sprite.SetIntervalChangePattern(7);
+			m_pStarData->m_sprite.SetAnimationFlag(true);
+			break;
+		case PANET_03:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PLANET03));
+			m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
+			m_pStarData->m_sprite.SetIntervalChangePattern(7);
+			m_pStarData->m_sprite.SetAnimationFlag(true);
+			break;
+		case SUN:
+			m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_SUN));
+			m_pStarData->m_sprite.SetTexPatternDevide(5,4);
+			m_pStarData->m_sprite.SetIntervalChangePattern(7);
+			m_pStarData->m_sprite.SetAnimationFlag(true);
+			break;
+		default:
+			break;
+		}
+
+
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN+1);
+		int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
 		switch (RamdomNum)
 		{
 		case 1:
@@ -89,7 +117,7 @@ cBlackHole::cBlackHole(){
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
-		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f-30);
+		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 30);
 
 		// 吸い込み範囲
 		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
@@ -114,7 +142,7 @@ cBlackHole::cBlackHole(){
 //		デストラクタ
 //
 //=======================================================================================
-cBlackHole::~cBlackHole(){
+cRearStar::~cRearStar(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -126,7 +154,7 @@ cBlackHole::~cBlackHole(){
 //		更新
 //
 //=======================================================================================
-void cBlackHole::Update(){
+void cRearStar::Update(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -218,7 +246,7 @@ void cBlackHole::Update(){
 //		描画
 //
 //=======================================================================================
-void cBlackHole::Draw(){
+void cRearStar::Draw(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -252,7 +280,7 @@ void cBlackHole::Draw(){
 //		生成
 //
 //=======================================================================================
-void cBlackHole::Create(){
+void cRearStar::Create(){
 
 	// 生成イベントの開始
 	if (!m_pStarData->m_bCreateEnd){
@@ -296,7 +324,7 @@ void cBlackHole::Create(){
 
 		if (m_pStarData->m_sprite.GetSize().x >= STAR_SIZE)
 			m_pStarData->m_bCreateEnd = true;
-	
+
 
 	}
 
@@ -320,7 +348,7 @@ void cBlackHole::Create(){
 //		削除(一応作った)
 //
 //=======================================================================================
-void cBlackHole::Destroy(){
+void cRearStar::Destroy(){
 
 	// 削除イベントの開始
 	if (!m_pStarData->m_bDestroyEnd){
@@ -357,7 +385,7 @@ void cBlackHole::Destroy(){
 ////		リスポーン
 ////
 ////=======================================================================================
-void cBlackHole::Respawn(){
+void cRearStar::Respawn(){
 
 
 	if (!m_pStarData->m_bRespawnEnd){
@@ -372,9 +400,42 @@ void cBlackHole::Respawn(){
 
 			// サイズの変更
 			m_pStarData->m_sprite.SetSize(D3DXVECTOR2(0, 0));
-			
+
 			// 乱数の初期化
 			CRandam::InitRand();
+
+
+			// タイプの決定
+			int Type = CRandam::RandamRenge(0, REAR_TYPE_MAX);
+			switch (Type)
+			{
+			case PANET_01:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PLANET01));
+				m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
+				m_pStarData->m_sprite.SetAnimationFlag(true);
+				break;
+			case PANET_02:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PLANET02));
+				m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
+				m_pStarData->m_sprite.SetAnimationFlag(true);
+				break;
+			case PANET_03:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_PLANET03));
+				m_pStarData->m_sprite.SetTexPatternDevide(10, 2);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
+				m_pStarData->m_sprite.SetAnimationFlag(true);
+				break;
+			case SUN:
+				m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_SUN));
+				m_pStarData->m_sprite.SetTexPatternDevide(5, 4);
+				m_pStarData->m_sprite.SetIntervalChangePattern(7);
+				m_pStarData->m_sprite.SetAnimationFlag(true);
+				break;
+			default:
+				break;
+			}
 
 			// 座標の決定
 			D3DXVECTOR2 CreateRamdomPos;
@@ -426,12 +487,12 @@ void cBlackHole::Respawn(){
 //
 //=======================================================================================
 //--- 網のデータ取得 ---
-void cBlackHole::SetNetData(cNet* data){
+void cRearStar::SetNetData(cNet* data){
 	m_pNetData = data;
 }
 
 //--- 網と当たった時の処理 ---
-void cBlackHole::OnCollidToNet(int num){
+void cRearStar::OnCollidToNet(int num){
 
 	// 先頭から何番目か
 	m_pStarData = m_pRoot;

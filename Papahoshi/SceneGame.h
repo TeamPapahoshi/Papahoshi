@@ -34,6 +34,7 @@
 #include "Ryusei.h"
 #include "Constellation.h"
 #include "Gage.h"
+#include "RearStar.h"
 
 #include "BlackHole.h"
 #include "SpaceRock.h"
@@ -76,12 +77,17 @@ private:
 	// このシーンでインスタンスするもののポインタ
 	cBG*						m_pBG;
 	cNet*						m_pNet;
+
 	cNormalStar*				m_pNomalStar;		// モブ星
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
 	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	cRyusei*					m_pRyusei;			// 流星
 	cConstellation*				m_pConsellation;	// 星群
+	cRearStar*					m_pRearStar;		// レア星
+	
+
+
 	cGage*						m_pGage;			// ゲージ
 	cGameUI*					m_pGameUI;
 	cTimer*						m_pTimer;			// タイマー
