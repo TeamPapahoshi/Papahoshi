@@ -49,10 +49,17 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Star/SpaceRockBomb.wav", 0 },	// 隕石の爆発
 	{ "Sound/SE/Star/VacumeBlackHole.wav", 0 },	// 隕石の爆発
 
+
+	{ "Sound/SE/Title/Titleship.wav", 0 },		// 船の汽笛
+
+	{ "Sound/SE/Result/ResultMIN.wav", 0 },		// リザルトジングル(閾値以下)
+	{ "Sound/SE/Result/ResultMAX.wav", 0 },		// リザルトジングル(閾値以上)
+
 	{ "Sound/Voice/3.wav", 0 },	// アナウンス
 	{ "Sound/Voice/2.wav", 0 },	// アナウンス
 	{ "Sound/Voice/1.wav", 0 },	// アナウンス
 	{ "Sound/Voice/start.wav", 0 },	// アナウンス
+
 
 };
 
@@ -241,6 +248,8 @@ void UninitSound(void)
 //=============================================================================
 HRESULT PlaySound(SOUND_LABEL label)
 {
+
+	return S_OK;
 #ifdef USE_SOUND
 	XAUDIO2_VOICE_STATE xa2state;
 	XAUDIO2_BUFFER buffer;

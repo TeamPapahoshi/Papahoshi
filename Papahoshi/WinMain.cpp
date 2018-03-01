@@ -18,8 +18,8 @@
 // マクロ定義
 //------------------------------
 //----- Windows関連 ------------
-#define CLASS_NAME	"HEW SAMPLE"	// ウィンドウクラス名
-#define WINDOW_NAME	"HEW SAMPLE"	// キャプション名
+#define CLASS_NAME	"パパ、お星さまとって！"	// ウィンドウクラス名
+#define WINDOW_NAME	"パパ、お星さまとって！"	// キャプション名
 
 #define WINDOW_MODE	(TRUE)		//FALSEでフルスクリーン
 

@@ -113,7 +113,6 @@ cRyusei::cRyusei(){
 //=======================================================================================
 cRyusei::~cRyusei(){
 
-
 	StopSound(SOUND_LABEL_SE_STREAM_METEOR);
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
@@ -170,7 +169,6 @@ void cRyusei::Update(){
 		}
 	}
 
-
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
@@ -207,8 +205,6 @@ void cRyusei::Update(){
 	if (m_nCurrentNum <= LIMIT_METEOR_NOT_FEVER && !m_bFever){
 		StopSound(SOUND_LABEL_SE_STREAM_METEOR);
 	}
-
-
 
 	// イベントの起動
 	// デバッグキー
@@ -256,7 +252,6 @@ void cRyusei::Draw(){
 		if (!m_pStarData->m_bDraw)
 			continue;
 
-
 		m_pStarData->m_sprite.Draw();
 		m_pStarData->m_MeteorLight.Draw();
 		//m_pStarData->m_Collision.Draw();
@@ -266,14 +261,11 @@ void cRyusei::Draw(){
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 
-
-
 	// デバッグプリント
 	PrintDebugProc("━━━━━━流星━━━━━━\n");
 	PrintDebugProc("現在の数 %d/%d\n", m_nCurrentNum, m_nMaxNum);
 	PrintDebugProc("リスポーンインターバル確認 %d/%d\n", m_pStarData->m_nRespawnFrame, RESPAWN_FREAM);
 	PrintDebugProc("━━━━━━━━━━━━━━━\n");
-
 
 }
 //=======================================================================================
@@ -289,25 +281,17 @@ void cRyusei::Create(){
 	// 生成イベントの開始
 	if (!m_pStarData->m_bCreateEnd){
 
-
-
 		// ここ以外は同じ処理になるはずだからコピぺでいいはず
 		//****** ここに演出とか生成処理を書いていく **********
 		//m_pStarData->m_bUse = true;->これでもできるけど今回は数もかぞえておきたいから
 		m_pStarData->m_bDraw = true;
 
-
-
 		//****************************************************
-
-
 
 		// 演出がおわったら生成終了フラグを立てる->if(EffectEnd()){m_pStar->....}
 		//m_pStarData->m_bCreateEnd = true;
 
 		m_pStarData->m_bCreateEnd = true;
-
-
 
 	}
 
@@ -420,6 +404,8 @@ void cRyusei::Respawn(){
 			// 星から目的地方向の単位ベクトルを求める
 			m_pStarData->m_Destination = D3DXVECTOR2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT);
 			m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
+
+			m_pStarData->m_bCaptured = false;
 
 			m_pStarData->m_bRespawnEnd = true;
 		}

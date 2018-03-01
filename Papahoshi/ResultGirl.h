@@ -17,7 +17,7 @@
 //-----------------------------
 //É}ÉNÉçíËã`
 //-----------------------------
-#define   RESULTGIRL_POS_X (SCREEN_WIDTH - 320.0f)
+#define   RESULTGIRL_POS_X (SCREEN_WIDTH - 380.0f)
 #define   RESULTGIRL_POS_Y (SCREEN_HEIGHT - 150.0f)
 #define   RESULTGIRL_SIZE_X (300.0f)
 #define   RESULTGIRL_SIZE_Y (400.0f)

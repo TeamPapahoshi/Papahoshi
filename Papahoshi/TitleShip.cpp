@@ -14,6 +14,7 @@
 #include "TitleShip.h"
 #include "Texture.h"
 #include "GameMain.h"	// エフェクトクラス取得用
+#include "sound.h"
 
 //-----------------------------
 //マクロ定義
@@ -27,6 +28,7 @@
 #define TITLESHIP_MOVE_Y (0.15f)		//船のY軸方向移動量
 
 #define MAKE_SMOKE_TIME  (35)			//煙の生成間隔時間
+#define PLAY_SE_FLAME    (800)			//効果音再生間隔
 //-----------------------------
 //列挙型定義
 //-----------------------------
@@ -70,6 +72,7 @@ void cTitleShip::Init(){
 	m_sprite.SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_SHIP));
 
 	m_nMakeSmokeTime = 0;	//煙生成時間の初期化
+	m_nPlaySEFlame = PLAY_SE_FLAME / 2;		//効果音再生時間の初期化
 	m_bShipOutFlag = false;	//船離脱フラグの初期化
 }
 
@@ -119,6 +122,16 @@ void cTitleShip::Update(bool bSceneChangeFlag){
 												 90);
 		//生成時間の再設定
 		m_nMakeSmokeTime = MAKE_SMOKE_TIME;
+	}
+
+	//効果音再生時間の加算
+	m_nPlaySEFlame++;
+
+	if (m_nPlaySEFlame > PLAY_SE_FLAME)
+	{
+		//効果音の再生
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_TITLE_SHIP);
+		m_nPlaySEFlame = 0;
 	}
 
 	//画面外に船が出たらフラグを立てる

@@ -24,6 +24,8 @@
 #define BG_STAR        ("Image/BG/bgstar.jpg")
 #define BG_RESULT	   ("Image/BG/bgresult.jpg")
 
+#define BG_ADD_TEXROLL_X (0.001f)
+
 float i=0;
 bool	a=false;
 //=======================================================================================
@@ -45,6 +47,7 @@ void cBG::SetBG(BG bg){
 	case TITLE:
 		sprite.LoadTexture(BG_STAR);
 		sprite.SetHSVColorFlag(false);
+		sprite.SetTexRollFlag(true);
 		break;
 	case GAME_MAIN:
 		sprite.LoadTexture(BG_FILNAME_SKY);
@@ -57,7 +60,8 @@ void cBG::SetBG(BG bg){
 		break;
 	case RESULT:
 		sprite.LoadTexture(BG_RESULT);
-		sprite.SetVtxColor(D3DXCOLOR(128,128,128,255));
+		sprite.SetVtxColor(D3DXCOLOR(128, 128, 128, 255));
+		sprite.SetTexRollFlag(true);
 		break;
 	default:
 		break;
@@ -103,7 +107,23 @@ cBG::~cBG(){
 //=======================================================================================
 void cBG::Update(){
 
+	switch (type)
+	{
 
+	case TITLE:
+		//タイトル画面は普段は波の動きと同じ値で背景を動かす
+		sprite.SetTexRollNumX(sprite.GetTexRollNumX() - BG_ADD_TEXROLL_X);
+
+		break;
+	case RESULT:
+		//リザルト画面は一定の値を加算
+		sprite.SetTexRollNumX(sprite.GetTexRollNumX() + BG_ADD_TEXROLL_X);
+
+		break;
+	default:
+		break;
+
+	}
 		//if (!a)
 		//	i += 1.0f;
 

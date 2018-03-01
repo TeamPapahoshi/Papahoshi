@@ -17,13 +17,13 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define TITLEROGO_SIZE_X (80)
-#define TITLEROGO_SIZE_Y (100)
+#define TITLEROGO_SIZE_X (120)
+#define TITLEROGO_SIZE_Y (120)
 
-#define TITLEROGO_POS_X ((SCREEN_WIDTH / 2 - (TITLEROGO_SIZE_X * ((MAX_TITLEROGO) / 2))))
+#define TITLEROGO_POS_X ((SCREEN_WIDTH / 2 - (TITLEROGO_SIZE_X * ((MAX_TITLEROGO) / 2))) + 60)
 #define TITLEROGO_POS_Y (SCREEN_HEIGHT / 2 - 150)
 
-#define TITLEROGO_SPACE_X (0)
+#define TITLEROGO_SPACE_X (-20)
 
 #define TITLEROGO_HOP_COUNT (40)	//タイトルロゴの動作タイマー
 
@@ -88,19 +88,27 @@ void cTitleRogo::Init()
 			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X, TITLEROGO_SIZE_Y));
 			break;
 		case 2:
+			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X / 1.3f + TITLEROGO_SPACE_X, TITLEROGO_POS_Y));
+			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X / 2.4f, TITLEROGO_SIZE_Y / 1.6f));
+			break;
+		case 5:
+			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X / 1.3f - TITLEROGO_SPACE_X, TITLEROGO_POS_Y));
+			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X , TITLEROGO_SIZE_Y));
+			break;
+		case 6:
 			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X / 1.3f, TITLEROGO_POS_Y));
-			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X / 2.0f, TITLEROGO_SIZE_Y / 1.2f));
+			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X, TITLEROGO_SIZE_Y));
 			break;
 		case 8:
-			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X / 1.15f, TITLEROGO_POS_Y));
+			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X / 1.15f + TITLEROGO_SPACE_X, TITLEROGO_POS_Y));
 			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X / 2.0f, TITLEROGO_SIZE_Y / 1.5f));
 			break;
 		case 10:
-			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X / 1.15f, TITLEROGO_POS_Y));
+			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X / 1.15f + TITLEROGO_SPACE_X, TITLEROGO_POS_Y));
 			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X / 1.4f, TITLEROGO_SIZE_Y));
 			break;
 		default:
-			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X, TITLEROGO_POS_Y));
+			m_aTitlerogo[Initloop].Rogosprite.SetPos(D3DXVECTOR2(m_aTitlerogo[Initloop - 1].Rogosprite.GetPosX() + TITLEROGO_SIZE_X + TITLEROGO_SPACE_X, TITLEROGO_POS_Y));
 			m_aTitlerogo[Initloop].Rogosprite.SetSize(D3DXVECTOR2(TITLEROGO_SIZE_X, TITLEROGO_SIZE_Y));
 			break;
 		}

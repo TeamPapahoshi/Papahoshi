@@ -20,15 +20,16 @@
 //-----------------------------
 #define METEOR_LIFETIME (60)
 #define METEOR_SIZE (25.0f)
-#define METEOR_MOVE (5.5f)
+#define METEOR_MOVE_X (3.5f)
+#define METEOR_MOVE_Y (6.0f)
 
 #define METEOR_ALPHA_SUB    (50.0f)
 
 #define RANDAM_METEOR_POS_X (100)
-#define RANDAM_METEOR_POS_Y (100)
+#define RANDAM_METEOR_POS_Y (50)
 
 #define RANDAM_METEOR_SET_X ((float)CRandam::RandamRenge(RANDAM_METEOR_POS_X, SCREEN_WIDTH - RANDAM_METEOR_POS_X))
-#define RANDAM_METEOR_SET_Y ((float)CRandam::RandamRenge(RANDAM_METEOR_POS_Y, SCREEN_HEIGHT - RANDAM_METEOR_POS_Y))
+#define RANDAM_METEOR_SET_Y ((float)CRandam::RandamRenge(RANDAM_METEOR_POS_Y, SCREEN_HEIGHT / 2))
 #define RANDAM_METEOR_TIME (CRandam::RandamRenge(100, 250))
 
 //-----------------------------
@@ -82,7 +83,7 @@ void cMeteor::Init()
 		{
 			m_aMeteor[loop].Sprite[Spriteloop].SetTexture(cTextureManeger::GetTextureTitle(TEX_TITLE_STAR_LIGHT));
 			m_aMeteor[loop].Sprite[Spriteloop].SetVtxColorA(255.0f / (Spriteloop + 1));
-			m_aMeteor[loop].Sprite[Spriteloop].SetMove(D3DXVECTOR2(-METEOR_MOVE, METEOR_MOVE));
+			m_aMeteor[loop].Sprite[Spriteloop].SetMove(D3DXVECTOR2(-METEOR_MOVE_X, METEOR_MOVE_Y));
 			m_aMeteor[loop].Sprite[Spriteloop].SetSize(D3DXVECTOR2(METEOR_SIZE / (Spriteloop + 1), METEOR_SIZE / (Spriteloop + 1)));
 			m_aMeteor[loop].Sprite[Spriteloop].SetAddBlend(true);
 		}
@@ -187,7 +188,7 @@ void cMeteor::SetMeteor(){
 		for (int Spriteloop = 0; Spriteloop < MAX_METEOR_SPRITE_NUM; Spriteloop++)
 		{
 			m_aMeteor[loop].Sprite[Spriteloop].SetVtxColorA(255.0f / (Spriteloop + 1));
-			m_aMeteor[loop].Sprite[Spriteloop].SetMove(D3DXVECTOR2(-METEOR_MOVE, METEOR_MOVE));
+			m_aMeteor[loop].Sprite[Spriteloop].SetMove(D3DXVECTOR2(-METEOR_MOVE_X, METEOR_MOVE_Y));
 			m_aMeteor[loop].Sprite[Spriteloop].SetSize(D3DXVECTOR2(METEOR_SIZE, METEOR_SIZE));
 		}
 

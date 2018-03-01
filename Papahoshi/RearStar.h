@@ -1,12 +1,12 @@
 //======================================================================
-//	SpaceRock
+//	RearStar
 //	
-//	概要＿：隕石
+//	概要＿：レア星
 //	制作者：加藤　遼
 //	
 //======================================================================
-#ifndef ___SPACE_ROCK_H___
-#define ___SPACE_ROCK_H___
+#ifndef ___REAR_STAR_H___
+#define ___REAR_STAR_H___
 
 //-----------------------------
 //インクルードファイル
@@ -15,40 +15,39 @@
 #include "Collision.h"
 #include "BaseStar.h"
 #include "Net_Type2.h"
-#include "NormalStars.h"
+#include <vector>
+#include <fstream>
 
 
 //-----------------------------
-// 構造体定義
+// 列挙体定義
 //-----------------------------
+enum eRearStarType{
+	PANET_01,
+	PANET_02,
+	PANET_03,
+	SUN,
+	REAR_TYPE_MAX
+};
 //-----------------------------
 // クラス定義
 //-----------------------------
-class cSpaceRockData :public cBaseStarData{
+class cRearStarData :public cBaseStarData{
 public:
-	int				m_nDestroyStarNum;	// 破壊する数
-	int				m_nLifeTime=0;
+	cCollider		m_VacumeRange;		// 吸い込み範囲
+	cCollider		m_DeleteRange;		// 削除範囲
 
-	bool	m_bVibration = true;
-	int		m_nVibrationFrame = 0;
-
-	//---- 爆発エフェクト関連 ----
-	cSpriteParam	m_ExplosionAnim;	// 爆破るエフェクト用
-	int				m_ExplosionFrame;	// 爆発時間
-	bool			m_bExplosion;		// 開始用フラグ
+	eRearStarType	m_eType;			// 種類
 };
 
 
-//-----------------------------
-//クラス定義
-//-----------------------------
-class cSpaceRock :public cBaseStar{
+class cRearStar :public cBaseStar{
 
 public:
 	void Update();
 	void Draw();
-	~cSpaceRock();
-	cSpaceRock();
+	~cRearStar();
+	cRearStar();
 
 	//--- 網との処理 ---
 	void SetNetData(cNet* data);
@@ -62,26 +61,27 @@ public:
 		}
 	}
 
-	//--- モブ星との処理 ----
-	void SetNormalStarData(cNormalStar* data);
-	void OnCollidToNormalStar(int num);
+	
 
-	//--- 基本処理 ---
+
+	bool GetCapturedFlag(){
+		return m_pStarData->m_bCaptured;
+	}
+
 	void Create();		// 生成
 	void Destroy();		// 削除
 	void Respawn();		// リスポーン
 
 private:
-	cSpaceRockData* m_pStarData;	// 必要データ
-	cSpaceRockData*	m_pRoot;		// 先頭アドレス格納用
+	cRearStarData* m_pStarData;	// 必要データ
+	cRearStarData*	m_pRoot;	// 先頭アドレス格納用
 	cNet*			m_pNetData;
-	cNormalStar*	m_pNormalStarData;
 
 	//Set&Get
 public:
 
 	// Getter
-	cSpaceRockData* GetStarData(){
+	cRearStarData* GetStarData(){
 		return m_pRoot;
 	}
 
@@ -104,4 +104,5 @@ public:
 	}
 	//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
 };
-#endif //!___SPACE_ROCK_H___
+
+#endif //!___BLACK_HOLE_H___

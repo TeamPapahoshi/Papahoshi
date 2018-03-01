@@ -119,7 +119,8 @@ void cEffectManeger::SetEffectCircle(LPDIRECT3DTEXTURE9*	ptex,
 								     D3DXVECTOR2			size, 
 								     D3DXCOLOR				color, 
 								     int					life,
-								     int					division)
+								     int					division,
+									 bool					flag)
 {
 	for (int SetEffectloop = 0; SetEffectloop < MAX_EFFECT; SetEffectloop++)
 	{
@@ -128,7 +129,7 @@ void cEffectManeger::SetEffectCircle(LPDIRECT3DTEXTURE9*	ptex,
 
 		//円形エフェクトの配置
 		m_pEffect[SetEffectloop] = new cEffectCircle;
-		m_pEffect[SetEffectloop]->SetEffectCircle(ptex, pos, size, color, life, division);
+		m_pEffect[SetEffectloop]->SetEffectCircle(ptex, pos, size, color, life, division, flag);
 		
 		break;
 	}

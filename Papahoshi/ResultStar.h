@@ -32,7 +32,7 @@ public:
 	int		m_nEffectFrame = 0;
 	int		m_nStarColorNum = 0;
 	int		m_nLifeTime = 0;
-
+	float   m_fAddRad = 0;
 };
 
 // 基底クラス:クラスサンプル
@@ -42,10 +42,17 @@ private:	//外部から参照不可能
 	cResultStarData* m_pStarData;	//星のデータ
 	cResultStarData* m_pRoot;		//星のデータ先頭位置
 
+	cResultStarData* m_pMoveStarData;	//移動する星のデータ
+	cResultStarData* m_pMoveRoot;		//移動する星のデータ先頭位置
+
 	cResultgirl*   m_pResultGirl;
-	int			   m_nStarNum;	//星の数
 	bool		   m_bStarFlag;	//星の出現切り替えフラグ
 
+	int            m_nSetMoveStarCount; //移動する星の出現カウンタ
+
+	int	    m_nStarNum = 0;	//星の数
+
+	void SetMoveStar(void);
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
 
@@ -59,6 +66,7 @@ public:		//外部から参照可能
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+
 
 	void GetResultGirlData(cResultgirl* data)
 	{

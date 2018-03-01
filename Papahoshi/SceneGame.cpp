@@ -38,6 +38,10 @@ m_bHurryUp(false)
 	m_pBlackHole = new cBlackHole();
 	m_pBlackHole->SetNetData(m_pNet);
 
+	// レア星
+	m_pRearStar = new cRearStar();
+	m_pRearStar->SetNetData(m_pNet);
+
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
 	m_pSpaceRock->SetNetData(m_pNet);
@@ -117,6 +121,7 @@ cSceneGame::~cSceneGame(){
 	delete m_pTimer;
 	delete m_pConsellation;
 	delete m_pPlaySupport;
+	delete m_pRearStar;
 
 	//----- BGMの停止 -----
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
@@ -196,11 +201,13 @@ void cSceneGame::Draw(){
 	m_pBG->Draw();				// 背景
 	m_pBlackHole->Draw();
 	m_pSampleStar->Draw();
-	m_pSpaceRock->Draw();
 	m_pNomalStar->Draw();
+	m_pSpaceRock->Draw();
 	m_pRyusei->Draw();
 	//m_pConsellation->Draw();
+	m_pRearStar->Draw();
 	m_pNet->Draw();
+
 
 	m_pGameUI->Draw();
 	m_pGage->Draw();
@@ -256,6 +263,7 @@ void cSceneGame::MainUpdate(){
 	m_pSampleStar->Update();
 	m_pRyusei->Update();
 	m_pConsellation->Update();
+	m_pRearStar->Update();
 
 	m_pPlaySupport->Update(m_pNet->GetGamePhase(), m_pNet->GetAllPress(), m_pNet->GetRevor());
 
@@ -263,6 +271,13 @@ void cSceneGame::MainUpdate(){
 	//----- 残り時間で生成する星を指定 --------
 	if (m_pTimer->GetTime() == 50){
 		m_pBlackHole->SetCreateStart();
+		m_pRearStar->SetCreateStart();
+
+	}
+
+	//----- 残り時間で生成する星を指定 --------
+	if (m_pTimer->GetTime() == 40){
+		m_pSpaceRock->SetCreateStart();
 
 	}
 
@@ -472,6 +487,27 @@ void cSceneGame::CheckCollision(){
 					  m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
 					  CheckCollisionCircleToLine(m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
 					  m_pBlackHole->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
+
+					  m_pBlackHole->OnCollidToNet(nCountStar);
+				  }
+			  }
+		  }
+	  }
+
+
+	  //---網とブラックホールのの判定type2---
+	  for (int nCountStar = 0; nCountStar < m_pRearStar->GetMaxNum(); nCountStar++){
+
+		  if (!m_pRearStar->GetStarData()[nCountStar].m_bUse)
+			  continue;
+
+		  for (int nCountNet = 0; nCountNet < 2; nCountNet++){
+
+			  if (m_pNet->GetPullFlug()){
+				  if (CheckCollisionCircleToLine(m_pRearStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pRearStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetLeft(), m_pNet->GetNetCenter()) ||
+					  CheckCollisionCircleToLine(m_pRearStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
+					  m_pRearStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
 
 					  m_pBlackHole->OnCollidToNet(nCountStar);
 				  }
