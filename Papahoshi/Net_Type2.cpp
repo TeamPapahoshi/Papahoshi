@@ -112,6 +112,9 @@ m_fThrowSpeed(0.0f)
 		m_aFourUki[i].SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_UKI));
 		m_aFourUki[i].SetSize(D3DXVECTOR2(UKI_SIZE, UKI_SIZE));
 	}
+	m_aFourUki[0].LoadTexture("Image/Net/red.png");
+	m_aFourUki[1].LoadTexture("Image/Net/blue.png");
+	m_aFourUki[2].LoadTexture("Image/Net/yellow.png");
 
 	//うき・センター
 	m_center.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_UKI));
