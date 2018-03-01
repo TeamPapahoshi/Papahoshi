@@ -106,7 +106,14 @@
 #define TEXTURE_FILENAME_PINK_STAR_ANIM			("Image/Star/pinkStarAnim.png")
 #define TEXTURE_FILENAME_CYAN_METEOR_ANIM		("Image/Star/CyanMeteor.png")
 #define TEXTURE_FILENAME_PINK_METEOR_ANIM		("Image/Star/pinkMeteor.png")
+
+
+#define TEXTURE_FILENAME_SUN_ANIM				("Image/Star/sun.png")
+#define TEXTURE_FILENAME_PLANET01_ANIM			("Image/Star/planet01.png")
+#define TEXTURE_FILENAME_PLANET02_ANIM			("Image/Star/planet02.png")
 #define TEXTURE_FILENAME_PLANET03_ANIM			("Image/Star/planet03.png")
+
+
 #define TEXTURE_FILENAME_EXPLOSION_ANIM			("Image/Star/explosion000.png")
 
 //アナウンス
@@ -138,10 +145,10 @@
 #define TEXTURE_FILENAME_NET_PIRTICLE	 ("Image/Pirticle/Star.png")
 
 //サポート
-#define TEXTURE_FILENAME_SUPPORT_1	 ("Image/GameUI/fukidashi/1.png")
-#define TEXTURE_FILENAME_SUPPORT_2	 ("Image/GameUI/fukidashi/2.png")
-#define TEXTURE_FILENAME_SUPPORT_3	 ("Image/GameUI/fukidashi/3.png")
-#define TEXTURE_FILENAME_SUPPORT_4	 ("Image/GameUI/fukidashi/4.png")
+#define TEXTURE_FILENAME_SUPPORT_1		 ("Image/GameUI/fukidashi/1.png")
+#define TEXTURE_FILENAME_SUPPORT_2		("Image/GameUI/fukidashi/2.png")
+#define TEXTURE_FILENAME_SUPPORT_3		("Image/GameUI/fukidashi/3.png")
+#define TEXTURE_FILENAME_SUPPORT_4		 ("Image/GameUI/fukidashi/4.png")
 #define TEXTURE_FILENAME_SUPPORT_BLACK	 ("Image/GameUI/fukidashi/black.png")
 #define TEXTURE_FILENAME_SUPPORT_FEVER	 ("Image/GameUI/fukidashi/fever.png")
 #define TEXTURE_FILENAME_SUPPORT_HURRY	 ("Image/GameUI/fukidashi/hurry.png")
@@ -246,6 +253,11 @@ vector<char*> texGame = {
 	TEXTURE_FILENAME_SUPPORT_INSEKI,
 	TEXTURE_FILENAME_SUPPORT_MAX,
 	TEXTURE_FILENAME_SUPPORT_MIN,
+
+	TEXTURE_FILENAME_SUN_ANIM,			
+	TEXTURE_FILENAME_PLANET01_ANIM	,
+	TEXTURE_FILENAME_PLANET02_ANIM,
+
 
 };
 

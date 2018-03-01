@@ -167,6 +167,9 @@
     <Filter Include="ソース ファイル\シーン\各シーン\06トレーニングモード">
       <UniqueIdentifier>{b370fe3d-4bd1-494f-9a4c-c792cf5c1920}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\レア星">
+      <UniqueIdentifier>{acda510d-bb4f-4d20-ae29-fc762be7cd42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SceneTitle.cpp">
@@ -355,6 +358,9 @@
     <ClCompile Include="SceneTraning.cpp">
       <Filter>ソース ファイル\シーン\各シーン\06トレーニングモード</Filter>
     </ClCompile>
+    <ClCompile Include="RearStar.cpp">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\レア星</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneTitle.h">
@@ -540,6 +546,9 @@
     </ClInclude>
     <ClInclude Include="SceneTraning.h">
       <Filter>ソース ファイル\シーン\各シーン\06トレーニングモード</Filter>
+    </ClInclude>
+    <ClInclude Include="RearStar.h">
+      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\レア星</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

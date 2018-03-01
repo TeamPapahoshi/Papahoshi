@@ -43,6 +43,7 @@
     <ClCompile Include="PlaySupport.cpp" />
     <ClCompile Include="rand.cpp" />
     <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="RearStar.cpp" />
     <ClCompile Include="ResultFont.cpp" />
     <ClCompile Include="ResultGirl.cpp" />
     <ClCompile Include="ResultStar.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="PlaySupport.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Ranking.h" />
+    <ClInclude Include="RearStar.h" />
     <ClInclude Include="ResultFont.h" />
     <ClInclude Include="ResultGirl.h" />
     <ClInclude Include="ResultStar.h" />
