@@ -279,20 +279,25 @@ void cSceneGame::MainUpdate(){
 
 	}
 
-	// ゲームの状態
+//********プレゼン用*********************************
 #ifndef _PRESEN_KEY
-
 
 	// プレゼン用デバッグキー
 	if (GetKeyboardTrigger(DIK_R)){
+		m_pTimer->StartCountDown(LIMIT_TIME);// タイムリセット
+	}
 
-		// タイムリセット
-		m_pTimer->StartCountDown(LIMIT_TIME);
+	if (GetKeyboardTrigger(DIK_M)){
+		m_pSpaceRock->SetCreateStart();//隕石生成
+	}
 
+	if (GetKeyboardTrigger(DIK_F)){
+		m_pTimer->StartCountDown(1);// 残り1秒
 	}
 
 	
 #endif
+//*****************************************************:
 
 
 
