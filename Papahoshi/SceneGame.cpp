@@ -30,7 +30,6 @@
 cSceneGame::cSceneGame() : 
 m_bHurryUp(false)
 {
-
 	// 網
 	m_pNet = new cNet();
 
@@ -65,7 +64,6 @@ m_bHurryUp(false)
 
 	// 星群れ
 	m_pConsellation = new cConstellation();
-
 
 	// UI
 	m_pGameUI = new cGameUI();
@@ -281,6 +279,20 @@ void cSceneGame::MainUpdate(){
 
 	}
 
+	// ゲームの状態
+#ifndef _PRESEN_KEY
+
+
+	// プレゼン用デバッグキー
+	if (GetKeyboardTrigger(DIK_R)){
+
+		// タイムリセット
+		m_pTimer->StartCountDown(LIMIT_TIME);
+
+	}
+
+	
+#endif
 
 
 
@@ -349,15 +361,7 @@ void cSceneGame::MainUpdate(){
 		m_bHurryUp = true;
 		if (!m_bFever)
 			m_pGameUI->SetUiType(cGameUI::eUItype::HURRY_UP);
-	}
-
-	
-	if (GetKeyboardTrigger(DIK_F)){
-		m_bFever ? m_bFever = false : m_bFever = true;
-		if (m_bFever)
-			m_pAnnounce = new cAnnounce(cAnnounce::eAnnounceType::Fever);
-	}
-	
+	}	
 }
 
 //============================================
@@ -509,7 +513,7 @@ void cSceneGame::CheckCollision(){
 					  CheckCollisionCircleToLine(m_pRearStar->GetStarData()[nCountStar].m_Collision.GetCollider().CirclePos,
 					  m_pRearStar->GetStarData()[nCountStar].m_Collision.GetCollider().fRadius, m_pNet->GetNetCenter(), m_pNet->GetNetRight())){
 
-					  m_pBlackHole->OnCollidToNet(nCountStar);
+					  m_pRearStar->OnCollidToNet(nCountStar);
 				  }
 			  }
 		  }
