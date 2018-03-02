@@ -116,13 +116,6 @@ void cNormalStar::Init(){
 		m_pStarData->m_sprite.SetTexPatternDevide(4, 2);
 		m_pStarData->m_sprite.SetIntervalChangePattern(7);
 		break;
-<<<<<<< HEAD
-=======
-
-	case 4:
-		//m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLUE_STAR_ANIM));
-		break;
-
 	default:
 		break;
 	};
@@ -130,8 +123,8 @@ void cNormalStar::Init(){
 
 	// 生成座標の決定
 	D3DXVECTOR2 CreateRamdomPos;
-	CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT, GAME_SCREEN_RIGHT);
-	CreateRamdomPos.y = (float)CRandam::RandamRenge(0, SCREEN_HEIGHT - 100);
+	CreateRamdomPos.x = (float)CRandam::RandamRenge(GAME_SCREEN_LEFT + size, GAME_SCREEN_RIGHT - size);
+	CreateRamdomPos.y = (float)CRandam::RandamRenge(GAME_SCREEN_TOP + size, SCREEN_HEIGHT - 100.0f);
 	//CreateRamdomPos = D3DXVECTOR2(SCREEN_CENTER);
 	m_pStarData->m_sprite.SetPos(CreateRamdomPos);		// 代入
 
@@ -212,22 +205,8 @@ void cNormalStar::Update(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
-<<<<<<< HEAD
 		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-=======
-
-		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-
-		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
-
-		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-
-
->>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
 		{
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;
@@ -264,6 +243,27 @@ void cNormalStar::Update(){
 					EFFECT_BEZIERCURVE_FRAME,
 					m_pStarData->m_sprite.GetPos(),
 					m_pGageData->GetGageSprite().GetPos() + m_pGageData->GetGageSprite().GetSize() / 2);
+
+				//エフェクト使用フラグをOnに
+				m_pStarData->m_bEffectSetFlag = true;
+			}
+			else if(!m_pStarData->m_bEffectSetFlag && m_pGageData->GetGagemax())
+			{
+				D3DXCOLOR EffectColor;
+
+				EffectColor = D3DXCOLOR(255, 255, 192, 255);
+
+				/*
+				// エフェクトの設定
+				GetEffectManeger()->SetEffectBezierCurve(cTextureManeger::GetTextureGame(TEX_GAME_STAR_LIGHT),
+					m_pStarData->m_sprite.GetPos(),
+					D3DXVECTOR2(EFFECT_BEZIERCURVE_SIZE, EFFECT_BEZIERCURVE_SIZE),
+					EffectColor,
+					EFFECT_BEZIERCURVE_FRAME,
+					m_pStarData->m_sprite.GetPos(),
+					D3DXVECTOR2(CRandam::RandamRenge(SCREEN_CENTER.x - 150.0f, SCREEN_CENTER.x + 150.0f),
+					            GAME_SCREEN_TOP));
+				*/
 
 				//エフェクト使用フラグをOnに
 				m_pStarData->m_bEffectSetFlag = true;

@@ -26,7 +26,7 @@
 #define MAX_RAD (2.0f * 3.14f)
 #define ToRADIAN(a)	(((a) % 360) / 180.0f * 3.1415f)	// D→R変換
 
-#define POINT_SET_X (40)		//制御点の位置制御用Ｘ
+#define POINT_SET_X (50)		//制御点の位置制御用Ｘ
 #define POINT_SET_Y (10)		//制御点の位置制御用Ｙ
 //-----------------------------
 //列挙型定義

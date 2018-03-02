@@ -75,6 +75,7 @@ m_bChange(false)
 	//----- BGMの再生 ----
 	PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
 	SetVolume(TITLE_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
+	SetVolume(TITLE_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
 
 	// シーンチェンジフラグの初期化
 	bSceneChangeFlag = false;
@@ -142,6 +143,8 @@ void cSceneTitle::Update(){
 		)
 	{
 		bSceneChangeFlag = true;
+		//効果音の再生
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_TITLE_SHIP);
 	}
 
 	//回転コマンド

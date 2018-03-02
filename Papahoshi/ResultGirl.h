@@ -14,6 +14,9 @@
 #include "Common.h"
 #include "GameMain.h"	// エフェクトクラス取得用
 
+//----- 外部オブジェクトの読み込み -----
+#include "Ranking.h"
+
 //-----------------------------
 //マクロ定義
 //-----------------------------
@@ -39,6 +42,8 @@ private:	//外部から参照不可能
 	int			 m_nAnimFlame;
 	bool		 m_nAnimFlag;	//trueでmaxの、falseでminのテクスチャ表示
 
+	cRanking*    m_pRanking;
+
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
 
@@ -48,12 +53,18 @@ public:		//外部から参照可能
 	cResultgirl();	//コンストラクタ
 	~cResultgirl();	//デストラクタ
 
+	void Init(void);
 	void Update(void);
 	void Draw(void);
 
 	bool GetResultGirlAnim(void)
 	{
 		return m_nAnimFlag;
+	}
+
+	void GetRankingDara(cRanking* data)
+	{
+		m_pRanking = data;
 	}
 };
 

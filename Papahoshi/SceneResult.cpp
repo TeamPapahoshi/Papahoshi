@@ -28,6 +28,9 @@
 #define SCORE_SIZE_X (100.0f)
 #define SCORE_SIZE_Y (140.0f)
 
+#define SCORE_RESULTBGM_MIN (300)
+#define SCORE_RESULTBGM_MAX (480)
+
 //-----------------------------
 // グローバル
 //-----------------------------
@@ -48,6 +51,8 @@ cSceneResult::cSceneResult()
 	m_pBG->SetBG(m_pBG->RESULT);
 
 	m_pResultgirl = new cResultgirl();
+	m_pResultgirl->GetRankingDara(m_pRanking);
+	m_pResultgirl->Init();
 
 	m_pResultFont = new cResultFont();
 	m_pResultFont->GetRankingData(m_pRanking);
@@ -55,6 +60,16 @@ cSceneResult::cSceneResult()
 	m_pResultStar = new cResultStar();
 	m_pResultStar->GetResultGirlData(m_pResultgirl);
 	m_pResultStar->Init();
+
+	if (m_pRanking->GetChangeScoreFlag())
+		m_nResultBGMFlame = SCORE_RESULTBGM_MAX;
+	else
+		m_nResultBGMFlame = SCORE_RESULTBGM_MIN;
+
+	SetVolume(RESULT_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MAX);
+	SetVolume(RESULT_BGM_VOLUME, SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MIN);
+
+	m_bBGMFlag = false;
 
 	//----- 表示スコアの初期化 -----
 	ResetPrintScore();
@@ -73,6 +88,10 @@ cSceneResult::~cSceneResult(){
 	delete m_pResultgirl;
 	delete m_pResultFont;
 	delete m_pResultStar;
+
+	//----- BGMの停止 ----
+	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MAX);
+	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MIN);
 }
 
 //=======================================================================================
@@ -93,6 +112,19 @@ void cSceneResult::Update(){
 	m_pResultStar->Update();
 
 	UpdateScore();
+
+	//BGM再生フレームの減少
+	m_nResultBGMFlame--;
+
+	if (m_nResultBGMFlame < 0 && !m_bBGMFlag)
+	{
+		if (m_pRanking->GetChangeScoreFlag())
+			PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MAX);
+		else
+			PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MIN);
+
+		m_bBGMFlag = true;
+	}
 
 	// シーン更新
 	if (GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_A) ||

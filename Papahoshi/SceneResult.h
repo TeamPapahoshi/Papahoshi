@@ -45,5 +45,7 @@ private:
 	cResultFont* m_pResultFont;
 	cResultStar* m_pResultStar;
 
+	int          m_nResultBGMFlame;
+	bool		 m_bBGMFlag;
 };
 #endif //!___SCENE_RESULT_H___

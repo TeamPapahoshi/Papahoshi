@@ -36,9 +36,12 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 //-1ループ　0非ループ
 SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 {
-	{ "Sound/BGM/amenohino.wav", -1 },		// Title
+	{ "Sound/BGM/Title.wav", -1 },		// Title
 	{ "Sound/BGM/nomal.wav", -1 },			// Game
 	{ "Sound/BGM/fever.wav", -1 },			// fever
+
+	{ "Sound/BGM/ResultMinBGM.wav", -1 },		// リザルトジングル(閾値以下)
+	{ "Sound/BGM/ResultMaxBGM.wav", -1 },		// リザルトジングル(閾値以上)
 
 	{ "Sound/SE/Net/Shoot.wav", 0 },		// 網投げ
 	{ "Sound/SE/Net/Pull.wav", 0 },			// 網引き
@@ -51,25 +54,23 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 
 
 	{ "Sound/SE/Title/Titleship.wav", 0 },		// 船の汽笛
+	{ "Sound/SE/Title/Titlestar.wav", 0 },		// タイトル流星
+
+	{ "Sound/SE/Game/AddGage.wav", 0 },		// ゲージ増加
+	{ "Sound/SE/Game/SubGage.wav", 0 },		// ゲージ減少
 
 	{ "Sound/SE/Result/ResultMIN.wav", 0 },		// リザルトジングル(閾値以下)
 	{ "Sound/SE/Result/ResultMAX.wav", 0 },		// リザルトジングル(閾値以上)
 
-<<<<<<< HEAD
-	{ "Sound/SE/Result/Countup.wav", 0 },		// リザルトカウントアップ音
+	{ "Sound/SE/Result/Countup.wav", -1 },		// リザルトカウントアップ音
+	{ "Sound/SE/Result/CountupEnd.wav", 0 },		// リザルトカウントアップ終了音
 	{ "Sound/SE/Result/MoveStar.wav", 0 },		// リザルト星生成音
 
-=======
->>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
 	{ "Sound/Voice/3.wav", 0 },	// アナウンス
 	{ "Sound/Voice/2.wav", 0 },	// アナウンス
 	{ "Sound/Voice/1.wav", 0 },	// アナウンス
 	{ "Sound/Voice/start.wav", 0 },	// アナウンス
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
 };
 
 //=============================================================================
@@ -258,7 +259,6 @@ void UninitSound(void)
 HRESULT PlaySound(SOUND_LABEL label)
 {
 
-	return S_OK;
 #ifdef USE_SOUND
 	XAUDIO2_VOICE_STATE xa2state;
 	XAUDIO2_BUFFER buffer;
