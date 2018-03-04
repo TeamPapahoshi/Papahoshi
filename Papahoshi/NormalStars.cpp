@@ -30,7 +30,7 @@
 //----------------------------
 #define STAR_SIZE			(25)		// 最小サイズ
 #define STAR_SIZE_MARGIN	(20)		// サイズの幅
-#define RESPAWN_FREAM		(200)
+#define RESPAWN_FREAM		(100)
 #define MAX_NORMAL_STAR_NUM	(120)
 
 // 正存時間(ずっと画面に残ってたら消える)
@@ -142,6 +142,10 @@ void cNormalStar::Init(){
 	m_pStarData->m_Light.SetSize(D3DXVECTOR2(m_pStarData->m_sprite.GetSize().x + 30, m_pStarData->m_sprite.GetSize().x +30));
 	m_pStarData->m_Light.SetPos(D3DXVECTOR2(m_pStarData->m_sprite.GetPos().x, m_pStarData->m_sprite.GetPos().y));
 	m_pStarData->m_Light.SetVtxColorA(255);
+
+
+	m_pStarData->m_eDestroyType = NONE;
+	m_pStarData->m_bEffectSetFlag = false;
 }
 
 
@@ -152,9 +156,13 @@ void cNormalStar::Init(){
 //=======================================================================================
 cNormalStar::~cNormalStar(){
 
+	StopSound(SOUND_LABEL::SOUND_LABEL_SE_STAR_GET);
+	StopSound(SOUND_LABEL::SOUND_LABEL_SE_VACUME_BLACK_HOLE);
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
 	delete[] m_pStarData;
+	m_pStarData = NULL;
+
 }
 //=======================================================================================
 //
@@ -169,12 +177,18 @@ void cNormalStar::Update(){
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+
+		if (m_pStarData == NULL){
+			continue;
+		}
+			
+
 		//エフェクト表示中
 		if (m_pStarData->m_bEffectSetFlag)
 		{
 			//エフェクト表示フレームの加算
 			m_pStarData->m_nEffectFrame++;
-			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame == EFFECT_BEZIERCURVE_FRAME)
+			if (!m_pGageData->GetGagemax() && m_pStarData->m_nEffectFrame >= EFFECT_BEZIERCURVE_FRAME)
 			{
 				m_pGageData->GageChange(GAGE_ADD_VALUE);
 
@@ -202,23 +216,16 @@ void cNormalStar::Update(){
 
 		// 移動の目的位置決定
 		m_pStarData->m_Destination = m_pNetData->GetNetStart();
+	
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
+	
 		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-
-
-		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-
-		// 目的位置についたら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y)
-
-		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
-		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y && m_pStarData->m_bCaptured )
-
+		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y - 50 && m_pStarData->m_bCaptured)
 		{
+
+			m_pStarData->m_eDestroyType = CAPTURED_NET;
 			m_pStarData->m_bDestroyEvent = true;
 			m_pStarData->m_bAddScore = true;
 
@@ -292,6 +299,10 @@ void cNormalStar::Update(){
 
 	// イベント格納
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		if (m_pStarData == NULL){
+			continue;
+		}
 
 		// イベントが呼び出される感じ
 		if (m_pStarData->m_bCreateEvent){
@@ -376,10 +387,6 @@ void cNormalStar::Draw(){
 
 		m_pStarData->m_Light.Draw();
 		m_pStarData->m_sprite.Draw();
-	
-
-		//if (m_pStarData->m_bUse)
-		//	m_pStarData->m_Collision.Draw();
 	}
 
 	// 先頭に戻す
@@ -478,29 +485,21 @@ void cNormalStar::Destroy(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
 
-		// スコア加算
-		if (m_pStarData->m_bAddScore){
+		// 削除の種類によって処理を変更
+		switch (m_pStarData->m_eDestroyType)
+		{
+		case NONE:
+			break;
+		case SCREEN_OUT:
+			break;
+		case CAPTURED_NET:
 			AddScore(NORMAL_STAR_SCORE);
-			m_pStarData->m_bAddScore = false;
-		}
-
-		// 網での獲得によって消滅した音
-		if (m_pStarData->m_bCaptured && !m_pStarData->m_bHitBlackHoleDelete && !m_pStarData->m_bHitSpaceRock && !m_pStarData->m_DeleteToLifeTime){
-			PlaySound(SOUND_LABEL_SE_STAR_GET);
-			m_pStarData->m_bCaptured = false;
-			m_pStarData->m_bHitBlackHoleDelete = false;
-			m_pStarData->m_bHitSpaceRock = false;
-			m_pStarData->m_DeleteToLifeTime = false;
-		}
-
-
-		// ブラックホールでの獲得によって消滅した音
-		if (!m_pStarData->m_bCaptured && m_pStarData->m_bHitBlackHoleDelete && !m_pStarData->m_bHitSpaceRock && !m_pStarData->m_DeleteToLifeTime){
-			PlaySound(SOUND_LABEL_SE_VACUME_BLACK_HOLE);
-			m_pStarData->m_bCaptured = false;
-			m_pStarData->m_bHitBlackHoleDelete = false;
-			m_pStarData->m_bHitSpaceRock = false;
-			m_pStarData->m_DeleteToLifeTime = false;
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_STAR_GET);
+			break;
+		case VACUMED_BLACKHOLE:
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_VACUME_BLACK_HOLE);
+		default:
+			break;
 		}
 
 		//	リセット
@@ -585,6 +584,10 @@ void cNormalStar::OnCollidToNet(int num){
 	if (!m_pStarData->m_bCaptured)
 		m_pStarData->m_bCaptured = true;
 
+
+	// 
+	m_pStarData->m_eDestroyType = CAPTURED_NET;
+
 	// Vector確認用
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest*5);
 }
@@ -652,11 +655,13 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal,int black){
 	m_pStarData = m_pRoot;
 	m_pStarData += Normal;
 
-	
-		if (m_pBlackHoleData->GetStarData()[black].m_bCaptured)
-			return;
+	// ブラックホールが確保されていたら処理しない
+	if (m_pBlackHoleData->GetStarData()[black].m_bCaptured)
+		return;
 
 	
+	//
+	m_pStarData->m_eDestroyType = VACUMED_BLACKHOLE;
 
 	m_pStarData->m_bHitBlackHoleDelete = true;
 	m_pStarData->m_bDestroyEvent = true;

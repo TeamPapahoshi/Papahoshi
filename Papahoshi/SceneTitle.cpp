@@ -101,6 +101,8 @@ cSceneTitle::~cSceneTitle(){
 
 	//StopSound(SOUND_LABEL_BGM000);
 
+	StopSound(SOUND_LABEL::SOUND_LABEL_SE_TITLE_SHIP);
+
 	// 動的インスタンスするならdeleteをUnitとは別にここに
 	delete m_pTitleRogo;
 	m_pTitleRogo = NULL;
@@ -142,9 +144,14 @@ void cSceneTitle::Update(){
 		GetInputButtonPress(DIK_SPACE, 0, AC_CON_BUTTON_H)
 		)
 	{
-		bSceneChangeFlag = true;
+
 		//効果音の再生
-		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_TITLE_SHIP);
+		if (!bSceneChangeFlag){
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_TITLE_SHIP);
+		}
+
+		bSceneChangeFlag = true;
+	
 	}
 
 	//回転コマンド

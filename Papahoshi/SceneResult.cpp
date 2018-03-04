@@ -92,6 +92,8 @@ cSceneResult::~cSceneResult(){
 	//----- BGM‚Ì’âŽ~ ----
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MAX);
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MIN);
+	StopSound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUP);
+	StopSound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUPEND);
 }
 
 //=======================================================================================

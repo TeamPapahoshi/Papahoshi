@@ -28,7 +28,7 @@
 // グローバル
 //-----------------------------
 #ifdef _DEBUG
-bool g_bDispDebug = true;	//デバッグON/OFF
+bool g_bDispDebug = false;	//デバッグON/OFF
 #endif
 
 cEffectManeger g_CEffectManeger;	//エフェクト管理用クラス
@@ -63,13 +63,15 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindowed){
 	//乱数の初期化
 	CRandam::InitRand();
 
+	//サウンドの初期化
+	if (FAILED(InitSound(hWnd)))
+		return E_FAIL;
+
+
 	//入力装置管理の初期化
 	if (FAILED(InitInput(hInstance, hWnd)))
 		return E_FAIL;
 
-	//サウンドの初期化
-	if (FAILED(InitSound(hWnd)))
-		return E_FAIL;
 
 	//最初のシーンの設定
 #ifndef _DEBUG_DKIP_

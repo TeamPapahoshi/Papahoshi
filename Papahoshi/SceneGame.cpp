@@ -22,6 +22,9 @@
 #include "sound.h"
 #include "Common.h"
 
+
+
+bool g_finish = false;
 //=======================================================================================
 //
 //		初期化
@@ -286,6 +289,11 @@ void cSceneGame::MainUpdate(){
 //********プレゼン用*********************************
 #ifndef _PRESEN_KEY
 
+	// 時間が減らない
+	if (!g_finish){
+		m_pTimer->StartCountDown(LIMIT_TIME);
+	}
+
 	// プレゼン用デバッグキー
 	if (GetKeyboardTrigger(DIK_R)){
 		m_pTimer->StartCountDown(LIMIT_TIME);// タイムリセット
@@ -297,6 +305,7 @@ void cSceneGame::MainUpdate(){
 
 	if (GetKeyboardTrigger(DIK_F)){
 		m_pTimer->StartCountDown(1);// 残り1秒
+		g_finish = true;
 	}
 
 	

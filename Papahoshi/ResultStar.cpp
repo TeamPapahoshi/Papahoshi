@@ -229,6 +229,7 @@ void cResultStar::Update(){
 		{
 			//使用フラグがオンの場合に処理
 			if (!m_pMoveStarData->m_bUse)	continue;
+			if (m_pMoveStarData == NULL)		continue;
 
 			//回転の反映
 			m_pMoveStarData->m_sprite.SetRad(m_pMoveStarData->m_sprite.GetRad() + m_pMoveStarData->m_fAddRad);
