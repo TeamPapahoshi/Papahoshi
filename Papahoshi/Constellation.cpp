@@ -165,6 +165,7 @@ cConstellation::~cConstellation(){
 	m_pStarData = m_pRoot;
 	delete[]  m_pStarData;
 	m_pStarData = NULL;
+	m_pRoot = NULL;
 
 }
 

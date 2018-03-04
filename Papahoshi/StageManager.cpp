@@ -38,6 +38,7 @@ void cStageManager::ChangeStage(STAGE stage){
 
 	if (m_pStage != NULL){
 		delete m_pStage;	// ステージの解放
+		m_pStage = NULL;
 	}
 
 	//現在のステージ番号の更新
