@@ -70,10 +70,14 @@ cResultStar::~cResultStar(){
 	// êÊì™Ç…ñﬂÇ∑
 	m_pStarData = m_pRoot;
 	delete[] m_pStarData;
+	m_pStarData = NULL;
+	m_pRoot = NULL;
 
 	// êÊì™Ç…ñﬂÇ∑
 	m_pMoveStarData = m_pMoveRoot;
 	delete[] m_pMoveStarData;
+	m_pMoveStarData = NULL;
+	m_pMoveRoot = NULL;
 }
 
 //=======================================================================================

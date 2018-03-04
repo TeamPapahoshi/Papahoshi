@@ -128,6 +128,20 @@ cSceneGame::~cSceneGame(){
 	delete m_pPlaySupport;
 	delete m_pRearStar;
 
+	m_pBG			= NULL;
+	m_pNomalStar = NULL;
+	m_pSpaceRock = NULL;
+	m_pRyusei = NULL;
+	m_pGage = NULL;
+	m_pBlackHole = NULL;
+	m_pSampleStar = NULL;
+	m_pNet = NULL;
+	m_pGameUI = NULL;
+	m_pTimer = NULL;
+	m_pConsellation = NULL;
+	m_pPlaySupport = NULL;
+	m_pRearStar = NULL;
+
 	//----- BGM‚Ì’âŽ~ -----
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_GAME_FEVER);

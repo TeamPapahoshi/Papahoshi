@@ -163,7 +163,7 @@ cNormalStar::~cNormalStar(){
 	m_pStarData = m_pRoot;
 	delete[] m_pStarData;
 	m_pStarData = NULL;
-
+	m_pRoot = NULL;
 }
 //=======================================================================================
 //
@@ -230,7 +230,7 @@ void cNormalStar::Update(){
 		// 星から目的地方向の単位ベクトルを求める
 		m_pStarData->m_VecStarToDest = UnitVector(m_pStarData->m_Destination - m_pStarData->m_sprite.GetPos());
 
-	
+
 		// 目的位置についたてなおかつ網の中なら消去イベント開始Ｙ軸で決める
 		if (m_pStarData->m_sprite.GetPos().y >= m_pStarData->m_Destination.y - 50 && m_pStarData->m_bCaptured)
 		{
@@ -669,8 +669,8 @@ void cNormalStar::OnCollidToBlackHoleDeleteRange(int Normal,int black){
 	m_pStarData += Normal;
 
 	// ブラックホールが確保されていたら処理しない
-	if (m_pBlackHoleData->GetStarData()[black].m_bCaptured)
-		return;
+		if (m_pBlackHoleData->GetStarData()[black].m_bCaptured)
+			return;
 
 	
 	//

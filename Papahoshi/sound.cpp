@@ -75,6 +75,7 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/Voice/2.wav", 0 },	// アナウンス
 	{ "Sound/Voice/1.wav", 0 },	// アナウンス
 	{ "Sound/Voice/start.wav", 0 },	// アナウンス
+	{ "Sound/SE/Game/EndGame.wav", 0 },		// 終了時ホイッスル
 
 };
 

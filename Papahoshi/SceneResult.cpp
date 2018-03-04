@@ -89,6 +89,12 @@ cSceneResult::~cSceneResult(){
 	delete m_pResultFont;
 	delete m_pResultStar;
 
+	m_pRanking = NULL;
+	m_pBG = NULL;
+	m_pResultgirl = NULL;
+	m_pResultFont = NULL;
+	m_pResultStar = NULL;
+
 	//----- BGM‚Ì’âŽ~ ----
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MAX);
 	StopSound(SOUND_LABEL::SOUND_LABEL_BGM_RESULT_MIN);

@@ -51,6 +51,7 @@ cAnnounce::cAnnounce(eAnnounceType type){
 		m_MaxFaseNum = 1;
 		m_stringSprite.SetSize(D3DXVECTOR2(367.0f, 94.0f));
 		m_flameCnt = FINISH_FRAME_CNT;
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_GAME_WHISTLE);
 		break;
 	}
 
