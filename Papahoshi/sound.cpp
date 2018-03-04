@@ -30,6 +30,10 @@ IXAudio2MasteringVoice *g_pMasteringVoice = NULL;			// マスターボイス
 IXAudio2SourceVoice *g_apSourceVoice[SOUND_LABEL_MAX] = {};	// ソースボイス
 BYTE *g_apDataAudio[SOUND_LABEL_MAX] = {};					// オーディオデータ
 DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
+
+
+bool	g_bSound[SOUND_LABEL_MAX];			// そのサウンドが使われているかどうか
+int		g_nSoundWait[SOUND_LABEL_MAX];		// 同じ種類の音の場合再生までの待ち時間
 #endif
 
 // 各音素材のパラメータ

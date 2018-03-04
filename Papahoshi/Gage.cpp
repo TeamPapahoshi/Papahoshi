@@ -157,6 +157,16 @@ void cGage::UnInit(){
 //=======================================================================================
 void cGage::Update(){
 
+
+	if (m_bSound){
+		m_nSoundLimit++;
+	}
+	if (m_nSoundLimit > 10){
+		m_bSound = false;
+	}
+
+
+
 	if (m_bGageMax)
 	{//ゲージマックス状態からゲージを徐々に減らす
 		m_fGageNum -= GAGE_MINUS_VALUE;
@@ -313,7 +323,11 @@ void cGage::GageChange(int value)
 	//増減に応じて効果音の再生
 	if (value > 0)
 	{
-		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_GAME_GAGEADD);
+		if (!m_bSound){
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_GAME_GAGEADD);
+			m_bSound = true;
+		}
+		
 	}
 	else
 	{

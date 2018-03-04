@@ -70,6 +70,8 @@ cNormalStar::cNormalStar(){
 	m_pStarData = new cNormalStarData[m_nMaxNum]();	//ここ注意
 	m_pRoot = m_pStarData;							// 先頭アドレス保存
 
+	m_pStarData = m_pRoot;
+
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
@@ -81,7 +83,6 @@ cNormalStar::cNormalStar(){
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetAnimationFlag(true);
 	
-
 		Init();
 
 	}
@@ -173,6 +174,15 @@ void cNormalStar::Update(){
 
 	// 先頭に戻す
 	m_pStarData = m_pRoot;
+
+	if (m_bSound){
+		m_nSoundLimit++;
+	}
+	if (m_nSoundLimit > 10){
+		m_bSound = false;
+	}
+
+
 
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
@@ -494,10 +504,13 @@ void cNormalStar::Destroy(){
 			break;
 		case CAPTURED_NET:
 			AddScore(NORMAL_STAR_SCORE);
-		//	PlaySound(SOUND_LABEL::SOUND_LABEL_SE_STAR_GET);
+			if (!m_bSound){
+				PlaySound(SOUND_LABEL::SOUND_LABEL_SE_STAR_GET);
+				m_bSound = true;
+			}
 			break;
 		case VACUMED_BLACKHOLE:
-			//PlaySound(SOUND_LABEL::SOUND_LABEL_SE_VACUME_BLACK_HOLE);
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_VACUME_BLACK_HOLE);
 		default:
 			break;
 		}

@@ -35,8 +35,6 @@ public:
 	bool	m_bAddScore = false;
 	int		m_nLifeTime = 0;
 
-	
-
 	// ブラックホール
 	bool	m_bHitBlackHoleDelete=false;
 
@@ -45,6 +43,8 @@ public:
 
 	// 隕石
 	bool	m_bHitSpaceRock = false;
+
+
 
 
 };
@@ -83,6 +83,8 @@ private:
 	cBlackHole*			m_pBlackHoleData;	// ブラックホールのデータを格納
 	cNet*				m_pNetData;			// 網のデータ格納
 	cGage*				m_pGageData;		// ゲージのデータ格納
+	bool	m_bSound = false;
+	int		m_nSoundLimit = 0;
 
 	// リスポーンするときに初期化するもの
 	void Init();

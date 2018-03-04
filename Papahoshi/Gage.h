@@ -42,6 +42,11 @@ private:	//外部から参照不可能
 	bool	m_bFeverStart;
 	bool	m_bFeverFin;
 
+	// 連続再生
+	bool	m_bSound = false;
+	int		m_nSoundLimit = 0;
+
+
 	//-----------------------------
 protected:	//クラス内でのみ参照可能
 
