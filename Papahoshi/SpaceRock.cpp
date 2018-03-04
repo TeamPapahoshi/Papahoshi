@@ -26,12 +26,12 @@
 //-----------------------------
 //---- 隕石 ----
 #define CREATE_PATTERN		(2)
-#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+500,250))
+#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+500,200))
 //#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+150,350))
-//#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-150,350))
-#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_LEFT+500,250))
+//#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-150,350)
+#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_LEFT+500,200))
 #define STAR_SIZE			(150)
-#define RESPAWN_FREAM		(200)
+#define RESPAWN_FREAM		(500)
 #define MAX_SPACE_ROCK_NUM	(1)
 #define DESTROY_STAR		(20)
 
@@ -412,6 +412,34 @@ void cSpaceRock::Destroy(){
 		}
 
 
+		// αの設定
+		m_pStarData->m_sprite.SetVtxColorA(0);
+
+		// 座標の決定
+		D3DXVECTOR2 CreateRamdomPos;
+		int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN + 1);
+		switch (RamdomNum)
+		{
+		case 1:
+			CreateRamdomPos = CREATE_POS_01;
+			break;
+		case CREATE_PATTERN:
+			CreateRamdomPos = CREATE_POS_02;
+			break;
+		default:
+			break;
+		}
+		m_pStarData->m_sprite.SetPos(CreateRamdomPos);
+
+		m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
+		m_pStarData->m_nDestroyStarNum = DESTROY_STAR;					// 破壊数を設定
+		m_pStarData->m_ExplosionAnim.SetCurrentAnimPattern(0);
+		m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
+		m_pStarData->m_bExplosion = false;								// 開始用フラグ
+		m_pStarData->m_bCaptured = false;
+		m_pStarData->m_nLifeTime = LIFE_TIME;							// 正存時間の指定
+
+
 		// 終了したら即リスポーン準備
 		m_pStarData->m_bRespawnEvent = true;
 
@@ -460,33 +488,25 @@ void cSpaceRock::Respawn(){
 				break;
 			}
 			m_pStarData->m_sprite.SetPos(CreateRamdomPos);
-		
+
+			m_pStarData->m_sprite.SetVtxColor(D3DXCOLOR(255, 255, 255, 255));
 			m_pStarData->m_nDestroyStarNum = DESTROY_STAR;					// 破壊数を設定
 			m_pStarData->m_ExplosionAnim.SetCurrentAnimPattern(0);
 			m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
 			m_pStarData->m_bExplosion = false;								// 開始用フラグ
-
 			m_pStarData->m_bCaptured = false;
+			m_pStarData->m_nLifeTime = LIFE_TIME;							// 正存時間の指定
 
 			// リスポーン処理終了
 			m_pStarData->m_bRespawnEnd = true;
-
-
-			// 正存時間の指定
-			m_pStarData->m_nLifeTime = LIFE_TIME;
-
-	
 		}
 	}
 
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bRespawnEnd){
 
-
 		// 生成イベント開始
 		m_pStarData->m_bCreateEvent = true;
-
-
 
 		//	リセット
 		m_pStarData->m_nRespawnFrame = 0;
@@ -494,7 +514,6 @@ void cSpaceRock::Respawn(){
 		m_pStarData->m_bRespawnEvent = false;
 		return;
 	}
-
 }
 
 

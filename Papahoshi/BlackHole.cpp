@@ -26,7 +26,7 @@
 //-----------------------------
 #define STAR_SIZE			(200)	// サイズ
 #define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
-#define MAX_BLACK_HOLE_NUM	(2)		// 最大数
+#define MAX_BLACK_HOLE_NUM	(1)		// 最大数
 #define VACUUM_RANGE		(300)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
 
@@ -58,6 +58,10 @@ cBlackHole::cBlackHole(){
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		// 
+		m_pStarData->m_bCreateEvent = true;
+
 
 		// テクスチャの設定
 		m_pStarData->m_sprite.SetTexture(cTextureManeger::GetTextureGame(TEX_GAME_BLACK_HOLE));

@@ -114,6 +114,7 @@ cRyusei::cRyusei(){
 cRyusei::~cRyusei(){
 
 	StopSound(SOUND_LABEL_SE_STREAM_METEOR);
+	StopSound(SOUND_LABEL_SE_STAR_GET);
 	// êÊì™Ç…ñﬂÇ∑
 	m_pStarData = m_pRoot;
 	delete[] m_pStarData;
@@ -346,6 +347,7 @@ void cRyusei::Destroy(){
 			break;
 		case CAPTURED_NET:
 			AddScore(SCORE_RYUSEI);
+			PlaySound(SOUND_LABEL_SE_STAR_GET);
 			break;
 		default:
 			break;

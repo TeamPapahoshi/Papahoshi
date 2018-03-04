@@ -25,17 +25,17 @@
 // マクロ定義
 //-----------------------------
 #define STAR_SIZE			(150)	// サイズ
-#define RESPAWN_FREAM		(500)	// リスポーンのインターバルフレーム
+#define RESPAWN_FREAM		(400)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
 #define VACUUM_RANGE		(300)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
 
 //	生成位置
 #define CREATE_PATTERN		(4)
-#define CREATE_POS_01		(D3DXVECTOR2(SCREEN_CENTER))
-#define CREATE_POS_02		(D3DXVECTOR2(SCREEN_CENTER))
-#define CREATE_POS_03		(D3DXVECTOR2(SCREEN_CENTER))
-#define CREATE_POS_04		(D3DXVECTOR2(SCREEN_CENTER))
+#define CREATE_POS_01		(D3DXVECTOR2(SCREEN_CENTER.x-150,SCREEN_CENTER.y))
+#define CREATE_POS_02		(D3DXVECTOR2(SCREEN_CENTER.x-150,SCREEN_CENTER.y))
+#define CREATE_POS_03		(D3DXVECTOR2(SCREEN_CENTER.x+300,SCREEN_CENTER.y))
+#define CREATE_POS_04		(D3DXVECTOR2(SCREEN_CENTER.x+300,SCREEN_CENTER.y))
 
 
 
@@ -58,6 +58,8 @@ cRearStar::cRearStar(){
 
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		m_pStarData->m_bCreateEvent;
 
 
 		// タイプの決定
