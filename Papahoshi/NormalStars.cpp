@@ -494,10 +494,10 @@ void cNormalStar::Destroy(){
 			break;
 		case CAPTURED_NET:
 			AddScore(NORMAL_STAR_SCORE);
-			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_STAR_GET);
+		//	PlaySound(SOUND_LABEL::SOUND_LABEL_SE_STAR_GET);
 			break;
 		case VACUMED_BLACKHOLE:
-			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_VACUME_BLACK_HOLE);
+			//PlaySound(SOUND_LABEL::SOUND_LABEL_SE_VACUME_BLACK_HOLE);
 		default:
 			break;
 		}
