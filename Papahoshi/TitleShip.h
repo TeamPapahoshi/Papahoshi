@@ -29,7 +29,6 @@ class cTitleShip
 private:
 	cSpriteParam m_sprite;
 	int			 m_nMakeSmokeTime;
-	int			 m_nPlaySEFlame;
 	bool         m_bShipOutFlag;
 //-----------------------------
 protected:

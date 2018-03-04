@@ -30,6 +30,8 @@
 //-------------------------------
 int	g_nScore;		//現在スコア
 int g_nPrintScore;	//現在表示中のスコア
+bool g_bPlaySe;
+bool g_bCountEnd;
 
 cSpriteParam g_aScoreSprite[DIGIT_SCORE];
 
@@ -69,6 +71,8 @@ void AddScore(int score){
 //=================================================
 void ResetPrintScore(){
 	g_nPrintScore = 0;
+	g_bPlaySe = false;
+	g_bCountEnd = false;
 }
 
 //=================================================
@@ -107,6 +111,7 @@ void DrawScore(D3DXVECTOR2 pos, D3DXVECTOR2 size){
 
 	//----- スコア加算の音量を調整
 	SetVolume(0.5f, SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUP);
+	SetVolume(0.5f, SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUPEND);
 
 	//----- デバッグ表示 -----
 	PrintDebugProc("スコア : %d\n", g_nPrintScore);
@@ -129,6 +134,7 @@ void UpdateScore(){
 			g_nPrintScore += DRAW_STAGING_SKIP_NUM;
 		if (g_nPrintScore > g_nScore)
 			g_nPrintScore = g_nScore;	//値を同じに調整
+
 	}
 	//減算
 	else if (g_nScore < g_nPrintScore){
@@ -139,11 +145,27 @@ void UpdateScore(){
 			g_nPrintScore -= DRAW_STAGING_SKIP_NUM;
 		if (g_nPrintScore < g_nScore)
 			g_nPrintScore = g_nScore;	//値を同じに調整
+
+	}
+	else if (!g_bCountEnd)
+	{
+		StopSound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUP);
+		g_bPlaySe = false;
+		g_bCountEnd = true;
 	}
 
 	//リザルト時のみ効果音を再生
-	if (cSceneManeger::GetSceneNum())
+	if (cSceneManeger::GetSceneNum() == cSceneManeger::RESULT)
 	{
-		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUP);
+		if (!g_bPlaySe && !g_bCountEnd)
+		{
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUP);
+			g_bPlaySe = true;
+		}
+		else if (!g_bPlaySe && g_bCountEnd)
+		{
+			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_COUNTUPEND);
+			g_bPlaySe = true;
+		}
 	}
 }

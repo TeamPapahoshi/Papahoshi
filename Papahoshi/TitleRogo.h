@@ -16,7 +16,7 @@
 //-----------------------------
 //マクロ定義
 //-----------------------------
-#define  MAX_TITLEROGO (11)
+#define  MAX_TITLEROGO (13)
 
 //-----------------------------
 //列挙型定義
@@ -31,6 +31,8 @@ typedef struct
 	cSpriteParam	Rogosprite;			// スプライトのステータス(ロゴ)
 	int				nHopTimer;				// タイマー
 	float			fRadian;
+	bool			bMoveFlag;			//跳ねるフラグ
+	float           fOriginPosY;		//元のY座標
 }TITLEROGO;
 
 //-----------------------------

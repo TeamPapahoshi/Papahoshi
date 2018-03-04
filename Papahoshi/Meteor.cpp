@@ -14,6 +14,7 @@
 #include "Meteor.h"
 #include "Texture.h"
 #include "GameMain.h"	// エフェクトクラス取得用
+#include "sound.h"
 
 //-----------------------------
 //マクロ定義
@@ -30,7 +31,7 @@
 
 #define RANDAM_METEOR_SET_X ((float)CRandam::RandamRenge(RANDAM_METEOR_POS_X, SCREEN_WIDTH - RANDAM_METEOR_POS_X))
 #define RANDAM_METEOR_SET_Y ((float)CRandam::RandamRenge(RANDAM_METEOR_POS_Y, SCREEN_HEIGHT / 2))
-#define RANDAM_METEOR_TIME (CRandam::RandamRenge(100, 250))
+#define RANDAM_METEOR_TIME (CRandam::RandamRenge(100, 1000))
 
 //-----------------------------
 //列挙型定義
@@ -88,6 +89,9 @@ void cMeteor::Init()
 			m_aMeteor[loop].Sprite[Spriteloop].SetAddBlend(true);
 		}
 	}
+
+	SetVolume(0.3f, SOUND_LABEL::SOUND_LABEL_SE_TITLE_STAR);
+
 }
 
 //=======================================================================================
@@ -191,6 +195,9 @@ void cMeteor::SetMeteor(){
 			m_aMeteor[loop].Sprite[Spriteloop].SetMove(D3DXVECTOR2(-METEOR_MOVE_X, METEOR_MOVE_Y));
 			m_aMeteor[loop].Sprite[Spriteloop].SetSize(D3DXVECTOR2(METEOR_SIZE, METEOR_SIZE));
 		}
+
+		//効果音の再生
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_TITLE_STAR);
 
 		//一つ生成したらループを抜ける
 		break;

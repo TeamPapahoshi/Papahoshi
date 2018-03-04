@@ -21,6 +21,9 @@ typedef enum
 	SOUND_LABEL_BGM_GAME,			// ゲーム中
 	SOUND_LABEL_BGM_GAME_FEVER,		// フィーバータイム
 
+	SOUND_LABEL_BGM_RESULT_MIN,
+	SOUND_LABEL_BGM_RESULT_MAX,
+
 	SOUND_LABEL_SE_NET_SHOOT,		// 網投げ
 	SOUND_LABEL_SE_NET_PULL,		// 網引き
 	SOUND_LABEL_SE_NET_GAGE,		// ゲージ
@@ -31,20 +34,19 @@ typedef enum
 	SOUND_LABEL_SE_VACUME_BLACK_HOLE,	// ブラックホール吸い込みおん
 
 	SOUND_LABEL_SE_TITLE_SHIP,	// 汽笛
+	SOUND_LABEL_SE_TITLE_STAR,	//タイトル流星
+	SOUND_LABEL_SE_GAME_GAGEADD,	//ゲージ増加
+	SOUND_LABEL_SE_GAME_GAGESUB,	//ゲージ減少
 	SOUND_LABEL_GINGLE_RESULT_MIN,	// リザルトジングル(閾値以下)
 	SOUND_LABEL_GINGLE_RESULT_MAX,	// リザルトジングル(閾値以上)
 	SOUND_LABEL_SE_RESULT_COUNTUP,	// リザルトカウントアップ音
+	SOUND_LABEL_SE_RESULT_COUNTUPEND,	// リザルトカウントアップ終了音
 	SOUND_LABEL_SE_RESULT_MOVE_STAR,// リザルト星生成音
-
-
-
-
 
 	SOUND_LABEL_VOICE_3,	//アナウンス「3」
 	SOUND_LABEL_VOICE_2,	//アナウンス「2」
 	SOUND_LABEL_VOICE_1,	//アナウンス「1」
 	SOUND_LABEL_VOICE_START,	//アナウンス「START」
-
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
 
@@ -57,6 +59,7 @@ typedef enum
 #define TITLE_BGM_VOLUME	(1.0f)
 #define GAME_BGM_VOLUME	(1.0f)
 #define FEVER_BGM_VOLUME	(1.0f)
+#define RESULT_BGM_VOLUME   (1.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言

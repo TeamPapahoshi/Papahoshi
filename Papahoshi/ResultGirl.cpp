@@ -17,8 +17,6 @@
 //マクロ定義
 //-----------------------------
 
-#define   TEXTURE_CHANGE_LINE (10000)	//テクスチャ切り替えのスコア閾値(暫定)
-
 #define   TEXTURE_PATTERN_MAX (2)
 #define   TEXTURE_PATTERN_MIN (4)
 
@@ -44,15 +42,36 @@
 //
 //=======================================================================================
 cResultgirl::cResultgirl(){
+
+}
+
+//=======================================================================================
+//
+//		デストラクタ
+//
+//=======================================================================================
+cResultgirl::~cResultgirl(){
+
+	StopSound(SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MAX);
+	StopSound(SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MIN);
+}
+
+//=======================================================================================
+//
+//		初期化処理
+//
+//=======================================================================================
+void cResultgirl::Init(){
+
 	//初期化処理
 	m_cGirlsprite.SetPos(D3DXVECTOR2(RESULTGIRL_POS_X, RESULTGIRL_POS_Y));
 	m_cGirlsprite.SetSize(D3DXVECTOR2(RESULTGIRL_SIZE_X, RESULTGIRL_SIZE_Y));
 	m_nCurrentPattern = 0;
 	m_nAnimFlame = 0;
 	//スコアが一定以上だった場合
-	if (GetScore() >= TEXTURE_CHANGE_LINE)
-	//デバッグ用
-	//if (1)
+	if (m_pRanking->GetChangeScoreFlag())
+		//デバッグ用
+		//if (1)
 	{
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MAX_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MAX;
@@ -68,15 +87,6 @@ cResultgirl::cResultgirl(){
 		SetVolume(GINGLE_VOLUME, SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MIN);
 		PlaySound(SOUND_LABEL::SOUND_LABEL_GINGLE_RESULT_MIN);
 	}
-
-}
-
-//=======================================================================================
-//
-//		デストラクタ
-//
-//=======================================================================================
-cResultgirl::~cResultgirl(){
 
 }
 

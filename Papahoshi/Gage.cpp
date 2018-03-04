@@ -12,6 +12,8 @@
 #include "input.h"
 #include "Texture.h"
 
+#include "sound.h"
+
 //-----------------------------
 //マクロ定義
 //-----------------------------
@@ -133,6 +135,10 @@ void cGage::Init(){
 
 	m_bFeverStart = false;
 	m_bFeverFin = false;
+
+	//効果音の音量調整
+	SetVolume(0.8f, SOUND_LABEL::SOUND_LABEL_SE_GAME_GAGEADD);
+	SetVolume(0.8f, SOUND_LABEL::SOUND_LABEL_SE_GAME_GAGESUB);
 }
 
 //=======================================================================================
@@ -303,6 +309,16 @@ void cGage::GageChange(int value)
 										GAGE_EFFECT_CIRCLE_SET_FRAME,
 										GAGE_EFFECT_NUM_MAX,
 										false);
+
+	//増減に応じて効果音の再生
+	if (value > 0)
+	{
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_GAME_GAGEADD);
+	}
+	else
+	{
+		PlaySound(SOUND_LABEL::SOUND_LABEL_SE_GAME_GAGESUB);
+	}
 
 		//最大値になったらゲージマックス状態に
 	if (m_fGageNum >= MAX_GAGE_NUM)
