@@ -16,7 +16,7 @@
 //マクロ定義
 //-----------------------------
 //ゲージ増減量
-#define GAGE_ADD_VALUE		(4.0f)
+#define GAGE_ADD_VALUE		(6.0f)
 #define GAGE_MINUS_VALUE	(0.2f)
 #define MAX_GAGE_NUM (100.0f)
 

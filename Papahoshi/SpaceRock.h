@@ -16,6 +16,7 @@
 #include "BaseStar.h"
 #include "Net_Type2.h"
 #include "NormalStars.h"
+#include "Gage.h"
 
 
 //-----------------------------
@@ -31,6 +32,9 @@ public:
 
 	bool	m_bVibration = true;
 	int		m_nVibrationFrame = 0;
+
+	
+	
 
 	//---- 爆発エフェクト関連 ----
 	cSpriteParam	m_ExplosionAnim;	// 爆破るエフェクト用
@@ -62,6 +66,11 @@ public:
 		}
 	}
 
+
+	//--- ゲージとの処理 ---
+	void SetGageData(cGage* data);
+
+
 	//--- モブ星との処理 ----
 	void SetNormalStarData(cNormalStar* data);
 	void OnCollidToNormalStar(int num);
@@ -76,6 +85,7 @@ private:
 	cSpaceRockData*	m_pRoot;		// 先頭アドレス格納用
 	cNet*			m_pNetData;
 	cNormalStar*	m_pNormalStarData;
+	cGage*			m_pGageData;
 
 	//Set&Get
 public:

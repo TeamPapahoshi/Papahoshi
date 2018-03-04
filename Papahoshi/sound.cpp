@@ -55,21 +55,16 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Result/ResultMIN.wav", 0 },		// リザルトジングル(閾値以下)
 	{ "Sound/SE/Result/ResultMAX.wav", 0 },		// リザルトジングル(閾値以上)
 
-<<<<<<< HEAD
 	{ "Sound/SE/Result/Countup.wav", 0 },		// リザルトカウントアップ音
 	{ "Sound/SE/Result/MoveStar.wav", 0 },		// リザルト星生成音
 
-=======
->>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
+
 	{ "Sound/Voice/3.wav", 0 },	// アナウンス
 	{ "Sound/Voice/2.wav", 0 },	// アナウンス
 	{ "Sound/Voice/1.wav", 0 },	// アナウンス
 	{ "Sound/Voice/start.wav", 0 },	// アナウンス
 
-<<<<<<< HEAD
-=======
 
->>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
 };
 
 //=============================================================================
@@ -258,7 +253,7 @@ void UninitSound(void)
 HRESULT PlaySound(SOUND_LABEL label)
 {
 
-	return S_OK;
+	//return S_OK;
 #ifdef USE_SOUND
 	XAUDIO2_VOICE_STATE xa2state;
 	XAUDIO2_BUFFER buffer;

@@ -26,8 +26,10 @@
 //-----------------------------
 //---- 隕石 ----
 #define CREATE_PATTERN		(2)
-#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+150,350))
-#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-150,350))
+#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+500,250))
+//#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+150,350))
+//#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-150,350))
+#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_LEFT+500,250))
 #define STAR_SIZE			(150)
 #define RESPAWN_FREAM		(200)
 #define MAX_SPACE_ROCK_NUM	(1)
@@ -404,6 +406,12 @@ void cSpaceRock::Destroy(){
 	// 生成終了フラグが立ったらリセットして終了
 	if (m_pStarData->m_bDestroyEnd){
 
+
+		if (m_pStarData->m_bCaptured){
+			m_pGageData->GageChange(-20);
+		}
+
+
 		// 終了したら即リスポーン準備
 		m_pStarData->m_bRespawnEvent = true;
 
@@ -458,6 +466,8 @@ void cSpaceRock::Respawn(){
 			m_pStarData->m_ExplosionFrame = EXPLOSION_FRAME;				// 爆発時間
 			m_pStarData->m_bExplosion = false;								// 開始用フラグ
 
+			m_pStarData->m_bCaptured = false;
+
 			// リスポーン処理終了
 			m_pStarData->m_bRespawnEnd = true;
 
@@ -505,6 +515,8 @@ void cSpaceRock::OnCollidToNet(int count){
 	m_pStarData = m_pRoot;
 	m_pStarData += count;
 
+	m_pStarData->m_bCaptured = true;
+
 
 	// Vector確認用
 	m_pStarData->m_sprite.SetPos(m_pStarData->m_sprite.GetPos() + m_pStarData->m_VecStarToDest * 5);
@@ -534,4 +546,15 @@ void cSpaceRock::OnCollidToNormalStar(int num){
 
 
 
+}
+
+//=======================================================================================
+//
+//		ゲージとの処理
+//
+//=======================================================================================
+//---- ゲージの情報を取得 -----
+void cSpaceRock::SetGageData(cGage* data)
+{
+	m_pGageData = data;
 }

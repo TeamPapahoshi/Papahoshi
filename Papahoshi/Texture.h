@@ -116,10 +116,8 @@ enum TEX_STAGE_SELECT{
 
 		TEX_NET_PIRTICLE,
 
-<<<<<<< HEAD
-=======
 
->>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
+
 		TEX_GAME_GAGE_FIVER,
 
 		TEX_SUPPORT_1,
@@ -132,13 +130,12 @@ enum TEX_STAGE_SELECT{
 		TEX_SUPPORT_inseki,
 		TEX_SUPPORT_max,
 		TEX_SUPPORT_min,
-<<<<<<< HEAD
-=======
+
 
 		TEX_GAME_SUN,
 		TEX_GAME_PLANET01,
 		TEX_GAME_PLANET02,
->>>>>>> cd4e7a85e4f51a22bb84fbae3c4849fb832b50a4
+
 
 		TEX_GAME_MAX
 	};

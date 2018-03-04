@@ -33,6 +33,10 @@ m_bHurryUp(false)
 	// 網
 	m_pNet = new cNet();
 
+	// ゲージ
+	m_pGage = new cGage();
+	m_pGage->Init();
+
 	// ブラックホール
 	m_pBlackHole = new cBlackHole();
 	m_pBlackHole->SetNetData(m_pNet);
@@ -44,6 +48,8 @@ m_bHurryUp(false)
 	// 隕石
 	m_pSpaceRock = new cSpaceRock();
 	m_pSpaceRock->SetNetData(m_pNet);
+	m_pSpaceRock->SetGageData(m_pGage);
+
 
 	// サンプル
 	m_pSampleStar = new cSampleStar();
@@ -52,9 +58,7 @@ m_bHurryUp(false)
 	m_pRyusei = new cRyusei();
 	m_pRyusei->SetNetData(m_pNet);
 
-	// ゲージ
-	m_pGage = new cGage();
-	m_pGage->Init();
+
 
 	// モブ星
 	m_pNomalStar = new cNormalStar();
