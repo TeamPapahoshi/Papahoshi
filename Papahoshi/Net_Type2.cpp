@@ -894,6 +894,7 @@ void cNet::ShoutPhaseUpdate(){
 					xFin[i] = true;
 				}
 			}
+
 		}
 
 	}
@@ -914,6 +915,7 @@ void cNet::ShoutPhaseUpdate(){
 		if (!m_bRipple[i]){ //îgñ‰ê∂ê¨
 			SetRipple(m_aPos[i]);
 			m_bRipple[i] = true;
+			PlaySound(SOUND_LABEL_SE_NET_SET);
 		}
 		if (i == 2){
 			m_fHalfCircleSize = 0.0f;
