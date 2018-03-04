@@ -25,6 +25,7 @@ typedef enum
 	SOUND_LABEL_BGM_RESULT_MAX,
 
 	SOUND_LABEL_SE_NET_SHOOT,		// ñ‘ìäÇ∞
+	SOUND_LABEL_SE_NET_SET,			// ñ‘ê›íu
 	SOUND_LABEL_SE_NET_PULL,		// ñ‘à¯Ç´
 	SOUND_LABEL_SE_NET_GAGE,		// ÉQÅ[ÉW
 

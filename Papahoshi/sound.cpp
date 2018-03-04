@@ -43,8 +43,9 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/BGM/ResultMinBGM.wav", -1 },		// リザルトジングル(閾値以下)
 	{ "Sound/BGM/ResultMaxBGM.wav", -1 },		// リザルトジングル(閾値以上)
 
-	{ "Sound/SE/Net/Shoot.wav", 0 },		// 網投げ
-	{ "Sound/SE/Net/Pull.wav", 0 },			// 網引き
+	{ "Sound/SE/Game/ShootNet.wav", 0 },		// 網投げ
+	{ "Sound/SE/Game/SetNet.wav", 0 },			// 網引き
+	{ "Sound/SE/Game/BackNet.wav", 0 },			// 網引き
 	{ "Sound/SE/Net/shine1.wav", 0 },		// ゲージ
 
 	{ "Sound/SE/Star/StarGetSound.wav", 0},		// 星の獲得
