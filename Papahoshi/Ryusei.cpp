@@ -30,7 +30,7 @@
 #define RESPAWN_FREAM			(200)
 #define MAX_NORMAL_RYUSEI_NUM	(50)
 #define MOVE_SPEED				(4.5f)
-#define SCORE_RYUSEI			(200)
+#define SCORE_RYUSEI			(100)
 
 
 #define LIMIT_METEOR_NOT_FEVER	(1)

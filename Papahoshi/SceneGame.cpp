@@ -167,6 +167,7 @@ void cSceneGame::Update(){
 	
 	// ↓すべての状態で更新↓
 
+#ifdef _DEBUG
 	// シーン更新
 	if (GetKeyboardTrigger(DIK_G)){
 		m_eGameState = GAME_STATE_MAIN;
@@ -175,6 +176,7 @@ void cSceneGame::Update(){
 	if (GetKeyboardTrigger(DIK_SPACE)){
 		cSceneManeger::ChangeScene(cSceneManeger::RESULT);
 	}
+#endif
 }
 
 //=======================================================================================

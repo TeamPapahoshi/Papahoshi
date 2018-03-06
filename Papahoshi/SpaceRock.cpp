@@ -408,7 +408,7 @@ void cSpaceRock::Destroy(){
 
 
 		if (m_pStarData->m_bCaptured){
-			m_pGageData->GageChange(-20);
+			m_pGageData->GageChange(-50);
 		}
 
 

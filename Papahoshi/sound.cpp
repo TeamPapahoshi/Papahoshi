@@ -56,6 +56,7 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/SE/Star/StreamMeteor.wav", -1},	// 星の獲得
 	{ "Sound/SE/Star/SpaceRockBomb.wav", 0 },	// 隕石の爆発
 	{ "Sound/SE/Star/VacumeBlackHole.wav", 0 },	// 隕石の爆発
+	{ "Sound/SE/Star/RearStarGet.wav", 0 },	// 隕石の爆発
 
 
 	{ "Sound/SE/Title/Titleship.wav", 0 },		// 船の汽笛
@@ -76,6 +77,8 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Sound/Voice/1.wav", 0 },	// アナウンス
 	{ "Sound/Voice/start.wav", 0 },	// アナウンス
 	{ "Sound/SE/Game/EndGame.wav", 0 },		// 終了時ホイッスル
+
+
 
 };
 

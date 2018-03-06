@@ -19,6 +19,7 @@
 #include "Input.h"
 #include "GameUI.h"
 #include "MathEX.h"
+#include "Score.h"
 
 
 //-----------------------------
@@ -27,14 +28,15 @@
 #define STAR_SIZE			(200)	// サイズ
 #define RESPAWN_FREAM		(100)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
-#define VACUUM_RANGE		(300)	// 吸い込み範囲
+#define VACUUM_RANGE		(800)	// 吸い込み範囲
 #define DELETE_RANGE		(10)	// 削除範囲
+#define BLACK_HOLE_SCORE	(200)
 
 //	生成位置
 #define CREATE_PATTERN		(4)
 #define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,100))
 #define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,100))
-#define CREATE_POS_03		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+#define CREATE_POS_03		(D3DXVECTOR2(SCREEN_CENTER.x,SCREEN_CENTER.y))
 #define CREATE_POS_04		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
 
 
@@ -60,7 +62,7 @@ cBlackHole::cBlackHole(){
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
 		// 
-		m_pStarData->m_bCreateEvent = true;
+		//m_pStarData->m_bCreateEvent = true;
 
 
 		// テクスチャの設定
@@ -71,7 +73,7 @@ cBlackHole::cBlackHole(){
 	
 		// 座標の決定
 		D3DXVECTOR2 CreateRamdomPos;
-		int RamdomNum = CRandam::RandamRenge(1, CREATE_PATTERN+1);
+		int RamdomNum = CRandam::RandamRenge(1, 4);
 		switch (RamdomNum)
 		{
 		case 1:
@@ -82,9 +84,6 @@ cBlackHole::cBlackHole(){
 			break;
 		case 3:
 			CreateRamdomPos = CREATE_POS_03;
-			break;
-		case 4:
-			CreateRamdomPos = CREATE_POS_04;
 			break;
 		default:
 			break;
@@ -139,6 +138,10 @@ void cBlackHole::Update(){
 
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
+
+		// 使用されていないのは飛ばす
+		if (!m_pStarData->m_bUse)
+			continue;
 
 		// 当たり判定
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 30);
@@ -348,6 +351,11 @@ void cBlackHole::Destroy(){
 		// 終了したら即リスポーン準備
 		m_pStarData->m_bRespawnEvent = true;
 
+
+		// 網でキャッチされていたらスコア加算
+		if (m_pStarData->m_bCaptured){
+			AddScore(BLACK_HOLE_SCORE);
+		}
 
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;

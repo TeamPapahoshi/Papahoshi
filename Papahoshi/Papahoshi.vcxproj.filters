@@ -47,9 +47,6 @@
     <Filter Include="ソース ファイル\02シーン\各シーン\03ゲーム\星\星の種類\隕石">
       <UniqueIdentifier>{09f95796-6644-4776-884c-5352b816d32e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\02シーン\各シーン\03ゲーム\星\レア星">
-      <UniqueIdentifier>{acda510d-bb4f-4d20-ae29-fc762be7cd42}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\02シーン\各シーン\03ゲーム\網">
       <UniqueIdentifier>{444df0d6-b471-462e-b01c-8fd23eebee82}</UniqueIdentifier>
     </Filter>
@@ -142,6 +139,9 @@
     </Filter>
     <Filter Include="ソース ファイル\00コピー用">
       <UniqueIdentifier>{f064968f-65e1-4182-a2ee-1d3d8bf916e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\02シーン\各シーン\03ゲーム\星\星の種類\レア星">
+      <UniqueIdentifier>{acda510d-bb4f-4d20-ae29-fc762be7cd42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -296,7 +296,7 @@
       <Filter>ソース ファイル\02シーン\各シーン\06トレーニングモード</Filter>
     </ClCompile>
     <ClCompile Include="RearStar.cpp">
-      <Filter>ソース ファイル\02シーン\各シーン\03ゲーム\星\レア星</Filter>
+      <Filter>ソース ファイル\02シーン\各シーン\03ゲーム\星\星の種類\レア星</Filter>
     </ClCompile>
     <ClCompile Include="SpaceRock.cpp">
       <Filter>ソース ファイル\02シーン\各シーン\03ゲーム\星\星の種類\隕石</Filter>
@@ -452,7 +452,7 @@
       <Filter>ソース ファイル\02シーン\各シーン\06トレーニングモード</Filter>
     </ClInclude>
     <ClInclude Include="RearStar.h">
-      <Filter>ソース ファイル\02シーン\各シーン\03ゲーム\星\レア星</Filter>
+      <Filter>ソース ファイル\02シーン\各シーン\03ゲーム\星\星の種類\レア星</Filter>
     </ClInclude>
     <ClInclude Include="SpaceRock.h">
       <Filter>ソース ファイル\02シーン\各シーン\03ゲーム\星\星の種類\隕石</Filter>

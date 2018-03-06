@@ -19,23 +19,25 @@
 #include "Input.h"
 #include "GameUI.h"
 #include "MathEX.h"
+#include "Score.h"
+#include "sound.h"
+
 
 
 //-----------------------------
 // マクロ定義
 //-----------------------------
 #define STAR_SIZE			(150)	// サイズ
-#define RESPAWN_FREAM		(400)	// リスポーンのインターバルフレーム
+#define RESPAWN_FREAM		(1000)	// リスポーンのインターバルフレーム
 #define MAX_BLACK_HOLE_NUM	(1)		// 最大数
-#define VACUUM_RANGE		(300)	// 吸い込み範囲
-#define DELETE_RANGE		(10)	// 削除範囲
+#define REAR_STAR_SCORE		(1000)
 
 //	生成位置
 #define CREATE_PATTERN		(4)
-#define CREATE_POS_01		(D3DXVECTOR2(SCREEN_CENTER.x-150,SCREEN_CENTER.y))
-#define CREATE_POS_02		(D3DXVECTOR2(SCREEN_CENTER.x-150,SCREEN_CENTER.y))
-#define CREATE_POS_03		(D3DXVECTOR2(SCREEN_CENTER.x+300,SCREEN_CENTER.y))
-#define CREATE_POS_04		(D3DXVECTOR2(SCREEN_CENTER.x+300,SCREEN_CENTER.y))
+#define CREATE_POS_01		(D3DXVECTOR2(GAME_SCREEN_RIGHT-STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+#define CREATE_POS_02		(D3DXVECTOR2(GAME_SCREEN_LEFT+STAR_SIZE/2.0f,GAME_SCREEN_UNDER-100))
+#define CREATE_POS_03		(CREATE_POS_01)
+#define CREATE_POS_04		(CREATE_POS_01)
 
 
 
@@ -59,7 +61,7 @@ cRearStar::cRearStar(){
 	// 初期化
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		m_pStarData->m_bCreateEvent = true;
+		//m_pStarData->m_bCreateEvent = true;
 
 
 		// タイプの決定
@@ -121,17 +123,8 @@ cRearStar::cRearStar(){
 		m_pStarData->m_Collision.SetType(cCollider::CIRCLE);
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 30);
 
-		// 吸い込み範囲
-		m_pStarData->m_VacumeRange.SetType(cCollider::CIRCLE);
-		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
-
-		// 削除範囲
-		m_pStarData->m_DeleteRange.SetType(cCollider::CIRCLE);
-		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 
 		m_pStarData->m_bCaptured = false;
-		// αの設定
-		//m_pStarData->m_sprite.SetVtxColorA(0);
 
 		// サイズの変更
 		m_pStarData->m_sprite.SetSize(D3DXVECTOR2(0, 0));
@@ -165,10 +158,12 @@ void cRearStar::Update(){
 	// 更新
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
+		// 使用されていないのは飛ばす
+		if (!m_pStarData->m_bUse)
+			continue;
+
 		// 当たり判定
 		m_pStarData->m_Collision.SetCircleCollider(m_pStarData->m_sprite.GetPos(), STAR_SIZE / 2.0f - 30);
-		m_pStarData->m_VacumeRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), VACUUM_RANGE);
-		m_pStarData->m_DeleteRange.SetCircleCollider(m_pStarData->m_sprite.GetPos(), DELETE_RANGE);
 		m_pStarData->m_sprite.AnimationLoop();
 
 		// 移動の目的位置決定
@@ -202,8 +197,6 @@ void cRearStar::Update(){
 			//}
 
 		}
-
-
 		if (m_pStarData->m_bDestroyEvent){
 			Destroy();
 		}
@@ -373,6 +366,12 @@ void cRearStar::Destroy(){
 		// 終了したら即リスポーン準備
 		m_pStarData->m_bRespawnEvent = true;
 
+
+		// 網でキャッチされていたらスコア加算
+		if (m_pStarData->m_bCaptured){
+			AddScore(REAR_STAR_SCORE);
+			PlaySound(SOUND_LABEL_SE_REAR_STAR_GET);
+		}
 
 		//	リセット
 		m_pStarData->m_bDestroyEnd = false;

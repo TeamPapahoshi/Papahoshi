@@ -36,7 +36,7 @@
 #define LIFE_TIME			(2000)
 #define LIFE_TIME_MARGIN	(500)
 
-#define NORMAL_STAR_SCORE	(300)	
+#define NORMAL_STAR_SCORE	(50)	
 
 #define VACUMED_SPEED		(0.2f)
 
@@ -119,7 +119,6 @@ void cNormalStar::Init(){
 	default:
 		break;
 	};
-
 
 	// ê∂ê¨ç¿ïWÇÃåàíË
 	D3DXVECTOR2 CreateRamdomPos;
