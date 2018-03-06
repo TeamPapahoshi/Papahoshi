@@ -13,7 +13,6 @@
 #include <math.h>
 #include <fstream>
 #include <cmath>
-
 #include "debugproc.h"
 #include "Common.h"
 #include "Texture.h"
