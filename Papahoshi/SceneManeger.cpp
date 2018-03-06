@@ -8,18 +8,17 @@
 //-----------------------------
 //インクルードファイル
 //-----------------------------
-#include<stdio.h>
-#include<iostream>
+#include <stdio.h>
+#include <iostream>
 
-#include"SceneManeger.h"
-#include"debugproc.h"
-#include"Texture.h"
+#include "SceneManeger.h"
+#include "debugproc.h"
+#include "Texture.h"
 
 // 各シーン
-#include"SceneTitle.h"
-#include"SceneStageSelect.h"
-#include"SceneGame.h"
-#include"SceneResult.h"
+#include "SceneTitle.h"
+#include "SceneGame.h"
+#include "SceneResult.h"
 #include "SceneTraning.h"
 
 //-----------------------------
@@ -50,17 +49,11 @@ void cSceneManeger::ChangeScene(SCENE scene){
 
 	//現在のシーン番号の更新
 	SetSceneNum(scene);
-
-
 	switch (scene){
 	case TITLE:
 		tex->LoadTexture(TITLE);			// テクスチャのロード
 		m_pScene = new cSceneTitle();		// 動的インスタンス&初期化
-		break;
-	case STAGE_SELECT:
-		tex->LoadTexture(STAGE_SELECT);		// テクスチャのロード
-		m_pScene = new cSceneStageSelect();
-		break;
+		break;;
 	case GAME:
 		tex->LoadTexture(GAME);				// テクスチャのロード
 		m_pScene = new cSceneGame();		// 動的インスタンス&初期化
@@ -191,10 +184,6 @@ void cSceneManeger::Draw(){
 	//トランジションがある場合は実行
 	if (pTransition)
 		pTransition->Draw();
-
-
-
-
 }
 
 //=======================================================================================

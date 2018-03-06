@@ -15,12 +15,10 @@
 #include "SceneManeger.h"
 #include "Common.h"
 #include "PlaySupport.h"
-#include "StageManager.h"
 #include "BG.h"
 #include "Net_Type2.h"
 #include "SampleStar.h"
 #include "NormalStars.h"
-#include "FixedStars.h"
 #include "Ryusei.h"
 #include "Constellation.h"
 #include "Gage.h"
@@ -47,7 +45,6 @@ private:
 	cNormalStar*				m_pNomalStar;		// モブ星
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
-	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	cRyusei*					m_pRyusei;			// 流星
 	cConstellation*				m_pConsellation;	// 星群
 	cGage*						m_pGage;			// ゲージ

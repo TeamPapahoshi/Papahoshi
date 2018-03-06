@@ -17,8 +17,6 @@
 #include "Common.h"
 #include "PlaySupport.h"
 
-// ステージ
-#include "StageManager.h"
 
 // このステージで使うオブジェクト
 #include "BG.h"
@@ -30,7 +28,6 @@
 // 星
 #include "SampleStar.h"
 #include "NormalStars.h"
-#include "FixedStars.h"
 #include "Ryusei.h"
 #include "Constellation.h"
 #include "Gage.h"
@@ -81,7 +78,6 @@ private:
 	cNormalStar*				m_pNomalStar;		// モブ星
 	cBlackHole*					m_pBlackHole;		// ブラックホール
 	cSpaceRock*					m_pSpaceRock;		// 隕石
-	vector<cFixedStar*>			m_pFixedStar;		// 恒星
 	cRyusei*					m_pRyusei;			// 流星
 	cConstellation*				m_pConsellation;	// 星群
 	cRearStar*					m_pRearStar;		// レア星

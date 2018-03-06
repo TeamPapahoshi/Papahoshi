@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Announce.cpp" />
     <ClCompile Include="BaseStar.cpp" />
     <ClCompile Include="BG.cpp" />
@@ -26,7 +25,6 @@
     <ClCompile Include="EffectSparkle.cpp" />
     <ClCompile Include="EffectSphereLight.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="FixedStars.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Gage.cpp" />
     <ClCompile Include="GameMain.cpp" />
@@ -39,7 +37,6 @@
     <ClCompile Include="NetRipple.cpp" />
     <ClCompile Include="Net_Type2.cpp" />
     <ClCompile Include="NormalStars.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlaySupport.cpp" />
     <ClCompile Include="rand.cpp" />
     <ClCompile Include="Ranking.cpp" />
@@ -48,24 +45,17 @@
     <ClCompile Include="ResultGirl.cpp" />
     <ClCompile Include="ResultStar.cpp" />
     <ClCompile Include="Ryusei.cpp" />
-    <ClCompile Include="RyuseiLine.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="SampleStar.cpp" />
-    <ClCompile Include="SaveClearFlag.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneManeger.cpp" />
     <ClCompile Include="SceneResult.cpp" />
-    <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="SceneTraning.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="SpaceRock.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Stage01.cpp" />
-    <ClCompile Include="Stage02.cpp" />
-    <ClCompile Include="StageManager.cpp" />
-    <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TitleRogo.cpp" />
@@ -75,7 +65,6 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="Announce.h" />
     <ClInclude Include="BaseStar.h" />
     <ClInclude Include="BG.h" />
@@ -91,7 +80,6 @@
     <ClInclude Include="EffectSparkle.h" />
     <ClInclude Include="EffectSphereLight.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="FixedStars.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Gage.h" />
     <ClInclude Include="GameMain.h" />
@@ -104,7 +92,6 @@
     <ClInclude Include="NetRipple.h" />
     <ClInclude Include="Net_Type2.h" />
     <ClInclude Include="NormalStars.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlaySupport.h" />
     <ClInclude Include="rand.h" />
     <ClInclude Include="Ranking.h" />
@@ -113,24 +100,17 @@
     <ClInclude Include="ResultGirl.h" />
     <ClInclude Include="ResultStar.h" />
     <ClInclude Include="Ryusei.h" />
-    <ClInclude Include="RyuseiLine.h" />
     <ClInclude Include="Sample.h" />
     <ClInclude Include="SampleStar.h" />
-    <ClInclude Include="SaveClearFlag.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneManeger.h" />
     <ClInclude Include="SceneResult.h" />
-    <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="SceneTraning.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="SpaceRock.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Stage01.h" />
-    <ClInclude Include="Stage02.h" />
-    <ClInclude Include="StageManager.h" />
-    <ClInclude Include="StageSelect.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleRogo.h" />

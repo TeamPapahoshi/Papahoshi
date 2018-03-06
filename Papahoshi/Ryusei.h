@@ -15,7 +15,6 @@
 #include "Collision.h"
 #include "BaseStar.h"
 #include "Sprite.h"
-#include "RyuseiLine.h"
 #include "Net_Type2.h"
 #include "sound.h"
 
@@ -100,7 +99,6 @@ public:
 private:
 	cRyuseiData*	m_pStarData;		// 必要データ
 	cRyuseiData*	m_pRoot;			// 先頭アドレス格納用
-	cRyuseiLine*	m_pLine;
 	cNet*			m_pNetData;			// 網のデータ格納
 
 	bool			m_bFever;

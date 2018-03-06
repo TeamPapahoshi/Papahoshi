@@ -11,9 +11,6 @@
     <Filter Include="ソース ファイル\シーン\各シーン">
       <UniqueIdentifier>{b74e4abd-e98d-4e2a-9090-7b26b8a522e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\02ステージセレクト">
-      <UniqueIdentifier>{8af1a10e-6408-47f1-a8c1-cf8e74760235}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\01タイトル">
       <UniqueIdentifier>{17a71ee9-83e4-48b8-a812-c684187ee939}</UniqueIdentifier>
     </Filter>
@@ -62,9 +59,6 @@
     <Filter Include="ソース ファイル\共通処理\エフェクト\エフェクトの種類">
       <UniqueIdentifier>{6f80f5be-b26b-4a83-813e-7215f8805b6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理">
-      <UniqueIdentifier>{fdbd7213-cad0-4845-b584-45ff69f237cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム">
       <UniqueIdentifier>{7815facc-e42b-48a1-819d-9fffd060160d}</UniqueIdentifier>
     </Filter>
@@ -80,12 +74,6 @@
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\モブ星">
       <UniqueIdentifier>{c71cfbec-69d9-447f-b277-782e5fcb6592}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\恒星">
-      <UniqueIdentifier>{fde97b57-414b-4312-a510-114b78b7b209}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\プレイヤー%28仮%29">
-      <UniqueIdentifier>{098c1280-1165-42f2-90e8-a9e13e14c250}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\網">
       <UniqueIdentifier>{444df0d6-b471-462e-b01c-8fd23eebee82}</UniqueIdentifier>
     </Filter>
@@ -98,23 +86,8 @@
     <Filter Include="ソース ファイル\メイン">
       <UniqueIdentifier>{2db00c89-32f5-40b8-983a-494d7eb1dd53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ">
-      <UniqueIdentifier>{090d8c85-47cc-4b6a-991a-bea2c42bc2de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ\管理、基底">
-      <UniqueIdentifier>{b6b6c4f2-7330-4fbf-8a08-2eb311483ee6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29">
-      <UniqueIdentifier>{7e569b73-392f-4a36-92d7-c8168d5961a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ01%28チュートリアル01%29">
-      <UniqueIdentifier>{2a166c99-40da-46d3-9219-015f2ef25e80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\ブラックホール">
       <UniqueIdentifier>{d30a170a-1b32-4d7b-baba-ec4edb767d52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\共通処理\アニメーション">
-      <UniqueIdentifier>{914cbcf6-fad0-41b3-bd8d-d8cf227a9e1f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\シーン\各シーン\01タイトル\タイトルオブジェクト">
       <UniqueIdentifier>{0cb06d61-00b1-4bbe-89e1-8a17d6934195}</UniqueIdentifier>
@@ -184,14 +157,8 @@
     <ClCompile Include="SceneGame.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム</Filter>
     </ClCompile>
-    <ClCompile Include="SceneStageSelect.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
-    </ClCompile>
     <ClCompile Include="BaseStar.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス</Filter>
-    </ClCompile>
-    <ClCompile Include="FixedStars.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\恒星</Filter>
     </ClCompile>
     <ClCompile Include="NormalStars.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\モブ星</Filter>
@@ -217,9 +184,6 @@
     <ClCompile Include="Net.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\プレイヤー%28仮%29</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル\共通処理\テクスチャ</Filter>
     </ClCompile>
@@ -228,9 +192,6 @@
     </ClCompile>
     <ClCompile Include="sound.cpp">
       <Filter>ソース ファイル\共通処理\サウンド</Filter>
-    </ClCompile>
-    <ClCompile Include="StageSelect.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
     </ClCompile>
     <ClCompile Include="Direct3D.cpp">
       <Filter>ソース ファイル\共通処理\Direct3Dデバイス</Filter>
@@ -256,23 +217,8 @@
     <ClCompile Include="Sample.cpp">
       <Filter>ソース ファイル\コピー用</Filter>
     </ClCompile>
-    <ClCompile Include="SaveClearFlag.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理</Filter>
-    </ClCompile>
-    <ClCompile Include="StageManager.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\管理、基底</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage01.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ01%28チュートリアル01%29</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage02.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29</Filter>
-    </ClCompile>
     <ClCompile Include="BlackHole.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\ブラックホール</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>ソース ファイル\共通処理\アニメーション</Filter>
     </ClCompile>
     <ClCompile Include="Net_Type2.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
@@ -308,9 +254,6 @@
       <Filter>ソース ファイル\共通処理\数学的な関数</Filter>
     </ClCompile>
     <ClCompile Include="Ryusei.cpp">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\流星</Filter>
-    </ClCompile>
-    <ClCompile Include="RyuseiLine.cpp">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\流星</Filter>
     </ClCompile>
     <ClCompile Include="EffectSparkle.cpp">
@@ -372,14 +315,8 @@
     <ClInclude Include="SceneManeger.h">
       <Filter>ソース ファイル\シーン\管理、基底クラス</Filter>
     </ClInclude>
-    <ClInclude Include="SceneStageSelect.h">
-      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
-    </ClInclude>
     <ClInclude Include="SceneGame.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム</Filter>
-    </ClInclude>
-    <ClInclude Include="FixedStars.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\恒星</Filter>
     </ClInclude>
     <ClInclude Include="NormalStars.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\モブ星</Filter>
@@ -405,9 +342,6 @@
     <ClInclude Include="Net.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\プレイヤー%28仮%29</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>ソース ファイル\共通処理\テクスチャ</Filter>
     </ClInclude>
@@ -416,9 +350,6 @@
     </ClInclude>
     <ClInclude Include="sound.h">
       <Filter>ソース ファイル\共通処理\サウンド</Filter>
-    </ClInclude>
-    <ClInclude Include="StageSelect.h">
-      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト</Filter>
     </ClInclude>
     <ClInclude Include="Direct3D.h">
       <Filter>ソース ファイル\共通処理\Direct3Dデバイス</Filter>
@@ -444,23 +375,8 @@
     <ClInclude Include="Sample.h">
       <Filter>ソース ファイル\コピー用</Filter>
     </ClInclude>
-    <ClInclude Include="SaveClearFlag.h">
-      <Filter>ソース ファイル\シーン\各シーン\02ステージセレクト\クリア情報管理</Filter>
-    </ClInclude>
-    <ClInclude Include="StageManager.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\管理、基底</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage01.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ01%28チュートリアル01%29</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage02.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\ステージ\ステージ02%28チュートリアル02%29</Filter>
-    </ClInclude>
     <ClInclude Include="BlackHole.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\ブラックホール</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>ソース ファイル\共通処理\アニメーション</Filter>
     </ClInclude>
     <ClInclude Include="Net_Type2.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\網</Filter>
@@ -499,9 +415,6 @@
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\管理、基底クラス</Filter>
     </ClInclude>
     <ClInclude Include="Ryusei.h">
-      <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\流星</Filter>
-    </ClInclude>
-    <ClInclude Include="RyuseiLine.h">
       <Filter>ソース ファイル\シーン\各シーン\03ゲーム\星\星の種類\流星</Filter>
     </ClInclude>
     <ClInclude Include="BaseStar.h" />
