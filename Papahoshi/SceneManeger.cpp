@@ -26,7 +26,7 @@
 //-----------------------------
 cBaseScene* cSceneManeger::m_pScene = NULL;							//現在のシーンの初期化
 cSceneManeger::SCENE cSceneManeger::m_nCurrentSceneNum = TITLE;		//現在のシーン番号の初期化
-cTransition* pTransition = NULL;	//トランジション
+cTransition* pTransition = NULL;									//トランジション
 
 // textureのインスタンス
 cTextureManeger* tex = new cTextureManeger();

@@ -24,7 +24,6 @@
     <ClCompile Include="EffectManeger.cpp" />
     <ClCompile Include="EffectSparkle.cpp" />
     <ClCompile Include="EffectSphereLight.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Gage.cpp" />
     <ClCompile Include="GameMain.cpp" />
@@ -79,7 +78,6 @@
     <ClInclude Include="EffectManeger.h" />
     <ClInclude Include="EffectSparkle.h" />
     <ClInclude Include="EffectSphereLight.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Gage.h" />
     <ClInclude Include="GameMain.h" />

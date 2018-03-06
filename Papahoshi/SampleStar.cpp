@@ -2,7 +2,7 @@
 //	SampleStar
 //	
 //	概要＿：コピー用星　　このままコピーして使えるヘッダーと一緒に
-//	制作者：加藤　遼
+//	制作者：加藤　遼				組みなおしたい泣
 //	
 //======================================================================
 //-----------------------------
@@ -103,15 +103,12 @@ void cSampleStar::Update(){
 
 
 
-	// イベントの起動
-	// デバッグキー
+	//// デバッグキー
 	//if (GetKeyboardTrigger(DIK_K)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
 	//		if (m_pStarData->m_bDraw)	// ここ注意
 	//			continue;
-
 	//		m_pStarData->m_bCreateEvent = true;
 	//		break;
 	//	}
@@ -120,10 +117,8 @@ void cSampleStar::Update(){
 	//if (GetKeyboardTrigger(DIK_D)){
 	//	m_pStarData = m_pRoot;	// 先頭に戻す
 	//	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
-
 	//		if (!m_pStarData->m_bUse)	// ここ注意
 	//			continue;
-
 	//		m_pStarData->m_bDestroyEvent = true;
 	//		break;
 	//	}

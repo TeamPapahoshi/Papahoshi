@@ -22,8 +22,6 @@
 #include "sound.h"
 #include "Common.h"
 
-
-
 bool g_finish = false;
 //=======================================================================================
 //
@@ -53,15 +51,12 @@ m_bHurryUp(false)
 	m_pSpaceRock->SetNetData(m_pNet);
 	m_pSpaceRock->SetGageData(m_pGage);
 
-
 	// ƒTƒ“ƒvƒ‹
 	m_pSampleStar = new cSampleStar();
 
 	// —¬¯
 	m_pRyusei = new cRyusei();
 	m_pRyusei->SetNetData(m_pNet);
-
-
 
 	// ƒ‚ƒu¯
 	m_pNomalStar = new cNormalStar();
@@ -94,7 +89,6 @@ m_bHurryUp(false)
 #endif
 	m_bFever = false;
 	 g_finish = false;
-
 
 	//---- BGM‚ÌÄ¶ ----
 	PlaySound(SOUND_LABEL::SOUND_LABEL_BGM_GAME);
@@ -190,7 +184,7 @@ void cSceneGame::Update(){
 //=======================================================================================
 void cSceneGame::Draw(){
 
-
+#ifdef _DEBUG
 	// ƒQ[ƒ€‚Ìó‘Ô‚Å•ªŠò(•ª‚¯‚é•K—v‚È‚¢‚©‚à)
 	switch (m_eGameState)
 	{
@@ -217,8 +211,9 @@ void cSceneGame::Draw(){
 	default:
 		break;
 	}
+#endif
 
-	m_pBG->Draw();				// ”wŒi
+	m_pBG->Draw();				
 	m_pBlackHole->Draw();
 	m_pSampleStar->Draw();
 	m_pNomalStar->Draw();
@@ -227,8 +222,6 @@ void cSceneGame::Draw(){
 	//m_pConsellation->Draw();
 	m_pRearStar->Draw();
 	m_pNet->Draw();
-
-
 	m_pGameUI->Draw();
 	m_pGage->Draw();
 	m_pTimer->Draw();
@@ -324,9 +317,6 @@ void cSceneGame::MainUpdate(){
 	}
 #endif
 //*****************************************************:
-
-
-
 
 	CheckCollision();			//“–‚½‚è”»’è
 	

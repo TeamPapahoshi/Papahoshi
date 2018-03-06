@@ -1,9 +1,8 @@
-
 //======================================================================
 //	Common
 //	
 //	概要＿：共通部分
-//	制作者：花井　雄矢
+//	制作者：加藤　遼
 //	
 //======================================================================
 
@@ -34,7 +33,6 @@ using namespace std;
 //------------------------------
 // マクロ定義
 //------------------------------
-
 //----- スクリーンの大きさ ------------
 #define SCREEN_WIDTH (1366)	//横幅
 #define SCREEN_HEIGHT (768) //高さ
@@ -56,27 +54,8 @@ using namespace std;
 //----- SAFE DELETE ------
 #define SAFE_DELETE(x)	if(x!=NULL){delete x; x=NULL})
 
-//----- デバッグ用機能 ------------
-//#define _DEBUG_TEXT_	//デバッグ用テキスト表示
-
-#ifdef _DEBUG_TEXT_
 #define _FPS_MEASURE_		//FPS計測機能
 
-#if 0	// --------- SCENE_GAME ---------
-#define _DEBUG_TEXT_PLAYER_	//プレイヤー情報　デバッグ表示
-#define _DEBUG_HEART_
-#endif
-#endif
 
-//---------------------------
-// 列挙体定義
-//---------------------------
-enum eDirection {
-
-	DIRECTION_LEFT = -1,
-	DIRECTION_UP,
-	DIRECTION_RIGHT,
-	DIRECTION_DOWN
-};
 
 #endif //!___COMMON_H___
