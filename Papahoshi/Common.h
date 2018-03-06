@@ -14,7 +14,7 @@
 //#define _DEBUG_DKIP_
 
 // プレゼンテーション
-#define _PRESEN_KEY_
+//#define _PRESEN_KEY_
 
 //------------------------------
 // インクルードファイル

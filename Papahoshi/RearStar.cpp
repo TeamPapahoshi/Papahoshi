@@ -59,7 +59,7 @@ cRearStar::cRearStar(){
 	// ‰Šú‰»
 	for (int nCountStarNum = 0; nCountStarNum < m_nMaxNum; nCountStarNum++, m_pStarData++){
 
-		m_pStarData->m_bCreateEvent;
+		m_pStarData->m_bCreateEvent = true;
 
 
 		// ƒ^ƒCƒv‚ÌŒˆ’è

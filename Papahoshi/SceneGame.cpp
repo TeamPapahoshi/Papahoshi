@@ -93,6 +93,7 @@ m_bHurryUp(false)
 	m_eGameState = GAME_STATE_MAIN;
 #endif
 	m_bFever = false;
+	 g_finish = false;
 
 
 	//---- BGM‚ÌÄ¶ ----
@@ -301,7 +302,7 @@ void cSceneGame::MainUpdate(){
 	}
 
 //********ƒvƒŒƒ[ƒ“—p*********************************
-#ifndef _PRESEN_KEY
+#ifdef _PRESEN_KEY_
 
 	// ŽžŠÔ‚ªŒ¸‚ç‚È‚¢
 	if (!g_finish){
@@ -321,8 +322,6 @@ void cSceneGame::MainUpdate(){
 		m_pTimer->StartCountDown(1);// Žc‚è1•b
 		g_finish = true;
 	}
-
-	
 #endif
 //*****************************************************:
 

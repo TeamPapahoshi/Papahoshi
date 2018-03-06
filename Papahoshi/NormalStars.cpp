@@ -37,7 +37,7 @@
 #define LIFE_TIME			(2000)
 #define LIFE_TIME_MARGIN	(500)
 
-#define NORMAL_STAR_SCORE	(100)	
+#define NORMAL_STAR_SCORE	(300)	
 
 #define VACUMED_SPEED		(0.2f)
 
@@ -147,6 +147,7 @@ void cNormalStar::Init(){
 
 	m_pStarData->m_eDestroyType = NONE;
 	m_pStarData->m_bEffectSetFlag = false;
+	m_pStarData->m_nEffectFrame = 0;
 }
 
 

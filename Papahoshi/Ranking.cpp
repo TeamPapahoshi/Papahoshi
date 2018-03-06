@@ -61,6 +61,7 @@ cRanking::cRanking(){
 
 	//ファイルの読み込み(失敗したらデフォルトデータの設定)
 	if (!ReadRanking() || g_bDefaultScore)
+	//if (g_bDefaultScore)
 	{
 		int defaultdata = DEFAULT_SCORE;
 
