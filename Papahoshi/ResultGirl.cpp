@@ -70,8 +70,8 @@ void cResultgirl::Init(){
 	m_nAnimFlame = 0;
 	//スコアが一定以上だった場合
 	if (m_pRanking->GetChangeScoreFlag())
-		//デバッグ用
-		//if (1)
+	//デバッグ用
+	//if (1)
 	{
 		m_cGirlsprite.SetTexture(cTextureManeger::GetTextureResult(TEX_RESULT_GIRL_MAX_1));
 		m_nAnimPattern = TEXTURE_PATTERN_MAX;

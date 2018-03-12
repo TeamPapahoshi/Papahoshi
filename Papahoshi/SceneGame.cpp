@@ -408,7 +408,6 @@ void cSceneGame::EndUpdate(){
 		m_pAnnounce = NULL;
 		cSceneManeger::ChangeSceneSetTransition(cSceneManeger::SCENE::RESULT, cTransition::TRANSITION_TYPE::TRANSITION_DICE_SCALE_CHANGE);
 	}
-
 }
 
 

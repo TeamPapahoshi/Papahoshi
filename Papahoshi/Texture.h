@@ -49,8 +49,6 @@ enum TEX_TITLE{
 	enum TEX_GAME{
 		TEX_GAME_STAR_LIGHT,
 		TEX_GAME_STAR,
-		TEX_GAME_FE,
-		TEX_GAME_FE02,
 		TEX_GAME_NET,
 		TEX_GAME_UKI,
 		TEX_GAME_ARROW,
@@ -164,6 +162,7 @@ public:
 
 private:
 	static vector<LPDIRECT3DTEXTURE9> p_texture;	// テクスチャのポインタの動的配列
+	int    m_nSize = 0;									// 読み込んだテクスチャの配列サイズ
 };
 
 #endif	//!___TEXTURE_H___

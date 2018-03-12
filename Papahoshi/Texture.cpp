@@ -36,8 +36,6 @@
 #define TEXTURE_FILNAME_STAR_LIGHT		("Image/Star/light.png")
 #define TEXTURE_FILNAME_STAR			("Image/Star/Star.png")
 #define TEXTURE_FILNAME_RYUSEI			("Image/Star/Ryusei.jpg")
-#define TEXTURE_FILNAME_EF				("Image/Star/Effect.png")
-#define TEXTURE_FILNAME_EF02			("Image/Star/Effect2.png")
 #define TEXTURE_FILENAME_NET			("Image/Net/Net.png")
 #define TEXTURE_FILENAME_UKI			("Image/Net/uki.jpg")
 #define TEXTURE_FILENAME_ARROW			("Image/Net/arrow.png")
@@ -176,8 +174,6 @@ vector<char*> texTitle = {
 vector<char*> texGame = {
 	TEXTURE_FILNAME_STAR_LIGHT,
 	TEXTURE_FILNAME_STAR,
-	TEXTURE_FILNAME_EF,
-	TEXTURE_FILNAME_EF02,
 	TEXTURE_FILENAME_NET,
 	TEXTURE_FILENAME_UKI,
 	TEXTURE_FILENAME_ARROW,
@@ -289,8 +285,12 @@ void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 	// 初期化処理
 
 	// リリース
-	for (int i = 0; i < (int)filename.size(); i++){
-		p_texture[i]->Release();
+	for (int i = 0; i < m_nSize; i++){
+		if (p_texture.at(i) != NULL)
+		{
+			p_texture.at(i)->Release();
+			p_texture.at(i) = NULL;
+		}
 	}
 	p_texture.clear();
 	p_texture.shrink_to_fit();	// 確保したメモリを配列のサイズに合わせる
@@ -316,9 +316,12 @@ void cTextureManeger::LoadTexture(cSceneManeger::SCENE scene){
 	// テクスチャのポインタのリサイズ
 	p_texture.resize(filename.size());
 
+	//テクスチャファイルの配列サイズを保存
+	m_nSize = (int)filename.size();
+
 	// ロード
-	for (int i = 0; i < (int)filename.size(); i++){
-		D3DXCreateTextureFromFile(pDevice, filename[i], &p_texture[i]);
+	for (int i = 0; i < m_nSize; i++){
+		D3DXCreateTextureFromFile(pDevice, filename.at(i), &p_texture.at(i));
 	}
 }
 

@@ -229,6 +229,9 @@ void cResultStar::Update(){
 			PlaySound(SOUND_LABEL::SOUND_LABEL_SE_RESULT_MOVE_STAR);
 		}
 
+		//アドレスを先頭に戻す
+		m_pMoveStarData = m_pMoveRoot;
+
 		for (int loop = 0; loop < STARNUM_MOVE; loop++, m_pMoveStarData++)
 		{
 			//使用フラグがオンの場合に処理
